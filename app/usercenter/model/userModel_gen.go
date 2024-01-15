@@ -6,7 +6,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"looklook/deploy/script/mysql/genModel"
+	"looklook/app/order/model"
 	"strings"
 
 	"time"
@@ -104,7 +104,7 @@ func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error)
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}
@@ -124,7 +124,7 @@ func (m *defaultUserModel) FindOneByMobile(ctx context.Context, mobile string) (
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}

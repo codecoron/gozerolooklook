@@ -35,13 +35,13 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LotteryClient interface {
-	// -----------------------鎶藉琛?----------------------
+	// -----------------------抽奖表-----------------------
 	AddLottery(ctx context.Context, in *AddLotteryReq, opts ...grpc.CallOption) (*AddLotteryResp, error)
 	UpdateLottery(ctx context.Context, in *UpdateLotteryReq, opts ...grpc.CallOption) (*UpdateLotteryResp, error)
 	DelLottery(ctx context.Context, in *DelLotteryReq, opts ...grpc.CallOption) (*DelLotteryResp, error)
 	GetLotteryById(ctx context.Context, in *GetLotteryByIdReq, opts ...grpc.CallOption) (*GetLotteryByIdResp, error)
 	SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
-	// -----------------------濂栧搧琛?----------------------
+	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
 	DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
@@ -151,13 +151,13 @@ func (c *lotteryClient) SearchPrize(ctx context.Context, in *SearchPrizeReq, opt
 // All implementations must embed UnimplementedLotteryServer
 // for forward compatibility
 type LotteryServer interface {
-	// -----------------------鎶藉琛?----------------------
+	// -----------------------抽奖表-----------------------
 	AddLottery(context.Context, *AddLotteryReq) (*AddLotteryResp, error)
 	UpdateLottery(context.Context, *UpdateLotteryReq) (*UpdateLotteryResp, error)
 	DelLottery(context.Context, *DelLotteryReq) (*DelLotteryResp, error)
 	GetLotteryById(context.Context, *GetLotteryByIdReq) (*GetLotteryByIdResp, error)
 	SearchLottery(context.Context, *SearchLotteryReq) (*SearchLotteryResp, error)
-	// -----------------------濂栧搧琛?----------------------
+	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
 	DelPrize(context.Context, *DelPrizeReq) (*DelPrizeResp, error)

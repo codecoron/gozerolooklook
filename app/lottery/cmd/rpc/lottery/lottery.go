@@ -37,13 +37,13 @@ type (
 	UpdatePrizeResp    = pb.UpdatePrizeResp
 
 	LotteryZrpcClient interface {
-		// -----------------------鎶藉琛?----------------------
+		// -----------------------抽奖表-----------------------
 		AddLottery(ctx context.Context, in *AddLotteryReq, opts ...grpc.CallOption) (*AddLotteryResp, error)
 		UpdateLottery(ctx context.Context, in *UpdateLotteryReq, opts ...grpc.CallOption) (*UpdateLotteryResp, error)
 		DelLottery(ctx context.Context, in *DelLotteryReq, opts ...grpc.CallOption) (*DelLotteryResp, error)
 		GetLotteryById(ctx context.Context, in *GetLotteryByIdReq, opts ...grpc.CallOption) (*GetLotteryByIdResp, error)
 		SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
-		// -----------------------濂栧搧琛?----------------------
+		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
 		DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
@@ -62,7 +62,7 @@ func NewLotteryZrpcClient(cli zrpc.Client) LotteryZrpcClient {
 	}
 }
 
-// -----------------------鎶藉琛?----------------------
+// -----------------------抽奖表-----------------------
 func (m *defaultLotteryZrpcClient) AddLottery(ctx context.Context, in *AddLotteryReq, opts ...grpc.CallOption) (*AddLotteryResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.AddLottery(ctx, in, opts...)
@@ -88,7 +88,7 @@ func (m *defaultLotteryZrpcClient) SearchLottery(ctx context.Context, in *Search
 	return client.SearchLottery(ctx, in, opts...)
 }
 
-// -----------------------濂栧搧琛?----------------------
+// -----------------------奖品表-----------------------
 func (m *defaultLotteryZrpcClient) AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.AddPrize(ctx, in, opts...)

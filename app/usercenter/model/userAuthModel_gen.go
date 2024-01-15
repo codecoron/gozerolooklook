@@ -6,7 +6,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"looklook/deploy/script/mysql/genModel"
+	"looklook/app/order/model"
 	"strings"
 
 	"time"
@@ -104,7 +104,7 @@ func (m *defaultUserAuthModel) FindOne(ctx context.Context, id int64) (*UserAuth
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}
@@ -124,7 +124,7 @@ func (m *defaultUserAuthModel) FindOneByAuthTypeAuthKey(ctx context.Context, aut
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (m *defaultUserAuthModel) FindOneByUserIdAuthType(ctx context.Context, user
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}

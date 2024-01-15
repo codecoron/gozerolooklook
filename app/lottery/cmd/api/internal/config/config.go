@@ -11,6 +11,9 @@ type Config struct {
 	DB struct {
 		DataSource string
 	}
+	JwtAuth struct {
+		AccessSecret string
+	}
 	Cache cache.CacheConf
 
 	UsercenterRpcConf zrpc.RpcClientConf

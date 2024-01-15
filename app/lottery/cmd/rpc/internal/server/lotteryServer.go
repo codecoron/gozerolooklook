@@ -22,7 +22,7 @@ func NewLotteryServer(svcCtx *svc.ServiceContext) *LotteryServer {
 	}
 }
 
-// -----------------------鎶藉琛?----------------------
+// -----------------------抽奖表-----------------------
 func (s *LotteryServer) AddLottery(ctx context.Context, in *pb.AddLotteryReq) (*pb.AddLotteryResp, error) {
 	l := logic.NewAddLotteryLogic(ctx, s.svcCtx)
 	return l.AddLottery(in)
@@ -48,7 +48,7 @@ func (s *LotteryServer) SearchLottery(ctx context.Context, in *pb.SearchLotteryR
 	return l.SearchLottery(in)
 }
 
-// -----------------------濂栧搧琛?----------------------
+// -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
 	return l.AddPrize(in)

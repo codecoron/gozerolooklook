@@ -6,7 +6,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"looklook/deploy/script/mysql/genModel"
 	"strings"
 
 	"time"
@@ -99,7 +98,7 @@ func (m *defaultHomestayCommentModel) FindOne(ctx context.Context, id int64) (*H
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
+		return nil, model.ErrNotFound
 	default:
 		return nil, err
 	}
@@ -140,7 +139,7 @@ func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, ses
 		return err
 	}
 	if updateCount == 0 {
-		return genModel.ErrNoRowsUpdate
+		return model.ErrNoRowsUpdate
 	}
 
 	return nil

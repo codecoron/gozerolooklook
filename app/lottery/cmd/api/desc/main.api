@@ -24,3 +24,15 @@ service lottery {
 	post /lottery/lotteryList (LotteryListReq) returns (LotteryListResp)
 }
 
+//need login
+@server (
+	prefix: lottery/v1
+	group:  lottery
+	jwt:    JwtAuth
+)
+service lottery {
+	@doc "发起抽奖"
+	@handler createLottery
+	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
+}
+
