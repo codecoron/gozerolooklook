@@ -6,6 +6,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/Masterminds/squirrel"
+	"looklook/common/globalkey"
 	"strings"
 	"time"
 
@@ -31,6 +33,7 @@ type (
 		FindOne(ctx context.Context, id int64) (*Lottery, error)
 		Update(ctx context.Context, data *Lottery) error
 		Delete(ctx context.Context, id int64) error
+		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Lottery, error)
 	}
 
 	defaultLotteryModel struct {
@@ -103,6 +106,29 @@ func (m *defaultLotteryModel) Update(ctx context.Context, data *Lottery) error {
 		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.Id)
 	}, lotteryLotteryIdKey)
 	return err
+}
+
+func (m *defaultLotteryModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Lottery, error) {
+
+	builder = builder.Columns(lotteryRows)
+
+	if preMinId > 0 {
+		builder = builder.Where(" id < ? ", preMinId)
+	}
+
+	query, values, err := builder.Where("del_state = ?", globalkey.DelStateNo).OrderBy("id DESC").Limit(uint64(pageSize)).ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var resp []*Lottery
+	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
+	switch err {
+	case nil:
+		return resp, nil
+	default:
+		return nil, err
+	}
 }
 
 func (m *defaultLotteryModel) formatPrimary(primary any) string {

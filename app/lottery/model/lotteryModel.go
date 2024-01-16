@@ -1,6 +1,8 @@
 package model
 
 import (
+	"context"
+	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -12,12 +14,22 @@ type (
 	// and implement the added methods in customLotteryModel.
 	LotteryModel interface {
 		lotteryModel
+		//自定义的方法写到这里，避免被覆盖掉
+		List(ctx context.Context, page, limit int64) ([]*Lottery, error)
 	}
 
 	customLotteryModel struct {
 		*defaultLotteryModel
 	}
 )
+
+func (c *customLotteryModel) List(ctx context.Context, page, limit int64) ([]*Lottery, error) {
+	query := fmt.Sprintf("select %s from %s limit ?,?", lotteryRows, c.table)
+	var resp []*Lottery
+	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, (page-1)*limit, limit)
+	return resp, err
+}
 
 // NewLotteryModel returns a model for the database table.
 func NewLotteryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) LotteryModel {
