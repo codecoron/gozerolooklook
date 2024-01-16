@@ -9,6 +9,7 @@ JwtAuth:
 
 Log:
   ServiceName: lottery-api
+  Mode: console
   Level: error
 
 #监控

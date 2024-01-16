@@ -4,6 +4,9 @@ Mode: dev
 
 Log:
   ServiceName: lottery-rpc
+  Mode: console
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
   Level: error
 
 #监控
