@@ -6,6 +6,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"looklook/app/usercenter/model"
 	"strings"
 
 	"time"
