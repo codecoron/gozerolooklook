@@ -39,18 +39,18 @@ type (
 	}
 
 	Lottery struct {
-		Id            int64     `db:"id"`
-		UserId        int64     `db:"user_id"`        // 发起抽奖用户ID
-		Name          string    `db:"name"`           // 默认取一等奖名称
-		Thumb         string    `db:"thumb"`          // 默认取一等经配图
-		PublishType   int64     `db:"publish_type"`   // 开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-		PublishTime   time.Time `db:"publish_time"`   // 开奖时间
-		JoinNumber    int64     `db:"join_number"`    // 自动开奖人数
-		Introduce     string    `db:"introduce"`      // 抽奖说明
-		AwardDeadline time.Time `db:"award_deadline"` // 领奖截止时间
-		CreateTime    time.Time `db:"create_time"`
-		UpdateTime    time.Time `db:"update_time"`
-		IsSelected    int64     `db:"is_selected"` // 是否精选 1是 0否
+		Id            int64        `db:"id"`
+		UserId        int64        `db:"user_id"`        // 发起抽奖用户ID
+		Name          string       `db:"name"`           // 默认取一等奖名称
+		Thumb         string       `db:"thumb"`          // 默认取一等经配图
+		PublishType   int64        `db:"publish_type"`   // 开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+		PublishTime   sql.NullTime `db:"publish_time"`   // 开奖时间
+		JoinNumber    int64        `db:"join_number"`    // 自动开奖人数
+		Introduce     string       `db:"introduce"`      // 抽奖说明
+		AwardDeadline sql.NullTime `db:"award_deadline"` // 领奖截止时间
+		CreateTime    time.Time    `db:"create_time"`
+		UpdateTime    time.Time    `db:"update_time"`
+		IsSelected    int64        `db:"is_selected"` // 是否精选 1是 0否
 	}
 )
 
