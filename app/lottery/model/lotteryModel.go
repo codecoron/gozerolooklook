@@ -37,9 +37,8 @@ func (c *customLotteryModel) List(ctx context.Context, page, limit int64) ([]*Lo
 func (m *customLotteryModel) TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, lotteryRowsExpectAutoSet)
-		//return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected)
-		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.JoinNumber, data.Introduce)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected)
 	}, lotteryLotteryIdKey)
 	return ret, err
 }

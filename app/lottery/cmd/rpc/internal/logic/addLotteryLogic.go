@@ -30,11 +30,12 @@ func NewAddLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddLot
 func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, error) {
 	//添加事务处理
 	err := l.svcCtx.LotteryModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
+		logx.Error("in:", in)
 		//抽奖基本信息
 		lottery := new(model.Lottery)
 		lottery.UserId = in.UserId
 		lottery.Name = in.Name
-		//lottery.AwardDeadline = time.Unix(in.AwardDeadline, 0) //todo 排查时间的原因
+		//lottery.AwardDeadline = nil //todo 排查时间的原因
 		//lottery.PublishTime = time.Unix(in.PublishTime, 0)     //todo 排查时间的原因
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber
