@@ -1,0 +1,56 @@
+syntax = "v1"
+
+info (
+    title:   "用户收货地址"
+    desc:    "用户收货地址"
+    author:  "Max"
+    email:   "425772719@qq.com"
+)
+
+type AddressInfo {
+    ContactName string `json:"contactName"`
+    ContactMobile string `json:"contactMobile"`
+    District map[string]DistrictItem `json:"district"`
+    Address string `json:"address"`
+    Postcode string `json:"postcode"`
+    IsDefault string `json:"isDefault"`
+}
+
+type DistrictItem {
+    Id string `json:"id"`
+    Name string `json:"name"`
+}
+
+type UserAddress {
+    Id int64 `json:"id"`
+    UserId int64 `json:"userId"`
+    AddressInfo
+}
+
+type (
+    AddressListReq {
+        UserId int64 `json:"userId"`
+    }
+    AddressListResp {
+        List []UserAddress `json:"list"`
+    }
+)
+
+type (
+    AddAddressReq {
+        UserId int64 `json:"userId"`
+        AddressInfo
+    }
+    AddAddressResp {
+        Id int64 `json:"id"`
+    }
+)
+
+type (
+    ConvertAddressReq {
+        OriginalAddressInfo string `json:"originalAddressInfo"`
+    }
+    ConvertAddressResp {
+        AddressInfo
+    }
+)
