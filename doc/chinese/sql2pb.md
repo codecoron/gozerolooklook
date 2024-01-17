@@ -12,6 +12,14 @@ go install github.com/Mikaelemmmm/sql2pb@latest
 
 ### 命令示例
 
+#### usercenter
+
+```
+sql2pb -go_package ./pb -host 127.0.0.1 -package pb -password PXDN93VRKUm8TeE7 -port 33069 -schema looklook_usercenter  -service_name usercenter -user root > usercenter.proto
+```
+
+#### lottery
+
 ```
 sql2pb -go_package ./pb -host localhost -package pb -password 123456 -port 3306 -schema lottery -service_name lotter -user root > lottery.proto
 ```
