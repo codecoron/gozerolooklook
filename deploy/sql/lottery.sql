@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 15/01/2024 18:07:01
+ Date: 17/01/2024 23:07:16
 */
 
 SET NAMES utf8mb4;
@@ -27,21 +27,15 @@ CREATE TABLE `lottery`  (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '默认取一等奖名称',
   `thumb` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '默认取一等经配图',
   `publish_type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '开奖设置：1按时间开奖 2按人数开奖 3即抽即中',
-  `publish_time` datetime(0) NOT NULL COMMENT '开奖时间',
+  `publish_time` datetime(0) DEFAULT NULL COMMENT '开奖时间',
   `join_number` int(0) NOT NULL DEFAULT 0 COMMENT '自动开奖人数',
-  `introduce` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '抽奖说明',
+  `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '抽奖说明',
   `award_deadline` datetime(0) NOT NULL COMMENT '领奖截止时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   `is_selected` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否精选 1是 0否',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of lottery
--- ----------------------------
-INSERT INTO `lottery` VALUES (1, 1, '自然堂 气垫BB 自然色', 'https://img10.360buyimg.com/n1/jfs/t1/86934/2/28516/101853/627119fbE03141b18/3a94e4953b95e90d.jpg', 1, '2024-01-14 17:01:35', 0, '官方抽奖，欢迎参与', '2024-01-14 17:02:06', '2024-01-14 17:02:09', '2024-01-15 15:22:12', 1);
-INSERT INTO `lottery` VALUES (2, 1, '农夫山泉', 'https://img10.360buyimg.com/n1/jfs/t1/86934/2/28516/101853/627119fbE03141b18/3a94e4953b95e90d.jpg', 1, '2024-01-15 15:21:40', 0, '这是介绍', '2024-01-27 15:21:43', '2024-01-15 15:21:55', '2024-01-15 15:22:05', 1);
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for prize
@@ -59,6 +53,6 @@ CREATE TABLE `prize`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '奖品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '奖品表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
