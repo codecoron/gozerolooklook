@@ -9,7 +9,7 @@ package pb;
 message User {
   int64 id = 1;
   string mobile = 2;
-  string nickname =3;
+  string nickname = 3;
   int64  sex = 4;
   string avatar = 5;
   string info = 6;
@@ -53,7 +53,7 @@ message GetUserInfoReq {
   int64  id = 1;
 }
 message GetUserInfoResp {
-   User user = 1;
+  User user = 1;
 }
 
 message GetUserAuthByAuthKeyReq {
@@ -61,7 +61,7 @@ message GetUserAuthByAuthKeyReq {
   string  authType = 2;
 }
 message GetUserAuthByAuthKeyResp {
-   UserAuth userAuth = 1;
+  UserAuth userAuth = 1;
 }
 
 message GetUserAuthByUserIdReq {
@@ -69,7 +69,7 @@ message GetUserAuthByUserIdReq {
   string  authType = 2;
 }
 message GetUserAuthyUserIdResp {
-   UserAuth userAuth = 1;
+  UserAuth userAuth = 1;
 }
 
 message GenerateTokenReq {
@@ -80,6 +80,69 @@ message GenerateTokenResp {
   int64  accessExpire = 2;
   int64  refreshAfter = 3;
 }
+//--------------------------------用户联系方式-------------------------------
+message UserContact {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1qrcode 2phone 3shop
+  string content = 4; //content
+  string remark = 5; //remark
+  int64 createTime = 6; //createTime
+  int64 updateTime = 7; //updateTime
+}
+
+message AddUserContactReq {
+  int64 userId = 1; //userId
+  int64 type = 2; //1qrcode 2phone 3shop
+  string content = 3; //content
+  string remark = 4; //remark
+}
+
+message AddUserContactResp {
+  int64 Id = 1; //Id
+}
+
+message UpdateUserContactReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1qrcode 2phone 3shop
+  string content = 4; //content
+  string remark = 5; //remark
+}
+
+message UpdateUserContactResp {
+}
+
+message DelUserContactReq {
+  int64 id = 1; //id
+}
+
+message DelUserContactResp {
+}
+
+message GetUserContactByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserContactByIdResp {
+  UserContact userContact = 1; //userContact
+}
+
+message SearchUserContactReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  int64 type = 5; //1qrcode 2phone 3shop
+  string content = 6; //content
+  string remark = 7; //remark
+  int64 createTime = 8; //createTime
+  int64 updateTime = 9; //updateTime
+}
+
+message SearchUserContactResp {
+  repeated UserContact userContact = 1; //userContact
+}
 
 //service
 service usercenter {
@@ -89,4 +152,10 @@ service usercenter {
   rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyReq) returns(GetUserAuthByAuthKeyResp);
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+  //-----------------------用户联系方式----------------------
+  rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
+  rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
+  rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp);
+  rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp);
+  rpc SearchUserContact(SearchUserContactReq) returns (SearchUserContactResp);
 }
