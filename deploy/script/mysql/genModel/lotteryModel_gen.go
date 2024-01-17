@@ -47,7 +47,7 @@ type (
 		PublishTime   sql.NullTime `db:"publish_time"`   // 开奖时间
 		JoinNumber    int64        `db:"join_number"`    // 自动开奖人数
 		Introduce     string       `db:"introduce"`      // 抽奖说明
-		AwardDeadline sql.NullTime `db:"award_deadline"` // 领奖截止时间
+		AwardDeadline time.Time    `db:"award_deadline"` // 领奖截止时间
 		CreateTime    time.Time    `db:"create_time"`
 		UpdateTime    time.Time    `db:"update_time"`
 		IsSelected    int64        `db:"is_selected"` // 是否精选 1是 0否
