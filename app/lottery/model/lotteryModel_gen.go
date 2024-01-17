@@ -6,6 +6,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"looklook/deploy/script/mysql/genModel"
 	"strings"
 	"time"
 
@@ -81,7 +82,7 @@ func (m *defaultLotteryModel) FindOne(ctx context.Context, id int64) (*Lottery, 
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
+		return nil, genModel.ErrNotFound
 	default:
 		return nil, err
 	}

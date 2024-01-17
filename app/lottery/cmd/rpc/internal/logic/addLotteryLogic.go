@@ -29,27 +29,28 @@ func NewAddLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddLot
 // -----------------------发起抽奖----------------------
 func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, error) {
 	//添加事务处理
+	var lotteryId int64
 	err := l.svcCtx.LotteryModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
-		logx.Error("in:", in)
+		//logx.Error("in:", in)
 		//抽奖基本信息
 		lottery := new(model.Lottery)
 		lottery.UserId = in.UserId
 		lottery.Name = in.Name
-		//lottery.AwardDeadline = nil //todo 排查时间的原因
-		//lottery.PublishTime = time.Unix(in.PublishTime, 0)     //todo 排查时间的原因
+		//lottery.AwardDeadline = in.AwardDeadline
+		//lottery.PublishTime = in.PublishTime
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber
 		lottery.PublishType = in.PublishType
 		lottery.Thumb = in.Thumb
 		lottery.IsSelected = 0
-		logx.Error("lottery:", lottery)
+		//logx.Error("lottery:", lottery)
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
 			logx.Error("插入失败:%v", err)
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Lottery Database Exception lottery : %+v , err: %v", lottery, err)
 		}
-		lotteryId, _ := insert.LastInsertId()
+		lotteryId, _ = insert.LastInsertId()
 		//添加奖品信息
 		for _, pbPrize := range in.Prizes {
 			prize := new(model.Prize)
@@ -71,6 +72,6 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 	}
 
 	return &pb.AddLotteryResp{
-		Id: 1, //todo 返回真实id
+		Id: lotteryId,
 	}, nil
 }

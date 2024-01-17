@@ -34,5 +34,9 @@ service lottery {
 	@doc "发起抽奖"
 	@handler createLottery
 	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
+
+	@doc "发布抽奖"
+	@handler updateLottery
+	post /lottery/updateLottery (UpdateLotteryReq) returns (UpdateLotteryResp)
 }
 

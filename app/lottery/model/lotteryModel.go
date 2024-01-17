@@ -19,6 +19,7 @@ type (
 		List(ctx context.Context, page, limit int64) ([]*Lottery, error)
 		TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error)
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
+		TransUpdate(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error)
 	}
 
 	customLotteryModel struct {
@@ -47,6 +48,14 @@ func (m *customLotteryModel) Trans(ctx context.Context, fn func(ctx context.Cont
 	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
 	})
+}
+func (m *customLotteryModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set publish_time = ?, award_deadline = ? where id = ?", m.table)
+		return session.ExecCtx(ctx, query, data.PublishTime, data.AwardDeadline, data.Id)
+	}, lotteryLotteryIdKey)
+	return ret, err
 }
 
 // NewLotteryModel returns a model for the database table.

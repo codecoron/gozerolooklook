@@ -64,3 +64,14 @@ type (
     }
 )
 
+type (
+    UpdateLotteryReq {
+        Id int `json:"id"`
+        PublishTime int64 `json:"publish_time"`
+        AwardDeadline int64 `json:"awardDeadline"`
+    }
+    UpdateLotteryResp {
+    }
+)
+
+
