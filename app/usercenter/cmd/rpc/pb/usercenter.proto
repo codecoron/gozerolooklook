@@ -80,6 +80,81 @@ message GenerateTokenResp {
   int64  refreshAfter = 3;
 }
 
+//--------------------------------用户收货地址表--------------------------------
+message UserAddress {
+  int64 id = 1; //id
+  int64 userId = 2; //用户id
+  string contactName = 3; //联系人姓名
+  string contactMobile = 4; //联系人手机号码
+  string district = 5; //地区信息
+  string detail = 6; //详细地址
+  string postcode = 7; //邮政编码
+  int64 isDefault = 8; //是否为默认地址 1是 0否
+  int64 createTime = 9; //createTime
+  int64 updateTime = 10; //updateTime
+}
+
+message AddUserAddressReq {
+  int64 userId = 1; //用户id
+  string contactName = 2; //联系人姓名
+  string contactMobile = 3; //联系人手机号码
+  string district = 4; //地区信息
+  string detail = 5; //详细地址
+  string postcode = 6; //邮政编码
+  int64 isDefault = 7; //是否为默认地址 1是 0否
+}
+
+message AddUserAddressResp {
+}
+
+message UpdateUserAddressReq {
+  int64 id = 1; //id
+  int64 userId = 2; //用户id
+  string contactName = 3; //联系人姓名
+  string contactMobile = 4; //联系人手机号码
+  string district = 5; //地区信息
+  string detail = 6; //详细地址
+  string postcode = 7; //邮政编码
+  int64 isDefault = 8; //是否为默认地址 1是 0否
+}
+
+message UpdateUserAddressResp {
+}
+
+message DelUserAddressReq {
+  int64 id = 1; //id
+}
+
+message DelUserAddressResp {
+}
+
+message GetUserAddressByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserAddressByIdResp {
+  UserAddress userAddress = 1; //userAddress
+}
+
+message SearchUserAddressReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //用户id
+  string contactName = 5; //联系人姓名
+  string contactMobile = 6; //联系人手机号码
+  string district = 7; //地区信息
+  string detail = 8; //详细地址
+  string postcode = 9; //邮政编码
+  int64 isDefault = 10; //是否为默认地址 1是 0否
+  int64 createTime = 11; //createTime
+  int64 updateTime = 12; //updateTime
+}
+
+message SearchUserAddressResp {
+  repeated UserAddress userAddress = 1; //userAddress
+}
+
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
@@ -88,4 +163,10 @@ service usercenter {
   rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyReq) returns(GetUserAuthByAuthKeyResp);
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+  //-----------------------用户收货地址表-----------------------
+  rpc AddUserAddress(AddUserAddressReq) returns (AddUserAddressResp);
+  rpc UpdateUserAddress(UpdateUserAddressReq) returns (UpdateUserAddressResp);
+  rpc DelUserAddress(DelUserAddressReq) returns (DelUserAddressResp);
+  rpc GetUserAddressById(GetUserAddressByIdReq) returns (GetUserAddressByIdResp);
+  rpc SearchUserAddress(SearchUserAddressReq) returns (SearchUserAddressResp);
 }
