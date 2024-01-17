@@ -30,6 +30,7 @@ type User struct {
 	Sex      int64  `json:"sex"`
 	Avatar   string `json:"avatar"`
 	Info     string `json:"info"`
+	IsAdmin  int64  `json:"isAdmin"`
 }
 
 type UserInfoReq struct {

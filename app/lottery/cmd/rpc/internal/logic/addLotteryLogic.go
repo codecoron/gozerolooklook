@@ -10,6 +10,7 @@ import (
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/common/xerr"
+	"time"
 )
 
 type AddLotteryLogic struct {
@@ -35,7 +36,7 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery := new(model.Lottery)
 		lottery.UserId = in.UserId
 		lottery.Name = in.Name
-		//lottery.AwardDeadline = nil //todo 排查时间的原因
+		lottery.AwardDeadline = time.Unix(in.AwardDeadline, 0) //todo 排查时间的原因
 		//lottery.PublishTime = time.Unix(in.PublishTime, 0)     //todo 排查时间的原因
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber
