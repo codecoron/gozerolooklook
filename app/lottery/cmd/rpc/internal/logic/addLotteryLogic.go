@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"database/sql"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -10,6 +11,7 @@ import (
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/common/xerr"
+	"time"
 )
 
 type AddLotteryLogic struct {
@@ -32,11 +34,17 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 	var lotteryId int64
 	err := l.svcCtx.LotteryModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		//logx.Error("in:", in)
+		var aTime sql.NullTime
 		//抽奖基本信息
 		lottery := new(model.Lottery)
 		lottery.UserId = in.UserId
 		lottery.Name = in.Name
-		//lottery.AwardDeadline = in.AwardDeadline
+		if in.AwardDeadline != 0 {
+			aTime.Time = time.Unix(in.AwardDeadline, 0)
+			aTime.Valid = true
+		} else {
+			aTime.Valid = false
+		}
 		//lottery.PublishTime = in.PublishTime
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber

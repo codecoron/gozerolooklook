@@ -48,13 +48,15 @@ func (l *UpdateLotteryLogic) UpdateLottery(in *pb.UpdateLotteryReq) (*pb.UpdateL
 			pTime.Time = time.Unix(in.PublishTime, 0)
 			pTime.Valid = true
 		} else {
-			pTime.Valid = false
+			logx.Error("publish_time为空")
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "publish_time为空")
 		}
-		if in.PublishTime != 0 {
+		if in.AwardDeadline != 0 {
 			aTime.Time = time.Unix(in.AwardDeadline, 0)
 			aTime.Valid = true
 		} else {
-			aTime.Valid = false
+			logx.Error("awardDeadline为空")
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "awardDeadline为空")
 		}
 		lottery.PublishTime = pTime
 		lottery.AwardDeadline = aTime
