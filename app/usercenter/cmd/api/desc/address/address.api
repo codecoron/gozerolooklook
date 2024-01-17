@@ -10,14 +10,21 @@ info (
 type AddressInfo {
     ContactName string `json:"contactName"`
     ContactMobile string `json:"contactMobile"`
-    District map[string]DistrictItem `json:"district"`
-    Address string `json:"address"`
+    District DistrictInfo `json:"district"`
+    Detail string `json:"detail"`
     Postcode string `json:"postcode"`
-    IsDefault string `json:"isDefault"`
+    IsDefault int64 `json:"isDefault"`
+}
+
+type DistrictInfo {
+    Province DistrictItem `json:"province"`
+    City DistrictItem `json:"city"`
+    County DistrictItem `json:"county"`
+    Town DistrictItem `json:"town,omitempty"`
 }
 
 type DistrictItem {
-    Id string `json:"id"`
+    Id string `json:"id,omitempty"`
     Name string `json:"name"`
 }
 

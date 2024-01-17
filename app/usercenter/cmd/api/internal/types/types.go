@@ -11,12 +11,12 @@ type AddAddressResp struct {
 }
 
 type AddressInfo struct {
-	ContactName   string                  `json:"contactName"`
-	ContactMobile string                  `json:"contactMobile"`
-	District      map[string]DistrictItem `json:"district"`
-	Address       string                  `json:"address"`
-	Postcode      string                  `json:"postcode"`
-	IsDefault     string                  `json:"isDefault"`
+	ContactName   string       `json:"contactName"`
+	ContactMobile string       `json:"contactMobile"`
+	District      DistrictInfo `json:"district"`
+	Detail        string       `json:"detail"`
+	Postcode      string       `json:"postcode"`
+	IsDefault     int64        `json:"isDefault"`
 }
 
 type AddressListReq struct {
@@ -35,8 +35,15 @@ type ConvertAddressResp struct {
 	AddressInfo
 }
 
+type DistrictInfo struct {
+	Province DistrictItem `json:"province"`
+	City     DistrictItem `json:"city"`
+	County   DistrictItem `json:"county"`
+	Town     DistrictItem `json:"town,omitempty"`
+}
+
 type DistrictItem struct {
-	Id   string `json:"id"`
+	Id   string `json:"id,omitempty"`
 	Name string `json:"name"`
 }
 

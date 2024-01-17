@@ -105,6 +105,7 @@ message AddUserAddressReq {
 }
 
 message AddUserAddressResp {
+  int64 id = 1; //地址id
 }
 
 message UpdateUserAddressReq {
