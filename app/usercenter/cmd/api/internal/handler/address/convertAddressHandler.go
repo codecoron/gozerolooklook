@@ -1,6 +1,7 @@
 package address
 
 import (
+	"looklook/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -19,10 +20,6 @@ func ConvertAddressHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := address.NewConvertAddressLogic(r.Context(), svcCtx)
 		resp, err := l.ConvertAddress(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }
