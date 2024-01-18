@@ -15,8 +15,12 @@ import (
 type (
 	AddUserAddressReq        = pb.AddUserAddressReq
 	AddUserAddressResp       = pb.AddUserAddressResp
+	AddUserContactReq        = pb.AddUserContactReq
+	AddUserContactResp       = pb.AddUserContactResp
 	DelUserAddressReq        = pb.DelUserAddressReq
 	DelUserAddressResp       = pb.DelUserAddressResp
+	DelUserContactReq        = pb.DelUserContactReq
+	DelUserContactResp       = pb.DelUserContactResp
 	GenerateTokenReq         = pb.GenerateTokenReq
 	GenerateTokenResp        = pb.GenerateTokenResp
 	GetUserAddressByIdReq    = pb.GetUserAddressByIdReq
@@ -25,6 +29,8 @@ type (
 	GetUserAuthByAuthKeyResp = pb.GetUserAuthByAuthKeyResp
 	GetUserAuthByUserIdReq   = pb.GetUserAuthByUserIdReq
 	GetUserAuthyUserIdResp   = pb.GetUserAuthyUserIdResp
+	GetUserContactByIdReq    = pb.GetUserContactByIdReq
+	GetUserContactByIdResp   = pb.GetUserContactByIdResp
 	GetUserInfoReq           = pb.GetUserInfoReq
 	GetUserInfoResp          = pb.GetUserInfoResp
 	LoginReq                 = pb.LoginReq
@@ -33,11 +39,16 @@ type (
 	RegisterResp             = pb.RegisterResp
 	SearchUserAddressReq     = pb.SearchUserAddressReq
 	SearchUserAddressResp    = pb.SearchUserAddressResp
+	SearchUserContactReq     = pb.SearchUserContactReq
+	SearchUserContactResp    = pb.SearchUserContactResp
 	UpdateUserAddressReq     = pb.UpdateUserAddressReq
 	UpdateUserAddressResp    = pb.UpdateUserAddressResp
+	UpdateUserContactReq     = pb.UpdateUserContactReq
+	UpdateUserContactResp    = pb.UpdateUserContactResp
 	User                     = pb.User
 	UserAddress              = pb.UserAddress
 	UserAuth                 = pb.UserAuth
+	UserContact              = pb.UserContact
 
 	Usercenter interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
@@ -46,6 +57,12 @@ type (
 		GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error)
 		GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
+		// -----------------------用户联系方式----------------------
+		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
+		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
+		DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
+		GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
+		SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
 		// -----------------------用户收货地址表-----------------------
 		AddUserAddress(ctx context.Context, in *AddUserAddressReq, opts ...grpc.CallOption) (*AddUserAddressResp, error)
 		UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error)
@@ -93,6 +110,32 @@ func (m *defaultUsercenter) GetUserAuthByUserId(ctx context.Context, in *GetUser
 func (m *defaultUsercenter) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GenerateToken(ctx, in, opts...)
+}
+
+// -----------------------用户联系方式----------------------
+func (m *defaultUsercenter) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserContactById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserContact(ctx, in, opts...)
 }
 
 // -----------------------用户收货地址表-----------------------

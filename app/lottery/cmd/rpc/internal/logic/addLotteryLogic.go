@@ -10,6 +10,7 @@ import (
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/common/xerr"
+	"time"
 )
 
 type AddLotteryLogic struct {
@@ -30,23 +31,19 @@ func NewAddLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddLot
 func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, error) {
 	//添加事务处理
 	err := l.svcCtx.LotteryModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
-		logx.Error("in:", in)
 		//抽奖基本信息
 		lottery := new(model.Lottery)
 		lottery.UserId = in.UserId
 		lottery.Name = in.Name
-		//lottery.AwardDeadline = nil //todo 排查时间的原因
-		//lottery.PublishTime = time.Unix(in.PublishTime, 0)     //todo 排查时间的原因
+		lottery.AwardDeadline = time.Unix(in.AwardDeadline, 0)
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber
 		lottery.PublishType = in.PublishType
 		lottery.Thumb = in.Thumb
 		lottery.IsSelected = 0
-		logx.Error("lottery:", lottery)
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
-			logx.Error("插入失败:%v", err)
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Lottery Database Exception lottery : %+v , err: %v", lottery, err)
 		}
 		lotteryId, _ := insert.LastInsertId()

@@ -223,6 +223,38 @@
           "user"
         ]
       }
+    },
+    "/usercenter/v1/userContact/create": {
+      "post": {
+        "summary": "添加联系方式",
+        "operationId": "create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "userContact"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -332,6 +364,62 @@
         "list"
       ]
     },
+    "ContactInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "ContactInfo",
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "content",
+        "remark"
+      ]
+    },
+    "ContactInfoReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ContactInfoReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ContactInfoResp": {
+      "type": "object",
+      "properties": {
+        "contactInfo": {
+          "$ref": "#/definitions/ContactInfo"
+        }
+      },
+      "title": "ContactInfoResp",
+      "required": [
+        "contactInfo"
+      ]
+    },
     "ConvertAddressReq": {
       "type": "object",
       "properties": {
@@ -368,6 +456,40 @@
         }
       },
       "title": "ConvertAddressResp"
+    },
+    "CreateReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "CreateReq",
+      "required": [
+        "type",
+        "content",
+        "remark"
+      ]
+    },
+    "CreateResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateResp",
+      "required": [
+        "id"
+      ]
     },
     "DistrictInfo": {
       "type": "object",
@@ -505,6 +627,10 @@
         },
         "info": {
           "type": "string"
+        },
+        "isAdmin": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "User",
@@ -514,7 +640,8 @@
         "nickname",
         "sex",
         "avatar",
-        "info"
+        "info",
+        "isAdmin"
       ]
     },
     "UserAddress": {

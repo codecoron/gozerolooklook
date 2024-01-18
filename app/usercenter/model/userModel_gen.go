@@ -69,6 +69,7 @@ type (
 		Sex        int64     `db:"sex"` // 性别 0:男 1:女
 		Avatar     string    `db:"avatar"`
 		Info       string    `db:"info"`
+		IsAdmin    int64     `db:"is_admin"`
 	}
 )
 

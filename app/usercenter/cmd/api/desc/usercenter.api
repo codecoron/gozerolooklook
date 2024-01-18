@@ -10,6 +10,7 @@ info (
 
 import (
 	"user/user.api"
+	"user_contact/usercontact.api"
 	"address/address.api"
 )
 
@@ -43,6 +44,18 @@ service usercenter {
 	@doc "获得用户数据"
 	@handler detail
 	post /user/detail (UserInfoReq) returns (UserInfoResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userContact
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "添加联系方式"
+	@handler create
+	post /userContact/create (CreateReq) returns (CreateResp)
 }
 
 //need login

@@ -52,6 +52,32 @@ func (s *UsercenterServer) GenerateToken(ctx context.Context, in *pb.GenerateTok
 	return l.GenerateToken(in)
 }
 
+// -----------------------用户联系方式----------------------
+func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
+	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)
+	return l.AddUserContact(in)
+}
+
+func (s *UsercenterServer) UpdateUserContact(ctx context.Context, in *pb.UpdateUserContactReq) (*pb.UpdateUserContactResp, error) {
+	l := logic.NewUpdateUserContactLogic(ctx, s.svcCtx)
+	return l.UpdateUserContact(in)
+}
+
+func (s *UsercenterServer) DelUserContact(ctx context.Context, in *pb.DelUserContactReq) (*pb.DelUserContactResp, error) {
+	l := logic.NewDelUserContactLogic(ctx, s.svcCtx)
+	return l.DelUserContact(in)
+}
+
+func (s *UsercenterServer) GetUserContactById(ctx context.Context, in *pb.GetUserContactByIdReq) (*pb.GetUserContactByIdResp, error) {
+	l := logic.NewGetUserContactByIdLogic(ctx, s.svcCtx)
+	return l.GetUserContactById(in)
+}
+
+func (s *UsercenterServer) SearchUserContact(ctx context.Context, in *pb.SearchUserContactReq) (*pb.SearchUserContactResp, error) {
+	l := logic.NewSearchUserContactLogic(ctx, s.svcCtx)
+	return l.SearchUserContact(in)
+}
+
 // -----------------------用户收货地址表-----------------------
 func (s *UsercenterServer) AddUserAddress(ctx context.Context, in *pb.AddUserAddressReq) (*pb.AddUserAddressResp, error) {
 	l := logic.NewAddUserAddressLogic(ctx, s.svcCtx)

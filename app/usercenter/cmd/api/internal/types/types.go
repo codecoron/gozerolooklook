@@ -27,12 +27,38 @@ type AddressListResp struct {
 	List []UserAddress `json:"list"`
 }
 
+type ContactInfo struct {
+	Id      int64  `json:"id"`
+	UserId  int64  `json:"userId"`
+	Type    int64  `json:"type"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
+}
+
+type ContactInfoReq struct {
+	Id int64 `json:"id"`
+}
+
+type ContactInfoResp struct {
+	ContactInfo ContactInfo `json:"contactInfo"`
+}
+
 type ConvertAddressReq struct {
 	OriginalAddressInfo string `json:"originalAddressInfo"`
 }
 
 type ConvertAddressResp struct {
 	AddressInfo
+}
+
+type CreateReq struct {
+	Type    int64  `json:"type"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
+}
+
+type CreateResp struct {
+	Id int64 `json:"id"`
 }
 
 type DistrictInfo struct {
@@ -76,6 +102,7 @@ type User struct {
 	Sex      int64  `json:"sex"`
 	Avatar   string `json:"avatar"`
 	Info     string `json:"info"`
+	IsAdmin  int64  `json:"isAdmin"`
 }
 
 type UserAddress struct {

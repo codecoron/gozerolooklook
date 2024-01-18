@@ -1,7 +1,7 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
- Source Server         : looklook
+ Source Server         : gozero-looklook
  Source Server Type    : MySQL
  Source Server Version : 80028
  Source Host           : 127.0.0.1:33069
@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 10/03/2022 17:14:49
+ Date: 17/01/2024 23:06:57
 */
 
 SET NAMES utf8mb4;
@@ -21,41 +21,72 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `delete_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `del_state` tinyint NOT NULL DEFAULT '0',
-  `version` bigint NOT NULL DEFAULT '0' COMMENT '版本号',
+CREATE TABLE `user`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `delete_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `del_state` tinyint(0) NOT NULL DEFAULT 0,
+  `version` bigint(0) NOT NULL DEFAULT 0 COMMENT '版本号',
   `mobile` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-  `sex` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别 0:男 1:女',
+  `sex` tinyint(1) NOT NULL DEFAULT 0 COMMENT '性别 0:男 1:女',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_mobile` (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户表';
+  `is_admin` tinyint(1) DEFAULT 0 COMMENT '是否管理员 1是 0否',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `idx_mobile`(`mobile`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `user_auth`;
-CREATE TABLE `user_auth` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `delete_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `del_state` tinyint NOT NULL DEFAULT '0',
-  `version` bigint NOT NULL DEFAULT '0' COMMENT '版本号',
-  `user_id` bigint NOT NULL DEFAULT '0',
+CREATE TABLE `user_auth`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `delete_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `del_state` tinyint(0) NOT NULL DEFAULT 0,
+  `version` bigint(0) NOT NULL DEFAULT 0 COMMENT '版本号',
+  `user_id` bigint(0) NOT NULL DEFAULT 0,
   `auth_key` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '平台唯一id',
   `auth_type` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '平台类型',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_type_key` (`auth_type`,`auth_key`) USING BTREE,
-  UNIQUE KEY `idx_userId_key` (`user_id`,`auth_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户授权表';
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `idx_type_key`(`auth_type`, `auth_key`) USING BTREE,
+  UNIQUE INDEX `idx_userId_key`(`user_id`, `auth_type`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户授权表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for user_contact
+-- ----------------------------
+DROP TABLE IF EXISTS `user_contact`;
+CREATE TABLE `user_contact`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `user_id` int(0) NOT NULL DEFAULT 0,
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1qrcode 2phone 3shop',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'content',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'remark',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for user_shop
+-- ----------------------------
+DROP TABLE IF EXISTS `user_shop`;
+CREATE TABLE `user_shop`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `user_id` int(0) NOT NULL DEFAULT 0,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `location` decimal(65, 0) NOT NULL DEFAULT 0,
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `delete_time` datetime(0) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
