@@ -25,6 +25,7 @@ const (
 	Lottery_GetLotteryById_FullMethodName       = "/pb.lottery/GetLotteryById"
 	Lottery_SearchLottery_FullMethodName        = "/pb.lottery/SearchLottery"
 	Lottery_SetIsSelectedLottery_FullMethodName = "/pb.lottery/SetIsSelectedLottery"
+	Lottery_LotteryDetail_FullMethodName        = "/pb.lottery/LotteryDetail"
 	Lottery_AddPrize_FullMethodName             = "/pb.lottery/AddPrize"
 	Lottery_UpdatePrize_FullMethodName          = "/pb.lottery/UpdatePrize"
 	Lottery_DelPrize_FullMethodName             = "/pb.lottery/DelPrize"
@@ -43,6 +44,7 @@ type LotteryClient interface {
 	GetLotteryById(ctx context.Context, in *GetLotteryByIdReq, opts ...grpc.CallOption) (*GetLotteryByIdResp, error)
 	SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
 	SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error)
+	LotteryDetail(ctx context.Context, in *LotteryDetailReq, opts ...grpc.CallOption) (*LotteryDetailResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -113,6 +115,15 @@ func (c *lotteryClient) SetIsSelectedLottery(ctx context.Context, in *SetIsSelec
 	return out, nil
 }
 
+func (c *lotteryClient) LotteryDetail(ctx context.Context, in *LotteryDetailReq, opts ...grpc.CallOption) (*LotteryDetailResp, error) {
+	out := new(LotteryDetailResp)
+	err := c.cc.Invoke(ctx, Lottery_LotteryDetail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lotteryClient) AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error) {
 	out := new(AddPrizeResp)
 	err := c.cc.Invoke(ctx, Lottery_AddPrize_FullMethodName, in, out, opts...)
@@ -169,6 +180,7 @@ type LotteryServer interface {
 	GetLotteryById(context.Context, *GetLotteryByIdReq) (*GetLotteryByIdResp, error)
 	SearchLottery(context.Context, *SearchLotteryReq) (*SearchLotteryResp, error)
 	SetIsSelectedLottery(context.Context, *SetIsSelectedLotteryReq) (*SetIsSelectedLotteryResp, error)
+	LotteryDetail(context.Context, *LotteryDetailReq) (*LotteryDetailResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
@@ -199,6 +211,9 @@ func (UnimplementedLotteryServer) SearchLottery(context.Context, *SearchLotteryR
 }
 func (UnimplementedLotteryServer) SetIsSelectedLottery(context.Context, *SetIsSelectedLotteryReq) (*SetIsSelectedLotteryResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetIsSelectedLottery not implemented")
+}
+func (UnimplementedLotteryServer) LotteryDetail(context.Context, *LotteryDetailReq) (*LotteryDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LotteryDetail not implemented")
 }
 func (UnimplementedLotteryServer) AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrize not implemented")
@@ -336,6 +351,24 @@ func _Lottery_SetIsSelectedLottery_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_LotteryDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LotteryDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).LotteryDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_LotteryDetail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).LotteryDetail(ctx, req.(*LotteryDetailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Lottery_AddPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddPrizeReq)
 	if err := dec(in); err != nil {
@@ -456,6 +489,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetIsSelectedLottery",
 			Handler:    _Lottery_SetIsSelectedLottery_Handler,
+		},
+		{
+			MethodName: "LotteryDetail",
+			Handler:    _Lottery_LotteryDetail_Handler,
 		},
 		{
 			MethodName: "AddPrize",

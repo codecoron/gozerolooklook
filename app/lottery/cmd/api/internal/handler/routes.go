@@ -45,4 +45,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/lottery/v1"),
 	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/lotteryDetail",
+				Handler: lottery.LotteryDetailHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/lottery/v1"),
+	)
 }

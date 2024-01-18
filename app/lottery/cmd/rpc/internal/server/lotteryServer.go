@@ -53,6 +53,11 @@ func (s *LotteryServer) SetIsSelectedLottery(ctx context.Context, in *pb.SetIsSe
 	return l.SetIsSelectedLottery(in)
 }
 
+func (s *LotteryServer) LotteryDetail(ctx context.Context, in *pb.LotteryDetailReq) (*pb.LotteryDetailResp, error) {
+	l := logic.NewLotteryDetailLogic(ctx, s.svcCtx)
+	return l.LotteryDetail(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)

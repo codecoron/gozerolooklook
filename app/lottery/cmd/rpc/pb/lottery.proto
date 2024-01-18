@@ -103,6 +103,15 @@ message SetIsSelectedLotteryResp {
   int64 isSelected = 1; //是否精选 1是 0否
 }
 
+message LotteryDetailReq {
+  int64 Id = 2; // 抽奖id
+}
+
+message LotteryDetailResp {
+  Lottery lottery = 1; // 抽奖信息
+  repeated Prize prizes = 2; // 奖品列表
+}
+
 //--------------------------------奖品表--------------------------------
 message Prize {
   int64 id = 1; //id
@@ -191,6 +200,7 @@ service lottery{
   rpc GetLotteryById(GetLotteryByIdReq) returns (GetLotteryByIdResp);
   rpc SearchLottery(SearchLotteryReq) returns (SearchLotteryResp);
   rpc SetIsSelectedLottery(SetIsSelectedLotteryReq) returns (SetIsSelectedLotteryResp);
+  rpc LotteryDetail(LotteryDetailReq) returns (LotteryDetailResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);
