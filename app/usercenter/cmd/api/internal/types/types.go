@@ -2,7 +2,6 @@
 package types
 
 type AddAddressReq struct {
-	UserId int64 `json:"userId"`
 	AddressInfo
 }
 
@@ -20,7 +19,8 @@ type AddressInfo struct {
 }
 
 type AddressListReq struct {
-	UserId int64 `json:"userId"`
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
 }
 
 type AddressListResp struct {

@@ -36,7 +36,8 @@ type UserAddress {
 
 type (
     AddressListReq {
-        UserId int64 `json:"userId"`
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
     }
     AddressListResp {
         List []UserAddress `json:"list"`
@@ -45,7 +46,6 @@ type (
 
 type (
     AddAddressReq {
-        UserId int64 `json:"userId"`
         AddressInfo
     }
     AddAddressResp {

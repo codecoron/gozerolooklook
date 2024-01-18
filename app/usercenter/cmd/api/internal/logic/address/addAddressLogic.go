@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"looklook/app/usercenter/cmd/rpc/pb"
+	"looklook/common/ctxdata"
 	"looklook/common/xerr"
 
 	"looklook/app/usercenter/cmd/api/internal/svc"
@@ -29,18 +30,19 @@ func NewAddAddressLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddAdd
 }
 
 func (l *AddAddressLogic) AddAddress(req *types.AddAddressReq) (resp *types.AddAddressResp, err error) {
-	addressReq := new(pb.AddUserAddressReq)
-	err = copier.Copy(addressReq, req)
+	pbAddressReq := new(pb.AddUserAddressReq)
+	err = copier.Copy(pbAddressReq, req)
 	if err != nil {
 		return nil, err
 	}
+	pbAddressReq.UserId = ctxdata.GetUidFromCtx(l.ctx)
 	districtByte, err := json.Marshal(req.District)
 	if err != nil {
 		return nil, err
 	}
-	addressReq.District = string(districtByte)
+	pbAddressReq.District = string(districtByte)
 
-	addAddress, err := l.svcCtx.UsercenterRpc.AddUserAddress(l.ctx, addressReq)
+	addAddress, err := l.svcCtx.UsercenterRpc.AddUserAddress(l.ctx, pbAddressReq)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrMsg("add address fail"), "add address rpc AddUserAddress fail req: %+v , err : %v ", req, err)
 	}

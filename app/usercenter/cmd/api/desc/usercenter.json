@@ -49,7 +49,7 @@
       }
     },
     "/usercenter/v1/user/addressList": {
-      "get": {
+      "post": {
         "summary": "收货地址列表",
         "operationId": "addressList",
         "responses": {
@@ -62,11 +62,12 @@
         },
         "parameters": [
           {
-            "name": "userId",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "schema": {
+              "$ref": "#/definitions/AddressListReq"
+            }
           }
         ],
         "tags": [
@@ -261,10 +262,6 @@
     "AddAddressReq": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "integer",
-          "format": "int64"
-        },
         "contactName": {
           "type": "string"
         },
@@ -285,10 +282,7 @@
           "format": "int64"
         }
       },
-      "title": "AddAddressReq",
-      "required": [
-        "userId"
-      ]
+      "title": "AddAddressReq"
     },
     "AddAddressResp": {
       "type": "object",
@@ -339,14 +333,19 @@
     "AddressListReq": {
       "type": "object",
       "properties": {
-        "userId": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
           "type": "integer",
           "format": "int64"
         }
       },
       "title": "AddressListReq",
       "required": [
-        "userId"
+        "page",
+        "pageSize"
       ]
     },
     "AddressListResp": {

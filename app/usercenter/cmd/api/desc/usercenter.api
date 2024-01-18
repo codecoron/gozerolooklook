@@ -67,7 +67,7 @@ service usercenter {
 service usercenter {
 	@doc "收货地址列表"
 	@handler addressList
-	get /user/addressList (AddressListReq) returns (AddressListResp)
+	post /user/addressList (AddressListReq) returns (AddressListResp)
 
 	@doc "添加收货地址"
 	@handler addAddress

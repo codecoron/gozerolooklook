@@ -21,7 +21,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: address.AddAddressHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
+				Method:  http.MethodPost,
 				Path:    "/user/addressList",
 				Handler: address.AddressListHandler(serverCtx),
 			},
