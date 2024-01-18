@@ -77,3 +77,29 @@ func (s *UsercenterServer) SearchUserContact(ctx context.Context, in *pb.SearchU
 	l := logic.NewSearchUserContactLogic(ctx, s.svcCtx)
 	return l.SearchUserContact(in)
 }
+
+// -----------------------用户收货地址表-----------------------
+func (s *UsercenterServer) AddUserAddress(ctx context.Context, in *pb.AddUserAddressReq) (*pb.AddUserAddressResp, error) {
+	l := logic.NewAddUserAddressLogic(ctx, s.svcCtx)
+	return l.AddUserAddress(in)
+}
+
+func (s *UsercenterServer) UpdateUserAddress(ctx context.Context, in *pb.UpdateUserAddressReq) (*pb.UpdateUserAddressResp, error) {
+	l := logic.NewUpdateUserAddressLogic(ctx, s.svcCtx)
+	return l.UpdateUserAddress(in)
+}
+
+func (s *UsercenterServer) DelUserAddress(ctx context.Context, in *pb.DelUserAddressReq) (*pb.DelUserAddressResp, error) {
+	l := logic.NewDelUserAddressLogic(ctx, s.svcCtx)
+	return l.DelUserAddress(in)
+}
+
+func (s *UsercenterServer) GetUserAddressById(ctx context.Context, in *pb.GetUserAddressByIdReq) (*pb.GetUserAddressByIdResp, error) {
+	l := logic.NewGetUserAddressByIdLogic(ctx, s.svcCtx)
+	return l.GetUserAddressById(in)
+}
+
+func (s *UsercenterServer) SearchUserAddress(ctx context.Context, in *pb.SearchUserAddressReq) (*pb.SearchUserAddressResp, error) {
+	l := logic.NewSearchUserAddressLogic(ctx, s.svcCtx)
+	return l.SearchUserAddress(in)
+}
