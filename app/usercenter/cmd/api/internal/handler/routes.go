@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	user "looklook/app/usercenter/cmd/api/internal/handler/user"
+	userContact "looklook/app/usercenter/cmd/api/internal/handler/userContact"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -38,6 +39,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/user/detail",
 				Handler: user.DetailHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/userContact/create",
+				Handler: userContact.CreateHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
