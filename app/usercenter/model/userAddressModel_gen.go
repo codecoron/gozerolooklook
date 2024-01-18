@@ -44,7 +44,7 @@ type (
 		ContactName   string    `db:"contact_name"`   // 联系人姓名
 		ContactMobile string    `db:"contact_mobile"` // 联系人手机号码
 		District      string    `db:"district"`       // 地区信息
-		Address       string    `db:"address"`        // 详细地址
+		Detail        string    `db:"detail"`         // 详细地址
 		Postcode      string    `db:"postcode"`       // 邮政编码
 		IsDefault     int64     `db:"is_default"`     // 是否为默认地址 1是 0否
 		CreateTime    time.Time `db:"create_time"`
@@ -89,7 +89,7 @@ func (m *defaultUserAddressModel) Insert(ctx context.Context, data *UserAddress)
 	looklookUsercenterUserAddressIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAddressIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, userAddressRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.ContactName, data.ContactMobile, data.District, data.Address, data.Postcode, data.IsDefault)
+		return conn.ExecCtx(ctx, query, data.UserId, data.ContactName, data.ContactMobile, data.District, data.Detail, data.Postcode, data.IsDefault)
 	}, looklookUsercenterUserAddressIdKey)
 	return ret, err
 }
@@ -98,7 +98,7 @@ func (m *defaultUserAddressModel) Update(ctx context.Context, data *UserAddress)
 	looklookUsercenterUserAddressIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAddressIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userAddressRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.ContactName, data.ContactMobile, data.District, data.Address, data.Postcode, data.IsDefault, data.Id)
+		return conn.ExecCtx(ctx, query, data.UserId, data.ContactName, data.ContactMobile, data.District, data.Detail, data.Postcode, data.IsDefault, data.Id)
 	}, looklookUsercenterUserAddressIdKey)
 	return err
 }
