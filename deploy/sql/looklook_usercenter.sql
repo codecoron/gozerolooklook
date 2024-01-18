@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 17/01/2024 23:06:57
+ Date: 18/01/2024 21:16:45
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +25,7 @@ CREATE TABLE `user`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT,
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
-  `delete_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `delete_time` datetime(0) DEFAULT NULL,
   `del_state` tinyint(0) NOT NULL DEFAULT 0,
   `version` bigint(0) NOT NULL DEFAULT 0 COMMENT '版本号',
   `mobile` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
