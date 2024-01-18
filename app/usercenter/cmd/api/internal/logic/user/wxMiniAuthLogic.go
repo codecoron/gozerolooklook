@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"fmt"
-
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
@@ -65,8 +63,11 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 		//bind user.
 
 		//Wechat-Mini Decrypted data
-		mobile := userData.PhoneNumber
-		nickName := fmt.Sprintf("LookLook%s", mobile[7:])
+		logx.Error("authResult.OpenID:", authResult.OpenID)
+		logx.Error("userData.OpenID:", userData.OpenID)
+		logx.Error("userData.NickName:", userData.NickName)
+		nickName := userData.NickName
+		mobile := "11111111111"
 		registerRsp, err := l.svcCtx.UsercenterRpc.Register(l.ctx, &usercenter.RegisterReq{
 			AuthKey:  authResult.OpenID,
 			AuthType: usercenterModel.UserAuthTypeSmallWX,
