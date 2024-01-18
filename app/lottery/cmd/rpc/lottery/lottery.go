@@ -13,30 +13,30 @@ import (
 )
 
 type (
-	AddLotteryReq               = pb.AddLotteryReq
-	AddLotteryResp              = pb.AddLotteryResp
-	AddPrizeReq                 = pb.AddPrizeReq
-	AddPrizeResp                = pb.AddPrizeResp
-	DelLotteryReq               = pb.DelLotteryReq
-	DelLotteryResp              = pb.DelLotteryResp
-	DelPrizeReq                 = pb.DelPrizeReq
-	DelPrizeResp                = pb.DelPrizeResp
-	GetLotteryByIdReq           = pb.GetLotteryByIdReq
-	GetLotteryByIdResp          = pb.GetLotteryByIdResp
-	GetPrizeByIdReq             = pb.GetPrizeByIdReq
-	GetPrizeByIdResp            = pb.GetPrizeByIdResp
-	Lottery                     = pb.Lottery
-	Prize                       = pb.Prize
-	SearchIsSelectedLotteryReq  = pb.SearchIsSelectedLotteryReq
-	SearchIsSelectedLotteryResp = pb.SearchIsSelectedLotteryResp
-	SearchLotteryReq            = pb.SearchLotteryReq
-	SearchLotteryResp           = pb.SearchLotteryResp
-	SearchPrizeReq              = pb.SearchPrizeReq
-	SearchPrizeResp             = pb.SearchPrizeResp
-	UpdateLotteryReq            = pb.UpdateLotteryReq
-	UpdateLotteryResp           = pb.UpdateLotteryResp
-	UpdatePrizeReq              = pb.UpdatePrizeReq
-	UpdatePrizeResp             = pb.UpdatePrizeResp
+	AddLotteryReq            = pb.AddLotteryReq
+	AddLotteryResp           = pb.AddLotteryResp
+	AddPrizeReq              = pb.AddPrizeReq
+	AddPrizeResp             = pb.AddPrizeResp
+	DelLotteryReq            = pb.DelLotteryReq
+	DelLotteryResp           = pb.DelLotteryResp
+	DelPrizeReq              = pb.DelPrizeReq
+	DelPrizeResp             = pb.DelPrizeResp
+	GetLotteryByIdReq        = pb.GetLotteryByIdReq
+	GetLotteryByIdResp       = pb.GetLotteryByIdResp
+	GetPrizeByIdReq          = pb.GetPrizeByIdReq
+	GetPrizeByIdResp         = pb.GetPrizeByIdResp
+	Lottery                  = pb.Lottery
+	Prize                    = pb.Prize
+	SearchLotteryReq         = pb.SearchLotteryReq
+	SearchLotteryResp        = pb.SearchLotteryResp
+	SearchPrizeReq           = pb.SearchPrizeReq
+	SearchPrizeResp          = pb.SearchPrizeResp
+	SetIsSelectedLotteryReq  = pb.SetIsSelectedLotteryReq
+	SetIsSelectedLotteryResp = pb.SetIsSelectedLotteryResp
+	UpdateLotteryReq         = pb.UpdateLotteryReq
+	UpdateLotteryResp        = pb.UpdateLotteryResp
+	UpdatePrizeReq           = pb.UpdatePrizeReq
+	UpdatePrizeResp          = pb.UpdatePrizeResp
 
 	LotteryZrpcClient interface {
 		// -----------------------抽奖表-----------------------
@@ -45,7 +45,7 @@ type (
 		DelLottery(ctx context.Context, in *DelLotteryReq, opts ...grpc.CallOption) (*DelLotteryResp, error)
 		GetLotteryById(ctx context.Context, in *GetLotteryByIdReq, opts ...grpc.CallOption) (*GetLotteryByIdResp, error)
 		SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
-		SearchIsSelectedLottery(ctx context.Context, in *SearchIsSelectedLotteryReq, opts ...grpc.CallOption) (*SearchIsSelectedLotteryResp, error)
+		SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -91,9 +91,9 @@ func (m *defaultLotteryZrpcClient) SearchLottery(ctx context.Context, in *Search
 	return client.SearchLottery(ctx, in, opts...)
 }
 
-func (m *defaultLotteryZrpcClient) SearchIsSelectedLottery(ctx context.Context, in *SearchIsSelectedLotteryReq, opts ...grpc.CallOption) (*SearchIsSelectedLotteryResp, error) {
+func (m *defaultLotteryZrpcClient) SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
-	return client.SearchIsSelectedLottery(ctx, in, opts...)
+	return client.SetIsSelectedLottery(ctx, in, opts...)
 }
 
 // -----------------------奖品表-----------------------

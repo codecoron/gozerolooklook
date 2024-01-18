@@ -16,8 +16,7 @@ type (
 	LotteryModel interface {
 		lotteryModel
 		//todo 自定义的方法写到这里，避免被覆盖掉 ; 重写模板 提高效率
-		List(ctx context.Context, page, limit int64) ([]*Lottery, error)
-		IsSelectedList(ctx context.Context, page, limit int64) ([]*Lottery, error)
+		List(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error)
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 	}
@@ -27,20 +26,16 @@ type (
 	}
 )
 
-func (c *customLotteryModel) List(ctx context.Context, page, limit int64) ([]*Lottery, error) {
-	query := fmt.Sprintf("select %s from %s limit ?,?", lotteryRows, c.table)
+func (c *customLotteryModel) List(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error) {
+	var query string
+	if selected != 0 {
+		query = fmt.Sprintf("select %s from %s where id > ? and is_selected = 1 limit ?,?", lotteryRows, c.table)
+	} else {
+		query = fmt.Sprintf("select %s from %s where id > ? limit ?,?", lotteryRows, c.table)
+	}
 	var resp []*Lottery
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
-	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, (page-1)*limit, limit)
-	return resp, err
-}
-
-func (c *customLotteryModel) IsSelectedList(ctx context.Context, page, limit int64) ([]*Lottery, error) {
-	//query := fmt.Sprintf("select %s from %s limit ?,?", lotteryRows, c.table)
-	query := fmt.Sprintf("select %s from %s where is_selected = 1 limit ?,?", lotteryRows, c.table)
-	var resp []*Lottery
-	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
-	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, (page-1)*limit, limit)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
 	return resp, err
 }
 

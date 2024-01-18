@@ -22,7 +22,8 @@ type LotteryListReq struct {
 }
 
 type LotteryListResp struct {
-	List []Lottery `json:"list"`
+	List   []Lottery `json:"list"`
+	LastId int64     `json:"lastId"`
 }
 
 type Prize struct {
@@ -55,13 +56,10 @@ type CreateLotteryResp struct {
 	Id int `json:"id"`
 }
 
-type LotteryIsSelectedListReq struct {
-	LastId     int64 `json:"lastId"`
-	Page       int64 `json:"page"`
-	PageSize   int64 `json:"pageSize"`
-	IsSelected int64 `json:"isSelected"`
+type SetLotteryIsSelectedReq struct {
+	Id int64 `json:"id"`
 }
 
-type LotteryIsSelectedListResp struct {
-	List []Lottery `json:"list"`
+type SetLotteryIsSelectedResp struct {
+	IsSelected int64 `json:"isSelected"`
 }

@@ -87,31 +87,21 @@ message SearchLotteryReq {
   int64 createTime = 12; //createTime
   int64 updateTime = 13; //updateTime
   int64 isSelected = 14; //是否精选 1是 0否
+  int64  lastId = 15; // 页面最后一条记录的id
 }
 
 message SearchLotteryResp {
   repeated Lottery lottery = 1; //lottery
+  int64 lastId = 2; // 记录页面最后一条记录的id
 }
 
-message SearchIsSelectedLotteryReq {
-  int64 page = 1; //page
-  int64 limit = 2; //limit
-  int64 id = 3; //id
-  int64 userId = 4; //发起抽奖用户ID
-  string name = 5; //默认取一等奖名称
-  string thumb = 6; //默认取一等经配图
-  int64 publishType = 7; //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-  int64 publishTime = 8; //开奖时间
-  int64 joinNumber = 9; //自动开奖人数
-  string introduce = 10; //抽奖说明
-  int64 awardDeadline = 11; //领奖截止时间
-  int64 createTime = 12; //createTime
-  int64 updateTime = 13; //updateTime
-  int64 isSelected = 14; //是否精选 1是 0否
+message SetIsSelectedLotteryReq {
+  int64 userId = 1; //发起抽奖用户ID
+  int64 Id = 2; // 抽奖id
 }
 
-message SearchIsSelectedLotteryResp {
-  repeated Lottery lottery = 1; //lottery
+message SetIsSelectedLotteryResp {
+  int64 isSelected = 1; //是否精选 1是 0否
 }
 
 //--------------------------------奖品表--------------------------------
@@ -201,7 +191,7 @@ service lottery{
   rpc DelLottery(DelLotteryReq) returns (DelLotteryResp);
   rpc GetLotteryById(GetLotteryByIdReq) returns (GetLotteryByIdResp);
   rpc SearchLottery(SearchLotteryReq) returns (SearchLotteryResp);
-  rpc SearchIsSelectedLottery(SearchIsSelectedLotteryReq) returns (SearchIsSelectedLotteryResp);
+  rpc SetIsSelectedLottery(SetIsSelectedLotteryReq) returns (SetIsSelectedLotteryResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);

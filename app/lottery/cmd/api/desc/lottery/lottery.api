@@ -30,6 +30,7 @@ type (
     }
     LotteryListResp {
         List []Lottery `json:"list"`
+        LastId int64 `json:"lastId"`
     }
 )
 
@@ -61,6 +62,15 @@ type (
     }
     CreateLotteryResp {
         Id int `json:"id"`
+    }
+)
+
+type (
+    SetLotteryIsSelectedReq {
+        Id int64 `json:"id"`
+    }
+    SetLotteryIsSelectedResp {
+        IsSelected int64 `json:"isSelected"`
     }
 )
 

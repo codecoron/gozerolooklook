@@ -19,17 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Lottery_AddLottery_FullMethodName              = "/pb.lottery/AddLottery"
-	Lottery_UpdateLottery_FullMethodName           = "/pb.lottery/UpdateLottery"
-	Lottery_DelLottery_FullMethodName              = "/pb.lottery/DelLottery"
-	Lottery_GetLotteryById_FullMethodName          = "/pb.lottery/GetLotteryById"
-	Lottery_SearchLottery_FullMethodName           = "/pb.lottery/SearchLottery"
-	Lottery_SearchIsSelectedLottery_FullMethodName = "/pb.lottery/SearchIsSelectedLottery"
-	Lottery_AddPrize_FullMethodName                = "/pb.lottery/AddPrize"
-	Lottery_UpdatePrize_FullMethodName             = "/pb.lottery/UpdatePrize"
-	Lottery_DelPrize_FullMethodName                = "/pb.lottery/DelPrize"
-	Lottery_GetPrizeById_FullMethodName            = "/pb.lottery/GetPrizeById"
-	Lottery_SearchPrize_FullMethodName             = "/pb.lottery/SearchPrize"
+	Lottery_AddLottery_FullMethodName           = "/pb.lottery/AddLottery"
+	Lottery_UpdateLottery_FullMethodName        = "/pb.lottery/UpdateLottery"
+	Lottery_DelLottery_FullMethodName           = "/pb.lottery/DelLottery"
+	Lottery_GetLotteryById_FullMethodName       = "/pb.lottery/GetLotteryById"
+	Lottery_SearchLottery_FullMethodName        = "/pb.lottery/SearchLottery"
+	Lottery_SetIsSelectedLottery_FullMethodName = "/pb.lottery/SetIsSelectedLottery"
+	Lottery_AddPrize_FullMethodName             = "/pb.lottery/AddPrize"
+	Lottery_UpdatePrize_FullMethodName          = "/pb.lottery/UpdatePrize"
+	Lottery_DelPrize_FullMethodName             = "/pb.lottery/DelPrize"
+	Lottery_GetPrizeById_FullMethodName         = "/pb.lottery/GetPrizeById"
+	Lottery_SearchPrize_FullMethodName          = "/pb.lottery/SearchPrize"
 )
 
 // LotteryClient is the client API for Lottery service.
@@ -42,7 +42,7 @@ type LotteryClient interface {
 	DelLottery(ctx context.Context, in *DelLotteryReq, opts ...grpc.CallOption) (*DelLotteryResp, error)
 	GetLotteryById(ctx context.Context, in *GetLotteryByIdReq, opts ...grpc.CallOption) (*GetLotteryByIdResp, error)
 	SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
-	SearchIsSelectedLottery(ctx context.Context, in *SearchIsSelectedLotteryReq, opts ...grpc.CallOption) (*SearchIsSelectedLotteryResp, error)
+	SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -104,9 +104,9 @@ func (c *lotteryClient) SearchLottery(ctx context.Context, in *SearchLotteryReq,
 	return out, nil
 }
 
-func (c *lotteryClient) SearchIsSelectedLottery(ctx context.Context, in *SearchIsSelectedLotteryReq, opts ...grpc.CallOption) (*SearchIsSelectedLotteryResp, error) {
-	out := new(SearchIsSelectedLotteryResp)
-	err := c.cc.Invoke(ctx, Lottery_SearchIsSelectedLottery_FullMethodName, in, out, opts...)
+func (c *lotteryClient) SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error) {
+	out := new(SetIsSelectedLotteryResp)
+	err := c.cc.Invoke(ctx, Lottery_SetIsSelectedLottery_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ type LotteryServer interface {
 	DelLottery(context.Context, *DelLotteryReq) (*DelLotteryResp, error)
 	GetLotteryById(context.Context, *GetLotteryByIdReq) (*GetLotteryByIdResp, error)
 	SearchLottery(context.Context, *SearchLotteryReq) (*SearchLotteryResp, error)
-	SearchIsSelectedLottery(context.Context, *SearchIsSelectedLotteryReq) (*SearchIsSelectedLotteryResp, error)
+	SetIsSelectedLottery(context.Context, *SetIsSelectedLotteryReq) (*SetIsSelectedLotteryResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
@@ -197,8 +197,8 @@ func (UnimplementedLotteryServer) GetLotteryById(context.Context, *GetLotteryByI
 func (UnimplementedLotteryServer) SearchLottery(context.Context, *SearchLotteryReq) (*SearchLotteryResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchLottery not implemented")
 }
-func (UnimplementedLotteryServer) SearchIsSelectedLottery(context.Context, *SearchIsSelectedLotteryReq) (*SearchIsSelectedLotteryResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchIsSelectedLottery not implemented")
+func (UnimplementedLotteryServer) SetIsSelectedLottery(context.Context, *SetIsSelectedLotteryReq) (*SetIsSelectedLotteryResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetIsSelectedLottery not implemented")
 }
 func (UnimplementedLotteryServer) AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrize not implemented")
@@ -318,20 +318,20 @@ func _Lottery_SearchLottery_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Lottery_SearchIsSelectedLottery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchIsSelectedLotteryReq)
+func _Lottery_SetIsSelectedLottery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetIsSelectedLotteryReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LotteryServer).SearchIsSelectedLottery(ctx, in)
+		return srv.(LotteryServer).SetIsSelectedLottery(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Lottery_SearchIsSelectedLottery_FullMethodName,
+		FullMethod: Lottery_SetIsSelectedLottery_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LotteryServer).SearchIsSelectedLottery(ctx, req.(*SearchIsSelectedLotteryReq))
+		return srv.(LotteryServer).SetIsSelectedLottery(ctx, req.(*SetIsSelectedLotteryReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -454,8 +454,8 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Lottery_SearchLottery_Handler,
 		},
 		{
-			MethodName: "SearchIsSelectedLottery",
-			Handler:    _Lottery_SearchIsSelectedLottery_Handler,
+			MethodName: "SetIsSelectedLottery",
+			Handler:    _Lottery_SetIsSelectedLottery_Handler,
 		},
 		{
 			MethodName: "AddPrize",

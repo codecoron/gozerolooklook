@@ -10,7 +10,6 @@ info (
 
 import (
 	"lottery/lottery.api"
-	"isselectedlottery/isselectedlottery.api"
 )
 
 //=====================================> lottery-lottery v1 <=================================
@@ -37,13 +36,14 @@ service lottery {
 	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
 }
 
-//no need login
+//need login and need admin
 @server (
 	prefix: lottery/v1
 	group:  lottery
+	jwt:    JwtAuth
 )
 service lottery {
-	@doc "lottery isSelected list"
-	@handler lotteryIsSelectedList
-	post /lottery/lotteryIsSelectedList (LotteryIsSelectedListReq) returns (LotteryIsSelectedListResp)
+	@doc "lottery setIsSelected"
+	@handler setLotteryIsSelected
+	post /lottery/setLotteryIsSelected (SetLotteryIsSelectedReq) returns (SetLotteryIsSelectedResp)
 }

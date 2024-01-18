@@ -48,9 +48,9 @@ func (s *LotteryServer) SearchLottery(ctx context.Context, in *pb.SearchLotteryR
 	return l.SearchLottery(in)
 }
 
-func (s *LotteryServer) SearchIsSelectedLottery(ctx context.Context, in *pb.SearchIsSelectedLotteryReq) (*pb.SearchIsSelectedLotteryResp, error) {
-	l := logic.NewSearchIsSelectedLotteryLogic(ctx, s.svcCtx)
-	return l.SearchIsSelectedLottery(in)
+func (s *LotteryServer) SetIsSelectedLottery(ctx context.Context, in *pb.SetIsSelectedLotteryReq) (*pb.SetIsSelectedLotteryResp, error) {
+	l := logic.NewSetIsSelectedLotteryLogic(ctx, s.svcCtx)
+	return l.SetIsSelectedLottery(in)
 }
 
 // -----------------------奖品表-----------------------

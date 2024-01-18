@@ -2,9 +2,10 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
-	"looklook/app/order/model"
+	"looklook/app/lottery/model"
 	"looklook/common/xerr"
 
 	"looklook/app/lottery/cmd/rpc/internal/svc"
@@ -29,7 +30,7 @@ func NewSearchLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sea
 
 func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchLotteryResp, error) {
 	//list, err := l.svcCtx.LotteryModel.FindPageListByIdDESC(l.ctx, whereBuilder, in.LastId, in.PageSize)
-	list, err := l.svcCtx.LotteryModel.List(l.ctx, in.Page, in.Limit)
+	list, err := l.svcCtx.LotteryModel.List(l.ctx, in.Page, in.Limit, in.IsSelected, in.LastId)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to get user's homestay order err : %v , in :%+v", err, in)
 	}
@@ -42,8 +43,12 @@ func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchL
 			resp = append(resp, &pbLottery)
 		}
 	}
-
+	// 获取最后一条记录，从而得到对应的lastId
+	lo := list[len(resp)-1:]
+	//lo
+	fmt.Println("test", lo)
 	return &pb.SearchLotteryResp{
 		Lottery: resp,
+		LastId:  0,
 	}, nil
 }

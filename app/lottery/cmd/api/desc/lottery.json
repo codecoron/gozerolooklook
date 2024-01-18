@@ -44,34 +44,6 @@
         ]
       }
     },
-    "lottery/v1/lottery/lotteryIsSelectedList": {
-      "post": {
-        "summary": "lottery isSelected list",
-        "operationId": "lotteryIsSelectedList",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/LotteryIsSelectedListResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LotteryIsSelectedListReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      }
-    },
     "lottery/v1/lottery/lotteryList": {
       "post": {
         "summary": "lottery list",
@@ -91,6 +63,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/LotteryListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/setLotteryIsSelected": {
+      "post": {
+        "summary": "lottery setIsSelected",
+        "operationId": "setLotteryIsSelected",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetLotteryIsSelectedResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetLotteryIsSelectedReq"
             }
           }
         ],
@@ -212,70 +212,6 @@
         "grantType"
       ]
     },
-    "IsSelectedLottery": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "userId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "发起抽奖用户ID"
-        },
-        "name": {
-          "type": "string",
-          "description": "默认一等奖名称"
-        },
-        "thumb": {
-          "type": "string",
-          "description": "默认一等奖配图"
-        },
-        "publishType": {
-          "type": "integer",
-          "format": "int64",
-          "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
-        },
-        "isSelected": {
-          "type": "integer",
-          "format": "int64",
-          "description": "是否精选 1是 0否"
-        },
-        "publish_time": {
-          "type": "integer",
-          "format": "int64",
-          "description": "开奖时间"
-        },
-        "join_number": {
-          "type": "integer",
-          "format": "int64",
-          "description": "自动开奖人数标准"
-        },
-        "introduce": {
-          "type": "string",
-          "description": "抽奖说明"
-        },
-        "awardDeadline": {
-          "type": "integer",
-          "format": "int64",
-          "description": "领奖截止时间"
-        }
-      },
-      "title": "IsSelectedLottery",
-      "required": [
-        "id",
-        "userId",
-        "name",
-        "thumb",
-        "publishType",
-        "isSelected",
-        "publish_time",
-        "join_number",
-        "introduce",
-        "awardDeadline"
-      ]
-    },
     "Lottery": {
       "type": "object",
       "properties": {
@@ -340,49 +276,6 @@
         "awardDeadline"
       ]
     },
-    "LotteryIsSelectedListReq": {
-      "type": "object",
-      "properties": {
-        "lastId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "pageSize": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "isSelected": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "LotteryIsSelectedListReq",
-      "required": [
-        "lastId",
-        "page",
-        "pageSize",
-        "isSelected"
-      ]
-    },
-    "LotteryIsSelectedListResp": {
-      "type": "object",
-      "properties": {
-        "list": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/IsSelectedLottery"
-          }
-        }
-      },
-      "title": "LotteryIsSelectedListResp",
-      "required": [
-        "list"
-      ]
-    },
     "LotteryListReq": {
       "type": "object",
       "properties": {
@@ -419,11 +312,16 @@
           "items": {
             "$ref": "#/definitions/Lottery"
           }
+        },
+        "lastId": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "LotteryListResp",
       "required": [
-        "list"
+        "list",
+        "lastId"
       ]
     },
     "Prize": {
@@ -446,6 +344,32 @@
       "required": [
         "id",
         "lotteryId"
+      ]
+    },
+    "SetLotteryIsSelectedReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SetLotteryIsSelectedReq",
+      "required": [
+        "id"
+      ]
+    },
+    "SetLotteryIsSelectedResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SetLotteryIsSelectedResp",
+      "required": [
+        "id"
       ]
     }
   },
