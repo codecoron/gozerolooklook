@@ -66,6 +66,7 @@ func (l *RegisterLogic) Register(in *usercenter.RegisterReq) (*usercenter.Regist
 		}
 		return nil
 	}); err != nil {
+		logx.Error("Register:", err)
 		return nil, err
 	}
 
