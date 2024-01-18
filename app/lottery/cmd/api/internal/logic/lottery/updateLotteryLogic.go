@@ -31,10 +31,9 @@ func (l *UpdateLotteryLogic) UpdateLottery(req *types.UpdateLotteryReq) (resp *t
 	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	_, err = l.svcCtx.LotteryRpc.UpdateLottery(l.ctx, &lottery.UpdateLotteryReq{
-		UserId:        userId,
-		Id:            int64(req.Id),
-		PublishTime:   req.PublishTime,
-		AwardDeadline: req.AwardDeadline,
+		UserId:      userId,
+		Id:          int64(req.Id),
+		PublishTime: req.PublishTime,
 	})
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrMsg("update lottery fail"), "update lottery rpc UpdateLottery fail req: %+v , err : %v ", req, err)

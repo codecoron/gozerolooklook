@@ -43,7 +43,6 @@ func (l *UpdateLotteryLogic) UpdateLottery(in *pb.UpdateLotteryReq) (*pb.UpdateL
 		lottery := new(model.Lottery)
 		lottery.Id = in.Id
 		var pTime sql.NullTime
-		var aTime sql.NullTime
 		if in.PublishTime != 0 {
 			pTime.Time = time.Unix(in.PublishTime, 0)
 			pTime.Valid = true
@@ -51,15 +50,8 @@ func (l *UpdateLotteryLogic) UpdateLottery(in *pb.UpdateLotteryReq) (*pb.UpdateL
 			logx.Error("publish_time为空")
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "publish_time为空")
 		}
-		if in.AwardDeadline != 0 {
-			aTime.Time = time.Unix(in.AwardDeadline, 0)
-			aTime.Valid = true
-		} else {
-			logx.Error("awardDeadline为空")
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "awardDeadline为空")
-		}
+
 		lottery.PublishTime = pTime
-		lottery.AwardDeadline = aTime
 
 		_, err = l.svcCtx.LotteryModel.TransUpdate(l.ctx, session, lottery)
 		if err != nil {

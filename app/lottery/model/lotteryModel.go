@@ -52,8 +52,8 @@ func (m *customLotteryModel) Trans(ctx context.Context, fn func(ctx context.Cont
 func (m *customLotteryModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set publish_time = ?, award_deadline = ? where id = ?", m.table)
-		return session.ExecCtx(ctx, query, data.PublishTime, data.AwardDeadline, data.Id)
+		query := fmt.Sprintf("update %s set publish_time = ? where id = ?", m.table)
+		return session.ExecCtx(ctx, query, data.PublishTime, data.Id)
 	}, lotteryLotteryIdKey)
 	return ret, err
 }
