@@ -29,8 +29,12 @@ var (
 type (
 	lotteryModel interface {
 		Insert(ctx context.Context, data *Lottery) (sql.Result, error)
+		TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*Lottery, error)
 		Update(ctx context.Context, data *Lottery) error
+		List(ctx context.Context, page, limit int64) ([]*Lottery, error)
+		TransUpdate(ctx context.Context, session sqlx.Session, data *Lottery) error
+		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		Delete(ctx context.Context, id int64) error
 	}
 
@@ -97,6 +101,14 @@ func (m *defaultLotteryModel) Insert(ctx context.Context, data *Lottery) (sql.Re
 	return ret, err
 }
 
+func (m *defaultLotteryModel) TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected)
+	}, lotteryLotteryIdKey)
+	return ret, err
+}
 func (m *defaultLotteryModel) Update(ctx context.Context, data *Lottery) error {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
@@ -104,6 +116,29 @@ func (m *defaultLotteryModel) Update(ctx context.Context, data *Lottery) error {
 		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.Id)
 	}, lotteryLotteryIdKey)
 	return err
+}
+
+func (m *defaultLotteryModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Lottery) error {
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, lotteryRowsWithPlaceHolder)
+		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishType, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.Id)
+	}, lotteryLotteryIdKey)
+	return err
+}
+
+func (m *defaultLotteryModel) List(ctx context.Context, page, limit int64) ([]*Lottery, error) {
+	query := fmt.Sprintf("select %s from %s limit ?,?", lotteryRows, m.table)
+	var resp []*Lottery
+	//err := m.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, (page-1)*limit, limit)
+	return resp, err
+}
+
+func (m *defaultLotteryModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
+	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
+		return fn(ctx, session)
+	})
 }
 
 func (m *defaultLotteryModel) formatPrimary(primary any) string {
