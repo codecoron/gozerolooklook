@@ -63,13 +63,11 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 		//bind user.
 
 		//Wechat-Mini Decrypted data
-		logx.Error("authResult.OpenID:", authResult.OpenID)
-		logx.Error("userData.OpenID:", userData.OpenID)
-		logx.Error("userData.NickName:", userData.NickName)
 		nickName := userData.NickName
-		mobile := "11111111111"
+		openId := authResult.OpenID
+		mobile := openId[len(openId)-11:] //TODO 优化逻辑
 		registerRsp, err := l.svcCtx.UsercenterRpc.Register(l.ctx, &usercenter.RegisterReq{
-			AuthKey:  authResult.OpenID,
+			AuthKey:  openId,
 			AuthType: usercenterModel.UserAuthTypeSmallWX,
 			Mobile:   mobile,
 			Nickname: nickName,
