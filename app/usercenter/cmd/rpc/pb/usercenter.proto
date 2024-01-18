@@ -80,6 +80,17 @@ message GenerateTokenResp {
   int64  accessExpire = 2;
   int64  refreshAfter = 3;
 }
+
+message UpdateUserBaseInfoReq {
+  string Nickname = 1;
+  int64 sex = 2;
+  string avatar = 3;
+  string info = 4;
+}
+
+message UpdateUserBaseInfoResp {
+}
+
 //--------------------------------用户联系方式-------------------------------
 message UserContact {
   int64 id = 1; //id
@@ -220,6 +231,8 @@ message SearchUserAddressResp {
   repeated UserAddress userAddress = 1; //userAddress
 }
 
+
+
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
@@ -228,6 +241,7 @@ service usercenter {
   rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyReq) returns(GetUserAuthByAuthKeyResp);
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+  rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   //-----------------------用户联系方式----------------------
   rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
