@@ -351,17 +351,12 @@
         "publish_time": {
           "type": "integer",
           "format": "int64"
-        },
-        "awardDeadline": {
-          "type": "integer",
-          "format": "int64"
         }
       },
       "title": "UpdateLotteryReq",
       "required": [
         "id",
-        "publish_time",
-        "awardDeadline"
+        "publish_time"
       ]
     },
     "UpdateLotteryResp": {
