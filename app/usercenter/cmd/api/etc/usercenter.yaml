@@ -26,12 +26,11 @@ Log:
 
 #WxMiniConf
 WxMiniConf:
-  AppId: wxc197a624139348ab
-  Secret: 944376268a8b8093bb03a1f6074d9d9a
+  AppId: wx0fe80d42b0d37cc8
+  Secret: 495f7df09f227dde93f57f875a8f0e9f
 
 #rpc service
 UsercenterRpcConf:
   Endpoints:
     - 127.0.0.1:2004
   NonBlock: true
-
