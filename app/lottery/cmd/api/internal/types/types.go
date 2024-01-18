@@ -22,8 +22,7 @@ type LotteryListReq struct {
 }
 
 type LotteryListResp struct {
-	List   []Lottery `json:"list"`
-	LastId int64     `json:"lastId"`
+	List []Lottery `json:"list"`
 }
 
 type Prize struct {

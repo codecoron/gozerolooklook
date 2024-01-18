@@ -30,7 +30,6 @@ type (
     }
     LotteryListResp {
         List []Lottery `json:"list"`
-        LastId int64 `json:"lastId"`
     }
 )
 

@@ -312,16 +312,11 @@
           "items": {
             "$ref": "#/definitions/Lottery"
           }
-        },
-        "lastId": {
-          "type": "integer",
-          "format": "int64"
         }
       },
       "title": "LotteryListResp",
       "required": [
-        "list",
-        "lastId"
+        "list"
       ]
     },
     "Prize": {
@@ -362,14 +357,14 @@
     "SetLotteryIsSelectedResp": {
       "type": "object",
       "properties": {
-        "id": {
+        "isSelected": {
           "type": "integer",
           "format": "int64"
         }
       },
       "title": "SetLotteryIsSelectedResp",
       "required": [
-        "id"
+        "isSelected"
       ]
     }
   },

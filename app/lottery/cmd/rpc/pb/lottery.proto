@@ -92,7 +92,6 @@ message SearchLotteryReq {
 
 message SearchLotteryResp {
   repeated Lottery lottery = 1; //lottery
-  int64 lastId = 2; // 记录页面最后一条记录的id
 }
 
 message SetIsSelectedLotteryReq {

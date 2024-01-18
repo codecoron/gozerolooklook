@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"looklook/app/lottery/model"
@@ -43,12 +42,7 @@ func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchL
 			resp = append(resp, &pbLottery)
 		}
 	}
-	// 获取最后一条记录，从而得到对应的lastId
-	lo := list[len(resp)-1:]
-	//lo
-	fmt.Println("test", lo)
 	return &pb.SearchLotteryResp{
 		Lottery: resp,
-		LastId:  0,
 	}, nil
 }
