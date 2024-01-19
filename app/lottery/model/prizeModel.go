@@ -18,6 +18,7 @@ type (
 		//自定义的方法写道这里，避免覆盖
 		TransInsert(ctx context.Context, session sqlx.Session, data *Prize) (sql.Result, error)
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
+		FindByLotteryId(ctx context.Context, lotteryId int64) ([]*Prize, error)
 	}
 
 	customPrizeModel struct {
@@ -45,4 +46,14 @@ func (m *defaultPrizeModel) Trans(ctx context.Context, fn func(ctx context.Conte
 	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
 	})
+}
+
+func (m *defaultPrizeModel) FindByLotteryId(ctx context.Context, lotteryId int64) ([]*Prize, error) {
+	var resp []*Prize
+	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ?", m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, lotteryId)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

@@ -10,6 +10,7 @@ type Config struct {
 	DB struct {
 		DataSource string
 	}
-	Cache          cache.CacheConf
-	LotteryRpcConf zrpc.RpcClientConf
+	Cache             cache.CacheConf
+	LotteryRpcConf    zrpc.RpcClientConf
+	UserCenterRpcConf zrpc.RpcClientConf
 }

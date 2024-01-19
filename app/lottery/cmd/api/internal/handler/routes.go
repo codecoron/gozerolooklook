@@ -29,8 +29,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/createLottery",
 				Handler: lottery.CreateLotteryHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/updateLottery",
+				Handler: lottery.UpdateLotteryHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/lottery/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/setLotteryIsSelected",
+				Handler: lottery.SetLotteryIsSelectedHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/lottery/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/lotteryDetail",
+				Handler: lottery.LotteryDetailHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/lottery/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/lotterySponsor",
+				Handler: lottery.LotterySponsorHandler(serverCtx),
+			},
+		},
 		rest.WithPrefix("/lottery/v1"),
 	)
 }

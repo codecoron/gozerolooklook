@@ -16,6 +16,6 @@ type Config struct {
 	}
 	Cache cache.CacheConf
 
-	UsercenterRpcConf zrpc.RpcClientConf
+	UserCenterRpcConf zrpc.RpcClientConf
 	LotteryRpcConf    zrpc.RpcClientConf
 }

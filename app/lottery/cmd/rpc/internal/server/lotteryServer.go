@@ -48,6 +48,21 @@ func (s *LotteryServer) SearchLottery(ctx context.Context, in *pb.SearchLotteryR
 	return l.SearchLottery(in)
 }
 
+func (s *LotteryServer) SetIsSelectedLottery(ctx context.Context, in *pb.SetIsSelectedLotteryReq) (*pb.SetIsSelectedLotteryResp, error) {
+	l := logic.NewSetIsSelectedLotteryLogic(ctx, s.svcCtx)
+	return l.SetIsSelectedLottery(in)
+}
+
+func (s *LotteryServer) LotteryDetail(ctx context.Context, in *pb.LotteryDetailReq) (*pb.LotteryDetailResp, error) {
+	l := logic.NewLotteryDetailLogic(ctx, s.svcCtx)
+	return l.LotteryDetail(in)
+}
+
+func (s *LotteryServer) LotterySponsor(ctx context.Context, in *pb.LotterySponsorReq) (*pb.LotterySponsorResp, error) {
+	l := logic.NewLotterySponsorLogic(ctx, s.svcCtx)
+	return l.LotterySponsor(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
