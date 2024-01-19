@@ -29,7 +29,7 @@ func NewSearchLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sea
 
 func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchLotteryResp, error) {
 	//list, err := l.svcCtx.LotteryModel.FindPageListByIdDESC(l.ctx, whereBuilder, in.LastId, in.PageSize)
-	list, err := l.svcCtx.LotteryModel.List(l.ctx, in.Page, in.Limit, in.IsSelected, in.LastId)
+	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Page, in.Limit, in.IsSelected, in.LastId)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to get user's homestay order err : %v , in :%+v", err, in)
 	}

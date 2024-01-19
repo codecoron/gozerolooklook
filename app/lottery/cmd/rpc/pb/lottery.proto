@@ -95,8 +95,8 @@ message SearchLotteryResp {
 }
 
 message SetIsSelectedLotteryReq {
-  int64 userId = 1; //发起抽奖用户ID
-  int64 Id = 2; // 抽奖id
+  int64 userId = 1; // 要进行设置的管理员Id
+  int64 id = 2; // 抽奖id
 }
 
 message SetIsSelectedLotteryResp {

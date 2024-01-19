@@ -9,7 +9,7 @@
 
 data/*
 !data/.gitkeep
-test/*
+test/
 
 # gitlab ci
 .cache
