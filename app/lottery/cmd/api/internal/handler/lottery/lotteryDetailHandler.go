@@ -10,17 +10,16 @@ import (
 	"looklook/app/lottery/cmd/api/internal/types"
 )
 
-func LotteryListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func LotteryDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LotteryListReq
+		var req types.LotteryDetailReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := lottery.NewLotteryListLogic(r.Context(), svcCtx)
-		resp, err := l.LotteryList(&req)
-		//注意 handler这里需要用result.HttpResult() 才会返回    "code": 200, "msg": "OK",
+		l := lottery.NewLotteryDetailLogic(r.Context(), svcCtx)
+		resp, err := l.LotteryDetail(&req)
 		if err != nil {
 			result.ParamErrorResult(r, w, err)
 		} else {

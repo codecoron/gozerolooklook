@@ -1,6 +1,7 @@
 package lottery
 
 import (
+	"fmt"
 	"looklook/common/result"
 	"net/http"
 
@@ -10,17 +11,17 @@ import (
 	"looklook/app/lottery/cmd/api/internal/types"
 )
 
-func LotteryListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func SetLotteryIsSelectedHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LotteryListReq
+		var req types.SetLotteryIsSelectedReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := lottery.NewLotteryListLogic(r.Context(), svcCtx)
-		resp, err := l.LotteryList(&req)
-		//注意 handler这里需要用result.HttpResult() 才会返回    "code": 200, "msg": "OK",
+		l := lottery.NewSetLotteryIsSelectedLogic(r.Context(), svcCtx)
+		resp, err := l.SetLotteryIsSelected(&req)
+		fmt.Println("testt", err)
 		if err != nil {
 			result.ParamErrorResult(r, w, err)
 		} else {
