@@ -3,6 +3,8 @@ package {{.PkgName}}
 import (
 	"net/http"
 
+	"looklook/common/result"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 	{{.ImportPackages}}
 )
@@ -17,10 +19,7 @@ func {{.HandlerName}}(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		{{end}}l := {{.LogicName}}.New{{.LogicType}}(r.Context(), svcCtx)
 		{{if .HasResp}}resp, {{end}}err := l.{{.Call}}({{if .HasRequest}}&req{{end}})
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			{{if .HasResp}}httpx.OkJsonCtx(r.Context(), w, resp){{else}}httpx.Ok(w){{end}}
-		}
+
+		result.HttpResult(r, w, {{if .HasResp}}resp{{else}}nil{{end}}, err)
 	}
 }
