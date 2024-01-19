@@ -55,6 +55,6 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		return nil, errors.Wrapf(xerr.NewErrMsg("create lottery fail"), "create lottery rpc CreateLottery fail req: %+v , err : %v ", req, err)
 	}
 	return &types.CreateLotteryResp{
-		Id: int(addLottery.Id),
+		Id: addLottery.Id,
 	}, nil
 }

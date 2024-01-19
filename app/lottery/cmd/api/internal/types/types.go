@@ -14,7 +14,7 @@ type CreateLotteryReq struct {
 }
 
 type CreateLotteryResp struct {
-	Id int `json:"id"`
+	Id int64 `json:"id"`
 }
 
 type CreatePrize struct {
@@ -56,8 +56,7 @@ type Prize struct {
 }
 
 type UpdateLotteryReq struct {
-	Id          int   `json:"id"`
-	PublishTime int64 `json:"publish_time"`
+	Id int64 `json:"id"`
 }
 
 type UpdateLotteryResp struct {

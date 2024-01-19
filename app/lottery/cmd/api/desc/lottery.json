@@ -168,7 +168,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         }
       },
       "title": "CreateLotteryResp",
@@ -346,17 +346,12 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int32"
-        },
-        "publish_time": {
-          "type": "integer",
           "format": "int64"
         }
       },
       "title": "UpdateLotteryReq",
       "required": [
-        "id",
-        "publish_time"
+        "id"
       ]
     },
     "UpdateLotteryResp": {
