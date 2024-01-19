@@ -11,6 +11,7 @@ info (
 import (
 	"user/user.api"
 	"user_contact/usercontact.api"
+	"address/address.api"
 )
 
 //============================> usercenter v1 <============================
@@ -55,5 +56,25 @@ service usercenter {
 	@doc "添加联系方式"
 	@handler create
 	post /userContact/create (CreateReq) returns (CreateResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  address
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "收货地址列表"
+	@handler addressList
+	post /user/addressList (AddressListReq) returns (AddressListResp)
+
+	@doc "添加收货地址"
+	@handler addAddress
+	post /user/addAddress (AddAddressReq) returns (AddAddressResp)
+
+	@doc "识别并转换收货地址"
+	@handler convertAddress
+	post /user/convertAddress (ConvertAddressReq) returns (ConvertAddressResp)
 }
 
