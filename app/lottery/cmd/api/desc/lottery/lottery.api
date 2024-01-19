@@ -60,9 +60,18 @@ type (
         Prizes []*CreatePrize `json:"prizes"`                                                         //奖品 支持多个
     }
     CreateLotteryResp {
-        Id int `json:"id"`
+        Id int64 `json:"id"`
     }
 )
+
+type (
+    UpdateLotteryReq {
+        Id int64 `json:"id"`
+    }
+    UpdateLotteryResp {
+    }
+)
+
 
 type (
     SetLotteryIsSelectedReq {

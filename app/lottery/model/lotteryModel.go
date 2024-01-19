@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -15,6 +16,8 @@ type (
 	// and implement the added methods in customLotteryModel.
 	LotteryModel interface {
 		lotteryModel
+		// 自定义方法
+		UpdatePublishTime(ctx context.Context, data *Lottery) error
 		LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error)
 	}
@@ -23,6 +26,15 @@ type (
 		*defaultLotteryModel
 	}
 )
+
+func (m *defaultLotteryModel) UpdatePublishTime(ctx context.Context, data *Lottery) error {
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set publish_time = ? where `id` = ?", m.table)
+		return conn.ExecCtx(ctx, query, data.PublishTime, data.Id)
+	}, lotteryLotteryIdKey)
+	return err
+}
 
 func (c *customLotteryModel) LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error) {
 	var query string

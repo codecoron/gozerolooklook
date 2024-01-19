@@ -155,6 +155,34 @@
           "lottery"
         ]
       }
+    },
+    "lottery/v1/lottery/updateLottery": {
+      "post": {
+        "summary": "发布抽奖",
+        "operationId": "updateLottery",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateLotteryResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateLotteryReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
     }
   },
   "definitions": {
@@ -224,7 +252,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         }
       },
       "title": "CreateLotteryResp",
@@ -563,6 +591,23 @@
         "avatar",
         "info"
       ]
+    },
+    "UpdateLotteryReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UpdateLotteryReq",
+      "required": [
+        "id"
+      ]
+    },
+    "UpdateLotteryResp": {
+      "type": "object",
+      "title": "UpdateLotteryResp"
     }
   },
   "securityDefinitions": {

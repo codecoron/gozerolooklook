@@ -25,7 +25,6 @@ func NewLotterySponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lo
 }
 
 func (l *LotterySponsorLogic) LotterySponsor(in *pb.LotterySponsorReq) (*pb.LotterySponsorResp, error) {
-	// todo: add your logic here and delete this line
 	lotteryId := in.Id
 	// 1 根据lotteryId获取到uid
 	uid, err := l.svcCtx.LotteryModel.FindUserIdByLotteryId(l.ctx, lotteryId)
