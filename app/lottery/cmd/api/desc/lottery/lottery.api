@@ -73,3 +73,54 @@ type (
 )
 
 
+type (
+    SetLotteryIsSelectedReq {
+        Id int64 `json:"id"`
+    }
+    SetLotteryIsSelectedResp {
+        IsSelected int64 `json:"isSelected"`
+    }
+)
+
+type LotteryDetail {
+    Id int64 `json:"id"`
+    Name string `json:"name"`
+    UserId int64 `json:"userId"`                                   //发起抽奖用户ID
+    Prizes []*CreatePrize `json:"prizes"`                           //奖品信息
+    PublishType int64 `json:"publishType"`                         //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+    IsSelected int64 `json:"isSelected"`                           //是否精选 1是 0否
+    PublishTime int64 `json:"publish_time"`                        //开奖时间
+    JoinNumber int64 `json:"join_number"`                          //自动开奖人数标准
+    Introduce string `json:"introduce"`                            //抽奖说明
+    AwardDeadline int64 `json:"awardDeadline"`                     //领奖截止时间
+}
+
+type (
+    LotteryDetailReq {
+        Id int64 `json:"id"`
+    }
+    LotteryDetailResp {
+        LotteryDetail LotteryDetail `json:"lotteryDetail"`
+    }
+)
+
+type Sponsor {
+    Id int64 `json:"id"`
+    NickName string `json:"nickName"`
+    Avatar     string    `json:"avatar"`
+    Info       string    `json:"info"`
+}
+
+type (
+    LotterySponsorReq {
+        Id int64 `json:"id"`
+    }
+    LotterySponsorResp {
+        Sponsor Sponsor `json:"sponsor"`
+    }
+)
+
+
+
+
+
