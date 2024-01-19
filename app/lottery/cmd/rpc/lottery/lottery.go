@@ -28,6 +28,8 @@ type (
 	Lottery                  = pb.Lottery
 	LotteryDetailReq         = pb.LotteryDetailReq
 	LotteryDetailResp        = pb.LotteryDetailResp
+	LotterySponsorReq        = pb.LotterySponsorReq
+	LotterySponsorResp       = pb.LotterySponsorResp
 	Prize                    = pb.Prize
 	SearchLotteryReq         = pb.SearchLotteryReq
 	SearchLotteryResp        = pb.SearchLotteryResp
@@ -49,6 +51,7 @@ type (
 		SearchLottery(ctx context.Context, in *SearchLotteryReq, opts ...grpc.CallOption) (*SearchLotteryResp, error)
 		SetIsSelectedLottery(ctx context.Context, in *SetIsSelectedLotteryReq, opts ...grpc.CallOption) (*SetIsSelectedLotteryResp, error)
 		LotteryDetail(ctx context.Context, in *LotteryDetailReq, opts ...grpc.CallOption) (*LotteryDetailResp, error)
+		LotterySponsor(ctx context.Context, in *LotterySponsorReq, opts ...grpc.CallOption) (*LotterySponsorResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -102,6 +105,11 @@ func (m *defaultLotteryZrpcClient) SetIsSelectedLottery(ctx context.Context, in 
 func (m *defaultLotteryZrpcClient) LotteryDetail(ctx context.Context, in *LotteryDetailReq, opts ...grpc.CallOption) (*LotteryDetailResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.LotteryDetail(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) LotterySponsor(ctx context.Context, in *LotterySponsorReq, opts ...grpc.CallOption) (*LotterySponsorResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.LotterySponsor(ctx, in, opts...)
 }
 
 // -----------------------奖品表-----------------------

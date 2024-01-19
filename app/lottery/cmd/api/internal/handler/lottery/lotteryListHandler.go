@@ -21,6 +21,10 @@ func LotteryListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := lottery.NewLotteryListLogic(r.Context(), svcCtx)
 		resp, err := l.LotteryList(&req)
 		//注意 handler这里需要用result.HttpResult() 才会返回    "code": 200, "msg": "OK",
-		result.HttpResult(r, w, resp, err)
+		if err != nil {
+			result.ParamErrorResult(r, w, err)
+		} else {
+			result.HttpResult(r, w, resp, err)
+		}
 	}
 }

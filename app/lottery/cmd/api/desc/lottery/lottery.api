@@ -95,6 +95,22 @@ type (
     }
 )
 
+type Sponsor {
+    Id int64 `json:"id"`
+    NickName string `json:"nickName"`
+    Avatar     string    `json:"avatar"`
+    Info       string    `json:"info"`
+}
+
+type (
+    LotterySponsorReq {
+        Id int64 `json:"id"`
+    }
+    LotterySponsorResp {
+        Sponsor Sponsor `json:"sponsor"`
+    }
+)
+
 
 
 

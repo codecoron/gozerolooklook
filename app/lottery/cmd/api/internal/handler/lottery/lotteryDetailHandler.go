@@ -1,6 +1,7 @@
 package lottery
 
 import (
+	"looklook/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -20,9 +21,9 @@ func LotteryDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := lottery.NewLotteryDetailLogic(r.Context(), svcCtx)
 		resp, err := l.LotteryDetail(&req)
 		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			result.ParamErrorResult(r, w, err)
 		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			result.HttpResult(r, w, resp, err)
 		}
 	}
 }

@@ -58,3 +58,14 @@ service lottery {
 	@handler lotteryDetail
 	post /lottery/lotteryDetail (LotteryDetailReq) returns (LotteryDetailResp)
 }
+
+//no need login
+@server (
+	prefix: lottery/v1
+	group:  lottery
+)
+service lottery {
+	@doc "lottery sponsor"
+	@handler lotterySponsor
+	post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
+}

@@ -104,12 +104,23 @@ message SetIsSelectedLotteryResp {
 }
 
 message LotteryDetailReq {
-  int64 Id = 2; // 抽奖id
+  int64 Id = 1; // 抽奖id
 }
 
 message LotteryDetailResp {
   Lottery lottery = 1; // 抽奖信息
   repeated Prize prizes = 2; // 奖品列表
+}
+
+message LotterySponsorReq {
+  int64 Id = 1; // 抽奖id
+}
+
+message LotterySponsorResp {
+  int64 Id = 1;
+  string NickName = 2;
+  string Avatar = 3;
+  string Info = 4;
 }
 
 //--------------------------------奖品表--------------------------------
@@ -201,6 +212,7 @@ service lottery{
   rpc SearchLottery(SearchLotteryReq) returns (SearchLotteryResp);
   rpc SetIsSelectedLottery(SetIsSelectedLotteryReq) returns (SetIsSelectedLotteryResp);
   rpc LotteryDetail(LotteryDetailReq) returns (LotteryDetailResp);
+  rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);

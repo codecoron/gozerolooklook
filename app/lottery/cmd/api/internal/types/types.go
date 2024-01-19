@@ -83,3 +83,18 @@ type LotteryDetailReq struct {
 type LotteryDetailResp struct {
 	LotteryDetail LotteryDetail `json:"lotteryDetail"`
 }
+
+type Sponsor struct {
+	Id       int64  `json:"id"`
+	NickName string `json:"nickName"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
+}
+
+type LotterySponsorReq struct {
+	Id int64 `json:"id"`
+}
+
+type LotterySponsorResp struct {
+	Sponsor Sponsor `json:"sponsor"`
+}

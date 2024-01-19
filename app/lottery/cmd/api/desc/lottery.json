@@ -100,6 +100,34 @@
         ]
       }
     },
+    "lottery/v1/lottery/lotterySponsor": {
+      "post": {
+        "summary": "lottery sponsor",
+        "operationId": "lotterySponsor",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LotterySponsorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LotterySponsorReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/setLotteryIsSelected": {
       "post": {
         "summary": "lottery setIsSelected",
@@ -311,6 +339,9 @@
           "type": "integer",
           "format": "int64"
         },
+        "name": {
+          "type": "string"
+        },
         "userId": {
           "type": "integer",
           "format": "int64",
@@ -356,6 +387,7 @@
       "title": "LotteryDetail",
       "required": [
         "id",
+        "name",
         "userId",
         "prizes",
         "publishType",
@@ -434,6 +466,31 @@
         "list"
       ]
     },
+    "LotterySponsorReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "LotterySponsorReq",
+      "required": [
+        "id"
+      ]
+    },
+    "LotterySponsorResp": {
+      "type": "object",
+      "properties": {
+        "sponsor": {
+          "$ref": "#/definitions/Sponsor"
+        }
+      },
+      "title": "LotterySponsorResp",
+      "required": [
+        "sponsor"
+      ]
+    },
     "Prize": {
       "type": "object",
       "properties": {
@@ -480,6 +537,31 @@
       "title": "SetLotteryIsSelectedResp",
       "required": [
         "isSelected"
+      ]
+    },
+    "Sponsor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nickName": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        }
+      },
+      "title": "Sponsor",
+      "required": [
+        "id",
+        "nickName",
+        "avatar",
+        "info"
       ]
     }
   },
