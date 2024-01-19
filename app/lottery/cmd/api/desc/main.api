@@ -72,10 +72,5 @@ service lottery {
 	@doc "lottery sponsor"
 	@handler lotterySponsor
 	post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
-
-	@doc "test"
-	@handler test
-	post /lottery/test
 }
 
-//--home="${template}"
