@@ -3,10 +3,10 @@ package user
 import (
 	"context"
 	"github.com/pkg/errors"
-	"looklook/app/usercenter/cmd/rpc/usercenter"
-
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +26,9 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogi
 }
 
 func (l *UpdateLogic) Update(req *types.UserUpdateReq) (resp *types.UserUpdateResp, err error) {
+	userId := ctxdata.GetUidFromCtx(l.ctx)
 	_, err = l.svcCtx.UsercenterRpc.UpdateUserBaseInfo(l.ctx, &usercenter.UpdateUserBaseInfoReq{
+		Id:       userId,
 		Nickname: req.Nickname,
 		Sex:      req.Sex,
 		Info:     req.Info,

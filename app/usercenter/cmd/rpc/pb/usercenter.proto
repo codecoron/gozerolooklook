@@ -82,10 +82,11 @@ message GenerateTokenResp {
 }
 
 message UpdateUserBaseInfoReq {
-  string Nickname = 1;
-  int64 sex = 2;
-  string avatar = 3;
-  string info = 4;
+  int64 id = 1;
+  string Nickname = 2;
+  int64 sex = 3;
+  string avatar = 4;
+  string info = 5;
 }
 
 message UpdateUserBaseInfoResp {
