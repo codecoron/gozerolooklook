@@ -61,3 +61,11 @@ type (
 		UserInfo User `json:"userInfo"`
 	}
 )
+
+type (
+	SetAdminReq {
+		Id int64  `json:"id"`
+	}
+	SetAdminResp {
+	}
+)

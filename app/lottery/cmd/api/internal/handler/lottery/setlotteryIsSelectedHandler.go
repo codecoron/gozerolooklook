@@ -1,7 +1,6 @@
 package lottery
 
 import (
-	"fmt"
 	"looklook/common/result"
 	"net/http"
 
@@ -21,7 +20,6 @@ func SetLotteryIsSelectedHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := lottery.NewSetLotteryIsSelectedLogic(r.Context(), svcCtx)
 		resp, err := l.SetLotteryIsSelected(&req)
-		fmt.Println("testt", err)
 		if err != nil {
 			result.ParamErrorResult(r, w, err)
 		} else {

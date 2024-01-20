@@ -17,6 +17,8 @@ type (
 	AddUserAddressResp       = pb.AddUserAddressResp
 	AddUserContactReq        = pb.AddUserContactReq
 	AddUserContactResp       = pb.AddUserContactResp
+	CheckIsAdminReq          = pb.CheckIsAdminReq
+	CheckIsAdminResp         = pb.CheckIsAdminResp
 	DelUserAddressReq        = pb.DelUserAddressReq
 	DelUserAddressResp       = pb.DelUserAddressResp
 	DelUserContactReq        = pb.DelUserContactReq
@@ -41,6 +43,8 @@ type (
 	SearchUserAddressResp    = pb.SearchUserAddressResp
 	SearchUserContactReq     = pb.SearchUserContactReq
 	SearchUserContactResp    = pb.SearchUserContactResp
+	SetAdminReq              = pb.SetAdminReq
+	SetAdminResp             = pb.SetAdminResp
 	UpdateUserAddressReq     = pb.UpdateUserAddressReq
 	UpdateUserAddressResp    = pb.UpdateUserAddressResp
 	UpdateUserContactReq     = pb.UpdateUserContactReq
@@ -57,6 +61,8 @@ type (
 		GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error)
 		GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
+		SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error)
+		CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error)
 		// -----------------------用户联系方式----------------------
 		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
 		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
@@ -110,6 +116,16 @@ func (m *defaultUsercenter) GetUserAuthByUserId(ctx context.Context, in *GetUser
 func (m *defaultUsercenter) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GenerateToken(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SetAdmin(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.CheckIsAdmin(ctx, in, opts...)
 }
 
 // -----------------------用户联系方式----------------------
