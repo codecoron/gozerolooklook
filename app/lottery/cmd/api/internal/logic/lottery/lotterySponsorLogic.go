@@ -27,16 +27,15 @@ func NewLotterySponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lo
 	}
 }
 
-func (l *LotterySponsorLogic) LotterySponsor(req *types.LotterySponsorReq) (*types.LotterySponsorResp, error) {
-	// todo: add your logic here and delete this line
-	resp, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
+func (l *LotterySponsorLogic) LotterySponsor(req *types.LotterySponsorReq) (resp *types.LotterySponsorResp, err error) {
+	res, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
 		Id: req.Id,
 	})
 	if err != nil {
 		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
 		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
 	}
-	var sponsor types.Sponsor
-	_ = copier.Copy(&sponsor, resp)
-	return &types.LotterySponsorResp{Sponsor: sponsor}, nil
+	resp = new(types.LotterySponsorResp)
+	_ = copier.Copy(resp, res)
+	return
 }

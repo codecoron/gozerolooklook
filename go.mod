@@ -14,6 +14,7 @@ require (
 
 require (
 	github.com/Masterminds/squirrel v1.5.2
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-module/carbon/v2 v2.0.1
 )
 
@@ -34,7 +35,6 @@ require (
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
 	github.com/go-openapi/jsonreference v0.20.1 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
-	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/gnostic v0.5.7-v3refs // indirect
