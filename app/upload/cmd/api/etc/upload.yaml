@@ -1,6 +1,6 @@
 Name: upload-api
 Host: 0.0.0.0
-Port: 1009
+Port: 1008
 
 #jwtAuth
 JwtAuth:
