@@ -27,5 +27,5 @@ Log:
 #rpc service
 FileUploadRpcConf:
   Endpoints:
-    - 127.0.0.1:2009
+    - 127.0.0.1:2008
   NonBlock: true
