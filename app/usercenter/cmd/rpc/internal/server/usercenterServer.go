@@ -52,6 +52,11 @@ func (s *UsercenterServer) GenerateToken(ctx context.Context, in *pb.GenerateTok
 	return l.GenerateToken(in)
 }
 
+func (s *UsercenterServer) UpdateUserBaseInfo(ctx context.Context, in *pb.UpdateUserBaseInfoReq) (*pb.UpdateUserBaseInfoResp, error) {
+	l := logic.NewUpdateUserBaseInfoLogic(ctx, s.svcCtx)
+	return l.UpdateUserBaseInfo(in)
+}
+
 func (s *UsercenterServer) SetAdmin(ctx context.Context, in *pb.SetAdminReq) (*pb.SetAdminResp, error) {
 	l := logic.NewSetAdminLogic(ctx, s.svcCtx)
 	return l.SetAdmin(in)

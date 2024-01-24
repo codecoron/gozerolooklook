@@ -81,6 +81,18 @@ message GenerateTokenResp {
   int64  refreshAfter = 3;
 }
 
+message UpdateUserBaseInfoReq {
+  int64 id = 1;
+  string Nickname = 2;
+  int64 sex = 3;
+  string avatar = 4;
+  string info = 5;
+}
+
+message UpdateUserBaseInfoResp {
+}
+
+
 message SetAdminReq {
   int64 userId = 1;
 }
@@ -233,6 +245,8 @@ message SearchUserAddressResp {
   repeated UserAddress userAddress = 1; //userAddress
 }
 
+
+
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
@@ -241,6 +255,7 @@ service usercenter {
   rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyReq) returns(GetUserAuthByAuthKeyResp);
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+  rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   rpc setAdmin(SetAdminReq) returns(SetAdminResp);
   rpc CheckIsAdmin(CheckIsAdminReq) returns(CheckIsAdminResp);
   //-----------------------用户联系方式----------------------

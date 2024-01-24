@@ -46,6 +46,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/user/setAdmin",
 				Handler: user.SetAdminHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/update",
+				Handler: user.UpdateHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/usercenter/v1"),
