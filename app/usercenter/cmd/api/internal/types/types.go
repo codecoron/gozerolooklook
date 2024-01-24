@@ -37,6 +37,8 @@ type WXMiniAuthReq struct {
 	Code          string `json:"code"`
 	IV            string `json:"iv"`
 	EncryptedData string `json:"encryptedData"`
+	Nickname      string `json:"nickname, optional"`
+	Avatar        string `json:"avatar, optional"`
 }
 
 type WXMiniAuthResp struct {

@@ -57,6 +57,11 @@ func (s *UsercenterServer) UpdateUserBaseInfo(ctx context.Context, in *pb.Update
 	return l.UpdateUserBaseInfo(in)
 }
 
+func (s *UsercenterServer) WxMiniRegister(ctx context.Context, in *pb.WXMiniRegisterReq) (*pb.WXMiniRegisterResp, error) {
+	l := logic.NewWxMiniRegisterLogic(ctx, s.svcCtx)
+	return l.WxMiniRegister(in)
+}
+
 // -----------------------用户联系方式----------------------
 func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
 	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)

@@ -51,6 +51,8 @@ type (
 	UserAddress              = pb.UserAddress
 	UserAuth                 = pb.UserAuth
 	UserContact              = pb.UserContact
+	WXMiniRegisterReq        = pb.WXMiniRegisterReq
+	WXMiniRegisterResp       = pb.WXMiniRegisterResp
 
 	Usercenter interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
@@ -60,6 +62,7 @@ type (
 		GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 		UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
+		WxMiniRegister(ctx context.Context, in *WXMiniRegisterReq, opts ...grpc.CallOption) (*WXMiniRegisterResp, error)
 		// -----------------------用户联系方式----------------------
 		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
 		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
@@ -118,6 +121,11 @@ func (m *defaultUsercenter) GenerateToken(ctx context.Context, in *GenerateToken
 func (m *defaultUsercenter) UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.UpdateUserBaseInfo(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) WxMiniRegister(ctx context.Context, in *WXMiniRegisterReq, opts ...grpc.CallOption) (*WXMiniRegisterResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.WxMiniRegister(ctx, in, opts...)
 }
 
 // -----------------------用户联系方式----------------------

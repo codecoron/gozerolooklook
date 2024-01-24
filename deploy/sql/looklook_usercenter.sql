@@ -28,7 +28,7 @@ CREATE TABLE `user`  (
   `delete_time` datetime(0) DEFAULT NULL,
   `del_state` tinyint(0) NOT NULL DEFAULT 0,
   `version` bigint(0) NOT NULL DEFAULT 0 COMMENT '版本号',
-  `mobile` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `mobile` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `sex` tinyint(1) NOT NULL DEFAULT 0 COMMENT '性别 0:男 1:女',
