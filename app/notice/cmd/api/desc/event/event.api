@@ -1,0 +1,19 @@
+syntax = "v1"
+
+info(
+    title: "回调消息"
+    desc: "回调消息"
+    author: "Max"
+    email: "13247629622@163.com"
+)
+
+type (
+    VerifyEventReq {
+        Signature string `form:"signature"`
+        Timestamp string `form:"timestamp"`
+        Nonce string `form:"nonce"`
+        Echostr string `form:"echostr"`
+    }
+    VerifyEventResp {
+    }
+)

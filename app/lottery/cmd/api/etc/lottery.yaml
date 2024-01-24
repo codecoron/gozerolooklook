@@ -10,7 +10,14 @@ JwtAuth:
 Log:
   ServiceName: lottery-api
   Mode: console
-  Level: error
+  # Mode: file
+  # 因为项目在docker中启动，所以logs是打印在docker中
+  Path: logs
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
+  Level: info
+  Compress: true
+  KeyDays: 7
 
 #监控
 Prometheus:
