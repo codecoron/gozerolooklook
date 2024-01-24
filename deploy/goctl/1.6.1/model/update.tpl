@@ -29,7 +29,7 @@ func (m *default{{.upperStartCamelObject}}Model) TransUpdate(ctx context.Context
 }
 
 func (m *default{{.upperStartCamelObject}}Model) List(ctx context.Context, page, limit int64) ([]*{{.upperStartCamelObject}}, error) {
-	query := fmt.Sprintf("select %s from %s limit ?,?", lotteryRows, m.table)
+	query := fmt.Sprintf("select %s from %s limit ?,?", {{.lowerStartCamelObject}}Rows, m.table)
 	var resp []*{{.upperStartCamelObject}}
 	//err := m.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, (page-1)*limit, limit)

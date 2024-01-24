@@ -3,15 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	"looklook/app/lottery/cmd/api/internal/config"
-	"looklook/app/lottery/cmd/api/internal/handler"
-	"looklook/app/lottery/cmd/api/internal/svc"
+
+	"looklook/app/notice/cmd/api/internal/config"
+	"looklook/app/notice/cmd/api/internal/handler"
+	"looklook/app/notice/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )
 
-var configFile = flag.String("f", "etc/lottery.yaml", "the config file")
+var configFile = flag.String("f", "etc/notice.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -24,9 +25,6 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
-
-	//禁止性能监控日志 建议打卡
-	//logx.DisableStat()
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
