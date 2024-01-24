@@ -1,0 +1,36 @@
+Name: vote-api
+Host: 0.0.0.0
+Port: 1012
+Mode: dev
+
+#jwtAuth
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+
+#监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4027
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: vote-api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log:
+  ServiceName: vote-api
+  Level: error
+
+#WxMiniConf
+WxMiniConf:
+  AppId: wx0fe80d42b0d37cc8
+  Secret: 495f7df09f227dde93f57f875a8f0e9f
+
+#rpc service
+VoteRpcConf:
+  Endpoints:
+    - 127.0.0.1:4028
+  NonBlock: true

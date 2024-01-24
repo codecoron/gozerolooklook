@@ -1,0 +1,150 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------投票表--------------------------------
+message VoteConfig {
+  int64 id = 1; //id
+  int64 lotteryId = 2; //抽奖ID
+  int64 enableVote = 3; //是否启用投票功能 1是 0否
+  string voteConfig = 4; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 createTime = 5; //createTime
+  int64 updateTime = 6; //updateTime
+}
+
+message AddVoteConfigReq {
+  int64 lotteryId = 1; //抽奖ID
+  int64 enableVote = 2; //是否启用投票功能 1是 0否
+  string voteConfig = 3; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+}
+
+message AddVoteConfigResp {
+}
+
+message UpdateVoteConfigReq {
+  int64 id = 1; //id
+  int64 lotteryId = 2; //抽奖ID
+  int64 enableVote = 3; //是否启用投票功能 1是 0否
+  string voteConfig = 4; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+}
+
+message UpdateVoteConfigResp {
+}
+
+message DelVoteConfigReq {
+  int64 id = 1; //id
+}
+
+message DelVoteConfigResp {
+}
+
+message GetVoteConfigByIdReq {
+  int64 id = 1; //id
+}
+
+message GetVoteConfigByIdResp {
+  VoteConfig voteConfig = 1; //voteConfig
+}
+
+message SearchVoteConfigReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 lotteryId = 4; //抽奖ID
+  int64 enableVote = 5; //是否启用投票功能 1是 0否
+  string voteConfig = 6; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 createTime = 7; //createTime
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchVoteConfigResp {
+  repeated VoteConfig voteConfig = 1; //voteConfig
+}
+
+//--------------------------------投票记录表--------------------------------
+message VoteRecord {
+  int64 id = 1; //id
+  int64 lotteryId = 2; //抽奖ID
+  int64 userId = 3; //用户ID
+  string selectedOption = 4; //用户选择的投票选项
+  int64 createdAt = 5; //投票时间
+}
+
+message AddVoteRecordReq {
+  int64 lotteryId = 1; //抽奖ID
+  int64 userId = 2; //用户ID
+  string selectedOption = 3; //用户选择的投票选项
+  int64 createdAt = 4; //投票时间
+}
+
+message AddVoteRecordResp {
+}
+
+message UpdateVoteRecordReq {
+  int64 id = 1; //id
+  int64 lotteryId = 2; //抽奖ID
+  int64 userId = 3; //用户ID
+  string selectedOption = 4; //用户选择的投票选项
+  int64 createdAt = 5; //投票时间
+}
+
+message UpdateVoteRecordResp {
+}
+
+message DelVoteRecordReq {
+  int64 id = 1; //id
+}
+
+message DelVoteRecordResp {
+}
+
+message GetVoteRecordByIdReq {
+  int64 id = 1; //id
+}
+
+message GetVoteRecordByIdResp {
+  VoteRecord voteRecord = 1; //voteRecord
+}
+
+message SearchVoteRecordReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 lotteryId = 4; //抽奖ID
+  int64 userId = 5; //用户ID
+  string selectedOption = 6; //用户选择的投票选项
+  int64 createdAt = 7; //投票时间
+}
+
+message SearchVoteRecordResp {
+  repeated VoteRecord voteRecord = 1; //voteRecord
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service vote{ 
+
+	 //-----------------------投票表----------------------- 
+	 rpc AddVoteConfig(AddVoteConfigReq) returns (AddVoteConfigResp); 
+	 rpc UpdateVoteConfig(UpdateVoteConfigReq) returns (UpdateVoteConfigResp); 
+	 rpc DelVoteConfig(DelVoteConfigReq) returns (DelVoteConfigResp); 
+	 rpc GetVoteConfigById(GetVoteConfigByIdReq) returns (GetVoteConfigByIdResp); 
+	 rpc SearchVoteConfig(SearchVoteConfigReq) returns (SearchVoteConfigResp); 
+	 //-----------------------投票记录表----------------------- 
+	 rpc AddVoteRecord(AddVoteRecordReq) returns (AddVoteRecordResp); 
+	 rpc UpdateVoteRecord(UpdateVoteRecordReq) returns (UpdateVoteRecordResp); 
+	 rpc DelVoteRecord(DelVoteRecordReq) returns (DelVoteRecordResp); 
+	 rpc GetVoteRecordById(GetVoteRecordByIdReq) returns (GetVoteRecordByIdResp); 
+	 rpc SearchVoteRecord(SearchVoteRecordReq) returns (SearchVoteRecordResp); 
+
+}

@@ -1,0 +1,38 @@
+syntax = "v1"
+
+info(
+    title: "投票服务"
+    desc: "投票服务"
+    author: "mike"
+    email: "coolfeng2008@outlook.com"
+    version: "v1"
+)
+
+
+// VoteConfigJSONData 是用于存储 voteConfig 字段的结构体类型
+type VoteConfigJSONData {
+    Title string `json:"title"`                     //投票标题
+    Description string `json:"description"`         //投票描述【非必填】
+    WinnerSelection int64 `json:"winner_selection"` //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
+    Type int64 `json:"type"`                        //投票类型：1单选 2多选
+    MinVotes int64 `json:"min_votes"`               //最小投票范围
+    MaxVotes int64 `json:"max_votes"`               //最大投票范围
+    Options []VoteOption `json:"options"`           //选项列表
+}
+
+// VoteOption 用于存储每个选项的信息
+type VoteOption {
+    Text string `json:"text"`   //选项名称
+    Image string `json:"image"` //选项图片
+}
+
+type (
+    CreateVoteReq {
+        lotteryId int64 `json:"lotteryId"`
+        enableVote int64 `json:"enableVote"`
+        voteConfig VoteConfigJSONData `json:"voteConfig"`
+    }
+    CreateVoteResp {
+        OrderSn string `json:"orderSn"`
+    }
+)
