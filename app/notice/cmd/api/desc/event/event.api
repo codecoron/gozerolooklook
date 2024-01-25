@@ -17,3 +17,13 @@ type (
     VerifyEventResp {
     }
 )
+
+type (
+    ReceiveEventReq {
+        Signature string `form:"signature"`
+        Timestamp string `form:"timestamp"`
+        Nonce string `form:"nonce"`
+    }
+    ReceiveEventResp {
+    }
+)
