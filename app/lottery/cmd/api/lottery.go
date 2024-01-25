@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"looklook/app/lottery/cmd/api/internal/config"
 	"looklook/app/lottery/cmd/api/internal/handler"
 	"looklook/app/lottery/cmd/api/internal/svc"
@@ -25,6 +24,9 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
+
+	//禁止性能监控日志 建议打卡
+	//logx.DisableStat()
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
