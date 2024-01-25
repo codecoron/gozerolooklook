@@ -1,0 +1,31 @@
+syntax = "v1"
+
+info (
+	title:   "签到服务"
+	desc:    "签到服务"
+	author:  "李培森"
+	email:   "2396258912@qq.com"
+	version: "v1"
+)
+
+import (
+	"checkin/checkin.api"
+)
+
+//=====================================> checkin-checkin v1 <=================================
+//need login
+@server (
+	prefix: checkin/v1
+	group:  checkin
+	jwt:    JwtAuth
+)
+service checkin {
+	@doc "获得签到状态"
+	@handler getCheckin
+	post /checkin/getCheckin (GetCheckinReq) returns (GetCheckinResp)
+
+	@doc "签到操作"
+	@handler Checkin
+	post /checkin (CheckinReq) returns (CheckinResp)
+}
+

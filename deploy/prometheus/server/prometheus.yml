@@ -86,4 +86,18 @@ scrape_configs:
           job: mqueue-scheduler
           app: mqueue-scheduler
           env: dev
+  - job_name: 'checkin-api'
+    static_configs:
+      - targets: [ 'looklook:4017' ]
+        labels:
+          job: checkin-api
+          app: checkin-api
+          env: dev
+  - job_name: 'checkin-rpc'
+    static_configs:
+      - targets: [ 'looklook:4018' ]
+        labels:
+          job: checkin-rpc
+          app: checkin-rpc
+          env: dev
 
