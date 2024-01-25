@@ -104,3 +104,12 @@ type UpdateLotteryReq struct {
 
 type UpdateLotteryResp struct {
 }
+
+type LotteryParticipationReq struct {
+	UserId    int64 `json:"userId"`
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type LotteryParticipationResp struct {
+	Id int64 `json:"id"`
+}
