@@ -1,9 +1,12 @@
 Name: vote-rpc
-ListenOn: 0.0.0.0:4028
-#Etcd:
-#  Hosts:
-#  - 127.0.0.1:2379
-#  Key: vote.rpc
+ListenOn: 0.0.0.0:2012
+Mode: dev
+
+#监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4028
+  Path: /metrics
 
 #jwtAuth
 JwtAuth:
@@ -15,11 +18,11 @@ Redis:
   Host: redis:6379
   Type: node
   Pass: G62m50oigInC30sf
-  Key: upload-rpc
+  Key: vote-rpc
 
 #DB
 DB:
-  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/upload_file_db?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/vote?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 Cache:
   - Host: redis:6379
     Pass: G62m50oigInC30sf

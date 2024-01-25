@@ -33,5 +33,5 @@ WxMiniConf:
 #rpc service
 VoteRpcConf:
   Endpoints:
-    - 127.0.0.1:4028
+    - 127.0.0.1:2012
   NonBlock: true
