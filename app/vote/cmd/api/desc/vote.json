@@ -1,0 +1,175 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "投票服务",
+    "description": "投票服务",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "vote/v1/vote/createVote": {
+      "post": {
+        "summary": "创建投票",
+        "operationId": "createVote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateVoteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateVoteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CreateVoteReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "enableVote": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否启用投票功能 1是 0否"
+        },
+        "voteConfig": {
+          "$ref": "#/definitions/VoteConfigJSONData",
+          "description": "投票配置字段说明"
+        }
+      },
+      "title": "CreateVoteReq",
+      "required": [
+        "userId",
+        "lotteryId",
+        "enableVote",
+        "voteConfig"
+      ]
+    },
+    "CreateVoteResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateVoteResp",
+      "required": [
+        "id"
+      ]
+    },
+    "VoteConfigJSONData": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "投票标题"
+        },
+        "description": {
+          "type": "string",
+          "description": "投票描述【非必填】"
+        },
+        "winnerSelection": {
+          "type": "integer",
+          "format": "int64",
+          "description": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票类型：1单选 2多选"
+        },
+        "minVotes": {
+          "type": "integer",
+          "format": "int64",
+          "description": "最小投票范围"
+        },
+        "maxVotes": {
+          "type": "integer",
+          "format": "int64",
+          "description": "最大投票范围"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteOption"
+          },
+          "description": "选项列表"
+        }
+      },
+      "title": "VoteConfigJSONData",
+      "required": [
+        "title",
+        "description",
+        "winnerSelection",
+        "type",
+        "minVotes",
+        "maxVotes",
+        "options"
+      ]
+    },
+    "VoteOption": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "选项名称"
+        },
+        "image": {
+          "type": "string",
+          "description": "选项图片"
+        }
+      },
+      "title": "VoteOption",
+      "required": [
+        "text",
+        "image"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

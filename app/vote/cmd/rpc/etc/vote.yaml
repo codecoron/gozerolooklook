@@ -1,6 +1,25 @@
-Name: vote.rpc
-ListenOn: 0.0.0.0:8080
-Etcd:
-  Hosts:
-  - 127.0.0.1:2379
-  Key: vote.rpc
+Name: vote-rpc
+ListenOn: 0.0.0.0:4028
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: vote.rpc
+
+#jwtAuth
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+  AccessExpire: 31536000
+
+#Redis
+Redis:
+  Host: redis:6379
+  Type: node
+  Pass: G62m50oigInC30sf
+  Key: upload-rpc
+
+#DB
+DB:
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/upload_file_db?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+Cache:
+  - Host: redis:6379
+    Pass: G62m50oigInC30sf
