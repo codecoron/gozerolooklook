@@ -11,17 +11,19 @@ package pb;
 //--------------------------------投票表--------------------------------
 message VoteConfig {
   int64 id = 1; //id
-  int64 lotteryId = 2; //抽奖ID
-  int64 enableVote = 3; //是否启用投票功能 1是 0否
-  string voteConfig = 4; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
-  int64 createTime = 5; //createTime
-  int64 updateTime = 6; //updateTime
+  int64 userId = 2; //用户id
+  int64 lotteryId = 3; //抽奖ID
+  int64 enableVote = 4; //是否启用投票功能 1是 0否
+  string voteConfig = 5; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 createTime = 6; //createTime
+  int64 updateTime = 7; //updateTime
 }
 
 message AddVoteConfigReq {
-  int64 lotteryId = 1; //抽奖ID
-  int64 enableVote = 2; //是否启用投票功能 1是 0否
-  string voteConfig = 3; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 userId = 1; //用户id
+  int64 lotteryId = 2; //抽奖ID
+  int64 enableVote = 3; //是否启用投票功能 1是 0否
+  string voteConfig = 4; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
 }
 
 message AddVoteConfigResp {
@@ -29,9 +31,10 @@ message AddVoteConfigResp {
 
 message UpdateVoteConfigReq {
   int64 id = 1; //id
-  int64 lotteryId = 2; //抽奖ID
-  int64 enableVote = 3; //是否启用投票功能 1是 0否
-  string voteConfig = 4; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 userId = 2; //用户id
+  int64 lotteryId = 3; //抽奖ID
+  int64 enableVote = 4; //是否启用投票功能 1是 0否
+  string voteConfig = 5; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
 }
 
 message UpdateVoteConfigResp {
@@ -56,11 +59,12 @@ message SearchVoteConfigReq {
   int64 page = 1; //page
   int64 limit = 2; //limit
   int64 id = 3; //id
-  int64 lotteryId = 4; //抽奖ID
-  int64 enableVote = 5; //是否启用投票功能 1是 0否
-  string voteConfig = 6; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
-  int64 createTime = 7; //createTime
-  int64 updateTime = 8; //updateTime
+  int64 userId = 4; //用户id
+  int64 lotteryId = 5; //抽奖ID
+  int64 enableVote = 6; //是否启用投票功能 1是 0否
+  string voteConfig = 7; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
+  int64 createTime = 8; //createTime
+  int64 updateTime = 9; //updateTime
 }
 
 message SearchVoteConfigResp {

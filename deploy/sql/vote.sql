@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 24/01/2024 21:42:52
+ Date: 25/01/2024 11:20:22
 */
 
 SET NAMES utf8mb4;
@@ -23,6 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `vote_config`;
 CREATE TABLE `vote_config`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT 0 COMMENT '用户id',
   `lottery_id` int NOT NULL COMMENT '抽奖ID',
   `enable_vote` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否启用投票功能 1是 0否',
   `vote_config` json NULL COMMENT '投票配置字段说明: {\"title\": \"投票标题\", \"description\": \"投票描述【非必填】\", \"winner_selection\": \"中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取\", \"type\": \"投票类型：1单选 2多选\", \"min_votes\": \"最小投票范围\", \"max_votes\": \"最大投票范围\", \"options\": [{\"text\": \"张三\", \"image\": \"path/to/zhangsan.jpg\"}, {\"text\": \"李四\", \"image\": \"path/to/lisi.jpg\"}, {\"text\": \"王五\", \"image\": \"path/to/wangwu.jpg\"}]}',

@@ -13,10 +13,10 @@ info(
 type VoteConfigJSONData {
     Title string `json:"title"`                     //投票标题
     Description string `json:"description"`         //投票描述【非必填】
-    WinnerSelection int64 `json:"winner_selection"` //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
+    WinnerSelection int64 `json:"winnerSelection"`  //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
     Type int64 `json:"type"`                        //投票类型：1单选 2多选
-    MinVotes int64 `json:"min_votes"`               //最小投票范围
-    MaxVotes int64 `json:"max_votes"`               //最大投票范围
+    MinVotes int64 `json:"minVotes"`                //最小投票范围
+    MaxVotes int64 `json:"maxVotes"`                //最大投票范围
     Options []VoteOption `json:"options"`           //选项列表
 }
 
@@ -28,11 +28,12 @@ type VoteOption {
 
 type (
     CreateVoteReq {
-        lotteryId int64 `json:"lotteryId"`
-        enableVote int64 `json:"enableVote"`
-        voteConfig VoteConfigJSONData `json:"voteConfig"`
+        UserId int64 `json:"userId"`                      //用户id
+        LotteryId int64 `json:"lotteryId"`                //抽奖id
+        EnableVote int64 `json:"enableVote"`              //是否启用投票功能 1是 0否
+        VoteConfig VoteConfigJSONData `json:"voteConfig"` //投票配置字段说明
     }
     CreateVoteResp {
-        OrderSn string `json:"orderSn"`
+        Id int64 `json:"id"`
     }
 )
