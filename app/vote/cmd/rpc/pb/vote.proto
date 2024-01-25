@@ -27,6 +27,7 @@ message AddVoteConfigReq {
 }
 
 message AddVoteConfigResp {
+  int64 id = 1; //id
 }
 
 message UpdateVoteConfigReq {

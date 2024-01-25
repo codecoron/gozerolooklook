@@ -55,6 +55,7 @@ type (
 
 	VoteConfig struct {
 		Id         int64          `db:"id"`
+		UserId     int64          `db:"user_id"`     // 用户id
 		LotteryId  int64          `db:"lottery_id"`  // 抽奖ID
 		EnableVote int64          `db:"enable_vote"` // 是否启用投票功能 1是 0否
 		VoteConfig sql.NullString `db:"vote_config"` // 投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
@@ -99,8 +100,8 @@ func (m *defaultVoteConfigModel) FindOne(ctx context.Context, id int64) (*VoteCo
 func (m *defaultVoteConfigModel) Insert(ctx context.Context, data *VoteConfig) (sql.Result, error) {
 	voteVoteConfigIdKey := fmt.Sprintf("%s%v", cacheVoteVoteConfigIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, voteConfigRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.LotteryId, data.EnableVote, data.VoteConfig)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, voteConfigRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.UserId, data.LotteryId, data.EnableVote, data.VoteConfig)
 	}, voteVoteConfigIdKey)
 	return ret, err
 }
@@ -108,8 +109,8 @@ func (m *defaultVoteConfigModel) Insert(ctx context.Context, data *VoteConfig) (
 func (m *defaultVoteConfigModel) TransInsert(ctx context.Context, session sqlx.Session, data *VoteConfig) (sql.Result, error) {
 	voteVoteConfigIdKey := fmt.Sprintf("%s%v", cacheVoteVoteConfigIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, voteConfigRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.LotteryId, data.EnableVote, data.VoteConfig)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, voteConfigRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.LotteryId, data.EnableVote, data.VoteConfig)
 	}, voteVoteConfigIdKey)
 	return ret, err
 }
@@ -117,7 +118,7 @@ func (m *defaultVoteConfigModel) Update(ctx context.Context, data *VoteConfig) e
 	voteVoteConfigIdKey := fmt.Sprintf("%s%v", cacheVoteVoteConfigIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, voteConfigRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.LotteryId, data.EnableVote, data.VoteConfig, data.Id)
+		return conn.ExecCtx(ctx, query, data.UserId, data.LotteryId, data.EnableVote, data.VoteConfig, data.Id)
 	}, voteVoteConfigIdKey)
 	return err
 }
@@ -126,7 +127,7 @@ func (m *defaultVoteConfigModel) TransUpdate(ctx context.Context, session sqlx.S
 	voteVoteConfigIdKey := fmt.Sprintf("%s%v", cacheVoteVoteConfigIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, voteConfigRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.LotteryId, data.EnableVote, data.VoteConfig, data.Id)
+		return session.ExecCtx(ctx, query, data.UserId, data.LotteryId, data.EnableVote, data.VoteConfig, data.Id)
 	}, voteVoteConfigIdKey)
 	return err
 }
