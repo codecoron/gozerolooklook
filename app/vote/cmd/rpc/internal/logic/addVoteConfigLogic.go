@@ -37,7 +37,7 @@ func (l *AddVoteConfigLogic) AddVoteConfig(in *pb.AddVoteConfigReq) (*pb.AddVote
 
 	insertResult, err := l.svcCtx.VoteConfigModel.Insert(l.ctx, voteConfig)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Add address db user_address Insert err:%v, address:%+v", err, voteConfig)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Add voteConfig db vote_config Insert err:%v, address:%+v", err, voteConfig)
 	}
 	lastId, err := insertResult.LastInsertId()
 	if err != nil {
