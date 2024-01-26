@@ -198,6 +198,24 @@ message SearchPrizeResp {
   repeated Prize prize = 1; //prize
 }
 
+message AddLotteryParticipationReq{
+  int64 userId = 1;
+  int64 lotteryId = 2;
+}
+
+message AddLotteryParticipationResp{
+  int64 id = 1;
+}
+
+message SearchLotteryParticipationReq{
+  int64 lotteryId = 1;
+}
+
+message SearchLotteryParticipationResp{
+  int64 count = 1;
+  repeated string list = 2;
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -219,5 +237,7 @@ service lottery{
   rpc DelPrize(DelPrizeReq) returns (DelPrizeResp);
   rpc GetPrizeById(GetPrizeByIdReq) returns (GetPrizeByIdResp);
   rpc SearchPrize(SearchPrizeReq) returns (SearchPrizeResp);
-
+  //-----------------------参与抽奖-----------------------
+  rpc AddLotteryParticipation(AddLotteryParticipationReq) returns (AddLotteryParticipationResp);
+  rpc SearchLotteryParticipation(SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp);
 }

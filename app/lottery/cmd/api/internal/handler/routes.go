@@ -78,7 +78,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/lottery/participation",
-				Handler: lottery.LotteryParticipationHandler(serverCtx),
+				Handler: lottery.AddLotteryParticipationHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/lottery/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/participation",
+				Handler: lottery.SearchLotteryParticipationHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/lottery/v1"),

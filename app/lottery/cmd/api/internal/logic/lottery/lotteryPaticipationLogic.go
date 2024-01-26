@@ -23,7 +23,12 @@ func NewLotteryParticipationLogic(ctx context.Context, svcCtx *svc.ServiceContex
 	}
 }
 
-func (l *LotteryParticipationLogic) LotteryParticipation(req *types.LotteryParticipationReq) (resp *types.LotteryParticipationResp, err error) {
+func (l *LotteryParticipationLogic) AddLotteryParticipation(req *types.AddLotteryParticipationReq) (resp *types.AddLotteryParticipationResp, err error) {
+
+	return
+}
+
+func (l *LotteryParticipationLogic) SearchLotteryParticipation(req *types.SearchLotteryParticipationReq) (resp *types.SearchLotteryParticipationResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return
