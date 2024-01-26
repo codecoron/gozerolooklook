@@ -20,8 +20,8 @@ type (
 )
 
 // NewUserModel returns a model for the database table.
-func NewUserModel(conn sqlx.SqlConn, c cache.CacheConf) UserModel {
+func NewUserModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) UserModel {
 	return &customUserModel{
-		defaultUserModel: newUserModel(conn, c),
+		defaultUserModel: newUserModel(conn, c, opts...),
 	}
 }
