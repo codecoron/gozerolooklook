@@ -17,6 +17,12 @@ func {{.HandlerName}}(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := validate.Validate(&req)
+        if validateErr != nil {
+            result.ParamErrorResult(r, w, validateErr)
+            return
+        }
+
 		{{end}}l := {{.LogicName}}.New{{.LogicType}}(r.Context(), svcCtx)
 		{{if .HasResp}}resp, {{end}}err := l.{{.Call}}({{if .HasRequest}}&req{{end}})
 
