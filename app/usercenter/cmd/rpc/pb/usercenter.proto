@@ -38,6 +38,19 @@ message RegisterResp {
   int64  refreshAfter = 3;
 }
 
+message WXMiniRegisterReq {
+  string nickname = 1;
+  string avatar = 2;
+  string authKey = 3;
+  string authType = 4;
+}
+
+message WXMiniRegisterResp {
+  string accessToken = 1;
+  int64  accessExpire = 2;
+  int64  refreshAfter = 3;
+}
+
 message LoginReq {
   string  authType = 1;
   string authKey = 2;
@@ -258,6 +271,7 @@ service usercenter {
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   rpc setAdmin(SetAdminReq) returns(SetAdminResp);
   rpc CheckIsAdmin(CheckIsAdminReq) returns(CheckIsAdminResp);
+  rpc WxMiniRegister(WXMiniRegisterReq) returns (WXMiniRegisterResp);
   //-----------------------用户联系方式----------------------
   rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
