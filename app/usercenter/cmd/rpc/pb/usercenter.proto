@@ -92,6 +92,19 @@ message UpdateUserBaseInfoReq {
 message UpdateUserBaseInfoResp {
 }
 
+
+message SetAdminReq {
+  int64 userId = 1;
+}
+message SetAdminResp {
+}
+
+message CheckIsAdminReq {
+  int64 userId = 1;
+}
+message CheckIsAdminResp {
+  bool isAdmin = 1;
+}
 //--------------------------------用户联系方式-------------------------------
 message UserContact {
   int64 id = 1; //id
@@ -243,6 +256,8 @@ service usercenter {
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
+  rpc setAdmin(SetAdminReq) returns(SetAdminResp);
+  rpc CheckIsAdmin(CheckIsAdminReq) returns(CheckIsAdminResp);
   //-----------------------用户联系方式----------------------
   rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);

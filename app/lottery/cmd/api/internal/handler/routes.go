@@ -81,6 +81,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: lottery.AddLotteryParticipationHandler(serverCtx),
 			},
 		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/lottery/v1"),
 	)
 
@@ -89,7 +90,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/lottery/participation",
-				Handler: lottery.SearchLotteryParticipationHandler(serverCtx),
+				Handler: lottery.SearchParticipationHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/lottery/v1"),

@@ -11,30 +11,31 @@ package pb;
 //--------------------------------抽奖表--------------------------------
 message Lottery {
   int64 id = 1; //id
-  int64 userId = 2; //发起抽奖用户ID
-  string name = 3; //默认取一等奖名称
-  string thumb = 4; //默认取一等经配图
-  int64 publishType = 5; //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-  int64 publishTime = 6; //开奖时间
-  int64 joinNumber = 7; //自动开奖人数
-  string introduce = 8; //抽奖说明
-  int64 awardDeadline = 9; //领奖截止时间
-  int64 createTime = 10; //createTime
-  int64 updateTime = 11; //updateTime
-  int64 isSelected = 12; //是否精选 1是 0否
+  int64 userId = 2;
+  string name = 3;
+  string thumb = 4;
+  int64 publishTime = 5;
+  int64 joinNumber = 6;
+  string introduce = 7;
+  int64 awardDeadline = 8;
+  int64 isSelected = 9;
+  int64 announceType = 10;
+  int64 announceTime = 11;
+  int64 isAnnounced = 12;
+  int64 createTime = 13;
+  int64 updateTime = 14;
 }
 
 message AddLotteryReq {
   int64 userId = 1; //发起抽奖用户ID
   string name = 2; //默认取一等奖名称
   string thumb = 3; //默认取一等经配图
-  int64 publishType = 4; //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-  int64 publishTime = 5; //开奖时间
-  int64 joinNumber = 6; //自动开奖人数
-  string introduce = 7; //抽奖说明
-  int64 awardDeadline = 8; //领奖截止时间
-  int64 isSelected = 9; //是否精选 1是 0否
-  repeated Prize prizes = 10; //奖品 支持多个
+  int64 joinNumber = 4;
+  string introduce = 5;
+  int64 awardDeadline = 6;
+  int64 announceType = 8;
+  repeated Prize prizes = 9; //奖品 支持多个
+  int64 announceTime = 10;
 }
 
 message AddLotteryResp {
@@ -46,12 +47,14 @@ message UpdateLotteryReq {
   int64 userId = 2; //发起抽奖用户ID
   string name = 3; //默认取一等奖名称
   string thumb = 4; //默认取一等经配图
-  int64 publishType = 5; //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-  int64 publishTime = 6; //开奖时间
-  int64 joinNumber = 7; //自动开奖人数
-  string introduce = 8; //抽奖说明
-  int64 awardDeadline = 9; //领奖截止时间
-  int64 isSelected = 10; //是否精选 1是 0否
+  int64 publishTime = 5; //开奖时间
+  int64 joinNumber = 6; //自动开奖人数
+  string introduce = 7; //抽奖说明
+  int64 awardDeadline = 8; //领奖截止时间
+  int64 isSelected = 9; //是否精选 1是 0否
+  int64 announceType = 10;
+  int64 announceTime = 11;
+  int64 isAnnounced = 12;
 }
 
 message UpdateLotteryResp {
@@ -79,15 +82,17 @@ message SearchLotteryReq {
   int64 userId = 4; //发起抽奖用户ID
   string name = 5; //默认取一等奖名称
   string thumb = 6; //默认取一等经配图
-  int64 publishType = 7; //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-  int64 publishTime = 8; //开奖时间
-  int64 joinNumber = 9; //自动开奖人数
-  string introduce = 10; //抽奖说明
-  int64 awardDeadline = 11; //领奖截止时间
-  int64 createTime = 12; //createTime
-  int64 updateTime = 13; //updateTime
-  int64 isSelected = 14; //是否精选 1是 0否
-  int64  lastId = 15; // 页面最后一条记录的id
+  int64 publishTime = 7; // 发布抽奖时间
+  int64 joinNumber = 8; //自动开奖人数
+  string introduce = 9; //抽奖说明
+  int64 awardDeadline = 10; //领奖截止时间
+  int64 createTime = 11; //createTime
+  int64 updateTime = 12; //updateTime
+  int64 isSelected = 13; //是否精选 1是 0否
+  int64  lastId = 14; // 页面最后一条记录的id
+  int64 announceType = 15;
+  int64 announceTime = 16;
+  int64 isAnnounced = 17;
 }
 
 message SearchLotteryResp {
