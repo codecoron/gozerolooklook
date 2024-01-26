@@ -43,7 +43,7 @@ type CreateLotteryReq struct {
 	Name          string         `json:"name"`          //默认一等奖名称
 	Thumb         string         `json:"thumb"`         //默认一等奖配图
 	AnnounceType  int64          `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	AnnounceTime  int64          `json:"announceTime"`  // 开奖时间
+	AnnounceTime  int64          `json:"announceTime"`  //开奖时间
 	JoinNumber    int64          `json:"join_number"`   //自动开奖人数标准
 	Introduce     string         `json:"introduce"`     //抽奖说明
 	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
