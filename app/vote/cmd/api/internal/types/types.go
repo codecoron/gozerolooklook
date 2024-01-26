@@ -12,6 +12,16 @@ type CreateVoteResp struct {
 	Id int64 `json:"id"`
 }
 
+type UpdateVoteReq struct {
+	Id         int64              `json:"id"`         //编辑投票id
+	LotteryId  int64              `json:"lotteryId"`  //抽奖id
+	EnableVote int64              `json:"enableVote"` //是否启用投票功能 1是 0否
+	VoteConfig VoteConfigJSONData `json:"voteConfig"` //投票配置字段说明
+}
+
+type UpdateVoteResp struct {
+}
+
 type VoteConfigJSONData struct {
 	Title           string       `json:"title"`           //投票标题
 	Description     string       `json:"description"`     //投票描述【非必填】

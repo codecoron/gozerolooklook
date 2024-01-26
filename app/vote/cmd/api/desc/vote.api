@@ -20,12 +20,13 @@ import (
 	jwt:    JwtAuth
 )
 service vote {
-	@doc "创建投票"
+	@doc "创建投票设置接口"
 	@handler createVote
 	post /vote/createVote (CreateVoteReq) returns (CreateVoteResp)
-// @doc "编辑投票"
-// @handler updateVote
-// post /vote/updateVote (UpdateVoteReq) returns (UpdateVoteResp)
+
+	@doc "编辑投票设置接口"
+	@handler updateVote
+	post /vote/updateVote (UpdateVoteReq) returns (UpdateVoteResp)
 //
 // @doc "查看投票"
 // @handler viewVote

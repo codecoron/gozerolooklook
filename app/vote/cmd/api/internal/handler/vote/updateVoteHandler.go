@@ -10,16 +10,16 @@ import (
 	"looklook/app/vote/cmd/api/internal/types"
 )
 
-func CreateVoteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UpdateVoteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.CreateVoteReq
+		var req types.UpdateVoteReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := vote.NewCreateVoteLogic(r.Context(), svcCtx)
-		resp, err := l.CreateVote(&req)
+		l := vote.NewUpdateVoteLogic(r.Context(), svcCtx)
+		resp, err := l.UpdateVote(&req)
 
 		result.HttpResult(r, w, resp, err)
 	}
