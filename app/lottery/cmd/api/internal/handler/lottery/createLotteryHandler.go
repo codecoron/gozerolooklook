@@ -1,8 +1,10 @@
 package lottery
 
 import (
-	"looklook/common/result"
+	"looklook/app/lottery/cmd/api/internal/handler/validator"
 	"net/http"
+
+	"looklook/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"looklook/app/lottery/cmd/api/internal/logic/lottery"
@@ -18,9 +20,15 @@ func CreateLotteryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := validator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
+			return
+		}
+
 		l := lottery.NewCreateLotteryLogic(r.Context(), svcCtx)
 		resp, err := l.CreateLottery(&req)
-		//注意 handler这里需要用result.HttpResult() 才会返回    "code": 200, "msg": "OK",
+
 		result.HttpResult(r, w, resp, err)
 	}
 }

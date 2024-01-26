@@ -73,3 +73,11 @@ type (
 	UserUpdateResp {
 	}
 )
+
+type (
+	SetAdminReq {
+		Id int64  `json:"id"`
+	}
+	SetAdminResp {
+	}
+)

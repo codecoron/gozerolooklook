@@ -39,9 +39,11 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.AwardDeadline = time.Unix(in.AwardDeadline, 0)
 		lottery.Introduce = in.Introduce
 		lottery.JoinNumber = in.JoinNumber
-		lottery.PublishType = in.PublishType
+		lottery.AnnounceType = in.AnnounceType
+		lottery.AnnounceTime = time.Unix(in.AnnounceTime, 0)
 		lottery.Thumb = in.Thumb
 		lottery.IsSelected = 0
+		lottery.IsAnnounced = 0
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
