@@ -22,20 +22,25 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `lottery`;
 CREATE TABLE `lottery`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `user_id` int(0) NOT NULL DEFAULT 0 COMMENT '发起抽奖用户ID',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT 0 COMMENT '发起抽奖用户ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '默认取一等奖名称',
   `thumb` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '默认取一等经配图',
-  `publish_type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '开奖设置：1按时间开奖 2按人数开奖 3即抽即中',
-  `publish_time` datetime(0) DEFAULT NULL COMMENT '开奖时间',
-  `join_number` int(0) NOT NULL DEFAULT 0 COMMENT '自动开奖人数',
+  `publish_time` datetime NULL DEFAULT NULL COMMENT '发布抽奖时间',
+  `join_number` int NOT NULL DEFAULT 0 COMMENT '自动开奖人数',
   `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '抽奖说明',
-  `award_deadline` datetime(0) NOT NULL COMMENT '领奖截止时间',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `award_deadline` datetime NOT NULL COMMENT '领奖截止时间',
   `is_selected` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否精选 1是 0否',
+  `announce_type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '开奖设置：1按时间开奖 2按人数开奖 3即抽即中',
+  `announce_time` datetime NULL DEFAULT NULL COMMENT '开奖时间',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
+  `is_announced` tinyint(1) NULL DEFAULT 0 COMMENT '是否开奖：0未开奖；1已经开奖',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for prize

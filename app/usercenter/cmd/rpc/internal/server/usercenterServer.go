@@ -57,9 +57,14 @@ func (s *UsercenterServer) UpdateUserBaseInfo(ctx context.Context, in *pb.Update
 	return l.UpdateUserBaseInfo(in)
 }
 
-func (s *UsercenterServer) WxMiniRegister(ctx context.Context, in *pb.WXMiniRegisterReq) (*pb.WXMiniRegisterResp, error) {
-	l := logic.NewWxMiniRegisterLogic(ctx, s.svcCtx)
-	return l.WxMiniRegister(in)
+func (s *UsercenterServer) SetAdmin(ctx context.Context, in *pb.SetAdminReq) (*pb.SetAdminResp, error) {
+	l := logic.NewSetAdminLogic(ctx, s.svcCtx)
+	return l.SetAdmin(in)
+}
+
+func (s *UsercenterServer) CheckIsAdmin(ctx context.Context, in *pb.CheckIsAdminReq) (*pb.CheckIsAdminResp, error) {
+	l := logic.NewCheckIsAdminLogic(ctx, s.svcCtx)
+	return l.CheckIsAdmin(in)
 }
 
 // -----------------------用户联系方式----------------------

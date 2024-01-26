@@ -27,25 +27,16 @@ func NewLotteryDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lot
 	}
 }
 
-func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (*types.LotteryDetailResp, error) {
-	resp, err := l.svcCtx.LotteryRpc.LotteryDetail(l.ctx, &lottery.LotteryDetailReq{
+func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *types.LotteryDetailResp, err error) {
+	res, err := l.svcCtx.LotteryRpc.LotteryDetail(l.ctx, &lottery.LotteryDetailReq{
 		Id: req.Id,
 	})
 	if err != nil {
 		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
 		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
 	}
-	var lotteryDetail types.LotteryDetail
-	_ = copier.Copy(&lotteryDetail, resp)
-	lotteryDetail.Id = resp.Lottery.Id
-	lotteryDetail.Name = resp.Lottery.Name
-	lotteryDetail.IsSelected = resp.Lottery.IsSelected
-	lotteryDetail.UserId = resp.Lottery.UserId
-	lotteryDetail.AwardDeadline = resp.Lottery.AwardDeadline
-	lotteryDetail.Introduce = resp.Lottery.Introduce
-	lotteryDetail.JoinNumber = resp.Lottery.JoinNumber
-	lotteryDetail.PublishTime = resp.Lottery.PublishTime
-	lotteryDetail.PublishType = resp.Lottery.PublishType
-
-	return &types.LotteryDetailResp{LotteryDetail: lotteryDetail}, nil
+	resp = new(types.LotteryDetailResp)
+	_ = copier.Copy(resp, res)
+	_ = copier.Copy(resp, res.Lottery)
+	return
 }

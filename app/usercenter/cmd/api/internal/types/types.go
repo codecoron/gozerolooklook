@@ -64,6 +64,13 @@ type UserUpdateReq struct {
 type UserUpdateResp struct {
 }
 
+type SetAdminReq struct {
+	Id int64 `json:"id"`
+}
+
+type SetAdminResp struct {
+}
+
 type ContactInfo struct {
 	Id      int64  `json:"id"`
 	UserId  int64  `json:"userId"`
