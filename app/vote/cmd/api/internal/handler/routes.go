@@ -23,6 +23,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/vote/updateVote",
 				Handler: vote.UpdateVoteHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/vote/viewVoteDetail",
+				Handler: vote.ViewVoteDetailHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/vote/v1"),

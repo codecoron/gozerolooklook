@@ -27,10 +27,10 @@ service vote {
 	@doc "编辑投票设置接口"
 	@handler updateVote
 	post /vote/updateVote (UpdateVoteReq) returns (UpdateVoteResp)
-//
-// @doc "查看投票"
-// @handler viewVote
-// post /vote/viewVote (ViewVoteReq) returns (ViewVoteResp)
+
+	@doc "查看投票设置详情"
+	@handler viewVoteDetail
+	post /vote/viewVoteDetail (ViewVoteDetailReq) returns (ViewVoteDetailResp)
 //
 // @doc "用户投票"
 // @handler userVote
