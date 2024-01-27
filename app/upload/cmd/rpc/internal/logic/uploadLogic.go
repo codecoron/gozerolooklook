@@ -28,7 +28,7 @@ func NewUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UploadLogi
 }
 
 func (l *UploadLogic) Upload(in *pb.FileUploadReq) (*pb.FileUploadResp, error) {
-	uploadFile := new(model.UploadFileInfo)
+	uploadFile := new(model.UploadFile)
 	_ = copier.Copy(uploadFile, in)
 	bucket, err := l.svcCtx.OssClient.Bucket(l.svcCtx.Config.Oss.BucketName)
 	if err != nil {
