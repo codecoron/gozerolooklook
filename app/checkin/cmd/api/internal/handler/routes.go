@@ -20,6 +20,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/checkin/claimReward",
+				Handler: checkin.ClaimRewardHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/checkin/finishTask",
+				Handler: checkin.FinishTaskHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/checkin/getCheckin",
 				Handler: checkin.GetCheckinHandler(serverCtx),
 			},
