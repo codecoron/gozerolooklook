@@ -27,13 +27,6 @@ type AddressListResp struct {
 	List []UserAddress `json:"list"`
 }
 
-type SetAdminReq struct {
-	Id int64 `json:"id"`
-}
-
-type SetAdminResp struct {
-}
-
 type ContactInfo struct {
 	Id      int64  `json:"id"`
 	UserId  int64  `json:"userId"`
@@ -100,6 +93,13 @@ type RegisterResp struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
 	RefreshAfter int64  `json:"refreshAfter"`
+}
+
+type SetAdminReq struct {
+	Id int64 `json:"id"`
+}
+
+type SetAdminResp struct {
 }
 
 type User struct {
