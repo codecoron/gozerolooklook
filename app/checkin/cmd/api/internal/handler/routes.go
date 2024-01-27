@@ -23,6 +23,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/checkin/getCheckin",
 				Handler: checkin.GetCheckinHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/checkin/getTasks",
+				Handler: checkin.GetTasksHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/checkin/v1"),

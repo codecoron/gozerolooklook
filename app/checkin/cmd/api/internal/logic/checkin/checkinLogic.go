@@ -34,7 +34,7 @@ func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, 
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("checkin fail"), "checkin rpc GetCheckin fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(xerr.NewErrMsg(err.Error()), "checkin rpc GetCheckin fail req: %+v , err : %v ", req, err)
 	}
 
 	return &types.CheckinResp{

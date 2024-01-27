@@ -33,6 +33,7 @@ const (
 	Checkin_UpdateTaskRecord_FullMethodName          = "/pb.checkin/UpdateTaskRecord"
 	Checkin_DelTaskRecord_FullMethodName             = "/pb.checkin/DelTaskRecord"
 	Checkin_GetTaskRecordById_FullMethodName         = "/pb.checkin/GetTaskRecordById"
+	Checkin_GetTaskRecordByUserId_FullMethodName     = "/pb.checkin/GetTaskRecordByUserId"
 	Checkin_SearchTaskRecord_FullMethodName          = "/pb.checkin/SearchTaskRecord"
 	Checkin_AddTasks_FullMethodName                  = "/pb.checkin/AddTasks"
 	Checkin_UpdateTasks_FullMethodName               = "/pb.checkin/UpdateTasks"
@@ -62,6 +63,7 @@ type CheckinClient interface {
 	UpdateTaskRecord(ctx context.Context, in *UpdateTaskRecordReq, opts ...grpc.CallOption) (*UpdateTaskRecordResp, error)
 	DelTaskRecord(ctx context.Context, in *DelTaskRecordReq, opts ...grpc.CallOption) (*DelTaskRecordResp, error)
 	GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error)
+	GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error)
 	SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error)
 	// -----------------------tasks-----------------------
 	AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error)
@@ -205,6 +207,15 @@ func (c *checkinClient) GetTaskRecordById(ctx context.Context, in *GetTaskRecord
 	return out, nil
 }
 
+func (c *checkinClient) GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error) {
+	out := new(GetTaskRecordByUserIdResp)
+	err := c.cc.Invoke(ctx, Checkin_GetTaskRecordByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *checkinClient) SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error) {
 	out := new(SearchTaskRecordResp)
 	err := c.cc.Invoke(ctx, Checkin_SearchTaskRecord_FullMethodName, in, out, opts...)
@@ -280,6 +291,7 @@ type CheckinServer interface {
 	UpdateTaskRecord(context.Context, *UpdateTaskRecordReq) (*UpdateTaskRecordResp, error)
 	DelTaskRecord(context.Context, *DelTaskRecordReq) (*DelTaskRecordResp, error)
 	GetTaskRecordById(context.Context, *GetTaskRecordByIdReq) (*GetTaskRecordByIdResp, error)
+	GetTaskRecordByUserId(context.Context, *GetTaskRecordByUserIdReq) (*GetTaskRecordByUserIdResp, error)
 	SearchTaskRecord(context.Context, *SearchTaskRecordReq) (*SearchTaskRecordResp, error)
 	// -----------------------tasks-----------------------
 	AddTasks(context.Context, *AddTasksReq) (*AddTasksResp, error)
@@ -335,6 +347,9 @@ func (UnimplementedCheckinServer) DelTaskRecord(context.Context, *DelTaskRecordR
 }
 func (UnimplementedCheckinServer) GetTaskRecordById(context.Context, *GetTaskRecordByIdReq) (*GetTaskRecordByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTaskRecordById not implemented")
+}
+func (UnimplementedCheckinServer) GetTaskRecordByUserId(context.Context, *GetTaskRecordByUserIdReq) (*GetTaskRecordByUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaskRecordByUserId not implemented")
 }
 func (UnimplementedCheckinServer) SearchTaskRecord(context.Context, *SearchTaskRecordReq) (*SearchTaskRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTaskRecord not implemented")
@@ -619,6 +634,24 @@ func _Checkin_GetTaskRecordById_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Checkin_GetTaskRecordByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTaskRecordByUserIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CheckinServer).GetTaskRecordByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Checkin_GetTaskRecordByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CheckinServer).GetTaskRecordByUserId(ctx, req.(*GetTaskRecordByUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Checkin_SearchTaskRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchTaskRecordReq)
 	if err := dec(in); err != nil {
@@ -789,6 +822,10 @@ var Checkin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTaskRecordById",
 			Handler:    _Checkin_GetTaskRecordById_Handler,
+		},
+		{
+			MethodName: "GetTaskRecordByUserId",
+			Handler:    _Checkin_GetTaskRecordByUserId_Handler,
 		},
 		{
 			MethodName: "SearchTaskRecord",

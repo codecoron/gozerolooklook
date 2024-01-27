@@ -30,33 +30,34 @@ func NewGetCheckinRecordByUserIdLogic(ctx context.Context, svcCtx *svc.ServiceCo
 }
 
 func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheckinRecordByUserIdReq) (*pb.GetCheckinRecordByUserIdResp, error) {
-	// todo:查询心愿任务
 	checkinRecord := new(model.CheckinRecord)
 	integarl := new(model.Integral)
+
 	err := l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		// 根据user_id查询用户的签到记录，如果没有就创建
 		getCheckinRecord, err := l.svcCtx.CheckinRecordModel.FindOneByUserId(l.ctx, in.UserId)
-		getIntegral, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
-		logx.Error("getIntegral:", getIntegral)
-		if err == sqlc.ErrNotFound {
-			// 没查询到用户的数据，说明用户从来没有签到过，新增记录
+		if err == sqlc.ErrNotFound { // 没查询到用户的数据，说明用户从来没有签到过，新增记录
+			// 新增签到记录
 			checkinRecord.UserId = in.UserId
-			insert, err := l.svcCtx.CheckinRecordModel.TransInsert(l.ctx, session, checkinRecord)
+			insert, err := l.svcCtx.CheckinRecordModel.TransInsertByUserId(l.ctx, session, checkinRecord)
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert check-in data : %+v , err: %v", insert, err)
 			}
+			// 新增积分记录
 			integarl.UserId = in.UserId
-			insert, err = l.svcCtx.IntegralModel.TransInsert(l.ctx, session, integarl)
+			insert, err = l.svcCtx.IntegralModel.TransInsertByUserId(l.ctx, session, integarl)
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert integarl data : %+v , err: %v", insert, err)
 			}
-
 			return nil
 		} else if err != nil {
 			// 其他错误
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find check-in data : %+v , err: %v", getCheckinRecord, err)
 		}
 
+		// 查询积分，任务列表
+		getIntegral, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
+		logx.Error("getIntegral:", getIntegral)
 		// 将getCheckinRecord 复制到 checkinRecord
 		_ = copier.Copy(checkinRecord, getCheckinRecord)
 		_ = copier.Copy(integarl, getIntegral)
@@ -69,7 +70,6 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 		//logx.Error("上次签到的日期targetDate:", targetDate)
 
 		switch {
-
 		case targetDate.Equal(today):
 			// 如果今天签了到，什么都不用变，因为签到的时候会更新
 			return nil
@@ -78,13 +78,13 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 			if checkinRecord.ContinuousCheckinDays >= 7 {
 				checkinRecord.ContinuousCheckinDays = 0
 				checkinRecord.State = 0
-				err := l.svcCtx.CheckinRecordModel.TransUpdate(l.ctx, session, checkinRecord)
+				err := l.svcCtx.CheckinRecordModel.TransUpdateByUserId(l.ctx, session, checkinRecord)
 				if err != nil {
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update check-in data : %+v , err: %v", checkinRecord, err)
 				}
 			} else if checkinRecord.State != 0 { // 如果是昨天签的到，state还是1的话，变为0
 				checkinRecord.State = 0
-				err := l.svcCtx.CheckinRecordModel.TransUpdate(l.ctx, session, checkinRecord)
+				err := l.svcCtx.CheckinRecordModel.TransUpdateByUserId(l.ctx, session, checkinRecord)
 				if err != nil {
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update check-in data : %+v , err: %v", checkinRecord, err)
 				}
@@ -94,15 +94,15 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 			if checkinRecord.State != 0 || checkinRecord.ContinuousCheckinDays != 0 {
 				checkinRecord.ContinuousCheckinDays = 0
 				checkinRecord.State = 0
-				err := l.svcCtx.CheckinRecordModel.TransUpdate(l.ctx, session, checkinRecord)
+				err := l.svcCtx.CheckinRecordModel.TransUpdateByUserId(l.ctx, session, checkinRecord)
 				if err != nil {
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update check-in data : %+v , err: %v", checkinRecord, err)
 				}
 			}
 			return nil
 		}
-
 	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -111,6 +111,5 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
 		State:                 checkinRecord.State,
 		Integral:              integarl.Integral,
-		TaskList:              nil,
 	}, nil
 }

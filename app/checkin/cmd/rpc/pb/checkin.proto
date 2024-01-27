@@ -51,7 +51,6 @@ message GetCheckinRecordByUserIdResp {
   int64 continuousCheckinDays = 1; // 用户连续签到天数
   int64 state = 2; // 当天是否签到，1为已签，0为未签
   int64 integral = 3; // 心愿值
-  repeated Tasks taskList = 4; // 任务列表
 }
 
 
@@ -194,6 +193,14 @@ message GetTaskRecordByIdResp {
   TaskRecord taskRecord = 1; //taskRecord
 }
 
+message GetTaskRecordByUserIdReq {
+  int64 user_id = 1;
+}
+
+message GetTaskRecordByUserIdResp {
+  repeated Tasks taskList = 1; // 任务列表
+}
+
 message SearchTaskRecordReq {
   int64 page = 1; //page
   int64 limit = 2; //limit
@@ -213,6 +220,7 @@ message Tasks {
   int64 type = 2; //1为新手，2为每日，3为每周
   string content = 3; //任务内容
   int64 integral = 4; //完成后增加的心愿值
+  int64 isFinished = 5; //0为未完成，1为已完成，2为已领取
 }
 message AddTasksReq {
   int64 type = 1; //1为新手，2为每日，3为每周
@@ -247,6 +255,7 @@ message GetTasksByIdReq {
 message GetTasksByIdResp {
   Tasks tasks = 1; //tasks
 }
+
 
 message SearchTasksReq {
   int64 page = 1; //page
@@ -285,6 +294,7 @@ service checkin{
   rpc UpdateTaskRecord(UpdateTaskRecordReq) returns (UpdateTaskRecordResp);
   rpc DelTaskRecord(DelTaskRecordReq) returns (DelTaskRecordResp);
   rpc GetTaskRecordById(GetTaskRecordByIdReq) returns (GetTaskRecordByIdResp);
+  rpc GetTaskRecordByUserId(GetTaskRecordByUserIdReq) returns (GetTaskRecordByUserIdResp);
   rpc SearchTaskRecord(SearchTaskRecordReq) returns (SearchTaskRecordResp);
   //-----------------------tasks-----------------------
   rpc AddTasks(AddTasksReq) returns (AddTasksResp);

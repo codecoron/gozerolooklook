@@ -22,10 +22,16 @@ type GetCheckinReq struct {
 }
 
 type GetCheckinResp struct {
-	ContinuousCheckinDays int64   `json:"continuousCheckinDays"` //用户连续签到的天数
-	State                 int64   `json:"state"`                 //当天用户是否签到，0为未签，1为已签
-	Integral              int64   `json:"integral"`              //心愿值
-	TasksList             []Tasks `json:"tasksList"`
+	ContinuousCheckinDays int64 `json:"continuousCheckinDays"` //用户连续签到的天数
+	State                 int64 `json:"state"`                 //当天用户是否签到，0为未签，1为已签
+	Integral              int64 `json:"integral"`              //心愿值
+}
+
+type GetTasksReq struct {
+}
+
+type GetTasksResp struct {
+	TasksList []*Tasks `json:"tasksList"`
 }
 
 type IntegralRecord struct {
@@ -42,8 +48,9 @@ type Intergral struct {
 }
 
 type Tasks struct {
-	Id       int64  `json:"id"`
-	Type     int64  `json:"type"`
-	Content  string `json:"content"`
-	Integral int64  `json:"integral"`
+	Id         int64  `json:"id"`
+	Type       int64  `json:"type"`
+	Content    string `json:"content"`
+	Integral   int64  `json:"integral"`
+	IsFinished int64  `json:"isFinished"`
 }

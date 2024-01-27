@@ -95,6 +95,11 @@ func (s *CheckinServer) GetTaskRecordById(ctx context.Context, in *pb.GetTaskRec
 	return l.GetTaskRecordById(in)
 }
 
+func (s *CheckinServer) GetTaskRecordByUserId(ctx context.Context, in *pb.GetTaskRecordByUserIdReq) (*pb.GetTaskRecordByUserIdResp, error) {
+	l := logic.NewGetTaskRecordByUserIdLogic(ctx, s.svcCtx)
+	return l.GetTaskRecordByUserId(in)
+}
+
 func (s *CheckinServer) SearchTaskRecord(ctx context.Context, in *pb.SearchTaskRecordReq) (*pb.SearchTaskRecordResp, error) {
 	l := logic.NewSearchTaskRecordLogic(ctx, s.svcCtx)
 	return l.SearchTaskRecord(in)

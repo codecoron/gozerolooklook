@@ -40,6 +40,8 @@ type (
 	GetIntegralRecordByUserIdResp = pb.GetIntegralRecordByUserIdResp
 	GetTaskRecordByIdReq          = pb.GetTaskRecordByIdReq
 	GetTaskRecordByIdResp         = pb.GetTaskRecordByIdResp
+	GetTaskRecordByUserIdReq      = pb.GetTaskRecordByUserIdReq
+	GetTaskRecordByUserIdResp     = pb.GetTaskRecordByUserIdResp
 	GetTasksByIdReq               = pb.GetTasksByIdReq
 	GetTasksByIdResp              = pb.GetTasksByIdResp
 	Integral                      = pb.Integral
@@ -81,6 +83,7 @@ type (
 		UpdateTaskRecord(ctx context.Context, in *UpdateTaskRecordReq, opts ...grpc.CallOption) (*UpdateTaskRecordResp, error)
 		DelTaskRecord(ctx context.Context, in *DelTaskRecordReq, opts ...grpc.CallOption) (*DelTaskRecordResp, error)
 		GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error)
+		GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error)
 		SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error)
 		// -----------------------tasks-----------------------
 		AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error)
@@ -172,6 +175,11 @@ func (m *defaultCheckin) DelTaskRecord(ctx context.Context, in *DelTaskRecordReq
 func (m *defaultCheckin) GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.GetTaskRecordById(ctx, in, opts...)
+}
+
+func (m *defaultCheckin) GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.GetTaskRecordByUserId(ctx, in, opts...)
 }
 
 func (m *defaultCheckin) SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error) {

@@ -46,7 +46,7 @@
     },
     "checkin/v1/checkin/getCheckin": {
       "post": {
-        "summary": "获得签到状态",
+        "summary": "获得签到状态以及积分",
         "operationId": "getCheckin",
         "responses": {
           "200": {
@@ -63,6 +63,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/GetCheckinReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "checkin"
+        ]
+      }
+    },
+    "checkin/v1/checkin/getTasks": {
+      "post": {
+        "summary": "获得用户任务完成状态",
+        "operationId": "getTasks",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetTasksResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetTasksReq"
             }
           }
         ],
@@ -162,7 +190,22 @@
           "type": "integer",
           "format": "int64",
           "description": "心愿值"
-        },
+        }
+      },
+      "title": "GetCheckinResp",
+      "required": [
+        "continuousCheckinDays",
+        "state",
+        "integral"
+      ]
+    },
+    "GetTasksReq": {
+      "type": "object",
+      "title": "GetTasksReq"
+    },
+    "GetTasksResp": {
+      "type": "object",
+      "properties": {
         "tasksList": {
           "type": "array",
           "items": {
@@ -170,11 +213,8 @@
           }
         }
       },
-      "title": "GetCheckinResp",
+      "title": "GetTasksResp",
       "required": [
-        "continuousCheckinDays",
-        "state",
-        "integral",
         "tasksList"
       ]
     },
@@ -250,6 +290,10 @@
         "integral": {
           "type": "integer",
           "format": "int64"
+        },
+        "isFinished": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "Tasks",
@@ -257,7 +301,8 @@
         "id",
         "type",
         "content",
-        "integral"
+        "integral",
+        "isFinished"
       ]
     }
   },

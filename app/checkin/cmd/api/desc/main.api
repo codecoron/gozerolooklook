@@ -20,9 +20,13 @@ import (
 	jwt:    JwtAuth
 )
 service checkin {
-	@doc "获得签到状态"
+	@doc "获得签到状态以及积分"
 	@handler getCheckin
 	post /checkin/getCheckin (GetCheckinReq) returns (GetCheckinResp)
+
+	@doc "获得用户任务完成状态"
+	@handler getTasks
+	post /checkin/getTasks (GetTasksReq) returns (GetTasksResp)
 
 	@doc "签到操作"
 	@handler Checkin

@@ -18,7 +18,8 @@ type (
 		checkinRecordModel
 		// 自定义方法
 		FindOneByUserId(ctx context.Context, userId int64) (*CheckinRecord, error)
-		UpdateByUserId(ctx context.Context, data *CheckinRecord) error
+		TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *CheckinRecord) error
+		TransInsertByUserId(ctx context.Context, session sqlx.Session, data *CheckinRecord) (sql.Result, error)
 	}
 
 	customCheckinRecordModel struct {
@@ -26,11 +27,20 @@ type (
 	}
 )
 
-func (m *defaultCheckinRecordModel) UpdateByUserId(ctx context.Context, data *CheckinRecord) error {
+func (m *defaultCheckinRecordModel) TransInsertByUserId(ctx context.Context, session sqlx.Session, data *CheckinRecord) (sql.Result, error) {
+	checkinCheckinRecordUserIdKey := fmt.Sprintf("%s%v", "cache:checkin:checkinRecord:userId:", data.UserId)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, checkinRecordRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.ContinuousCheckinDays, data.State, data.LastCheckinDate)
+	}, checkinCheckinRecordUserIdKey)
+	return ret, err
+}
+
+func (m *defaultCheckinRecordModel) TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *CheckinRecord) error {
 	checkinCheckinRecordUserIdKey := fmt.Sprintf("%s%v", "cache:checkin:checkinRecord:userId:", data.UserId)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `user_id` = ?", m.table, checkinRecordRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.ContinuousCheckinDays, data.State, data.LastCheckinDate, data.UserId)
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, checkinRecordRowsWithPlaceHolder)
+		return session.ExecCtx(ctx, query, data.UserId, data.ContinuousCheckinDays, data.State, data.LastCheckinDate, data.Id)
 	}, checkinCheckinRecordUserIdKey)
 	return err
 }
