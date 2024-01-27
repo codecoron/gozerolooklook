@@ -25,9 +25,6 @@ type LotteryListResp struct {
 	List []Lottery `json:"list"`
 }
 
-type CreateLotteryResp struct {
-	Id int64 `json:"id"`
-}
 type Prize struct {
 	Id        int64 `json:"id"`
 	LotteryId int64 `json:"lotteryId"` //抽奖ID
@@ -45,13 +42,23 @@ type CreatePrize struct {
 type CreateLotteryReq struct {
 	Name          string         `json:"name"`          //默认一等奖名称
 	Thumb         string         `json:"thumb"`         //默认一等奖配图
-	PublishType   int64          `json:"publishType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	IsSelected    int64          `json:"isSelected"`    //是否精选 1是 0否
-	PublishTime   int64          `json:"publish_time"`  //开奖时间
+	AnnounceType  int64          `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64          `json:"announceTime"`  //开奖时间
 	JoinNumber    int64          `json:"join_number"`   //自动开奖人数标准
 	Introduce     string         `json:"introduce"`     //抽奖说明
 	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
 	Prizes        []*CreatePrize `json:"prizes"`        //奖品 支持多个
+}
+
+type CreateLotteryResp struct {
+	Id int64 `json:"id"`
+}
+
+type UpdateLotteryReq struct {
+	Id int64 `json:"id"`
+}
+
+type UpdateLotteryResp struct {
 }
 
 type SetLotteryIsSelectedReq struct {
@@ -62,32 +69,21 @@ type SetLotteryIsSelectedResp struct {
 	IsSelected int64 `json:"isSelected"`
 }
 
-type LotteryDetail struct {
+type LotteryDetailReq struct {
+	Id int64 `json:"id"`
+}
+
+type LotteryDetailResp struct {
 	Id            int64          `json:"id"`
 	Name          string         `json:"name"`
 	UserId        int64          `json:"userId"`        //发起抽奖用户ID
-	Prizes        []*CreatePrize `json:"prizes"`        //奖品信息
 	PublishType   int64          `json:"publishType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
 	IsSelected    int64          `json:"isSelected"`    //是否精选 1是 0否
 	PublishTime   int64          `json:"publish_time"`  //开奖时间
 	JoinNumber    int64          `json:"join_number"`   //自动开奖人数标准
 	Introduce     string         `json:"introduce"`     //抽奖说明
 	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
-}
-
-type LotteryDetailReq struct {
-	Id int64 `json:"id"`
-}
-
-type LotteryDetailResp struct {
-	LotteryDetail LotteryDetail `json:"lotteryDetail"`
-}
-
-type Sponsor struct {
-	Id       int64  `json:"id"`
-	NickName string `json:"nickName"`
-	Avatar   string `json:"avatar"`
-	Info     string `json:"info"`
+	Prizes        []*CreatePrize `json:"prizes"`        //奖品信息
 }
 
 type LotterySponsorReq struct {
@@ -95,12 +91,8 @@ type LotterySponsorReq struct {
 }
 
 type LotterySponsorResp struct {
-	Sponsor Sponsor `json:"sponsor"`
-}
-
-type UpdateLotteryReq struct {
-	Id int64 `json:"id"`
-}
-
-type UpdateLotteryResp struct {
+	Id       int64  `json:"id"`
+	NickName string `json:"nickName"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
 }

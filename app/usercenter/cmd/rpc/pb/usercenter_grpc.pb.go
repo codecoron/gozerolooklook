@@ -25,6 +25,9 @@ const (
 	Usercenter_GetUserAuthByAuthKey_FullMethodName = "/pb.usercenter/getUserAuthByAuthKey"
 	Usercenter_GetUserAuthByUserId_FullMethodName  = "/pb.usercenter/getUserAuthByUserId"
 	Usercenter_GenerateToken_FullMethodName        = "/pb.usercenter/generateToken"
+	Usercenter_UpdateUserBaseInfo_FullMethodName   = "/pb.usercenter/updateUserBaseInfo"
+	Usercenter_SetAdmin_FullMethodName             = "/pb.usercenter/setAdmin"
+	Usercenter_CheckIsAdmin_FullMethodName         = "/pb.usercenter/CheckIsAdmin"
 	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
 	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
 	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
@@ -47,13 +50,16 @@ type UsercenterClient interface {
 	GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error)
 	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
-	//-----------------------用户联系方式----------------------
+	UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
+	SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error)
+	CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error)
+	// -----------------------用户联系方式----------------------
 	AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
 	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
 	DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
 	GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
 	SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
-	//-----------------------用户收货地址表-----------------------
+	// -----------------------用户收货地址表-----------------------
 	AddUserAddress(ctx context.Context, in *AddUserAddressReq, opts ...grpc.CallOption) (*AddUserAddressResp, error)
 	UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error)
 	DelUserAddress(ctx context.Context, in *DelUserAddressReq, opts ...grpc.CallOption) (*DelUserAddressResp, error)
@@ -117,6 +123,33 @@ func (c *usercenterClient) GetUserAuthByUserId(ctx context.Context, in *GetUserA
 func (c *usercenterClient) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
 	out := new(GenerateTokenResp)
 	err := c.cc.Invoke(ctx, Usercenter_GenerateToken_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error) {
+	out := new(UpdateUserBaseInfoResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserBaseInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error) {
+	out := new(SetAdminResp)
+	err := c.cc.Invoke(ctx, Usercenter_SetAdmin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error) {
+	out := new(CheckIsAdminResp)
+	err := c.cc.Invoke(ctx, Usercenter_CheckIsAdmin_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -223,13 +256,16 @@ type UsercenterServer interface {
 	GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyReq) (*GetUserAuthByAuthKeyResp, error)
 	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdReq) (*GetUserAuthyUserIdResp, error)
 	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
-	//-----------------------用户联系方式----------------------
+	UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error)
+	SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error)
+	CheckIsAdmin(context.Context, *CheckIsAdminReq) (*CheckIsAdminResp, error)
+	// -----------------------用户联系方式----------------------
 	AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error)
 	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
 	DelUserContact(context.Context, *DelUserContactReq) (*DelUserContactResp, error)
 	GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error)
 	SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error)
-	//-----------------------用户收货地址表-----------------------
+	// -----------------------用户收货地址表-----------------------
 	AddUserAddress(context.Context, *AddUserAddressReq) (*AddUserAddressResp, error)
 	UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error)
 	DelUserAddress(context.Context, *DelUserAddressReq) (*DelUserAddressResp, error)
@@ -259,6 +295,15 @@ func (UnimplementedUsercenterServer) GetUserAuthByUserId(context.Context, *GetUs
 }
 func (UnimplementedUsercenterServer) GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserBaseInfo not implemented")
+}
+func (UnimplementedUsercenterServer) SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAdmin not implemented")
+}
+func (UnimplementedUsercenterServer) CheckIsAdmin(context.Context, *CheckIsAdminReq) (*CheckIsAdminResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckIsAdmin not implemented")
 }
 func (UnimplementedUsercenterServer) AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserContact not implemented")
@@ -407,6 +452,60 @@ func _Usercenter_GenerateToken_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UsercenterServer).GenerateToken(ctx, req.(*GenerateTokenReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserBaseInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserBaseInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserBaseInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserBaseInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserBaseInfo(ctx, req.(*UpdateUserBaseInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SetAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAdminReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SetAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SetAdmin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SetAdmin(ctx, req.(*SetAdminReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_CheckIsAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckIsAdminReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).CheckIsAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_CheckIsAdmin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).CheckIsAdmin(ctx, req.(*CheckIsAdminReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -621,6 +720,18 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "generateToken",
 			Handler:    _Usercenter_GenerateToken_Handler,
+		},
+		{
+			MethodName: "updateUserBaseInfo",
+			Handler:    _Usercenter_UpdateUserBaseInfo_Handler,
+		},
+		{
+			MethodName: "setAdmin",
+			Handler:    _Usercenter_SetAdmin_Handler,
+		},
+		{
+			MethodName: "CheckIsAdmin",
+			Handler:    _Usercenter_CheckIsAdmin_Handler,
 		},
 		{
 			MethodName: "AddUserContact",

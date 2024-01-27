@@ -52,6 +52,21 @@ func (s *UsercenterServer) GenerateToken(ctx context.Context, in *pb.GenerateTok
 	return l.GenerateToken(in)
 }
 
+func (s *UsercenterServer) UpdateUserBaseInfo(ctx context.Context, in *pb.UpdateUserBaseInfoReq) (*pb.UpdateUserBaseInfoResp, error) {
+	l := logic.NewUpdateUserBaseInfoLogic(ctx, s.svcCtx)
+	return l.UpdateUserBaseInfo(in)
+}
+
+func (s *UsercenterServer) SetAdmin(ctx context.Context, in *pb.SetAdminReq) (*pb.SetAdminResp, error) {
+	l := logic.NewSetAdminLogic(ctx, s.svcCtx)
+	return l.SetAdmin(in)
+}
+
+func (s *UsercenterServer) CheckIsAdmin(ctx context.Context, in *pb.CheckIsAdminReq) (*pb.CheckIsAdminResp, error) {
+	l := logic.NewCheckIsAdminLogic(ctx, s.svcCtx)
+	return l.CheckIsAdmin(in)
+}
+
 // -----------------------用户联系方式----------------------
 func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
 	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)

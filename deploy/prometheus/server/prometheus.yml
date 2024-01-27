@@ -86,4 +86,17 @@ scrape_configs:
           job: mqueue-scheduler
           app: mqueue-scheduler
           env: dev
-
+  - job_name: 'upload-api'
+    static_configs:
+      - targets: ['looklook:4012']
+        labels:
+          job: upload-api
+          app: upload-api
+          env: dev
+  - job_name: 'upload-rpc'
+    static_configs:
+      - targets: ['looklook:4013']
+        labels:
+          job: upload-rpc
+          app: upload-rpc
+          env: dev
