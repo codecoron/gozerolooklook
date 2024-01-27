@@ -197,20 +197,15 @@
           "type": "string",
           "description": "默认一等奖配图"
         },
-        "publishType": {
+        "announceType": {
           "type": "integer",
           "format": "int64",
           "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
         },
-        "isSelected": {
+        "announceTime": {
           "type": "integer",
           "format": "int64",
-          "description": "是否精选 1是 0否"
-        },
-        "publish_time": {
-          "type": "integer",
-          "format": "int64",
-          "description": "开奖时间"
+          "description": " 开奖时间"
         },
         "join_number": {
           "type": "integer",
@@ -238,9 +233,8 @@
       "required": [
         "name",
         "thumb",
-        "publishType",
-        "isSelected",
-        "publish_time",
+        "announceType",
+        "announceTime",
         "join_number",
         "introduce",
         "awardDeadline",
@@ -360,7 +354,20 @@
         "awardDeadline"
       ]
     },
-    "LotteryDetail": {
+    "LotteryDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "LotteryDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "LotteryDetailResp": {
       "type": "object",
       "properties": {
         "id": {
@@ -374,13 +381,6 @@
           "type": "integer",
           "format": "int64",
           "description": "发起抽奖用户ID"
-        },
-        "prizes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CreatePrize"
-          },
-          "description": "奖品信息"
         },
         "publishType": {
           "type": "integer",
@@ -410,45 +410,27 @@
           "type": "integer",
           "format": "int64",
           "description": "领奖截止时间"
+        },
+        "prizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreatePrize"
+          },
+          "description": "奖品信息"
         }
       },
-      "title": "LotteryDetail",
+      "title": "LotteryDetailResp",
       "required": [
         "id",
         "name",
         "userId",
-        "prizes",
         "publishType",
         "isSelected",
         "publish_time",
         "join_number",
         "introduce",
-        "awardDeadline"
-      ]
-    },
-    "LotteryDetailReq": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "LotteryDetailReq",
-      "required": [
-        "id"
-      ]
-    },
-    "LotteryDetailResp": {
-      "type": "object",
-      "properties": {
-        "lotteryDetail": {
-          "$ref": "#/definitions/LotteryDetail"
-        }
-      },
-      "title": "LotteryDetailResp",
-      "required": [
-        "lotteryDetail"
+        "awardDeadline",
+        "prizes"
       ]
     },
     "LotteryListReq": {
@@ -510,13 +492,26 @@
     "LotterySponsorResp": {
       "type": "object",
       "properties": {
-        "sponsor": {
-          "$ref": "#/definitions/Sponsor"
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nickName": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
         }
       },
       "title": "LotterySponsorResp",
       "required": [
-        "sponsor"
+        "id",
+        "nickName",
+        "avatar",
+        "info"
       ]
     },
     "Prize": {
@@ -565,31 +560,6 @@
       "title": "SetLotteryIsSelectedResp",
       "required": [
         "isSelected"
-      ]
-    },
-    "Sponsor": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "nickName": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "info": {
-          "type": "string"
-        }
-      },
-      "title": "Sponsor",
-      "required": [
-        "id",
-        "nickName",
-        "avatar",
-        "info"
       ]
     },
     "UpdateLotteryReq": {

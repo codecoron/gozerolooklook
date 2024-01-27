@@ -1,8 +1,10 @@
 package lottery
 
 import (
-	"looklook/common/result"
+	"looklook/app/lottery/cmd/api/internal/handler/validator"
 	"net/http"
+
+	"looklook/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"looklook/app/lottery/cmd/api/internal/logic/lottery"
@@ -18,12 +20,15 @@ func LotterySponsorHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := validator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
+			return
+		}
+
 		l := lottery.NewLotterySponsorLogic(r.Context(), svcCtx)
 		resp, err := l.LotterySponsor(&req)
-		if err != nil {
-			result.ParamErrorResult(r, w, err)
-		} else {
-			result.HttpResult(r, w, resp, err)
-		}
+
+		result.HttpResult(r, w, resp, err)
 	}
 }

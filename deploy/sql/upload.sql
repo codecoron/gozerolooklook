@@ -1,4 +1,4 @@
-create table upload_file_info (
+create table upload_file (
                                   id int not null primary key auto_increment,
                                   user_id int not null comment '上传用户id',
                                   file_name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci comment '文件名',

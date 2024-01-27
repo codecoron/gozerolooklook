@@ -11,7 +11,7 @@ import (
 type ServiceContext struct {
 	Config          config.Config
 	RedisClient     *redis.Redis
-	FileUploadModel model.UploadFileInfoModel
+	FileUploadModel model.UploadFileModel
 	OssClient       *oss.Client
 }
 
@@ -25,7 +25,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 			r.Type = c.Redis.Type
 			r.Pass = c.Redis.Pass
 		}),
-		FileUploadModel: model.NewUploadFileInfoModel(sqlConn, c.Cache),
+		FileUploadModel: model.NewUploadFileModel(sqlConn, c.Cache),
 		OssClient:       client,
 	}
 }
