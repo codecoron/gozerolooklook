@@ -128,6 +128,13 @@ message LotterySponsorResp {
   string Info = 4;
 }
 
+message AnnounceLotteryReq {
+    int64 AnnounceType = 1;
+}
+
+message AnnounceLotteryResp {
+}
+
 //--------------------------------奖品表--------------------------------
 message Prize {
   int64 id = 1; //id
@@ -232,6 +239,6 @@ service lottery{
   rpc DelPrize(DelPrizeReq) returns (DelPrizeResp);
   rpc GetPrizeById(GetPrizeByIdReq) returns (GetPrizeByIdResp);
   rpc SearchPrize(SearchPrizeReq) returns (SearchPrizeResp);
-  rpc FindByLotteryId(FindByLotteryIdReq) returns (FindByLotteryIdResp);
+  rpc GetPrizeListByLotteryId(FindByLotteryIdReq) returns (FindByLotteryIdResp);
 
 }

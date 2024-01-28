@@ -10,21 +10,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type FindByLotteryIdLogic struct {
+type GetPrizeListByLotteryIdLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewFindByLotteryIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FindByLotteryIdLogic {
-	return &FindByLotteryIdLogic{
+func NewGetPrizeListByLotteryIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPrizeListByLotteryIdLogic {
+	return &GetPrizeListByLotteryIdLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *FindByLotteryIdLogic) FindByLotteryId(in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
+func (l *GetPrizeListByLotteryIdLogic) GetPrizeListByLotteryId(in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
 	res, err := l.svcCtx.PrizeModel.FindByLotteryId(l.ctx, in.LotteryId)
 	if err != nil {
 		return nil, err
@@ -41,4 +41,5 @@ func (l *FindByLotteryIdLogic) FindByLotteryId(in *pb.FindByLotteryIdReq) (*pb.F
 	return &pb.FindByLotteryIdResp{
 		Prizes: prizes,
 	}, nil
+	return &pb.FindByLotteryIdResp{}, nil
 }
