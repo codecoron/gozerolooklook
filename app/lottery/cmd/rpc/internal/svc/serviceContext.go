@@ -10,18 +10,20 @@ import (
 )
 
 type ServiceContext struct {
-	Config        config.Config
-	RedisClient   *redis.Redis
-	LotteryModel  model.LotteryModel
-	PrizeModel    model.PrizeModel
-	UserCenterRpc usercenter.Usercenter
+	Config                    config.Config
+	RedisClient               *redis.Redis
+	LotteryModel              model.LotteryModel
+	PrizeModel                model.PrizeModel
+	UserCenterRpc             usercenter.Usercenter
+	LotteryParticipationModel model.LotteryParticipationModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:        c,
-		LotteryModel:  model.NewLotteryModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
-		PrizeModel:    model.NewPrizeModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
-		UserCenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UserCenterRpcConf)),
+		Config:                    c,
+		LotteryModel:              model.NewLotteryModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		PrizeModel:                model.NewPrizeModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		UserCenterRpc:             usercenter.NewUsercenter(zrpc.MustNewClient(c.UserCenterRpcConf)),
+		LotteryParticipationModel: model.NewLotteryParticipationModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
 	}
 }

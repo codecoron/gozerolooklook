@@ -17,26 +17,8 @@ func AddLotteryParticipationHandler(svcCtx *svc.ServiceContext) http.HandlerFunc
 			return
 		}
 
-		l := lottery.NewLotteryParticipationLogic(r.Context(), svcCtx)
+		l := lottery.NewAddLotteryParticipationLogic(r.Context(), svcCtx)
 		resp, err := l.AddLotteryParticipation(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
-	}
-}
-
-func SearchLotteryParticipationHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.SearchLotteryParticipationReq
-		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-			return
-		}
-
-		l := lottery.NewLotteryParticipationLogic(r.Context(), svcCtx)
-		resp, err := l.SearchLotteryParticipation(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

@@ -30,6 +30,7 @@ type (
 	Lottery                        = pb.Lottery
 	LotteryDetailReq               = pb.LotteryDetailReq
 	LotteryDetailResp              = pb.LotteryDetailResp
+	LotteryParticipation           = pb.LotteryParticipation
 	LotterySponsorReq              = pb.LotterySponsorReq
 	LotterySponsorResp             = pb.LotterySponsorResp
 	Prize                          = pb.Prize

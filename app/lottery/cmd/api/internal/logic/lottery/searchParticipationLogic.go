@@ -2,6 +2,8 @@ package lottery
 
 import (
 	"context"
+	"looklook/app/lottery/cmd/rpc/lottery"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
 
 	"looklook/app/lottery/cmd/api/internal/svc"
 	"looklook/app/lottery/cmd/api/internal/types"
@@ -24,7 +26,22 @@ func NewSearchParticipationLogic(ctx context.Context, svcCtx *svc.ServiceContext
 }
 
 func (l *SearchParticipationLogic) SearchParticipation(req *types.SearchLotteryParticipationReq) (resp *types.SearchLotteryParticipationResp, err error) {
-	// todo: add your logic here and delete this line
+	r, err := l.svcCtx.LotteryRpc.SearchLotteryParticipation(l.ctx, &lottery.SearchLotteryParticipationReq{
+		LotteryId: req.LotteryId,
+	})
+	if err != nil {
+		return nil, err
+	}
 
+	for i := range r.List {
+		userId := r.List[i].UserId
+		info, err := l.svcCtx.UsercenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{
+			Id: userId,
+		})
+		if err != nil {
+			return nil, err
+		}
+		resp.List = append(resp.List, info.User.GetAvatar())
+	}
 	return
 }
