@@ -89,7 +89,13 @@ func (s *LotteryServer) SearchPrize(ctx context.Context, in *pb.SearchPrizeReq) 
 	return l.SearchPrize(in)
 }
 
-func (s *LotteryServer) FindByLotteryId(ctx context.Context, in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
-	l := logic.NewFindByLotteryIdLogic(ctx, s.svcCtx)
-	return l.FindByLotteryId(in)
+// -----------------------参与抽奖-----------------------
+func (s *LotteryServer) AddLotteryParticipation(ctx context.Context, in *pb.AddLotteryParticipationReq) (*pb.AddLotteryParticipationResp, error) {
+	l := logic.NewAddLotteryParticipationLogic(ctx, s.svcCtx)
+	return l.AddLotteryParticipation(in)
+}
+
+func (s *LotteryServer) SearchLotteryParticipation(ctx context.Context, in *pb.SearchLotteryParticipationReq) (*pb.SearchLotteryParticipationResp, error) {
+	l := logic.NewSearchLotteryParticipationLogic(ctx, s.svcCtx)
+	return l.SearchLotteryParticipation(in)
 }
