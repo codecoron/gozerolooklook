@@ -10,6 +10,7 @@ info (
 
 import (
 	"vote_config/voteConfig.api"
+	"vote_record/voteRecord.api"
 )
 
 //=====================================> vote v1 <=================================
@@ -31,13 +32,20 @@ service vote {
 	@doc "查看投票设置详情"
 	@handler viewVoteDetail
 	post /vote/viewVoteDetail (ViewVoteDetailReq) returns (ViewVoteDetailResp)
-//
-// @doc "用户投票"
-// @handler userVote
-// post /vote/viewVote (UserVoteReq) returns (UserVoteResp)
-//
-// @doc "查看用户投票"
-// @handler userViewDetailVote
-// post /vote/viewVote (userViewDetailVoteReq) returns (userViewDetailVoteResp)
+}
+
+//need login
+@server (
+	prefix: vote/v1
+	group:  vote
+	jwt:    JwtAuth
+)
+service vote {
+	@doc "新增投票记录"
+	@handler createVoteRecord
+	post /vote/createVoteRecord (CreateVoteRecordReq) returns (CreateVoteRecordResp)
+//  @doc "查看投票记录"
+//  @handler viewVoteRecordDetail
+//  post /vote/viewVoteRecordDetail (userViewDetailVoteReq) returns (userViewDetailVoteResp)
 }
 

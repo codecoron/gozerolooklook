@@ -12,7 +12,7 @@ type ServiceContext struct {
 	RedisClient *redis.Redis
 
 	VoteConfigModel model.VoteConfigModel
-	VoteRecord      model.VoteRecordModel
+	VoteRecordModel model.VoteRecordModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -26,5 +26,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		}),
 
 		VoteConfigModel: model.NewVoteConfigModel(sqlConn, c.Cache),
+		VoteRecordModel: model.NewVoteRecordModel(sqlConn, c.Cache),
 	}
 }

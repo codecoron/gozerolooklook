@@ -1,0 +1,20 @@
+syntax = "v1"
+
+info(
+    title: "用户投票记录"
+    desc: "用户投票记录"
+    author: "mike"
+    email: "coolfeng2008@outlook.com"
+    version: "v1"
+)
+
+type (
+    CreateVoteRecordReq {
+        LotteryId int64 `json:"lotteryId"`                                //抽奖id
+        UserId int64 `json:"userId"`                                      //用户id
+        SelectedOption int64 `json:"selectedOption"`                      //用户选择的投票选项
+    }
+    CreateVoteRecordResp {
+        Id int64 `json:"id"`
+    }
+)

@@ -57,7 +57,7 @@ type (
 		Id             int64     `db:"id"`
 		LotteryId      int64     `db:"lottery_id"`      // 抽奖ID
 		UserId         int64     `db:"user_id"`         // 用户ID
-		SelectedOption string    `db:"selected_option"` // 用户选择的投票选项
+		SelectedOption int64     `db:"selected_option"` // 用户选择的投票选项
 		CreatedAt      time.Time `db:"created_at"`      // 投票时间
 	}
 )

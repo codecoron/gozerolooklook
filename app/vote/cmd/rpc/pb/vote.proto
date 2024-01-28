@@ -77,25 +77,26 @@ message VoteRecord {
   int64 id = 1; //id
   int64 lotteryId = 2; //抽奖ID
   int64 userId = 3; //用户ID
-  string selectedOption = 4; //用户选择的投票选项
+  int64 selectedOption = 4; //用户选择的投票选项
   int64 createdAt = 5; //投票时间
 }
 
 message AddVoteRecordReq {
   int64 lotteryId = 1; //抽奖ID
   int64 userId = 2; //用户ID
-  string selectedOption = 3; //用户选择的投票选项
+  int64 selectedOption = 3; //用户选择的投票选项
   int64 createdAt = 4; //投票时间
 }
 
 message AddVoteRecordResp {
+  int64 id = 1; //id
 }
 
 message UpdateVoteRecordReq {
   int64 id = 1; //id
   int64 lotteryId = 2; //抽奖ID
   int64 userId = 3; //用户ID
-  string selectedOption = 4; //用户选择的投票选项
+  int64 selectedOption = 4; //用户选择的投票选项
   int64 createdAt = 5; //投票时间
 }
 
@@ -123,7 +124,7 @@ message SearchVoteRecordReq {
   int64 id = 3; //id
   int64 lotteryId = 4; //抽奖ID
   int64 userId = 5; //用户ID
-  string selectedOption = 6; //用户选择的投票选项
+  int64 selectedOption = 6; //用户选择的投票选项
   int64 createdAt = 7; //投票时间
 }
 
