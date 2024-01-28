@@ -44,6 +44,17 @@ type ViewVoteDetailResp struct {
 	VoteConfig VoteConfigJSONData `json:"voteConfig"` //投票配置字段说明
 }
 
+type ViewVoteRecordDetailReq struct {
+	LotteryId int64 `json:"lotteryId"` //抽奖id
+}
+
+type ViewVoteRecordDetailResp struct {
+	OptionText     string `json:"optionText"`     //投票选项名称
+	SelectedOption int64  `json:"selectedOption"` //投票选项序号
+	OptionImage    string `json:"optionImage"`    //投票选项图片,默认为空【表示文字投票选项】
+	VoteCount      int64  `json:"voteCount"`      //选项已获投票数量
+}
+
 type VoteConfigJSONData struct {
 	Title           string       `json:"title"`           //投票标题
 	Description     string       `json:"description"`     //投票描述【非必填】

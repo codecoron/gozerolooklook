@@ -127,6 +127,34 @@
           "vote"
         ]
       }
+    },
+    "vote/v1/vote/viewVoteRecordDetail": {
+      "post": {
+        "summary": "查看投票记录详情",
+        "operationId": "viewVoteRecordDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ViewVoteRecordDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViewVoteRecordDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
     }
   },
   "definitions": {
@@ -297,6 +325,50 @@
         "lotteryId",
         "enableVote",
         "voteConfig"
+      ]
+    },
+    "ViewVoteRecordDetailReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        }
+      },
+      "title": "ViewVoteRecordDetailReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "ViewVoteRecordDetailResp": {
+      "type": "object",
+      "properties": {
+        "optionText": {
+          "type": "string",
+          "description": "投票选项名称"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票选项序号"
+        },
+        "optionImage": {
+          "type": "string",
+          "description": "投票选项图片,默认为空【表示文字投票选项】"
+        },
+        "voteCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "选项已获投票数量"
+        }
+      },
+      "title": "ViewVoteRecordDetailResp",
+      "required": [
+        "optionText",
+        "selectedOption",
+        "optionImage",
+        "voteCount"
       ]
     },
     "VoteConfigJSONData": {

@@ -44,8 +44,9 @@ service vote {
 	@doc "新增投票记录"
 	@handler createVoteRecord
 	post /vote/createVoteRecord (CreateVoteRecordReq) returns (CreateVoteRecordResp)
-//  @doc "查看投票记录"
-//  @handler viewVoteRecordDetail
-//  post /vote/viewVoteRecordDetail (userViewDetailVoteReq) returns (userViewDetailVoteResp)
+
+	@doc "查看投票记录详情"
+	@handler viewVoteRecordDetail
+	post /vote/viewVoteRecordDetail (ViewVoteRecordDetailReq) returns (ViewVoteRecordDetailResp)
 }
 

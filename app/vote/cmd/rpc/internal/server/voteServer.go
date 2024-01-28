@@ -69,6 +69,11 @@ func (s *VoteServer) GetVoteRecordById(ctx context.Context, in *pb.GetVoteRecord
 	return l.GetVoteRecordById(in)
 }
 
+func (s *VoteServer) GetVoteRecordDetail(ctx context.Context, in *pb.GetVoteRecordDetailReq) (*pb.GetVoteRecordDetailResp, error) {
+	l := logic.NewGetVoteRecordDetailLogic(ctx, s.svcCtx)
+	return l.GetVoteRecordDetail(in)
+}
+
 func (s *VoteServer) SearchVoteRecord(ctx context.Context, in *pb.SearchVoteRecordReq) (*pb.SearchVoteRecordResp, error) {
 	l := logic.NewSearchVoteRecordLogic(ctx, s.svcCtx)
 	return l.SearchVoteRecord(in)

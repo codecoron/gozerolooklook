@@ -19,6 +19,21 @@ message VoteConfig {
   int64 updateTime = 7; //updateTime
 }
 
+message VoteOption {
+  string Text = 1; //选项名称
+  string Image = 2; //选项图片
+}
+
+message VoteConfigJSONData {
+  string Title = 1; //投票标题
+  string Description = 2; //投票描述【非必填】
+  int64 WinnerSelection = 3; //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
+  int64 Type = 4; //投票类型：1单选 2多选
+  int64 MinVotes = 5; //最小投票范围
+  int64 MaxVotes = 6; //最大投票范围
+  repeated VoteOption Options = 7; //选项列表
+}
+
 message AddVoteConfigReq {
   int64 userId = 1; //用户id
   int64 lotteryId = 2; //抽奖ID
@@ -100,6 +115,13 @@ message UpdateVoteRecordReq {
   int64 createdAt = 5; //投票时间
 }
 
+message VoteRecordDetail {
+  string OptionText = 1; //投票选项名称
+  int64 SelectedOption = 2; //投票选项序号
+  string OptionImage = 3; //投票选项图片,默认为空【表示文字投票选项】
+  int64 VoteCount = 4; //选项已获投票数量
+}
+
 message UpdateVoteRecordResp {
 }
 
@@ -116,6 +138,14 @@ message GetVoteRecordByIdReq {
 
 message GetVoteRecordByIdResp {
   VoteRecord voteRecord = 1; //voteRecord
+}
+
+message GetVoteRecordDetailReq {
+  int64 LotteryId = 1; //id
+}
+
+message GetVoteRecordDetailResp {
+  VoteRecordDetail voteRecordDetail = 1; //voteRecordDetail
 }
 
 message SearchVoteRecordReq {
@@ -151,6 +181,7 @@ service vote{
 	 rpc UpdateVoteRecord(UpdateVoteRecordReq) returns (UpdateVoteRecordResp); 
 	 rpc DelVoteRecord(DelVoteRecordReq) returns (DelVoteRecordResp); 
 	 rpc GetVoteRecordById(GetVoteRecordByIdReq) returns (GetVoteRecordByIdResp); 
-	 rpc SearchVoteRecord(SearchVoteRecordReq) returns (SearchVoteRecordResp); 
+	 rpc GetVoteRecordDetail(GetVoteRecordDetailReq) returns (GetVoteRecordDetailResp);
+	 rpc SearchVoteRecord(SearchVoteRecordReq) returns (SearchVoteRecordResp);
 
 }
