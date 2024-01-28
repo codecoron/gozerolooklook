@@ -41,5 +41,4 @@ func (l *GetPrizeListByLotteryIdLogic) GetPrizeListByLotteryId(in *pb.FindByLott
 	return &pb.FindByLotteryIdResp{
 		Prizes: prizes,
 	}, nil
-	return &pb.FindByLotteryIdResp{}, nil
 }
