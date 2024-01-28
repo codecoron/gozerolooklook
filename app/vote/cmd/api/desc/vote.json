@@ -344,31 +344,16 @@
     "ViewVoteRecordDetailResp": {
       "type": "object",
       "properties": {
-        "optionText": {
-          "type": "string",
-          "description": "投票选项名称"
-        },
-        "selectedOption": {
-          "type": "integer",
-          "format": "int64",
-          "description": "投票选项序号"
-        },
-        "optionImage": {
-          "type": "string",
-          "description": "投票选项图片,默认为空【表示文字投票选项】"
-        },
-        "voteCount": {
-          "type": "integer",
-          "format": "int64",
-          "description": "选项已获投票数量"
+        "voteRecordDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteRecordDetail"
+          }
         }
       },
       "title": "ViewVoteRecordDetailResp",
       "required": [
-        "optionText",
-        "selectedOption",
-        "optionImage",
-        "voteCount"
+        "voteRecordDetails"
       ]
     },
     "VoteConfigJSONData": {
@@ -437,6 +422,36 @@
       "required": [
         "text",
         "image"
+      ]
+    },
+    "VoteRecordDetail": {
+      "type": "object",
+      "properties": {
+        "optionText": {
+          "type": "string",
+          "description": "投票选项名称"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票选项序号"
+        },
+        "optionImage": {
+          "type": "string",
+          "description": "投票选项图片,默认为空【表示文字投票选项】"
+        },
+        "voteCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "选项已获投票数量"
+        }
+      },
+      "title": "VoteRecordDetail",
+      "required": [
+        "optionText",
+        "selectedOption",
+        "optionImage",
+        "voteCount"
       ]
     }
   },

@@ -49,10 +49,7 @@ type ViewVoteRecordDetailReq struct {
 }
 
 type ViewVoteRecordDetailResp struct {
-	OptionText     string `json:"optionText"`     //投票选项名称
-	SelectedOption int64  `json:"selectedOption"` //投票选项序号
-	OptionImage    string `json:"optionImage"`    //投票选项图片,默认为空【表示文字投票选项】
-	VoteCount      int64  `json:"voteCount"`      //选项已获投票数量
+	VoteRecordDetails []*VoteRecordDetail `json:"voteRecordDetails"`
 }
 
 type VoteConfigJSONData struct {
@@ -68,4 +65,11 @@ type VoteConfigJSONData struct {
 type VoteOption struct {
 	Text  string `json:"text"`  //选项名称
 	Image string `json:"image"` //选项图片
+}
+
+type VoteRecordDetail struct {
+	OptionText     string `json:"optionText"`     //投票选项名称
+	SelectedOption int64  `json:"selectedOption"` //投票选项序号
+	OptionImage    string `json:"optionImage"`    //投票选项图片,默认为空【表示文字投票选项】
+	VoteCount      int64  `json:"voteCount"`      //选项已获投票数量
 }

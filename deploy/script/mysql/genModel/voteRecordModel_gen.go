@@ -58,7 +58,8 @@ type (
 		LotteryId      int64     `db:"lottery_id"`      // 抽奖ID
 		UserId         int64     `db:"user_id"`         // 用户ID
 		SelectedOption int64     `db:"selected_option"` // 用户选择的投票选项
-		CreatedAt      time.Time `db:"created_at"`      // 投票时间
+		DelState       int64     `db:"del_state"`
+		CreatedAt      time.Time `db:"created_at"` // 投票时间
 	}
 )
 
@@ -98,8 +99,8 @@ func (m *defaultVoteRecordModel) FindOne(ctx context.Context, id int64) (*VoteRe
 func (m *defaultVoteRecordModel) Insert(ctx context.Context, data *VoteRecord) (sql.Result, error) {
 	voteVoteRecordIdKey := fmt.Sprintf("%s%v", cacheVoteVoteRecordIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, voteRecordRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, voteRecordRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.DelState)
 	}, voteVoteRecordIdKey)
 	return ret, err
 }
@@ -107,8 +108,8 @@ func (m *defaultVoteRecordModel) Insert(ctx context.Context, data *VoteRecord) (
 func (m *defaultVoteRecordModel) TransInsert(ctx context.Context, session sqlx.Session, data *VoteRecord) (sql.Result, error) {
 	voteVoteRecordIdKey := fmt.Sprintf("%s%v", cacheVoteVoteRecordIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, voteRecordRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, voteRecordRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.DelState)
 	}, voteVoteRecordIdKey)
 	return ret, err
 }
@@ -116,7 +117,7 @@ func (m *defaultVoteRecordModel) Update(ctx context.Context, data *VoteRecord) e
 	voteVoteRecordIdKey := fmt.Sprintf("%s%v", cacheVoteVoteRecordIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, voteRecordRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.Id)
+		return conn.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.DelState, data.Id)
 	}, voteVoteRecordIdKey)
 	return err
 }
@@ -125,7 +126,7 @@ func (m *defaultVoteRecordModel) TransUpdate(ctx context.Context, session sqlx.S
 	voteVoteRecordIdKey := fmt.Sprintf("%s%v", cacheVoteVoteRecordIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, voteRecordRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.Id)
+		return session.ExecCtx(ctx, query, data.LotteryId, data.UserId, data.SelectedOption, data.DelState, data.Id)
 	}, voteVoteRecordIdKey)
 	return err
 }

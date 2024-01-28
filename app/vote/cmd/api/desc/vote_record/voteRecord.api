@@ -21,10 +21,13 @@ type (
     ViewVoteRecordDetailReq {
         LotteryId int64 `json:"lotteryId"` //抽奖id
     }
-    ViewVoteRecordDetailResp {
+    VoteRecordDetail {
         OptionText string `json:"optionText"`        //投票选项名称
         SelectedOption int64 `json:"selectedOption"` //投票选项序号
         OptionImage string `json:"optionImage"`      //投票选项图片,默认为空【表示文字投票选项】
         VoteCount int64 `json:"voteCount"`           //选项已获投票数量
+    }
+    ViewVoteRecordDetailResp {
+        VoteRecordDetails []*VoteRecordDetail `json:"voteRecordDetails"`
     }
 )
