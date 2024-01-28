@@ -32,6 +32,7 @@ const (
 	Lottery_DelPrize_FullMethodName             = "/pb.lottery/DelPrize"
 	Lottery_GetPrizeById_FullMethodName         = "/pb.lottery/GetPrizeById"
 	Lottery_SearchPrize_FullMethodName          = "/pb.lottery/SearchPrize"
+	Lottery_FindByLotteryId_FullMethodName      = "/pb.lottery/FindByLotteryId"
 )
 
 // LotteryClient is the client API for Lottery service.
@@ -53,6 +54,7 @@ type LotteryClient interface {
 	DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
 	GetPrizeById(ctx context.Context, in *GetPrizeByIdReq, opts ...grpc.CallOption) (*GetPrizeByIdResp, error)
 	SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error)
+	FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error)
 }
 
 type lotteryClient struct {
@@ -180,6 +182,15 @@ func (c *lotteryClient) SearchPrize(ctx context.Context, in *SearchPrizeReq, opt
 	return out, nil
 }
 
+func (c *lotteryClient) FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error) {
+	out := new(FindByLotteryIdResp)
+	err := c.cc.Invoke(ctx, Lottery_FindByLotteryId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LotteryServer is the server API for Lottery service.
 // All implementations must embed UnimplementedLotteryServer
 // for forward compatibility
@@ -199,6 +210,7 @@ type LotteryServer interface {
 	DelPrize(context.Context, *DelPrizeReq) (*DelPrizeResp, error)
 	GetPrizeById(context.Context, *GetPrizeByIdReq) (*GetPrizeByIdResp, error)
 	SearchPrize(context.Context, *SearchPrizeReq) (*SearchPrizeResp, error)
+	FindByLotteryId(context.Context, *FindByLotteryIdReq) (*FindByLotteryIdResp, error)
 	mustEmbedUnimplementedLotteryServer()
 }
 
@@ -244,6 +256,9 @@ func (UnimplementedLotteryServer) GetPrizeById(context.Context, *GetPrizeByIdReq
 }
 func (UnimplementedLotteryServer) SearchPrize(context.Context, *SearchPrizeReq) (*SearchPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchPrize not implemented")
+}
+func (UnimplementedLotteryServer) FindByLotteryId(context.Context, *FindByLotteryIdReq) (*FindByLotteryIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindByLotteryId not implemented")
 }
 func (UnimplementedLotteryServer) mustEmbedUnimplementedLotteryServer() {}
 
@@ -492,6 +507,24 @@ func _Lottery_SearchPrize_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_FindByLotteryId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindByLotteryIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).FindByLotteryId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_FindByLotteryId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).FindByLotteryId(ctx, req.(*FindByLotteryIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Lottery_ServiceDesc is the grpc.ServiceDesc for Lottery service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -550,6 +583,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchPrize",
 			Handler:    _Lottery_SearchPrize_Handler,
+		},
+		{
+			MethodName: "FindByLotteryId",
+			Handler:    _Lottery_FindByLotteryId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

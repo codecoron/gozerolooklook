@@ -88,3 +88,8 @@ func (s *LotteryServer) SearchPrize(ctx context.Context, in *pb.SearchPrizeReq) 
 	l := logic.NewSearchPrizeLogic(ctx, s.svcCtx)
 	return l.SearchPrize(in)
 }
+
+func (s *LotteryServer) FindByLotteryId(ctx context.Context, in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
+	l := logic.NewFindByLotteryIdLogic(ctx, s.svcCtx)
+	return l.FindByLotteryId(in)
+}

@@ -203,6 +203,14 @@ message SearchPrizeResp {
   repeated Prize prize = 1; //prize
 }
 
+message FindByLotteryIdReq {
+  int64 lotteryId = 1; //id
+}
+
+message FindByLotteryIdResp {
+  repeated Prize prizes = 1; // 奖品列表
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -224,5 +232,6 @@ service lottery{
   rpc DelPrize(DelPrizeReq) returns (DelPrizeResp);
   rpc GetPrizeById(GetPrizeByIdReq) returns (GetPrizeByIdResp);
   rpc SearchPrize(SearchPrizeReq) returns (SearchPrizeResp);
+  rpc FindByLotteryId(FindByLotteryIdReq) returns (FindByLotteryIdResp);
 
 }

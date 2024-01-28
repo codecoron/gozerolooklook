@@ -21,6 +21,8 @@ type (
 	DelLotteryResp           = pb.DelLotteryResp
 	DelPrizeReq              = pb.DelPrizeReq
 	DelPrizeResp             = pb.DelPrizeResp
+	FindByLotteryIdReq       = pb.FindByLotteryIdReq
+	FindByLotteryIdResp      = pb.FindByLotteryIdResp
 	GetLotteryByIdReq        = pb.GetLotteryByIdReq
 	GetLotteryByIdResp       = pb.GetLotteryByIdResp
 	GetPrizeByIdReq          = pb.GetPrizeByIdReq
@@ -58,6 +60,7 @@ type (
 		DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
 		GetPrizeById(ctx context.Context, in *GetPrizeByIdReq, opts ...grpc.CallOption) (*GetPrizeByIdResp, error)
 		SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error)
+		FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -136,4 +139,9 @@ func (m *defaultLotteryZrpcClient) GetPrizeById(ctx context.Context, in *GetPriz
 func (m *defaultLotteryZrpcClient) SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.SearchPrize(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.FindByLotteryId(ctx, in, opts...)
 }
