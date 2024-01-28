@@ -1,12 +1,18 @@
 package types
 
 import (
+	"encoding/xml"
 	wxModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 )
 
 type MsgEvent struct {
 	wxModels.CallbackMessageHeader
-	List []UserSubscribeSetting `xml:"List"`
+	SubscribeMsgPopupEvent SubscribeMsgPopupEvent
+}
+
+type SubscribeMsgPopupEvent struct {
+	XMLName xml.Name               `xml:"SubscribeMsgPopupEvent"`
+	List    []UserSubscribeSetting `xml:"List"`
 }
 
 type UserSubscribeSetting struct {
