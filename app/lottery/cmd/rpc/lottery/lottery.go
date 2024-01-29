@@ -13,6 +13,36 @@ import (
 )
 
 type (
+	AddLotteryReq            = pb.AddLotteryReq
+	AddLotteryResp           = pb.AddLotteryResp
+	AddPrizeReq              = pb.AddPrizeReq
+	AddPrizeResp             = pb.AddPrizeResp
+	DelLotteryReq            = pb.DelLotteryReq
+	DelLotteryResp           = pb.DelLotteryResp
+	DelPrizeReq              = pb.DelPrizeReq
+	DelPrizeResp             = pb.DelPrizeResp
+	FindByLotteryIdReq       = pb.FindByLotteryIdReq
+	FindByLotteryIdResp      = pb.FindByLotteryIdResp
+	GetLotteryByIdReq        = pb.GetLotteryByIdReq
+	GetLotteryByIdResp       = pb.GetLotteryByIdResp
+	GetPrizeByIdReq          = pb.GetPrizeByIdReq
+	GetPrizeByIdResp         = pb.GetPrizeByIdResp
+	Lottery                  = pb.Lottery
+	LotteryDetailReq         = pb.LotteryDetailReq
+	LotteryDetailResp        = pb.LotteryDetailResp
+	LotterySponsorReq        = pb.LotterySponsorReq
+	LotterySponsorResp       = pb.LotterySponsorResp
+	Prize                    = pb.Prize
+	SearchLotteryReq         = pb.SearchLotteryReq
+	SearchLotteryResp        = pb.SearchLotteryResp
+	SearchPrizeReq           = pb.SearchPrizeReq
+	SearchPrizeResp          = pb.SearchPrizeResp
+	SetIsSelectedLotteryReq  = pb.SetIsSelectedLotteryReq
+	SetIsSelectedLotteryResp = pb.SetIsSelectedLotteryResp
+	UpdateLotteryReq         = pb.UpdateLotteryReq
+	UpdateLotteryResp        = pb.UpdateLotteryResp
+	UpdatePrizeReq           = pb.UpdatePrizeReq
+	UpdatePrizeResp          = pb.UpdatePrizeResp
 	AddLotteryParticipationReq     = pb.AddLotteryParticipationReq
 	AddLotteryParticipationResp    = pb.AddLotteryParticipationResp
 	AddLotteryReq                  = pb.AddLotteryReq
@@ -66,6 +96,7 @@ type (
 		// -----------------------参与抽奖-----------------------
 		AddLotteryParticipation(ctx context.Context, in *AddLotteryParticipationReq, opts ...grpc.CallOption) (*AddLotteryParticipationResp, error)
 		SearchLotteryParticipation(ctx context.Context, in *SearchLotteryParticipationReq, opts ...grpc.CallOption) (*SearchLotteryParticipationResp, error)
+		FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -144,6 +175,11 @@ func (m *defaultLotteryZrpcClient) GetPrizeById(ctx context.Context, in *GetPriz
 func (m *defaultLotteryZrpcClient) SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.SearchPrize(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) FindByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.FindByLotteryId(ctx, in, opts...)
 }
 
 // -----------------------参与抽奖-----------------------
