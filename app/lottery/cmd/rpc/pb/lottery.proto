@@ -236,11 +236,11 @@ message SearchLotteryParticipationResp{
   repeated LotteryParticipation list = 2;
 }
 
-message FindByLotteryIdReq {
+message GetPrizeListByLotteryIdReq {
   int64 lotteryId = 1; //id
 }
 
-message FindByLotteryIdResp {
+message GetPrizeListByLotteryIdResp {
   repeated Prize prizes = 1; // 奖品列表
 }
 
@@ -259,13 +259,14 @@ service lottery{
   rpc SetIsSelectedLottery(SetIsSelectedLotteryReq) returns (SetIsSelectedLotteryResp);
   rpc LotteryDetail(LotteryDetailReq) returns (LotteryDetailResp);
   rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
+  rpc AnnounceLottery(AnnounceLotteryReq) returns (AnnounceLotteryResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);
   rpc DelPrize(DelPrizeReq) returns (DelPrizeResp);
   rpc GetPrizeById(GetPrizeByIdReq) returns (GetPrizeByIdResp);
   rpc SearchPrize(SearchPrizeReq) returns (SearchPrizeResp);
-  rpc GetPrizeListByLotteryId(FindByLotteryIdReq) returns (FindByLotteryIdResp);
+  rpc GetPrizeListByLotteryId(GetPrizeListByLotteryIdReq) returns (GetPrizeListByLotteryIdResp);
 
   //-----------------------参与抽奖-----------------------
   rpc AddLotteryParticipation(AddLotteryParticipationReq) returns (AddLotteryParticipationResp);
