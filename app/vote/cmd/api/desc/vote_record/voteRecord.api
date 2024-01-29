@@ -30,4 +30,16 @@ type (
     ViewVoteRecordDetailResp {
         VoteRecordDetails []*VoteRecordDetail `json:"voteRecordDetails"`
     }
+
+    ViewUserVoteRecordDetailReq {
+        LotteryId int64 `json:"lotteryId"` //抽奖id
+    }
+    VoteUserRecordDetail {
+        LotteryId int64 `json:"lotteryId"`                                //抽奖id
+        UserId int64 `json:"userId"`                                      //用户id
+        SelectedOption int64 `json:"selectedOption"`                      //用户选择的投票选项
+    }
+    ViewUserVoteRecordDetailResp {
+        VoteUserRecordDetails []*VoteUserRecordDetail `json:"voteUserRecordDetails"`
+    }
 )

@@ -100,6 +100,34 @@
         ]
       }
     },
+    "vote/v1/vote/viewUserVoteRecordDetail": {
+      "post": {
+        "summary": "查看当前用户投票记录",
+        "operationId": "viewUserVoteRecordDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ViewUserVoteRecordDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViewUserVoteRecordDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
     "vote/v1/vote/viewVoteDetail": {
       "post": {
         "summary": "查看投票设置详情",
@@ -275,6 +303,35 @@
     "UpdateVoteResp": {
       "type": "object",
       "title": "UpdateVoteResp"
+    },
+    "ViewUserVoteRecordDetailReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        }
+      },
+      "title": "ViewUserVoteRecordDetailReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "ViewUserVoteRecordDetailResp": {
+      "type": "object",
+      "properties": {
+        "voteUserRecordDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteUserRecordDetail"
+          }
+        }
+      },
+      "title": "ViewUserVoteRecordDetailResp",
+      "required": [
+        "voteUserRecordDetails"
+      ]
     },
     "ViewVoteDetailReq": {
       "type": "object",
@@ -452,6 +509,32 @@
         "selectedOption",
         "optionImage",
         "voteCount"
+      ]
+    },
+    "VoteUserRecordDetail": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户选择的投票选项"
+        }
+      },
+      "title": "VoteUserRecordDetail",
+      "required": [
+        "lotteryId",
+        "userId",
+        "selectedOption"
       ]
     }
   },

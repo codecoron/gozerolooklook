@@ -32,6 +32,14 @@ type UpdateVoteReq struct {
 type UpdateVoteResp struct {
 }
 
+type ViewUserVoteRecordDetailReq struct {
+	LotteryId int64 `json:"lotteryId"` //抽奖id
+}
+
+type ViewUserVoteRecordDetailResp struct {
+	VoteUserRecordDetails []*VoteUserRecordDetail `json:"voteUserRecordDetails"`
+}
+
 type ViewVoteDetailReq struct {
 	Id int64 `json:"id"` //投票id
 }
@@ -72,4 +80,10 @@ type VoteRecordDetail struct {
 	SelectedOption int64  `json:"selectedOption"` //投票选项序号
 	OptionImage    string `json:"optionImage"`    //投票选项图片,默认为空【表示文字投票选项】
 	VoteCount      int64  `json:"voteCount"`      //选项已获投票数量
+}
+
+type VoteUserRecordDetail struct {
+	LotteryId      int64 `json:"lotteryId"`      //抽奖id
+	UserId         int64 `json:"userId"`         //用户id
+	SelectedOption int64 `json:"selectedOption"` //用户选择的投票选项
 }

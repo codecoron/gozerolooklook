@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/jinzhu/copier"
 	"looklook/app/vote/model"
 
@@ -54,9 +53,9 @@ func MergeResults(voteConfigData *model.VoteConfig, voteRecordData []*model.Vote
 	for index, option := range voteConfig.Options {
 		optionText := option.Text
 		optionImage := option.Image
-		fmt.Println("Text: ", optionText)
-		fmt.Println("Image: ", optionImage)
-		fmt.Println("index: ", index)
+		//fmt.Println("Text: ", optionText)
+		//fmt.Println("Image: ", optionImage)
+		//fmt.Println("index: ", index)
 
 		// 从投票记录的 map 中查找对应索引的累计投票数
 		voteCount := voteRecordMap[index]

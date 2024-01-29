@@ -35,12 +35,16 @@ func (l *ViewVoteRecordDetailLogic) ViewVoteRecordDetail(req *types.ViewVoteReco
 		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get VoteRecordDetail"), "Failed to get VoteRecordDetail err : %v ,req:%+v", err, req)
 	}
 
+	//fmt.Println("----res----", res)
+
 	resp = &types.ViewVoteRecordDetailResp{}
 	if err := copier.CopyWithOption(resp, res, copier.Option{
 		DeepCopy: true,
 	}); err != nil {
 		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to copy VoteRecord to ViewVoteDetailResp"), "Failed to copy VoteRecord to ViewVoteRecordDetailResp err: %v", err)
 	}
+
+	//fmt.Println("----resp----", resp)
 
 	return resp, nil
 }

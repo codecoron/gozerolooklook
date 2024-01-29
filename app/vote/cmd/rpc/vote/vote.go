@@ -13,33 +13,36 @@ import (
 )
 
 type (
-	AddVoteConfigReq        = pb.AddVoteConfigReq
-	AddVoteConfigResp       = pb.AddVoteConfigResp
-	AddVoteRecordReq        = pb.AddVoteRecordReq
-	AddVoteRecordResp       = pb.AddVoteRecordResp
-	DelVoteConfigReq        = pb.DelVoteConfigReq
-	DelVoteConfigResp       = pb.DelVoteConfigResp
-	DelVoteRecordReq        = pb.DelVoteRecordReq
-	DelVoteRecordResp       = pb.DelVoteRecordResp
-	GetVoteConfigByIdReq    = pb.GetVoteConfigByIdReq
-	GetVoteConfigByIdResp   = pb.GetVoteConfigByIdResp
-	GetVoteRecordByIdReq    = pb.GetVoteRecordByIdReq
-	GetVoteRecordByIdResp   = pb.GetVoteRecordByIdResp
-	GetVoteRecordDetailReq  = pb.GetVoteRecordDetailReq
-	GetVoteRecordDetailResp = pb.GetVoteRecordDetailResp
-	SearchVoteConfigReq     = pb.SearchVoteConfigReq
-	SearchVoteConfigResp    = pb.SearchVoteConfigResp
-	SearchVoteRecordReq     = pb.SearchVoteRecordReq
-	SearchVoteRecordResp    = pb.SearchVoteRecordResp
-	UpdateVoteConfigReq     = pb.UpdateVoteConfigReq
-	UpdateVoteConfigResp    = pb.UpdateVoteConfigResp
-	UpdateVoteRecordReq     = pb.UpdateVoteRecordReq
-	UpdateVoteRecordResp    = pb.UpdateVoteRecordResp
-	VoteConfig              = pb.VoteConfig
-	VoteConfigJSONData      = pb.VoteConfigJSONData
-	VoteOption              = pb.VoteOption
-	VoteRecord              = pb.VoteRecord
-	VoteRecordDetail        = pb.VoteRecordDetail
+	AddVoteConfigReq            = pb.AddVoteConfigReq
+	AddVoteConfigResp           = pb.AddVoteConfigResp
+	AddVoteRecordReq            = pb.AddVoteRecordReq
+	AddVoteRecordResp           = pb.AddVoteRecordResp
+	DelVoteConfigReq            = pb.DelVoteConfigReq
+	DelVoteConfigResp           = pb.DelVoteConfigResp
+	DelVoteRecordReq            = pb.DelVoteRecordReq
+	DelVoteRecordResp           = pb.DelVoteRecordResp
+	GetUserVoteRecordDetailReq  = pb.GetUserVoteRecordDetailReq
+	GetUserVoteRecordDetailResp = pb.GetUserVoteRecordDetailResp
+	GetVoteConfigByIdReq        = pb.GetVoteConfigByIdReq
+	GetVoteConfigByIdResp       = pb.GetVoteConfigByIdResp
+	GetVoteRecordByIdReq        = pb.GetVoteRecordByIdReq
+	GetVoteRecordByIdResp       = pb.GetVoteRecordByIdResp
+	GetVoteRecordDetailReq      = pb.GetVoteRecordDetailReq
+	GetVoteRecordDetailResp     = pb.GetVoteRecordDetailResp
+	SearchVoteConfigReq         = pb.SearchVoteConfigReq
+	SearchVoteConfigResp        = pb.SearchVoteConfigResp
+	SearchVoteRecordReq         = pb.SearchVoteRecordReq
+	SearchVoteRecordResp        = pb.SearchVoteRecordResp
+	UpdateVoteConfigReq         = pb.UpdateVoteConfigReq
+	UpdateVoteConfigResp        = pb.UpdateVoteConfigResp
+	UpdateVoteRecordReq         = pb.UpdateVoteRecordReq
+	UpdateVoteRecordResp        = pb.UpdateVoteRecordResp
+	UserVoteRecordDetail        = pb.UserVoteRecordDetail
+	VoteConfig                  = pb.VoteConfig
+	VoteConfigJSONData          = pb.VoteConfigJSONData
+	VoteOption                  = pb.VoteOption
+	VoteRecord                  = pb.VoteRecord
+	VoteRecordDetail            = pb.VoteRecordDetail
 
 	Vote interface {
 		// -----------------------投票表-----------------------
@@ -54,6 +57,7 @@ type (
 		DelVoteRecord(ctx context.Context, in *DelVoteRecordReq, opts ...grpc.CallOption) (*DelVoteRecordResp, error)
 		GetVoteRecordById(ctx context.Context, in *GetVoteRecordByIdReq, opts ...grpc.CallOption) (*GetVoteRecordByIdResp, error)
 		GetVoteRecordDetail(ctx context.Context, in *GetVoteRecordDetailReq, opts ...grpc.CallOption) (*GetVoteRecordDetailResp, error)
+		GetUserVoteRecordDetail(ctx context.Context, in *GetUserVoteRecordDetailReq, opts ...grpc.CallOption) (*GetUserVoteRecordDetailResp, error)
 		SearchVoteRecord(ctx context.Context, in *SearchVoteRecordReq, opts ...grpc.CallOption) (*SearchVoteRecordResp, error)
 	}
 
@@ -118,6 +122,11 @@ func (m *defaultVote) GetVoteRecordById(ctx context.Context, in *GetVoteRecordBy
 func (m *defaultVote) GetVoteRecordDetail(ctx context.Context, in *GetVoteRecordDetailReq, opts ...grpc.CallOption) (*GetVoteRecordDetailResp, error) {
 	client := pb.NewVoteClient(m.cli.Conn())
 	return client.GetVoteRecordDetail(ctx, in, opts...)
+}
+
+func (m *defaultVote) GetUserVoteRecordDetail(ctx context.Context, in *GetUserVoteRecordDetailReq, opts ...grpc.CallOption) (*GetUserVoteRecordDetailResp, error) {
+	client := pb.NewVoteClient(m.cli.Conn())
+	return client.GetUserVoteRecordDetail(ctx, in, opts...)
 }
 
 func (m *defaultVote) SearchVoteRecord(ctx context.Context, in *SearchVoteRecordReq, opts ...grpc.CallOption) (*SearchVoteRecordResp, error) {

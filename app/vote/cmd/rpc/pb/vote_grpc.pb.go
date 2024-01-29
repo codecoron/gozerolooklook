@@ -19,17 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Vote_AddVoteConfig_FullMethodName       = "/pb.vote/AddVoteConfig"
-	Vote_UpdateVoteConfig_FullMethodName    = "/pb.vote/UpdateVoteConfig"
-	Vote_DelVoteConfig_FullMethodName       = "/pb.vote/DelVoteConfig"
-	Vote_GetVoteConfigById_FullMethodName   = "/pb.vote/GetVoteConfigById"
-	Vote_SearchVoteConfig_FullMethodName    = "/pb.vote/SearchVoteConfig"
-	Vote_AddVoteRecord_FullMethodName       = "/pb.vote/AddVoteRecord"
-	Vote_UpdateVoteRecord_FullMethodName    = "/pb.vote/UpdateVoteRecord"
-	Vote_DelVoteRecord_FullMethodName       = "/pb.vote/DelVoteRecord"
-	Vote_GetVoteRecordById_FullMethodName   = "/pb.vote/GetVoteRecordById"
-	Vote_GetVoteRecordDetail_FullMethodName = "/pb.vote/GetVoteRecordDetail"
-	Vote_SearchVoteRecord_FullMethodName    = "/pb.vote/SearchVoteRecord"
+	Vote_AddVoteConfig_FullMethodName           = "/pb.vote/AddVoteConfig"
+	Vote_UpdateVoteConfig_FullMethodName        = "/pb.vote/UpdateVoteConfig"
+	Vote_DelVoteConfig_FullMethodName           = "/pb.vote/DelVoteConfig"
+	Vote_GetVoteConfigById_FullMethodName       = "/pb.vote/GetVoteConfigById"
+	Vote_SearchVoteConfig_FullMethodName        = "/pb.vote/SearchVoteConfig"
+	Vote_AddVoteRecord_FullMethodName           = "/pb.vote/AddVoteRecord"
+	Vote_UpdateVoteRecord_FullMethodName        = "/pb.vote/UpdateVoteRecord"
+	Vote_DelVoteRecord_FullMethodName           = "/pb.vote/DelVoteRecord"
+	Vote_GetVoteRecordById_FullMethodName       = "/pb.vote/GetVoteRecordById"
+	Vote_GetVoteRecordDetail_FullMethodName     = "/pb.vote/GetVoteRecordDetail"
+	Vote_GetUserVoteRecordDetail_FullMethodName = "/pb.vote/GetUserVoteRecordDetail"
+	Vote_SearchVoteRecord_FullMethodName        = "/pb.vote/SearchVoteRecord"
 )
 
 // VoteClient is the client API for Vote service.
@@ -48,6 +49,7 @@ type VoteClient interface {
 	DelVoteRecord(ctx context.Context, in *DelVoteRecordReq, opts ...grpc.CallOption) (*DelVoteRecordResp, error)
 	GetVoteRecordById(ctx context.Context, in *GetVoteRecordByIdReq, opts ...grpc.CallOption) (*GetVoteRecordByIdResp, error)
 	GetVoteRecordDetail(ctx context.Context, in *GetVoteRecordDetailReq, opts ...grpc.CallOption) (*GetVoteRecordDetailResp, error)
+	GetUserVoteRecordDetail(ctx context.Context, in *GetUserVoteRecordDetailReq, opts ...grpc.CallOption) (*GetUserVoteRecordDetailResp, error)
 	SearchVoteRecord(ctx context.Context, in *SearchVoteRecordReq, opts ...grpc.CallOption) (*SearchVoteRecordResp, error)
 }
 
@@ -149,6 +151,15 @@ func (c *voteClient) GetVoteRecordDetail(ctx context.Context, in *GetVoteRecordD
 	return out, nil
 }
 
+func (c *voteClient) GetUserVoteRecordDetail(ctx context.Context, in *GetUserVoteRecordDetailReq, opts ...grpc.CallOption) (*GetUserVoteRecordDetailResp, error) {
+	out := new(GetUserVoteRecordDetailResp)
+	err := c.cc.Invoke(ctx, Vote_GetUserVoteRecordDetail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *voteClient) SearchVoteRecord(ctx context.Context, in *SearchVoteRecordReq, opts ...grpc.CallOption) (*SearchVoteRecordResp, error) {
 	out := new(SearchVoteRecordResp)
 	err := c.cc.Invoke(ctx, Vote_SearchVoteRecord_FullMethodName, in, out, opts...)
@@ -174,6 +185,7 @@ type VoteServer interface {
 	DelVoteRecord(context.Context, *DelVoteRecordReq) (*DelVoteRecordResp, error)
 	GetVoteRecordById(context.Context, *GetVoteRecordByIdReq) (*GetVoteRecordByIdResp, error)
 	GetVoteRecordDetail(context.Context, *GetVoteRecordDetailReq) (*GetVoteRecordDetailResp, error)
+	GetUserVoteRecordDetail(context.Context, *GetUserVoteRecordDetailReq) (*GetUserVoteRecordDetailResp, error)
 	SearchVoteRecord(context.Context, *SearchVoteRecordReq) (*SearchVoteRecordResp, error)
 	mustEmbedUnimplementedVoteServer()
 }
@@ -211,6 +223,9 @@ func (UnimplementedVoteServer) GetVoteRecordById(context.Context, *GetVoteRecord
 }
 func (UnimplementedVoteServer) GetVoteRecordDetail(context.Context, *GetVoteRecordDetailReq) (*GetVoteRecordDetailResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVoteRecordDetail not implemented")
+}
+func (UnimplementedVoteServer) GetUserVoteRecordDetail(context.Context, *GetUserVoteRecordDetailReq) (*GetUserVoteRecordDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserVoteRecordDetail not implemented")
 }
 func (UnimplementedVoteServer) SearchVoteRecord(context.Context, *SearchVoteRecordReq) (*SearchVoteRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchVoteRecord not implemented")
@@ -408,6 +423,24 @@ func _Vote_GetVoteRecordDetail_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Vote_GetUserVoteRecordDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserVoteRecordDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VoteServer).GetUserVoteRecordDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vote_GetUserVoteRecordDetail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VoteServer).GetUserVoteRecordDetail(ctx, req.(*GetUserVoteRecordDetailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Vote_SearchVoteRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchVoteRecordReq)
 	if err := dec(in); err != nil {
@@ -472,6 +505,10 @@ var Vote_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVoteRecordDetail",
 			Handler:    _Vote_GetVoteRecordDetail_Handler,
+		},
+		{
+			MethodName: "GetUserVoteRecordDetail",
+			Handler:    _Vote_GetUserVoteRecordDetail_Handler,
 		},
 		{
 			MethodName: "SearchVoteRecord",

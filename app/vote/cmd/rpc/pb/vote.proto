@@ -123,6 +123,12 @@ message VoteRecordDetail {
   int64 VoteCount = 4; //选项已获投票数量
 }
 
+message UserVoteRecordDetail {
+  int64 LotteryId = 1; //抽奖ID
+  int64 UserId = 2; //用户ID
+  int64 SelectedOption = 3; //用户选择的投票选项
+}
+
 message UpdateVoteRecordResp {
 }
 
@@ -147,6 +153,15 @@ message GetVoteRecordDetailReq {
 
 message GetVoteRecordDetailResp {
   repeated VoteRecordDetail voteRecordDetails = 1; // 投票选项的详细信息切片
+}
+
+message GetUserVoteRecordDetailReq {
+  int64 LotteryId = 1; //id
+  int64 UserId = 5; //用户ID
+}
+
+message GetUserVoteRecordDetailResp {
+  repeated UserVoteRecordDetail userVoteRecordDetails = 1; // 用户投票详情
 }
 
 message SearchVoteRecordReq {
@@ -183,6 +198,7 @@ service vote{
 	 rpc DelVoteRecord(DelVoteRecordReq) returns (DelVoteRecordResp); 
 	 rpc GetVoteRecordById(GetVoteRecordByIdReq) returns (GetVoteRecordByIdResp); 
 	 rpc GetVoteRecordDetail(GetVoteRecordDetailReq) returns (GetVoteRecordDetailResp);
+	 rpc GetUserVoteRecordDetail(GetUserVoteRecordDetailReq) returns (GetUserVoteRecordDetailResp);
 	 rpc SearchVoteRecord(SearchVoteRecordReq) returns (SearchVoteRecordResp);
 
 }

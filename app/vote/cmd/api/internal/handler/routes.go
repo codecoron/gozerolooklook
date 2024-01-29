@@ -42,6 +42,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/vote/viewUserVoteRecordDetail",
+				Handler: vote.ViewUserVoteRecordDetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/vote/viewVoteRecordDetail",
 				Handler: vote.ViewVoteRecordDetailHandler(serverCtx),
 			},

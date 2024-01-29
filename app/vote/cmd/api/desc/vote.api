@@ -48,5 +48,9 @@ service vote {
 	@doc "查看投票记录详情"
 	@handler viewVoteRecordDetail
 	post /vote/viewVoteRecordDetail (ViewVoteRecordDetailReq) returns (ViewVoteRecordDetailResp)
+
+	@doc "查看当前用户投票记录"
+	@handler viewUserVoteRecordDetail
+	post /vote/viewUserVoteRecordDetail (ViewUserVoteRecordDetailReq) returns (ViewUserVoteRecordDetailResp)
 }
 
