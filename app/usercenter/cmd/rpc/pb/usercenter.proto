@@ -100,6 +100,9 @@ message UpdateUserBaseInfoReq {
   int64 sex = 3;
   string avatar = 4;
   string info = 5;
+  string signature = 6;
+  double longitude = 7;
+  double latitude = 8;
 }
 
 message UpdateUserBaseInfoResp {
