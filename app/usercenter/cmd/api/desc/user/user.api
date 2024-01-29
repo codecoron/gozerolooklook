@@ -70,6 +70,9 @@ type (
 		Sex      int64  `json:"sex"`
 		Avatar   string `json:"avatar"`
 		Info     string `json:"info"`
+		Signature string `json:"signature"`
+		Longitude float64 `json:"longitude"`
+		Latitude float64 `json:"latitude"`
 	}
 
 	UserUpdateResp {

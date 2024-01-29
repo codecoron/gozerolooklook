@@ -128,6 +128,66 @@
         ]
       }
     },
+    "lottery/v1/lottery/participation": {
+      "get": {
+        "summary": "抽奖人",
+        "operationId": "searchParticipation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchLotteryParticipationResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "lotteryId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "isAll",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "format": "boolean"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      },
+      "post": {
+        "summary": "参与抽奖",
+        "operationId": "addLotteryParticipation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddLotteryParticipationResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddLotteryParticipationReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/setLotteryIsSelected": {
       "post": {
         "summary": "lottery setIsSelected",
@@ -186,6 +246,23 @@
     }
   },
   "definitions": {
+    "AddLotteryParticipationReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "AddLotteryParticipationReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "AddLotteryParticipationResp": {
+      "type": "object",
+      "title": "AddLotteryParticipationResp"
+    },
     "CreateLotteryReq": {
       "type": "object",
       "properties": {
@@ -205,7 +282,7 @@
         "announceTime": {
           "type": "integer",
           "format": "int64",
-          "description": " 开奖时间"
+          "description": "开奖时间"
         },
         "join_number": {
           "type": "integer",
@@ -534,6 +611,44 @@
       "required": [
         "id",
         "lotteryId"
+      ]
+    },
+    "SearchLotteryParticipationReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isAll": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SearchLotteryParticipationReq",
+      "required": [
+        "lotteryId",
+        "isAll"
+      ]
+    },
+    "SearchLotteryParticipationResp": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "SearchLotteryParticipationResp",
+      "required": [
+        "count",
+        "list"
       ]
     },
     "SetLotteryIsSelectedReq": {
