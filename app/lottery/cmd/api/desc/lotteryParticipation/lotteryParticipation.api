@@ -1,0 +1,26 @@
+syntax = "v1"
+
+info (
+	title:   "参与抽奖"
+	desc:    "参与抽奖"
+	author:  "jiangxue"
+	email:   "896419134@qq.com"
+	version: "v1"
+)
+
+type AddLotteryParticipationReq {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type AddLotteryParticipationResp {
+}
+
+type SearchLotteryParticipationReq {
+	LotteryId int64 `json:"lotteryId"`
+	IsAll bool `json:"isAll"`
+}
+
+type SearchLotteryParticipationResp {
+	Count int64 `json:"count"`
+	List []string `json:"list"`
+}

@@ -67,6 +67,11 @@ func (s *UsercenterServer) CheckIsAdmin(ctx context.Context, in *pb.CheckIsAdmin
 	return l.CheckIsAdmin(in)
 }
 
+func (s *UsercenterServer) WxMiniRegister(ctx context.Context, in *pb.WXMiniRegisterReq) (*pb.WXMiniRegisterResp, error) {
+	l := logic.NewWxMiniRegisterLogic(ctx, s.svcCtx)
+	return l.WxMiniRegister(in)
+}
+
 // -----------------------用户联系方式----------------------
 func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
 	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)

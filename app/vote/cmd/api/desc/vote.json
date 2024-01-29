@@ -1,0 +1,554 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "投票服务",
+    "description": "投票服务",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "vote/v1/vote/createVote": {
+      "post": {
+        "summary": "创建投票设置接口",
+        "operationId": "createVote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateVoteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateVoteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
+    "vote/v1/vote/createVoteRecord": {
+      "post": {
+        "summary": "新增投票记录",
+        "operationId": "createVoteRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateVoteRecordResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateVoteRecordReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
+    "vote/v1/vote/updateVote": {
+      "post": {
+        "summary": "编辑投票设置接口",
+        "operationId": "updateVote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateVoteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateVoteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
+    "vote/v1/vote/viewUserVoteRecordDetail": {
+      "post": {
+        "summary": "查看当前用户投票记录",
+        "operationId": "viewUserVoteRecordDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ViewUserVoteRecordDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViewUserVoteRecordDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
+    "vote/v1/vote/viewVoteDetail": {
+      "post": {
+        "summary": "查看投票设置详情",
+        "operationId": "viewVoteDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ViewVoteDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViewVoteDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
+    "vote/v1/vote/viewVoteRecordDetail": {
+      "post": {
+        "summary": "查看投票记录详情",
+        "operationId": "viewVoteRecordDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ViewVoteRecordDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViewVoteRecordDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CreateVoteRecordReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户选择的投票选项"
+        }
+      },
+      "title": "CreateVoteRecordReq",
+      "required": [
+        "lotteryId",
+        "userId",
+        "selectedOption"
+      ]
+    },
+    "CreateVoteRecordResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateVoteRecordResp",
+      "required": [
+        "id"
+      ]
+    },
+    "CreateVoteReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "enableVote": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否启用投票功能 1是 0否"
+        },
+        "voteConfig": {
+          "$ref": "#/definitions/VoteConfigJSONData",
+          "description": "投票配置字段说明"
+        }
+      },
+      "title": "CreateVoteReq",
+      "required": [
+        "userId",
+        "lotteryId",
+        "enableVote",
+        "voteConfig"
+      ]
+    },
+    "CreateVoteResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateVoteResp",
+      "required": [
+        "id"
+      ]
+    },
+    "UpdateVoteReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "编辑投票id"
+        },
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "enableVote": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否启用投票功能 1是 0否"
+        },
+        "voteConfig": {
+          "$ref": "#/definitions/VoteConfigJSONData",
+          "description": "投票配置字段说明"
+        }
+      },
+      "title": "UpdateVoteReq",
+      "required": [
+        "id",
+        "lotteryId",
+        "enableVote",
+        "voteConfig"
+      ]
+    },
+    "UpdateVoteResp": {
+      "type": "object",
+      "title": "UpdateVoteResp"
+    },
+    "ViewUserVoteRecordDetailReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        }
+      },
+      "title": "ViewUserVoteRecordDetailReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "ViewUserVoteRecordDetailResp": {
+      "type": "object",
+      "properties": {
+        "voteUserRecordDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteUserRecordDetail"
+          }
+        }
+      },
+      "title": "ViewUserVoteRecordDetailResp",
+      "required": [
+        "voteUserRecordDetails"
+      ]
+    },
+    "ViewVoteDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票id"
+        }
+      },
+      "title": "ViewVoteDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ViewVoteDetailResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票id"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "enableVote": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否启用投票功能 1是 0否"
+        },
+        "voteConfig": {
+          "$ref": "#/definitions/VoteConfigJSONData",
+          "description": "投票配置字段说明"
+        }
+      },
+      "title": "ViewVoteDetailResp",
+      "required": [
+        "id",
+        "userId",
+        "lotteryId",
+        "enableVote",
+        "voteConfig"
+      ]
+    },
+    "ViewVoteRecordDetailReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        }
+      },
+      "title": "ViewVoteRecordDetailReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "ViewVoteRecordDetailResp": {
+      "type": "object",
+      "properties": {
+        "voteRecordDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteRecordDetail"
+          }
+        }
+      },
+      "title": "ViewVoteRecordDetailResp",
+      "required": [
+        "voteRecordDetails"
+      ]
+    },
+    "VoteConfigJSONData": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "投票标题"
+        },
+        "description": {
+          "type": "string",
+          "description": "投票描述【非必填】"
+        },
+        "winnerSelection": {
+          "type": "integer",
+          "format": "int64",
+          "description": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票类型：1单选 2多选"
+        },
+        "minVotes": {
+          "type": "integer",
+          "format": "int64",
+          "description": "最小投票范围"
+        },
+        "maxVotes": {
+          "type": "integer",
+          "format": "int64",
+          "description": "最大投票范围"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoteOption"
+          },
+          "description": "选项列表"
+        }
+      },
+      "title": "VoteConfigJSONData",
+      "required": [
+        "title",
+        "description",
+        "winnerSelection",
+        "type",
+        "minVotes",
+        "maxVotes",
+        "options"
+      ]
+    },
+    "VoteOption": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "选项名称"
+        },
+        "image": {
+          "type": "string",
+          "description": "选项图片"
+        }
+      },
+      "title": "VoteOption",
+      "required": [
+        "text",
+        "image"
+      ]
+    },
+    "VoteRecordDetail": {
+      "type": "object",
+      "properties": {
+        "optionText": {
+          "type": "string",
+          "description": "投票选项名称"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票选项序号"
+        },
+        "optionImage": {
+          "type": "string",
+          "description": "投票选项图片,默认为空【表示文字投票选项】"
+        },
+        "voteCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "选项已获投票数量"
+        }
+      },
+      "title": "VoteRecordDetail",
+      "required": [
+        "optionText",
+        "selectedOption",
+        "optionImage",
+        "voteCount"
+      ]
+    },
+    "VoteUserRecordDetail": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        },
+        "selectedOption": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户选择的投票选项"
+        }
+      },
+      "title": "VoteUserRecordDetail",
+      "required": [
+        "lotteryId",
+        "userId",
+        "selectedOption"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

@@ -24,11 +24,11 @@ service usercenter {
 	@doc "注册"
 	@handler register
 	post /user/register (RegisterReq) returns (RegisterResp)
-	
+
 	@doc "登录"
 	@handler login
 	post /user/login (LoginReq) returns (LoginResp)
-	
+
 	@doc "小程序注册登录"
 	@handler wxMiniAuth
 	post /user/wxMiniAuth (WXMiniAuthReq) returns (WXMiniAuthResp)
@@ -44,11 +44,11 @@ service usercenter {
 	@doc "获得用户数据"
 	@handler detail
 	post /user/detail (UserInfoReq) returns (UserInfoResp)
-	
+
 	@doc "修改用户基本信息"
 	@handler update
-	post /user/update (UserUpdateReq) returns (UserUpdateResp)
-	
+	put /user/update (UserUpdateReq) returns (UserUpdateResp)
+
 	@doc "设置user为admin"
 	@handler setAdmin
 	post /user/setAdmin (SetAdminReq) returns (SetAdminResp)
@@ -76,12 +76,13 @@ service usercenter {
 	@doc "收货地址列表"
 	@handler addressList
 	post /user/addressList (AddressListReq) returns (AddressListResp)
-	
+
 	@doc "添加收货地址"
 	@handler addAddress
 	post /user/addAddress (AddAddressReq) returns (AddAddressResp)
-	
+
 	@doc "识别并转换收货地址"
 	@handler convertAddress
 	post /user/convertAddress (ConvertAddressReq) returns (ConvertAddressResp)
 }
+
