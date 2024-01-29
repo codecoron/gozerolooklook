@@ -5,12 +5,18 @@ import (
 	"encoding/json"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
+	"looklook/app/usercenter/cmd/api/internal/svc"
+	"looklook/app/usercenter/cmd/api/internal/types"
 	"looklook/app/usercenter/cmd/rpc/pb"
 	"looklook/common/ctxdata"
 	"looklook/common/xerr"
 
-	"looklook/app/usercenter/cmd/api/internal/svc"
-	"looklook/app/usercenter/cmd/api/internal/types"
+	//"looklook/app/usercenter/cmd/rpc/pb"
+	//"looklook/common/ctxdata"
+	//"looklook/common/xerr"
+	//
+	//"looklook/app/usercenter/cmd/api/internal/svc"
+	//"looklook/app/usercenter/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
