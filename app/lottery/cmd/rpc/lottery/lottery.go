@@ -25,12 +25,12 @@ type (
 	DelLotteryResp                 = pb.DelLotteryResp
 	DelPrizeReq                    = pb.DelPrizeReq
 	DelPrizeResp                   = pb.DelPrizeResp
-	FindByLotteryIdReq             = pb.FindByLotteryIdReq
-	FindByLotteryIdResp            = pb.FindByLotteryIdResp
 	GetLotteryByIdReq              = pb.GetLotteryByIdReq
 	GetLotteryByIdResp             = pb.GetLotteryByIdResp
 	GetPrizeByIdReq                = pb.GetPrizeByIdReq
 	GetPrizeByIdResp               = pb.GetPrizeByIdResp
+	GetPrizeListByLotteryIdReq     = pb.GetPrizeListByLotteryIdReq
+	GetPrizeListByLotteryIdResp    = pb.GetPrizeListByLotteryIdResp
 	Lottery                        = pb.Lottery
 	LotteryDetailReq               = pb.LotteryDetailReq
 	LotteryDetailResp              = pb.LotteryDetailResp
@@ -68,7 +68,7 @@ type (
 		DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
 		GetPrizeById(ctx context.Context, in *GetPrizeByIdReq, opts ...grpc.CallOption) (*GetPrizeByIdResp, error)
 		SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error)
-		GetPrizeListByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error)
+		GetPrizeListByLotteryId(ctx context.Context, in *GetPrizeListByLotteryIdReq, opts ...grpc.CallOption) (*GetPrizeListByLotteryIdResp, error)
 		// -----------------------参与抽奖-----------------------
 		AddLotteryParticipation(ctx context.Context, in *AddLotteryParticipationReq, opts ...grpc.CallOption) (*AddLotteryParticipationResp, error)
 		SearchLotteryParticipation(ctx context.Context, in *SearchLotteryParticipationReq, opts ...grpc.CallOption) (*SearchLotteryParticipationResp, error)
@@ -157,7 +157,7 @@ func (m *defaultLotteryZrpcClient) SearchPrize(ctx context.Context, in *SearchPr
 	return client.SearchPrize(ctx, in, opts...)
 }
 
-func (m *defaultLotteryZrpcClient) GetPrizeListByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error) {
+func (m *defaultLotteryZrpcClient) GetPrizeListByLotteryId(ctx context.Context, in *GetPrizeListByLotteryIdReq, opts ...grpc.CallOption) (*GetPrizeListByLotteryIdResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.GetPrizeListByLotteryId(ctx, in, opts...)
 }

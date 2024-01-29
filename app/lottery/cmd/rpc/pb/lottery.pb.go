@@ -1356,7 +1356,7 @@ func (x *Prize) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PrizeId.ProtoReflect.Descriptor instead.
+// Deprecated: Use Prize.ProtoReflect.Descriptor instead.
 func (*Prize) Descriptor() ([]byte, []int) {
 	return file_lottery_proto_rawDescGZIP(), []int{19}
 }
@@ -2349,7 +2349,7 @@ func (x *SearchLotteryParticipationResp) GetList() []*LotteryParticipation {
 	return nil
 }
 
-type FindByLotteryIdReq struct {
+type GetPrizeListByLotteryIdReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -2357,8 +2357,8 @@ type FindByLotteryIdReq struct {
 	LotteryId int64 `protobuf:"varint,1,opt,name=lotteryId,proto3" json:"lotteryId,omitempty"` //id
 }
 
-func (x *FindByLotteryIdReq) Reset() {
-	*x = FindByLotteryIdReq{}
+func (x *GetPrizeListByLotteryIdReq) Reset() {
+	*x = GetPrizeListByLotteryIdReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_lottery_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2366,13 +2366,13 @@ func (x *FindByLotteryIdReq) Reset() {
 	}
 }
 
-func (x *FindByLotteryIdReq) String() string {
+func (x *GetPrizeListByLotteryIdReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindByLotteryIdReq) ProtoMessage() {}
+func (*GetPrizeListByLotteryIdReq) ProtoMessage() {}
 
-func (x *FindByLotteryIdReq) ProtoReflect() protoreflect.Message {
+func (x *GetPrizeListByLotteryIdReq) ProtoReflect() protoreflect.Message {
 	mi := &file_lottery_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2384,19 +2384,19 @@ func (x *FindByLotteryIdReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindByLotteryIdReq.ProtoReflect.Descriptor instead.
-func (*FindByLotteryIdReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPrizeListByLotteryIdReq.ProtoReflect.Descriptor instead.
+func (*GetPrizeListByLotteryIdReq) Descriptor() ([]byte, []int) {
 	return file_lottery_proto_rawDescGZIP(), []int{35}
 }
 
-func (x *FindByLotteryIdReq) GetLotteryId() int64 {
+func (x *GetPrizeListByLotteryIdReq) GetLotteryId() int64 {
 	if x != nil {
 		return x.LotteryId
 	}
 	return 0
 }
 
-type FindByLotteryIdResp struct {
+type GetPrizeListByLotteryIdResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -2404,8 +2404,8 @@ type FindByLotteryIdResp struct {
 	Prizes []*Prize `protobuf:"bytes,1,rep,name=prizes,proto3" json:"prizes,omitempty"` // 奖品列表
 }
 
-func (x *FindByLotteryIdResp) Reset() {
-	*x = FindByLotteryIdResp{}
+func (x *GetPrizeListByLotteryIdResp) Reset() {
+	*x = GetPrizeListByLotteryIdResp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_lottery_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2413,13 +2413,13 @@ func (x *FindByLotteryIdResp) Reset() {
 	}
 }
 
-func (x *FindByLotteryIdResp) String() string {
+func (x *GetPrizeListByLotteryIdResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindByLotteryIdResp) ProtoMessage() {}
+func (*GetPrizeListByLotteryIdResp) ProtoMessage() {}
 
-func (x *FindByLotteryIdResp) ProtoReflect() protoreflect.Message {
+func (x *GetPrizeListByLotteryIdResp) ProtoReflect() protoreflect.Message {
 	mi := &file_lottery_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2431,12 +2431,12 @@ func (x *FindByLotteryIdResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindByLotteryIdResp.ProtoReflect.Descriptor instead.
-func (*FindByLotteryIdResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPrizeListByLotteryIdResp.ProtoReflect.Descriptor instead.
+func (*GetPrizeListByLotteryIdResp) Descriptor() ([]byte, []int) {
 	return file_lottery_proto_rawDescGZIP(), []int{36}
 }
 
-func (x *FindByLotteryIdResp) GetPrizes() []*Prize {
+func (x *GetPrizeListByLotteryIdResp) GetPrizes() []*Prize {
 	if x != nil {
 		return x.Prizes
 	}
@@ -2694,14 +2694,15 @@ var file_lottery_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x2c, 0x0a, 0x04, 0x6c,
 	0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x4c,
 	0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x74, 0x69, 0x63, 0x69, 0x70, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x32, 0x0a, 0x12, 0x46, 0x69, 0x6e,
-	0x64, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x12,
-	0x1c, 0x0a, 0x09, 0x6c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x09, 0x6c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64, 0x22, 0x38, 0x0a,
-	0x13, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64,
+	0x69, 0x6f, 0x6e, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x3a, 0x0a, 0x1a, 0x47, 0x65, 0x74,
+	0x50, 0x72, 0x69, 0x7a, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65,
+	0x72, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x6f, 0x74, 0x74, 0x65,
+	0x72, 0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6c, 0x6f, 0x74, 0x74,
+	0x65, 0x72, 0x79, 0x49, 0x64, 0x22, 0x40, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x50, 0x72, 0x69, 0x7a,
+	0x65, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64,
 	0x52, 0x65, 0x73, 0x70, 0x12, 0x21, 0x0a, 0x06, 0x70, 0x72, 0x69, 0x7a, 0x65, 0x73, 0x18, 0x01,
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x70, 0x62, 0x2e, 0x50, 0x72, 0x69, 0x7a, 0x65, 0x52,
-	0x06, 0x70, 0x72, 0x69, 0x7a, 0x65, 0x73, 0x32, 0xdc, 0x08, 0x0a, 0x07, 0x6c, 0x6f, 0x74, 0x74,
+	0x06, 0x70, 0x72, 0x69, 0x7a, 0x65, 0x73, 0x32, 0xec, 0x08, 0x0a, 0x07, 0x6c, 0x6f, 0x74, 0x74,
 	0x65, 0x72, 0x79, 0x12, 0x33, 0x0a, 0x0a, 0x41, 0x64, 0x64, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72,
 	0x79, 0x12, 0x11, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72,
 	0x79, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x4c, 0x6f, 0x74,
@@ -2754,11 +2755,12 @@ var file_lottery_proto_rawDesc = []byte{
 	0x70, 0x12, 0x36, 0x0a, 0x0b, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x69, 0x7a, 0x65,
 	0x12, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x69, 0x7a,
 	0x65, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68,
-	0x50, 0x72, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x4a, 0x0a, 0x17, 0x47, 0x65, 0x74,
+	0x50, 0x72, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x5a, 0x0a, 0x17, 0x47, 0x65, 0x74,
 	0x50, 0x72, 0x69, 0x7a, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65,
-	0x72, 0x79, 0x49, 0x64, 0x12, 0x16, 0x2e, 0x70, 0x62, 0x2e, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79,
-	0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x70,
-	0x62, 0x2e, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49,
+	0x72, 0x79, 0x49, 0x64, 0x12, 0x1e, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x69,
+	0x7a, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49,
+	0x64, 0x52, 0x65, 0x71, 0x1a, 0x1f, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x69,
+	0x7a, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x79, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79, 0x49,
 	0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x5a, 0x0a, 0x17, 0x41, 0x64, 0x64, 0x4c, 0x6f, 0x74, 0x74,
 	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x74, 0x69, 0x63, 0x69, 0x70, 0x61, 0x74, 0x69, 0x6f, 0x6e,
 	0x12, 0x1e, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x4c, 0x6f, 0x74, 0x74, 0x65, 0x72, 0x79,
@@ -2808,7 +2810,7 @@ var file_lottery_proto_goTypes = []interface{}{
 	(*LotterySponsorResp)(nil),             // 16: pb.LotterySponsorResp
 	(*AnnounceLotteryReq)(nil),             // 17: pb.AnnounceLotteryReq
 	(*AnnounceLotteryResp)(nil),            // 18: pb.AnnounceLotteryResp
-	(*Prize)(nil),                          // 19: pb.PrizeId
+	(*Prize)(nil),                          // 19: pb.Prize
 	(*AddPrizeReq)(nil),                    // 20: pb.AddPrizeReq
 	(*AddPrizeResp)(nil),                   // 21: pb.AddPrizeResp
 	(*UpdatePrizeReq)(nil),                 // 22: pb.UpdatePrizeReq
@@ -2824,19 +2826,19 @@ var file_lottery_proto_goTypes = []interface{}{
 	(*SearchLotteryParticipationReq)(nil),  // 32: pb.SearchLotteryParticipationReq
 	(*LotteryParticipation)(nil),           // 33: pb.LotteryParticipation
 	(*SearchLotteryParticipationResp)(nil), // 34: pb.SearchLotteryParticipationResp
-	(*FindByLotteryIdReq)(nil),             // 35: pb.FindByLotteryIdReq
-	(*FindByLotteryIdResp)(nil),            // 36: pb.FindByLotteryIdResp
+	(*GetPrizeListByLotteryIdReq)(nil),     // 35: pb.GetPrizeListByLotteryIdReq
+	(*GetPrizeListByLotteryIdResp)(nil),    // 36: pb.GetPrizeListByLotteryIdResp
 }
 var file_lottery_proto_depIdxs = []int32{
-	19, // 0: pb.AddLotteryReq.prizes:type_name -> pb.PrizeId
+	19, // 0: pb.AddLotteryReq.prizes:type_name -> pb.Prize
 	0,  // 1: pb.GetLotteryByIdResp.lottery:type_name -> pb.Lottery
 	0,  // 2: pb.SearchLotteryResp.lottery:type_name -> pb.Lottery
 	0,  // 3: pb.LotteryDetailResp.lottery:type_name -> pb.Lottery
-	19, // 4: pb.LotteryDetailResp.prizes:type_name -> pb.PrizeId
-	19, // 5: pb.GetPrizeByIdResp.prize:type_name -> pb.PrizeId
-	19, // 6: pb.SearchPrizeResp.prize:type_name -> pb.PrizeId
+	19, // 4: pb.LotteryDetailResp.prizes:type_name -> pb.Prize
+	19, // 5: pb.GetPrizeByIdResp.prize:type_name -> pb.Prize
+	19, // 6: pb.SearchPrizeResp.prize:type_name -> pb.Prize
 	33, // 7: pb.SearchLotteryParticipationResp.list:type_name -> pb.LotteryParticipation
-	19, // 8: pb.FindByLotteryIdResp.prizes:type_name -> pb.PrizeId
+	19, // 8: pb.GetPrizeListByLotteryIdResp.prizes:type_name -> pb.Prize
 	1,  // 9: pb.lottery.AddLottery:input_type -> pb.AddLotteryReq
 	3,  // 10: pb.lottery.UpdateLottery:input_type -> pb.UpdateLotteryReq
 	5,  // 11: pb.lottery.DelLottery:input_type -> pb.DelLotteryReq
@@ -2851,7 +2853,7 @@ var file_lottery_proto_depIdxs = []int32{
 	24, // 20: pb.lottery.DelPrize:input_type -> pb.DelPrizeReq
 	26, // 21: pb.lottery.GetPrizeById:input_type -> pb.GetPrizeByIdReq
 	28, // 22: pb.lottery.SearchPrize:input_type -> pb.SearchPrizeReq
-	35, // 23: pb.lottery.GetPrizeListByLotteryId:input_type -> pb.FindByLotteryIdReq
+	35, // 23: pb.lottery.GetPrizeListByLotteryId:input_type -> pb.GetPrizeListByLotteryIdReq
 	30, // 24: pb.lottery.AddLotteryParticipation:input_type -> pb.AddLotteryParticipationReq
 	32, // 25: pb.lottery.SearchLotteryParticipation:input_type -> pb.SearchLotteryParticipationReq
 	2,  // 26: pb.lottery.AddLottery:output_type -> pb.AddLotteryResp
@@ -2868,7 +2870,7 @@ var file_lottery_proto_depIdxs = []int32{
 	25, // 37: pb.lottery.DelPrize:output_type -> pb.DelPrizeResp
 	27, // 38: pb.lottery.GetPrizeById:output_type -> pb.GetPrizeByIdResp
 	29, // 39: pb.lottery.SearchPrize:output_type -> pb.SearchPrizeResp
-	36, // 40: pb.lottery.GetPrizeListByLotteryId:output_type -> pb.FindByLotteryIdResp
+	36, // 40: pb.lottery.GetPrizeListByLotteryId:output_type -> pb.GetPrizeListByLotteryIdResp
 	31, // 41: pb.lottery.AddLotteryParticipation:output_type -> pb.AddLotteryParticipationResp
 	34, // 42: pb.lottery.SearchLotteryParticipation:output_type -> pb.SearchLotteryParticipationResp
 	26, // [26:43] is the sub-list for method output_type
@@ -3305,7 +3307,7 @@ func file_lottery_proto_init() {
 			}
 		}
 		file_lottery_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FindByLotteryIdReq); i {
+			switch v := v.(*GetPrizeListByLotteryIdReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3317,7 +3319,7 @@ func file_lottery_proto_init() {
 			}
 		}
 		file_lottery_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FindByLotteryIdResp); i {
+			switch v := v.(*GetPrizeListByLotteryIdResp); i {
 			case 0:
 				return &v.state
 			case 1:

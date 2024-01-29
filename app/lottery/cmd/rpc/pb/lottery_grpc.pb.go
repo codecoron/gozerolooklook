@@ -58,7 +58,7 @@ type LotteryClient interface {
 	DelPrize(ctx context.Context, in *DelPrizeReq, opts ...grpc.CallOption) (*DelPrizeResp, error)
 	GetPrizeById(ctx context.Context, in *GetPrizeByIdReq, opts ...grpc.CallOption) (*GetPrizeByIdResp, error)
 	SearchPrize(ctx context.Context, in *SearchPrizeReq, opts ...grpc.CallOption) (*SearchPrizeResp, error)
-	GetPrizeListByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error)
+	GetPrizeListByLotteryId(ctx context.Context, in *GetPrizeListByLotteryIdReq, opts ...grpc.CallOption) (*GetPrizeListByLotteryIdResp, error)
 	// -----------------------参与抽奖-----------------------
 	AddLotteryParticipation(ctx context.Context, in *AddLotteryParticipationReq, opts ...grpc.CallOption) (*AddLotteryParticipationResp, error)
 	SearchLotteryParticipation(ctx context.Context, in *SearchLotteryParticipationReq, opts ...grpc.CallOption) (*SearchLotteryParticipationResp, error)
@@ -198,8 +198,8 @@ func (c *lotteryClient) SearchPrize(ctx context.Context, in *SearchPrizeReq, opt
 	return out, nil
 }
 
-func (c *lotteryClient) GetPrizeListByLotteryId(ctx context.Context, in *FindByLotteryIdReq, opts ...grpc.CallOption) (*FindByLotteryIdResp, error) {
-	out := new(FindByLotteryIdResp)
+func (c *lotteryClient) GetPrizeListByLotteryId(ctx context.Context, in *GetPrizeListByLotteryIdReq, opts ...grpc.CallOption) (*GetPrizeListByLotteryIdResp, error) {
+	out := new(GetPrizeListByLotteryIdResp)
 	err := c.cc.Invoke(ctx, Lottery_GetPrizeListByLotteryId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -245,7 +245,7 @@ type LotteryServer interface {
 	DelPrize(context.Context, *DelPrizeReq) (*DelPrizeResp, error)
 	GetPrizeById(context.Context, *GetPrizeByIdReq) (*GetPrizeByIdResp, error)
 	SearchPrize(context.Context, *SearchPrizeReq) (*SearchPrizeResp, error)
-	GetPrizeListByLotteryId(context.Context, *FindByLotteryIdReq) (*FindByLotteryIdResp, error)
+	GetPrizeListByLotteryId(context.Context, *GetPrizeListByLotteryIdReq) (*GetPrizeListByLotteryIdResp, error)
 	// -----------------------参与抽奖-----------------------
 	AddLotteryParticipation(context.Context, *AddLotteryParticipationReq) (*AddLotteryParticipationResp, error)
 	SearchLotteryParticipation(context.Context, *SearchLotteryParticipationReq) (*SearchLotteryParticipationResp, error)
@@ -298,7 +298,7 @@ func (UnimplementedLotteryServer) GetPrizeById(context.Context, *GetPrizeByIdReq
 func (UnimplementedLotteryServer) SearchPrize(context.Context, *SearchPrizeReq) (*SearchPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchPrize not implemented")
 }
-func (UnimplementedLotteryServer) GetPrizeListByLotteryId(context.Context, *FindByLotteryIdReq) (*FindByLotteryIdResp, error) {
+func (UnimplementedLotteryServer) GetPrizeListByLotteryId(context.Context, *GetPrizeListByLotteryIdReq) (*GetPrizeListByLotteryIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPrizeListByLotteryId not implemented")
 }
 func (UnimplementedLotteryServer) AddLotteryParticipation(context.Context, *AddLotteryParticipationReq) (*AddLotteryParticipationResp, error) {
@@ -573,7 +573,7 @@ func _Lottery_SearchPrize_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _Lottery_GetPrizeListByLotteryId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindByLotteryIdReq)
+	in := new(GetPrizeListByLotteryIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -585,7 +585,7 @@ func _Lottery_GetPrizeListByLotteryId_Handler(srv interface{}, ctx context.Conte
 		FullMethod: Lottery_GetPrizeListByLotteryId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LotteryServer).GetPrizeListByLotteryId(ctx, req.(*FindByLotteryIdReq))
+		return srv.(LotteryServer).GetPrizeListByLotteryId(ctx, req.(*GetPrizeListByLotteryIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -94,7 +94,7 @@ func (s *LotteryServer) SearchPrize(ctx context.Context, in *pb.SearchPrizeReq) 
 	return l.SearchPrize(in)
 }
 
-func (s *LotteryServer) GetPrizeListByLotteryId(ctx context.Context, in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
+func (s *LotteryServer) GetPrizeListByLotteryId(ctx context.Context, in *pb.GetPrizeListByLotteryIdReq) (*pb.GetPrizeListByLotteryIdResp, error) {
 	l := logic.NewGetPrizeListByLotteryIdLogic(ctx, s.svcCtx)
 	return l.GetPrizeListByLotteryId(in)
 }
