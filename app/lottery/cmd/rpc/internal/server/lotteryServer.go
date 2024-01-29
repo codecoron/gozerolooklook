@@ -63,6 +63,11 @@ func (s *LotteryServer) LotterySponsor(ctx context.Context, in *pb.LotterySponso
 	return l.LotterySponsor(in)
 }
 
+func (s *LotteryServer) AnnounceLottery(ctx context.Context, in *pb.AnnounceLotteryReq) (*pb.AnnounceLotteryResp, error) {
+	l := logic.NewAnnounceLotteryLogic(ctx, s.svcCtx)
+	return l.AnnounceLottery(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
@@ -87,6 +92,11 @@ func (s *LotteryServer) GetPrizeById(ctx context.Context, in *pb.GetPrizeByIdReq
 func (s *LotteryServer) SearchPrize(ctx context.Context, in *pb.SearchPrizeReq) (*pb.SearchPrizeResp, error) {
 	l := logic.NewSearchPrizeLogic(ctx, s.svcCtx)
 	return l.SearchPrize(in)
+}
+
+func (s *LotteryServer) GetPrizeListByLotteryId(ctx context.Context, in *pb.GetPrizeListByLotteryIdReq) (*pb.GetPrizeListByLotteryIdResp, error) {
+	l := logic.NewGetPrizeListByLotteryIdLogic(ctx, s.svcCtx)
+	return l.GetPrizeListByLotteryId(in)
 }
 
 // -----------------------参与抽奖-----------------------
