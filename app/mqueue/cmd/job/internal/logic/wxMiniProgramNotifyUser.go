@@ -14,6 +14,9 @@ import (
 	"looklook/common/xerr"
 )
 
+// 微信返回的错误码
+const WxErrCodeUserRefuseReceiveMsg = 43101
+
 var ErrNotifyUserFail = xerr.NewErrMsg("notify user fail")
 
 // WxMiniProgramNotifyUserHandler mini program notify user
@@ -88,8 +91,17 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 	}
 
 	if resp.ErrCode != 0 {
-		// 可重试的错误，后续进行细分
-		return errors.Wrapf(ErrNotifyUserFail, "WxMiniProgramNotifyUserHandler send message fail, errCode:%v, errMsg: %v, reqData:%+v", resp.ErrCode, resp.ErrMsg, reqData)
+		switch resp.ErrCode {
+		// 不可重试的错误码
+		case WxErrCodeUserRefuseReceiveMsg:
+			logx.Infow("WxMiniProgramNotifyUserHandler user refuse receive msg",
+				logx.Field("openid", p.OpenId),
+			)
+			return nil
+		default:
+			// 可重试的错误码，后续进行细分
+			return errors.Wrapf(ErrNotifyUserFail, "WxMiniProgramNotifyUserHandler send message fail, errCode:%v, errMsg: %v, reqData:%+v", resp.ErrCode, resp.ErrMsg, reqData)
+		}
 	}
 
 	return nil

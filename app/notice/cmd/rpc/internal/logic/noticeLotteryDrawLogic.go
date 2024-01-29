@@ -18,6 +18,8 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
+var ErrNotifyLotteryDrawFail = xerr.NewErrMsg("notify lottery draw fail")
+
 type NoticeLotteryDrawLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
@@ -42,24 +44,24 @@ func (l *NoticeLotteryDrawLogic) NoticeLotteryDraw(in *pb.NoticeLotteryDrawReq) 
 	}
 
 	// 获取奖品信息
-	// TODO 还需要对接，改用俊威的GetPrizeListByLotteryId
-	rpcPrizeList, err := l.svcCtx.LotteryRpc.SearchPrize(l.ctx, &lottery.SearchPrizeReq{LotteryId: in.LotteryId})
+	rpcPrizeList, err := l.svcCtx.LotteryRpc.GetPrizeListByLotteryId(l.ctx, &lottery.GetPrizeListByLotteryIdReq{LotteryId: in.LotteryId})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to query the prize"), "Failed to query the prize, rpc SearchPrize fail , lotteryId : %d , err : %v", in.LotteryId, err)
-	}
-	if rpcPrizeList == nil {
-		return &pb.NoticeLotteryDrawResp{}, nil
+		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to query the prize"), "Failed to query the prize, rpc GetPrizeListByLotteryId fail , lotteryId : %d , err : %v", in.LotteryId, err)
 	}
 
 	// 汇总消息相关信息
 	lotteryName := rpcLotteryInfo.Lottery.Name
 	remindText := "看看你中奖了吗"
-	firstLevelPrizeName := ""
-	for _, prize := range rpcPrizeList.Prize {
-		if prize.Level == 1 {
-			firstLevelPrizeName = prize.Name
-			break
+
+	prizeName, firstLevelPrizeName := "", ""
+	if len(rpcPrizeList.Prizes) > 0 {
+		for _, prize := range rpcPrizeList.Prizes {
+			if prize.Level == 1 {
+				firstLevelPrizeName = prize.Name
+				break
+			}
 		}
+		prizeName = firstLevelPrizeName + " 等"
 	}
 
 	for _, userId := range in.UserIds {
@@ -68,25 +70,18 @@ func (l *NoticeLotteryDrawLogic) NoticeLotteryDraw(in *pb.NoticeLotteryDrawReq) 
 			AuthType: "wxMini",
 		})
 		if err != nil {
-			logx.WithContext(l.ctx).Error("NoticeLotteryDrawLogic UserCenterRpc.GetUserAuthByUserId err",
-				logx.Field("err", err))
-			continue
+			return nil, errors.Wrapf(ErrNotifyLotteryDrawFail, "NoticeLotteryDrawLogic GetUserAuthByUserId err:%+v, userId:%d", err, userId)
 		}
 		if userAuthResp.UserAuth == nil || userAuthResp.UserAuth.AuthKey == "" {
-			logx.WithContext(l.ctx).Error("NoticeLotteryDrawLogic user has no wechat auth",
+			logx.WithContext(l.ctx).Errorw("NoticeLotteryDrawLogic user has no wechat auth",
 				logx.Field("userId", userId))
 			continue
 		}
+		openid := userAuthResp.UserAuth.AuthKey
 
 		// 拼接小程序页面地址
 		// TODO 地址需要规范化
-		pageAddr := fmt.Sprintf("pages/home/index?lottery_id=%d&userId=%d", rpcLotteryInfo.Lottery.Id, userId)
-
-		openid := userAuthResp.UserAuth.AuthKey
-		// TODO 测试代码
-		//prizeName := firstLevelPrizeName + " 等"
-		prizeName := "一等奖XXX"
-		fmt.Println(firstLevelPrizeName)
+		pageAddr := fmt.Sprintf("pages/detail/prize?lotterId=%d&userId=%d", rpcLotteryInfo.Lottery.Id, userId)
 
 		msg := wxnotice.MessageLotteryDraw{
 			PrizeName:   wxnotice.Item{Value: prizeName},
@@ -95,10 +90,7 @@ func (l *NoticeLotteryDrawLogic) NoticeLotteryDraw(in *pb.NoticeLotteryDrawReq) 
 		}
 		jsonMsg, err := json.Marshal(msg)
 		if err != nil {
-			logx.WithContext(l.ctx).Error("NoticeLotteryDrawLogic msg json marshal err",
-				logx.Field("err", err),
-				logx.Field("msg", msg))
-			continue
+			return nil, errors.Wrapf(ErrNotifyLotteryDrawFail, "NoticeLotteryDrawLogic msg json marshal err:%+v, msg:%+v", err, msg)
 		}
 
 		p := jobtype.WxMiniProgramNotifyUserPayload{
@@ -110,18 +102,12 @@ func (l *NoticeLotteryDrawLogic) NoticeLotteryDraw(in *pb.NoticeLotteryDrawReq) 
 
 		payload, err := json.Marshal(p)
 		if err != nil {
-			logx.WithContext(l.ctx).Error("NoticeLotteryDrawLogic payload json marshal err",
-				logx.Field("err", err),
-				logx.Field("payload", p))
-			continue
+			return nil, errors.Wrapf(ErrNotifyLotteryDrawFail, "NoticeLotteryDrawLogic payload json marshal err:%+v, payload:%+v", err, p)
 		}
 
 		_, err = l.svcCtx.AsynqClient.Enqueue(asynq.NewTask(jobtype.MsgWxMiniProgramNotifyUser, payload))
 		if err != nil {
-			logx.WithContext(l.ctx).Error("NoticeLotteryDrawLogic AsynqClient.Enqueue err",
-				logx.Field("err", err),
-				logx.Field("payload", payload))
-			continue
+			return nil, errors.Wrapf(ErrNotifyLotteryDrawFail, "NoticeLotteryDrawLogic AsynqClient.Enqueue err:%+v, payload:%+v", err, payload)
 		}
 	}
 
