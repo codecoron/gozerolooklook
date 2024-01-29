@@ -1,5 +1,8 @@
 # 生成api业务代码 ， 进入"服务/cmd/api/desc"目录下，执行下面命令
+# 使用原生的goctl
 goctl api go -api main.api -dir ../  --style=goZero
+# 使用自定义的goctl 生成api
+goctl api go -api main.api -dir ../  --style=goZero --home=../../../../../deploy/goctl/1.6.1
 
 # 生成rpc业务代码
 # 【注】 需要安装下面3个插件
