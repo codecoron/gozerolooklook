@@ -259,6 +259,7 @@ service lottery{
   rpc SetIsSelectedLottery(SetIsSelectedLotteryReq) returns (SetIsSelectedLotteryResp);
   rpc LotteryDetail(LotteryDetailReq) returns (LotteryDetailResp);
   rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
+  rpc AnnounceLottery(AnnounceLotteryReq) returns (AnnounceLotteryResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);
