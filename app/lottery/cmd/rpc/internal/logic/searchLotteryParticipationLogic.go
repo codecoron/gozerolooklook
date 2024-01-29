@@ -24,7 +24,9 @@ func NewSearchLotteryParticipationLogic(ctx context.Context, svcCtx *svc.Service
 }
 
 func (l *SearchLotteryParticipationLogic) SearchLotteryParticipation(in *pb.SearchLotteryParticipationReq) (*pb.SearchLotteryParticipationResp, error) {
-	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ?", in.LotteryId)
+	offset := (in.PageIndex - 1) * in.PageSize
+	limit := in.PageSize
+	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ? limit ?, ?", in.LotteryId, offset, limit)
 	list, err := l.svcCtx.LotteryParticipationModel.FindAll(l.ctx, builder, "")
 	if err != nil {
 		return nil, err

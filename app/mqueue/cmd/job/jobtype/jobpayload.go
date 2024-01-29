@@ -7,7 +7,6 @@ type DeferCloseHomestayOrderPayload struct {
 	Sn string
 }
 
-
 // PaySuccessNotifyUserPayload pay success notify user
 type PaySuccessNotifyUserPayload struct {
 	Order *model.HomestayOrder

@@ -37,7 +37,7 @@ func (l *CreatePaymentLogic) CreatePayment(in *pb.CreatePaymentReq) (*pb.CreateP
 	data.OrderSn = in.OrderSn
 	data.ServiceType = model.ThirdPaymentServiceTypeHomestayOrder
 
-	_, err := l.svcCtx.ThirdPaymentModel.Insert(l.ctx,nil, data)
+	_, err := l.svcCtx.ThirdPaymentModel.Insert(l.ctx, nil, data)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "create wechat pay prepayorder db insert fail , err:%v ,data : %+v  ", err, data)
 	}

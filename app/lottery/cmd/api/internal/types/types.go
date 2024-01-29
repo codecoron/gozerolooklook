@@ -91,12 +91,13 @@ type Prize struct {
 
 type SearchLotteryParticipationReq struct {
 	LotteryId int64 `json:"lotteryId"`
-	IsAll     bool  `json:"isAll"`
+	PageIndex int64 `json:"pageIndex"`
+	PageSize  int64 `json:"pageSize"`
 }
 
 type SearchLotteryParticipationResp struct {
-	Count int64    `json:"count"`
-	List  []string `json:"list"`
+	Count int64       `json:"count"`
+	List  []*UserInfo `json:"list"`
 }
 
 type SetLotteryIsSelectedReq struct {
@@ -112,4 +113,14 @@ type UpdateLotteryReq struct {
 }
 
 type UpdateLotteryResp struct {
+}
+
+type UserInfo struct {
+	Mobile       string `json:"mobile"`
+	Nickname     string `json:"nickname"`
+	Sex          int64  `json:"sex"`
+	Avatar       string `json:"avatar"`
+	Info         string `json:"info"`
+	Signature    string `json:"signature"`
+	LocationName string `json:"locationName"`
 }
