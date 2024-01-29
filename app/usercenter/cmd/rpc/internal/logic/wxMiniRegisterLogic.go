@@ -32,7 +32,7 @@ func (l *WxMiniRegisterLogic) WxMiniRegister(in *usercenter.WXMiniRegisterReq) (
 		user := new(model.User)
 		user.Nickname = in.Nickname
 		user.Avatar = in.Avatar
-		insertResult, err := l.svcCtx.UserModel.Insert(ctx, session, user)
+		insertResult, err := l.svcCtx.UserModel.TransInsert(ctx, session, user)
 		if err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Register db user insertResult.LastInsertId err:%v,user:%+v", err, user)
 		}
