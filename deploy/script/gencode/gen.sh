@@ -15,7 +15,7 @@ goctl api go -api main.api -dir ../  --style=goZero --home=../../../../../deploy
 #       go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 #
 # 1）goctl >= 1.3 进入"服务/cmd/rpc/pb"目录下，执行下面命令
-    goctl rpc protoc *.proto --go_out=../ --go-grpc_out=../  --zrpc_out=../ --style=goZero
+    goctl rpc protoc usercenter.proto --go_out=../ --go-grpc_out=../  --zrpc_out=../ --style=goZero
 #    去除proto中的json的omitempty
 #    mac: sed -i "" 's/,omitempty//g' *.pb.go
 #    linux: sed -i 's/,omitempty//g' *.pb.go

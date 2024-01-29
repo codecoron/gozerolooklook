@@ -1,0 +1,56 @@
+syntax = "v1"
+
+info (
+	title:   "投票服务"
+	desc:    "投票服务"
+	author:  "mike"
+	email:   "coolfeng2008@outlook.com"
+	version: "v1"
+)
+
+import (
+	"vote_config/voteConfig.api"
+	"vote_record/voteRecord.api"
+)
+
+//=====================================> vote v1 <=================================
+//need login
+@server (
+	prefix: vote/v1
+	group:  vote
+	jwt:    JwtAuth
+)
+service vote {
+	@doc "创建投票设置接口"
+	@handler createVote
+	post /vote/createVote (CreateVoteReq) returns (CreateVoteResp)
+
+	@doc "编辑投票设置接口"
+	@handler updateVote
+	post /vote/updateVote (UpdateVoteReq) returns (UpdateVoteResp)
+
+	@doc "查看投票设置详情"
+	@handler viewVoteDetail
+	post /vote/viewVoteDetail (ViewVoteDetailReq) returns (ViewVoteDetailResp)
+}
+
+//need login
+@server (
+	prefix: vote/v1
+	group:  vote
+	jwt:    JwtAuth
+)
+service vote {
+	@doc "新增投票记录"
+	@handler createVoteRecord
+	post /vote/createVoteRecord (CreateVoteRecordReq) returns (CreateVoteRecordResp)
+
+	@doc "查看投票记录详情"
+	@handler viewVoteRecordDetail
+	post /vote/viewVoteRecordDetail (ViewVoteRecordDetailReq) returns (ViewVoteRecordDetailResp)
+
+	@doc "查看当前用户投票记录"
+	@handler viewUserVoteRecordDetail
+	post /vote/viewUserVoteRecordDetail (ViewUserVoteRecordDetailReq) returns (ViewUserVoteRecordDetailResp)
+}
+
