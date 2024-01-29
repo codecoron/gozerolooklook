@@ -11,6 +11,7 @@ func init() {
 	message[TOKEN_GENERATE_ERROR] = "生成token失败"
 	message[DB_ERROR] = "数据库繁忙,请稍后再试"
 	message[DB_UPDATE_AFFECTED_ZERO_ERROR] = "更新数据影响行数为0"
+	message[VOTE_VOTE_CONFIG_NOT_FOUND] = "投票信息不存在"
 }
 
 func MapErrMsg(errcode uint32) string {
