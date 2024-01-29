@@ -1,4 +1,4 @@
-package genModel
+package model
 
 import (
 	"errors"

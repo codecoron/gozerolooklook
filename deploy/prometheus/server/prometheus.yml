@@ -100,3 +100,34 @@ scrape_configs:
           job: upload-rpc
           app: upload-rpc
           env: dev
+  - job_name: 'lottery-api'
+    static_configs:
+      - targets: [ 'looklook:4012' ]
+        labels:
+          job: lottery-api
+          app: lottery-api
+          env: dev
+  - job_name: 'lottery-rpc'
+    static_configs:
+      - targets: [ 'looklook:4013' ]
+        labels:
+          job: lottery-rpc
+          app: lottery-rpc
+          env: dev
+
+  - job_name: 'vote-api'
+    static_configs:
+      - targets: [ 'looklook:4027' ]
+        labels:
+          job: vote-api
+          app: vote-api
+          env: dev
+  - job_name: 'vote-rpc'
+    static_configs:
+      - targets: [ 'looklook:4028' ]
+        labels:
+          job: vote-rpc
+          app: vote-rpc
+          env: dev
+
+
