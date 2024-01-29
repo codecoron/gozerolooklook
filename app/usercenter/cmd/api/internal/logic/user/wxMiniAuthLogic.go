@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
@@ -37,6 +38,7 @@ func NewWxMiniAuthLogic(ctx context.Context, svcCtx *svc.ServiceContext) WxMiniA
 // Wechat-Mini auth
 func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuthResp, error) {
 	//1、Wechat-Mini
+	fmt.Println("================000000001")
 	miniprogram := wechat.NewWechat().GetMiniProgram(&miniConfig.Config{
 		AppID:     l.svcCtx.Config.WxMiniConf.AppId,
 		AppSecret: l.svcCtx.Config.WxMiniConf.Secret,
@@ -59,6 +61,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 		AuthKey:  authResult.OpenID,
 	})
 	if err != nil {
+
 		return nil, errors.Wrapf(ErrWxMiniAuthFailError, "rpc call userAuthByAuthKey err : %v , authResult : %+v", err, authResult)
 	}
 	if rpcRsp.UserAuth == nil || rpcRsp.UserAuth.Id == 0 {
@@ -84,6 +87,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 			Avatar:   req.Avatar,
 		})
 		if err != nil {
+			fmt.Println("================321321312312312")
 			return nil, errors.Wrapf(ErrWxMiniAuthFailError, "UsercenterRpc.Register err :%v, authResult : %+v", err, authResult)
 		}
 
