@@ -6,7 +6,9 @@ import (
 	"looklook/app/usercenter/cmd/api/internal/types"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 	usercenterModel "looklook/app/usercenter/model"
+	"looklook/common/tool"
 	"looklook/common/xerr"
+	"strings"
 
 	"github.com/pkg/errors"
 	wechat "github.com/silenceper/wechat/v2"
@@ -63,23 +65,32 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 		//bind user.
 
 		//Wechat-Mini Decrypted data
-		nickName := userData.NickName
+		if len(req.Nickname) == 0 {
+			nicknameArr := []string{userData.NickName, tool.Krand(6, tool.KC_RAND_KIND_NUM)}
+			nickName := strings.Join(nicknameArr, "")
+			req.Nickname = nickName
+		}
+		if len(req.Avatar) == 0 {
+			req.Avatar = userData.AvatarURL
+		}
+
 		openId := authResult.OpenID
-		mobile := openId[len(openId)-11:] //TODO 优化逻辑
-		registerRsp, err := l.svcCtx.UsercenterRpc.Register(l.ctx, &usercenter.RegisterReq{
+		//mobile := openId[len(openId)-11:] //TODO 优化逻辑
+		wxMiniRegisterRsp, err := l.svcCtx.UsercenterRpc.WxMiniRegister(l.ctx, &usercenter.WXMiniRegisterReq{
 			AuthKey:  openId,
 			AuthType: usercenterModel.UserAuthTypeSmallWX,
-			Mobile:   mobile,
-			Nickname: nickName,
+			//Mobile:   mobile,
+			Nickname: req.Nickname,
+			Avatar:   req.Avatar,
 		})
 		if err != nil {
 			return nil, errors.Wrapf(ErrWxMiniAuthFailError, "UsercenterRpc.Register err :%v, authResult : %+v", err, authResult)
 		}
 
 		return &types.WXMiniAuthResp{
-			AccessToken:  registerRsp.AccessToken,
-			AccessExpire: registerRsp.AccessExpire,
-			RefreshAfter: registerRsp.RefreshAfter,
+			AccessToken:  wxMiniRegisterRsp.AccessToken,
+			AccessExpire: wxMiniRegisterRsp.AccessExpire,
+			RefreshAfter: wxMiniRegisterRsp.RefreshAfter,
 		}, nil
 
 	} else {
