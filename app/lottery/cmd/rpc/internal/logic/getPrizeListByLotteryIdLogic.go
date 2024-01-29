@@ -24,7 +24,7 @@ func NewGetPrizeListByLotteryIdLogic(ctx context.Context, svcCtx *svc.ServiceCon
 	}
 }
 
-func (l *GetPrizeListByLotteryIdLogic) GetPrizeListByLotteryId(in *pb.FindByLotteryIdReq) (*pb.FindByLotteryIdResp, error) {
+func (l *GetPrizeListByLotteryIdLogic) GetPrizeListByLotteryId(in *pb.GetPrizeListByLotteryIdReq) (*pb.GetPrizeListByLotteryIdResp, error) {
 	res, err := l.svcCtx.PrizeModel.FindByLotteryId(l.ctx, in.LotteryId)
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (l *GetPrizeListByLotteryIdLogic) GetPrizeListByLotteryId(in *pb.FindByLott
 		}
 		prizes = append(prizes, pbPrize)
 	}
-	return &pb.FindByLotteryIdResp{
+	return &pb.GetPrizeListByLotteryIdResp{
 		Prizes: prizes,
 	}, nil
 }

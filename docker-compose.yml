@@ -40,6 +40,8 @@ services:
     restart: always
     networks:
       - looklook_net
+    ports:
+      - 2005:2005
 
 networks:
   looklook_net:
