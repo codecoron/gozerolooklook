@@ -95,7 +95,8 @@ func (s *TimeLotteryStrategy) Run() error {
 				return err
 			}
 
-			// 根据lotteryId获取一个lottery详情，需要joinNumber字段
+			//todo 优化代码
+			// 根据lotteryId获取一个lottery详情，需要joinNumber字段 todo 优化名字 按人数开奖的指定人数
 			lottery, err := s.svcCtx.LotteryModel.FindOne(s.ctx, lotteryId)
 			if err != nil {
 				return err
@@ -163,6 +164,23 @@ func (s *TimeLotteryStrategy) Run() error {
 	return err
 }
 
+/*
+*
+开奖：
+1 按顺序开奖 一等奖1个 二等经2个  2个人参与
+2 伪代码：
+获得中奖人数 m
+获得奖品列表 奖品level升序 总数n
+m<=n
+中奖人数n和奖品m做匹配，n1 = m1
+map[userid]{prize}
+
+	for m {
+		for n{
+			m1 = n1
+		}
+	}
+*/
 func (s *TimeLotteryStrategy) DrawLottery(ctx context.Context, lottery *model.Lottery, prizes, zeroPrizes []*model.Prize, participantor []int64) ([]Winner, error) {
 	// test1： 用户有10个，奖品总数为5个，预计获奖人数945.即有某一时刻奖品数量为0。报错slice bounds out of range [7:2]    [已解决]
 	// 随机选择中奖者
@@ -200,10 +218,11 @@ func (s *TimeLotteryStrategy) DrawLottery(ctx context.Context, lottery *model.Lo
 			if prize.Count > 0 {
 				break
 			} else {
+				//
 				prizes = append(prizes[:randomPrizeIndex], prizes[randomPrizeIndex+1:]...)
 			}
 		}
-		// 正常情况是参与人数 <>= 预计参与人数; 预计参与人数 <= 奖品总数量
+		// 正常情况是参与人数 <>= 奖品数量; 预计中奖人数 == 奖品总数量
 
 		// 创建中奖者对象
 		winner := Winner{
