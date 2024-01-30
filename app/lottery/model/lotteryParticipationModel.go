@@ -17,6 +17,7 @@ type (
 		lotteryParticipationModel
 		GetParticipationUserIdsByLotteryId(ctx context.Context, LotteryId int64) ([]int64, error)
 		UpdateWinners(ctx context.Context, LotteryId, UserId, PrizeId int64) error
+		GetParticipatorsCountByLotteryId(ctx context.Context, LotteryId int64) (int64, error)
 	}
 
 	customLotteryParticipationModel struct {
@@ -52,6 +53,16 @@ func (m *defaultLotteryParticipationModel) GetParticipationUserIdsByLotteryId(ct
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, LotteryId)
 	if err != nil {
 		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) GetParticipatorsCountByLotteryId(ctx context.Context, LotteryId int64) (int64, error) {
+	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE lottery_id = ?", m.table)
+	var resp int64
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, LotteryId)
+	if err != nil {
+		return 0, err
 	}
 	return resp, nil
 }

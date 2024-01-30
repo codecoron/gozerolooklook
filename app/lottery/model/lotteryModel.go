@@ -21,8 +21,9 @@ type (
 		UpdatePublishTime(ctx context.Context, data *Lottery) error
 		LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error)
-		QueryLotteries(ctx context.Context, currentTime time.Time) ([]int64, error)
+		GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error)
 		UpdateLotteryStatus(ctx context.Context, lotteryID int64) error
+		GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error)
 	}
 
 	customLotteryModel struct {
@@ -76,10 +77,10 @@ func NewLotteryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 	}
 }
 
-func (c *customLotteryModel) QueryLotteries(ctx context.Context, currentTime time.Time) ([]int64, error) {
+func (c *customLotteryModel) GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error) {
 	var resp []int64
-	query := fmt.Sprintf("SELECT id FROM %s WHERE announce_type = 1 AND is_announced = 0 AND announce_time <= ?", c.table)
-	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, currentTime)
+	query := fmt.Sprintf("SELECT id FROM %s WHERE announce_type = ? AND is_announced = 0 AND announce_time <= ?", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType, currentTime)
 	if err != nil {
 		return nil, err
 	}
@@ -98,4 +99,14 @@ func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryID 
 		return err
 	}
 	return nil
+}
+
+func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error) {
+	var resp []*Lottery
+	query := fmt.Sprintf("SELECT * FROM %s WHERE announce_type = ? AND is_announced = 0", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
