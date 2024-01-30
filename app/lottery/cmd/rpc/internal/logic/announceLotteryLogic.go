@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
@@ -61,7 +60,7 @@ func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.A
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("AnnounceFinish") // t
+	//fmt.Println("AnnounceFinish") // t
 	return &pb.AnnounceLotteryResp{}, nil
 }
 
@@ -73,6 +72,16 @@ func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotter
 	})
 	if err != nil {
 		return err
+	}
+	return nil
+}
+
+func (l *AnnounceLotteryLogic) WriteWinnersToLotteryParticipation(winners []Winner) error {
+	for _, w := range winners {
+		err := l.svcCtx.LotteryParticipationModel.UpdateWinners(l.ctx, w.LotteryId, w.UserId, w.PrizeId)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -95,19 +104,18 @@ func (s *TimeLotteryStrategy) Run() error {
 				return err
 			}
 
-			fmt.Println("开始开奖的lottery:", lotteryId)
+			//fmt.Println("开始开奖的lottery:", lotteryId)
 
-			// todo 获取该lotteryId对应的所有参与者
-			//var participators []int64
-			//query := fmt.Sprintf("SELECT user_id FROM lottery_participants WHERE lottery_id = ?")
-			//err := c.QueryRowsNoCacheCtx(ctx, &participants, query, lottery.Id)
-			//if err != nil {
-			//	return nil, err
-			//}
+			// 获取该lotteryId对应的所有参与者
+			participators, err = s.svcCtx.LotteryParticipationModel.GetParticipationUserIdsByLotteryId(s.ctx, lotteryId)
+			if err != nil {
+				return err
+			}
 
-			testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+			//testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
-			participators = testParticipators
+			//participators = testParticipators
+			//fmt.Println("participators:", participators)
 
 			winners, err := s.DrawLottery(s.ctx, lotteryId, prizes, participators)
 			if err != nil {
@@ -115,30 +123,22 @@ func (s *TimeLotteryStrategy) Run() error {
 			}
 
 			// 测试查看所有winners
-			for _, w := range winners {
-				fmt.Printf("testwinners:%+v\n", w)
+			//for _, w := range winners {
+			//	fmt.Printf("testwinners:%+v\n", w)
+			//}
+
+			//更新抽奖状态为"已开奖"
+			err = s.svcCtx.LotteryModel.UpdateLotteryStatus(s.ctx, lotteryId)
+			if err != nil {
+				return err
 			}
 
-			//更新抽奖状态为"已开奖" t
-			//err = s.svcCtx.LotteryModel.UpdateLotteryStatus(s.ctx, lotteryId)
-			//if err != nil {
-			//	return err
-			//}
+			// 将得到的中奖信息，写入数据库participants
+			err = s.WriteWinnersToLotteryParticipation(winners)
+			if err != nil {
+				return err
+			}
 
-			// 更新数据库中Prize表该奖品的数量
-			//for _, p := range prizes {
-			//	fmt.Println("prizeId:", p.Id, "prizeCount:", p.Count)
-			//	err = s.svcCtx.PrizeModel.Update(s.ctx, p)
-			//	if err != nil {
-			//		return err
-			//	}
-			//}
-
-			// todo 将得到的中奖信息，写入数据库participants
-			//err = s.svcCtx.LotteryModel.WriteResultToDB(s.ctx, winners)
-			//if err != nil {
-			//	return err
-			//}
 			return nil
 		})
 		if err != nil {
@@ -209,7 +209,6 @@ func (s *TimeLotteryStrategy) DrawLottery(ctx context.Context, lotteryId int64, 
 			prizes = prizes[1:]
 		}
 		prizes[0].Count--
-		//fmt.Printf("testPrize:%+v\n", prizes[0])
 		prizeId := prizes[0].Id
 
 		// 创建中奖者对象
