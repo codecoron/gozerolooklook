@@ -72,12 +72,12 @@ func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.A
 	// 创建相应的抽奖策略
 	var strategy LotteryStrategy
 	switch in.AnnounceType {
-	//case 1:
-	//	// 开奖时间类型
-	//	strategy = &TimeLotteryStrategy{
-	//		AnnounceLotteryLogic: l,
-	//		CurrentTime:          time.Now(),
-	//	}
+	case 1:
+		// 开奖时间类型
+		strategy = &TimeLotteryStrategy{
+			AnnounceLotteryLogic: l,
+			CurrentTime:          time.Now(),
+		}
 	case 2:
 		// 开奖时间类型
 		strategy = &PeopleLotteryStrategy{
