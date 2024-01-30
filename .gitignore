@@ -25,3 +25,5 @@ default.etcd
 
 docker-compose-changlin.yml
 
+#package powerwechat log
+wechat
