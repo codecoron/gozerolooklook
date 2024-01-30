@@ -1,6 +1,6 @@
 Name: lottery-api
 Host: 0.0.0.0
-Port: 1005
+Port: 8888
 Mode: dev
 
 #jwtAuth
@@ -22,7 +22,7 @@ Log:
 #监控
 Prometheus:
   Host: 0.0.0.0
-  Port: 4012
+  Port: 4013
   Path: /metrics
 
 #链路追踪

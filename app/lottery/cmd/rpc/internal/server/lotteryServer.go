@@ -109,3 +109,8 @@ func (s *LotteryServer) SearchLotteryParticipation(ctx context.Context, in *pb.S
 	l := logic.NewSearchLotteryParticipationLogic(ctx, s.svcCtx)
 	return l.SearchLotteryParticipation(in)
 }
+
+func (s *LotteryServer) GetParticipationUserIdsByLotteryId(ctx context.Context, in *pb.GetParticipationUserIdsByLotteryIdReq) (*pb.GetParticipationUserIdsByLotteryIdResp, error) {
+	l := logic.NewGetParticipationUserIdsByLotteryIdLogic(ctx, s.svcCtx)
+	return l.GetParticipationUserIdsByLotteryId(in)
+}

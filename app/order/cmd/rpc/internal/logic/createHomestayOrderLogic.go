@@ -20,7 +20,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-const CloseOrderTimeMinutes = 30  //defer close order time
+const CloseOrderTimeMinutes = 30 //defer close order time
 
 type CreateHomestayOrderLogic struct {
 	ctx    context.Context
@@ -93,20 +93,19 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 
 	order.OrderTotalPrice = order.HomestayTotalPrice + order.FoodTotalPrice //Calculate total order price.
 
-	_, err = l.svcCtx.HomestayOrderModel.Insert(l.ctx,nil, order)
+	_, err = l.svcCtx.HomestayOrderModel.Insert(l.ctx, nil, order)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Order Database Exception order : %+v , err: %v", order, err)
 	}
 
-
 	//2、Delayed closing of order tasks.
 	payload, err := json.Marshal(jobtype.DeferCloseHomestayOrderPayload{Sn: order.Sn})
 	if err != nil {
-		logx.WithContext(l.ctx).Errorf("create defer close order task json Marshal fail err :%+v , sn : %s",err,order.Sn)
-	}else{
-		_, err = l.svcCtx.AsynqClient.Enqueue(asynq.NewTask(jobtype.DeferCloseHomestayOrder, payload), asynq.ProcessIn(CloseOrderTimeMinutes * time.Minute))
+		logx.WithContext(l.ctx).Errorf("create defer close order task json Marshal fail err :%+v , sn : %s", err, order.Sn)
+	} else {
+		_, err = l.svcCtx.AsynqClient.Enqueue(asynq.NewTask(jobtype.DeferCloseHomestayOrder, payload), asynq.ProcessIn(CloseOrderTimeMinutes*time.Minute))
 		if err != nil {
-			logx.WithContext(l.ctx).Errorf("create defer close order task insert queue fail err :%+v , sn : %s",err,order.Sn)
+			logx.WithContext(l.ctx).Errorf("create defer close order task insert queue fail err :%+v , sn : %s", err, order.Sn)
 		}
 	}
 

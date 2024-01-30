@@ -95,4 +95,3 @@ service lottery {
 	@handler searchParticipation
 	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
 }
-
