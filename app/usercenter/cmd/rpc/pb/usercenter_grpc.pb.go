@@ -26,6 +26,12 @@ const (
 	Usercenter_GetUserAuthByUserId_FullMethodName  = "/pb.usercenter/getUserAuthByUserId"
 	Usercenter_GenerateToken_FullMethodName        = "/pb.usercenter/generateToken"
 	Usercenter_UpdateUserBaseInfo_FullMethodName   = "/pb.usercenter/updateUserBaseInfo"
+	Usercenter_AddFollowInfo_FullMethodName        = "/pb.usercenter/AddFollowInfo"
+	Usercenter_AddUserFollow_FullMethodName        = "/pb.usercenter/AddUserFollow"
+	Usercenter_UpdateUserFollow_FullMethodName     = "/pb.usercenter/UpdateUserFollow"
+	Usercenter_DelUserFollow_FullMethodName        = "/pb.usercenter/DelUserFollow"
+	Usercenter_GetUserFollowById_FullMethodName    = "/pb.usercenter/GetUserFollowById"
+	Usercenter_SearchUserFollow_FullMethodName     = "/pb.usercenter/SearchUserFollow"
 	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
 	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
 	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
@@ -49,6 +55,13 @@ type UsercenterClient interface {
 	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 	UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
+	// -----------------------用户引流方式----------------------
+	AddFollowInfo(ctx context.Context, in *AddFollowInfoReq, opts ...grpc.CallOption) (*AddFollowInfoResp, error)
+	AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error)
+	UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error)
+	DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error)
+	GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error)
+	SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error)
 	// -----------------------用户联系方式----------------------
 	AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
 	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
@@ -128,6 +141,60 @@ func (c *usercenterClient) GenerateToken(ctx context.Context, in *GenerateTokenR
 func (c *usercenterClient) UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error) {
 	out := new(UpdateUserBaseInfoResp)
 	err := c.cc.Invoke(ctx, Usercenter_UpdateUserBaseInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) AddFollowInfo(ctx context.Context, in *AddFollowInfoReq, opts ...grpc.CallOption) (*AddFollowInfoResp, error) {
+	out := new(AddFollowInfoResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddFollowInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error) {
+	out := new(AddUserFollowResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserFollow_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error) {
+	out := new(UpdateUserFollowResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserFollow_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error) {
+	out := new(DelUserFollowResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserFollow_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error) {
+	out := new(GetUserFollowByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserFollowById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error) {
+	out := new(SearchUserFollowResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserFollow_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -235,6 +302,13 @@ type UsercenterServer interface {
 	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdReq) (*GetUserAuthyUserIdResp, error)
 	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
 	UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error)
+	// -----------------------用户引流方式----------------------
+	AddFollowInfo(context.Context, *AddFollowInfoReq) (*AddFollowInfoResp, error)
+	AddUserFollow(context.Context, *AddUserFollowReq) (*AddUserFollowResp, error)
+	UpdateUserFollow(context.Context, *UpdateUserFollowReq) (*UpdateUserFollowResp, error)
+	DelUserFollow(context.Context, *DelUserFollowReq) (*DelUserFollowResp, error)
+	GetUserFollowById(context.Context, *GetUserFollowByIdReq) (*GetUserFollowByIdResp, error)
+	SearchUserFollow(context.Context, *SearchUserFollowReq) (*SearchUserFollowResp, error)
 	// -----------------------用户联系方式----------------------
 	AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error)
 	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
@@ -274,6 +348,24 @@ func (UnimplementedUsercenterServer) GenerateToken(context.Context, *GenerateTok
 }
 func (UnimplementedUsercenterServer) UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserBaseInfo not implemented")
+}
+func (UnimplementedUsercenterServer) AddFollowInfo(context.Context, *AddFollowInfoReq) (*AddFollowInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddFollowInfo not implemented")
+}
+func (UnimplementedUsercenterServer) AddUserFollow(context.Context, *AddUserFollowReq) (*AddUserFollowResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserFollow not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserFollow(context.Context, *UpdateUserFollowReq) (*UpdateUserFollowResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserFollow not implemented")
+}
+func (UnimplementedUsercenterServer) DelUserFollow(context.Context, *DelUserFollowReq) (*DelUserFollowResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserFollow not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserFollowById(context.Context, *GetUserFollowByIdReq) (*GetUserFollowByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserFollowById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserFollow(context.Context, *SearchUserFollowReq) (*SearchUserFollowResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserFollow not implemented")
 }
 func (UnimplementedUsercenterServer) AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserContact not implemented")
@@ -440,6 +532,114 @@ func _Usercenter_UpdateUserBaseInfo_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UsercenterServer).UpdateUserBaseInfo(ctx, req.(*UpdateUserBaseInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_AddFollowInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFollowInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddFollowInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddFollowInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddFollowInfo(ctx, req.(*AddFollowInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_AddUserFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserFollowReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserFollow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserFollow(ctx, req.(*AddUserFollowReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserFollowReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserFollow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserFollow(ctx, req.(*UpdateUserFollowReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserFollowReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserFollow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserFollow(ctx, req.(*DelUserFollowReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserFollowById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserFollowByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserFollowById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserFollowById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserFollowById(ctx, req.(*GetUserFollowByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserFollowReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserFollow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserFollow(ctx, req.(*SearchUserFollowReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -658,6 +858,30 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateUserBaseInfo",
 			Handler:    _Usercenter_UpdateUserBaseInfo_Handler,
+		},
+		{
+			MethodName: "AddFollowInfo",
+			Handler:    _Usercenter_AddFollowInfo_Handler,
+		},
+		{
+			MethodName: "AddUserFollow",
+			Handler:    _Usercenter_AddUserFollow_Handler,
+		},
+		{
+			MethodName: "UpdateUserFollow",
+			Handler:    _Usercenter_UpdateUserFollow_Handler,
+		},
+		{
+			MethodName: "DelUserFollow",
+			Handler:    _Usercenter_DelUserFollow_Handler,
+		},
+		{
+			MethodName: "GetUserFollowById",
+			Handler:    _Usercenter_GetUserFollowById_Handler,
+		},
+		{
+			MethodName: "SearchUserFollow",
+			Handler:    _Usercenter_SearchUserFollow_Handler,
 		},
 		{
 			MethodName: "AddUserContact",

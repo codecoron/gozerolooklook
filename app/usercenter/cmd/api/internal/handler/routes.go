@@ -7,6 +7,7 @@ import (
 	address "looklook/app/usercenter/cmd/api/internal/handler/address"
 	user "looklook/app/usercenter/cmd/api/internal/handler/user"
 	userContact "looklook/app/usercenter/cmd/api/internal/handler/userContact"
+	userfollow "looklook/app/usercenter/cmd/api/internal/handler/userfollow"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -79,6 +80,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/userContact/create",
 				Handler: userContact.CreateHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/userfollow/addfollowInfo",
+				Handler: userfollow.AddfollowInfoHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

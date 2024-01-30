@@ -24,6 +24,7 @@ message UserAuth {
 }
 
 
+
 //req 、resp
 message RegisterReq {
   string mobile = 1;
@@ -94,7 +95,106 @@ message UpdateUserBaseInfoReq {
 
 message UpdateUserBaseInfoResp {
 }
+//--------------------------------用户引流方式-------------------------------
+message AddFollowInfoReq {
+  string name = 1;
+  string desc = 2;
+  string avatar = 3;
+  int64  isShow = 4;
+  int64  Type = 5;
+  int64  appletType = 6;
+  string qrCode = 7;
+  string inputA = 8;
+  string inputB = 9;
+}
+message AddFollowInfoResp {
+}
 
+message UserFollow {
+  int64 id = 1;
+  int64 userId = 2;
+  int64 type = 3;
+  int64 appletType = 4;
+  string name = 5;
+  string desc = 6;
+  string avatar = 7;
+  int64 isShow = 8;
+  string qrCode = 9;
+  string inputA = 10;
+  string inputB = 11;
+  int64 createTime = 12;
+  int64 updateTime = 13;
+}
+
+message AddUserFollowReq {
+  int64 userId = 1;
+  int64 type = 2;
+  int64 appletType = 3;
+  string name = 4;
+  string desc = 5;
+  string avatar = 6;
+  int64 isShow = 7;
+  string qrCode = 8;
+  string inputA = 9;
+  string inputB = 10;
+}
+
+message AddUserFollowResp {
+}
+
+message UpdateUserFollowReq {
+  int64 id = 1;
+  int64 userId = 2;
+  int64 type = 3;
+  int64 appletType = 4;
+  string name = 5;
+  string desc = 6;
+  string avatar = 7;
+  int64 isShow = 8;
+  string qrCode = 9;
+  string inputA = 10;
+  string inputB = 11;
+}
+
+message UpdateUserFollowResp {
+}
+
+message DelUserFollowReq {
+  int64 id = 1; //id
+}
+
+message DelUserFollowResp {
+}
+
+message GetUserFollowByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserFollowByIdResp {
+  UserFollow userFollow = 1; //userFollow
+}
+
+message SearchUserFollowReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  int64 type = 5;
+  int64 appletType = 6;
+  string name = 7;
+  string desc = 8;
+  string avatar = 9;
+  int64 isShow = 10;
+  string qrCode = 11;
+  string inputA = 12;
+  string inputB = 13;
+  int64 createTime = 14; //createTime
+  int64 updateTime = 15; //updateTime
+}
+
+message SearchUserFollowResp {
+  repeated UserFollow userFollow = 1;
+}
 //--------------------------------用户联系方式-------------------------------
 message UserContact {
   int64 id = 1; //id
@@ -246,6 +346,13 @@ service usercenter {
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
+  //-----------------------用户引流方式----------------------
+  rpc AddFollowInfo(AddFollowInfoReq) returns(AddFollowInfoResp);
+  rpc AddUserFollow(AddUserFollowReq) returns (AddUserFollowResp);
+  rpc UpdateUserFollow(UpdateUserFollowReq) returns (UpdateUserFollowResp);
+  rpc DelUserFollow(DelUserFollowReq) returns (DelUserFollowResp);
+  rpc GetUserFollowById(GetUserFollowByIdReq) returns (GetUserFollowByIdResp);
+  rpc SearchUserFollow(SearchUserFollowReq) returns (SearchUserFollowResp);
   //-----------------------用户联系方式----------------------
   rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);

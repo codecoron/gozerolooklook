@@ -57,6 +57,37 @@ func (s *UsercenterServer) UpdateUserBaseInfo(ctx context.Context, in *pb.Update
 	return l.UpdateUserBaseInfo(in)
 }
 
+// -----------------------用户引流方式----------------------
+func (s *UsercenterServer) AddFollowInfo(ctx context.Context, in *pb.AddFollowInfoReq) (*pb.AddFollowInfoResp, error) {
+	l := logic.NewAddFollowInfoLogic(ctx, s.svcCtx)
+	return l.AddFollowInfo(in)
+}
+
+func (s *UsercenterServer) AddUserFollow(ctx context.Context, in *pb.AddUserFollowReq) (*pb.AddUserFollowResp, error) {
+	l := logic.NewAddUserFollowLogic(ctx, s.svcCtx)
+	return l.AddUserFollow(in)
+}
+
+func (s *UsercenterServer) UpdateUserFollow(ctx context.Context, in *pb.UpdateUserFollowReq) (*pb.UpdateUserFollowResp, error) {
+	l := logic.NewUpdateUserFollowLogic(ctx, s.svcCtx)
+	return l.UpdateUserFollow(in)
+}
+
+func (s *UsercenterServer) DelUserFollow(ctx context.Context, in *pb.DelUserFollowReq) (*pb.DelUserFollowResp, error) {
+	l := logic.NewDelUserFollowLogic(ctx, s.svcCtx)
+	return l.DelUserFollow(in)
+}
+
+func (s *UsercenterServer) GetUserFollowById(ctx context.Context, in *pb.GetUserFollowByIdReq) (*pb.GetUserFollowByIdResp, error) {
+	l := logic.NewGetUserFollowByIdLogic(ctx, s.svcCtx)
+	return l.GetUserFollowById(in)
+}
+
+func (s *UsercenterServer) SearchUserFollow(ctx context.Context, in *pb.SearchUserFollowReq) (*pb.SearchUserFollowResp, error) {
+	l := logic.NewSearchUserFollowLogic(ctx, s.svcCtx)
+	return l.SearchUserFollow(in)
+}
+
 // -----------------------用户联系方式----------------------
 func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
 	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)

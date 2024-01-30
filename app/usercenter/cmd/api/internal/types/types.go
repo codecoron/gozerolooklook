@@ -9,6 +9,21 @@ type AddAddressResp struct {
 	Id int64 `json:"id"`
 }
 
+type AddfollowInfoReq struct {
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	IsShow     int64  `json:"is_show"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"applet_type"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"input_a"`
+	InputB     string `json:"input_b"`
+}
+
+type AddfollowInfoResp struct {
+}
+
 type AddressInfo struct {
 	ContactName   string       `json:"contactName"`
 	ContactMobile string       `json:"contactMobile"`
@@ -71,6 +86,20 @@ type DistrictInfo struct {
 type DistrictItem struct {
 	Id   string `json:"id,omitempty"`
 	Name string `json:"name"`
+}
+
+type FollowInfo struct {
+	Id         int64  `json:"id"`
+	UserId     int64  `json:"userId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"applet_type"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	IsShow     int64  `json:"is_show"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"input_a"`
+	InputB     string `json:"input_b"`
 }
 
 type LoginReq struct {

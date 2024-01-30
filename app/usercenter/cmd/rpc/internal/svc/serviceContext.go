@@ -16,6 +16,7 @@ type ServiceContext struct {
 	UserAuthModel    model.UserAuthModel
 	UserContactModel model.UserContactModel
 	UserAddressModel model.UserAddressModel
+	UserFollowModel  model.UserFollowModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
