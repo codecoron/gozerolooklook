@@ -2,7 +2,6 @@ package userfollow
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/usercenter/cmd/api/internal/svc"
@@ -25,12 +24,23 @@ func NewAddfollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Add
 }
 
 func (l *AddfollowInfoLogic) AddfollowInfo(req *types.AddfollowInfoReq) (resp *types.AddfollowInfoResp, err error) {
-	var pbAddUserfollowReq usercenter.AddFollowInfoReq
-	_ = copier.Copy(&pbAddUserfollowReq, req)
-	info, err := l.svcCtx.UsercenterRpc.AddFollowInfo(l.ctx, &pbAddUserfollowReq)
+	//if req == nil {
+	//	return nil, errors.Wrapf(err, "req: %+v", req)
+	//}
+	var pbReq *usercenter.AddUserFollowReq
+	//_ = copier.Copy(&pbReq, req)
+	//var pbReq *usercenter.AddUserFollowReq
+	pbReq.Name = req.Name
+	pbReq.Desc = req.Desc
+	pbReq.QrCode = req.QrCode
+	pbReq.UserId = 1
+	pbReq.Avatar = req.Avatar
+	pbReq.QrCode = req.QrCode
+	pbReq.InputA = req.InputA
+
+	_, err = l.svcCtx.UsercenterRpc.AddUserFollow(l.ctx, pbReq)
 	if err != nil {
 		return nil, errors.Wrapf(err, "req: %+v", req)
 	}
-	_ = copier.Copy(resp, &info)
 	return &types.AddfollowInfoResp{}, nil
 }

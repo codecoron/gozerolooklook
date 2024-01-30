@@ -13,57 +13,86 @@ import (
 )
 
 type (
-	AddFollowInfoReq         = pb.AddFollowInfoReq
-	AddFollowInfoResp        = pb.AddFollowInfoResp
 	AddUserAddressReq        = pb.AddUserAddressReq
 	AddUserAddressResp       = pb.AddUserAddressResp
+	AddUserAuthReq           = pb.AddUserAuthReq
+	AddUserAuthResp          = pb.AddUserAuthResp
 	AddUserContactReq        = pb.AddUserContactReq
 	AddUserContactResp       = pb.AddUserContactResp
 	AddUserFollowReq         = pb.AddUserFollowReq
 	AddUserFollowResp        = pb.AddUserFollowResp
+	AddUserReq               = pb.AddUserReq
+	AddUserResp              = pb.AddUserResp
+	AddUserShopReq           = pb.AddUserShopReq
+	AddUserShopResp          = pb.AddUserShopResp
 	DelUserAddressReq        = pb.DelUserAddressReq
 	DelUserAddressResp       = pb.DelUserAddressResp
+	DelUserAuthReq           = pb.DelUserAuthReq
+	DelUserAuthResp          = pb.DelUserAuthResp
 	DelUserContactReq        = pb.DelUserContactReq
 	DelUserContactResp       = pb.DelUserContactResp
 	DelUserFollowReq         = pb.DelUserFollowReq
 	DelUserFollowResp        = pb.DelUserFollowResp
+	DelUserReq               = pb.DelUserReq
+	DelUserResp              = pb.DelUserResp
+	DelUserShopReq           = pb.DelUserShopReq
+	DelUserShopResp          = pb.DelUserShopResp
 	GenerateTokenReq         = pb.GenerateTokenReq
 	GenerateTokenResp        = pb.GenerateTokenResp
 	GetUserAddressByIdReq    = pb.GetUserAddressByIdReq
 	GetUserAddressByIdResp   = pb.GetUserAddressByIdResp
 	GetUserAuthByAuthKeyReq  = pb.GetUserAuthByAuthKeyReq
 	GetUserAuthByAuthKeyResp = pb.GetUserAuthByAuthKeyResp
+	GetUserAuthByIdReq       = pb.GetUserAuthByIdReq
+	GetUserAuthByIdResp      = pb.GetUserAuthByIdResp
 	GetUserAuthByUserIdReq   = pb.GetUserAuthByUserIdReq
 	GetUserAuthyUserIdResp   = pb.GetUserAuthyUserIdResp
+	GetUserByIdReq           = pb.GetUserByIdReq
+	GetUserByIdResp          = pb.GetUserByIdResp
 	GetUserContactByIdReq    = pb.GetUserContactByIdReq
 	GetUserContactByIdResp   = pb.GetUserContactByIdResp
 	GetUserFollowByIdReq     = pb.GetUserFollowByIdReq
 	GetUserFollowByIdResp    = pb.GetUserFollowByIdResp
 	GetUserInfoReq           = pb.GetUserInfoReq
 	GetUserInfoResp          = pb.GetUserInfoResp
+	GetUserShopByIdReq       = pb.GetUserShopByIdReq
+	GetUserShopByIdResp      = pb.GetUserShopByIdResp
 	LoginReq                 = pb.LoginReq
 	LoginResp                = pb.LoginResp
 	RegisterReq              = pb.RegisterReq
 	RegisterResp             = pb.RegisterResp
 	SearchUserAddressReq     = pb.SearchUserAddressReq
 	SearchUserAddressResp    = pb.SearchUserAddressResp
+	SearchUserAuthReq        = pb.SearchUserAuthReq
+	SearchUserAuthResp       = pb.SearchUserAuthResp
 	SearchUserContactReq     = pb.SearchUserContactReq
 	SearchUserContactResp    = pb.SearchUserContactResp
 	SearchUserFollowReq      = pb.SearchUserFollowReq
 	SearchUserFollowResp     = pb.SearchUserFollowResp
+	SearchUserReq            = pb.SearchUserReq
+	SearchUserResp           = pb.SearchUserResp
+	SearchUserShopReq        = pb.SearchUserShopReq
+	SearchUserShopResp       = pb.SearchUserShopResp
 	UpdateUserAddressReq     = pb.UpdateUserAddressReq
 	UpdateUserAddressResp    = pb.UpdateUserAddressResp
+	UpdateUserAuthReq        = pb.UpdateUserAuthReq
+	UpdateUserAuthResp       = pb.UpdateUserAuthResp
 	UpdateUserBaseInfoReq    = pb.UpdateUserBaseInfoReq
 	UpdateUserBaseInfoResp   = pb.UpdateUserBaseInfoResp
 	UpdateUserContactReq     = pb.UpdateUserContactReq
 	UpdateUserContactResp    = pb.UpdateUserContactResp
 	UpdateUserFollowReq      = pb.UpdateUserFollowReq
 	UpdateUserFollowResp     = pb.UpdateUserFollowResp
+	UpdateUserReq            = pb.UpdateUserReq
+	UpdateUserResp           = pb.UpdateUserResp
+	UpdateUserShopReq        = pb.UpdateUserShopReq
+	UpdateUserShopResp       = pb.UpdateUserShopResp
 	User                     = pb.User
 	UserAddress              = pb.UserAddress
 	UserAuth                 = pb.UserAuth
 	UserContact              = pb.UserContact
 	UserFollow               = pb.UserFollow
+	UserShop                 = pb.UserShop
 
 	Usercenter interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
@@ -73,25 +102,42 @@ type (
 		GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 		UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
-		// -----------------------用户引流方式----------------------
-		AddFollowInfo(ctx context.Context, in *AddFollowInfoReq, opts ...grpc.CallOption) (*AddFollowInfoResp, error)
-		AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error)
-		UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error)
-		DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error)
-		GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error)
-		SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error)
-		// -----------------------用户联系方式----------------------
-		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
-		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
-		DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
-		GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
-		SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
+		// -----------------------用户表-----------------------
+		AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error)
+		UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
+		DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error)
+		GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
+		SearchUser(ctx context.Context, in *SearchUserReq, opts ...grpc.CallOption) (*SearchUserResp, error)
 		// -----------------------用户收货地址表-----------------------
 		AddUserAddress(ctx context.Context, in *AddUserAddressReq, opts ...grpc.CallOption) (*AddUserAddressResp, error)
 		UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error)
 		DelUserAddress(ctx context.Context, in *DelUserAddressReq, opts ...grpc.CallOption) (*DelUserAddressResp, error)
 		GetUserAddressById(ctx context.Context, in *GetUserAddressByIdReq, opts ...grpc.CallOption) (*GetUserAddressByIdResp, error)
 		SearchUserAddress(ctx context.Context, in *SearchUserAddressReq, opts ...grpc.CallOption) (*SearchUserAddressResp, error)
+		// -----------------------用户授权表-----------------------
+		AddUserAuth(ctx context.Context, in *AddUserAuthReq, opts ...grpc.CallOption) (*AddUserAuthResp, error)
+		UpdateUserAuth(ctx context.Context, in *UpdateUserAuthReq, opts ...grpc.CallOption) (*UpdateUserAuthResp, error)
+		DelUserAuth(ctx context.Context, in *DelUserAuthReq, opts ...grpc.CallOption) (*DelUserAuthResp, error)
+		GetUserAuthById(ctx context.Context, in *GetUserAuthByIdReq, opts ...grpc.CallOption) (*GetUserAuthByIdResp, error)
+		SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error)
+		// -----------------------抽奖发起人联系方式-----------------------
+		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
+		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
+		DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
+		GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
+		SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
+		// -----------------------抽奖发起人联系方式-----------------------
+		AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error)
+		UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error)
+		DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error)
+		GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error)
+		SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error)
+		// -----------------------userShop-----------------------
+		AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error)
+		UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error)
+		DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error)
+		GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error)
+		SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -140,61 +186,30 @@ func (m *defaultUsercenter) UpdateUserBaseInfo(ctx context.Context, in *UpdateUs
 	return client.UpdateUserBaseInfo(ctx, in, opts...)
 }
 
-// -----------------------用户引流方式----------------------
-func (m *defaultUsercenter) AddFollowInfo(ctx context.Context, in *AddFollowInfoReq, opts ...grpc.CallOption) (*AddFollowInfoResp, error) {
+// -----------------------用户表-----------------------
+func (m *defaultUsercenter) AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.AddFollowInfo(ctx, in, opts...)
+	return client.AddUser(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error) {
+func (m *defaultUsercenter) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.AddUserFollow(ctx, in, opts...)
+	return client.UpdateUser(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error) {
+func (m *defaultUsercenter) DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.UpdateUserFollow(ctx, in, opts...)
+	return client.DelUser(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error) {
+func (m *defaultUsercenter) GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.DelUserFollow(ctx, in, opts...)
+	return client.GetUserById(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error) {
+func (m *defaultUsercenter) SearchUser(ctx context.Context, in *SearchUserReq, opts ...grpc.CallOption) (*SearchUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.GetUserFollowById(ctx, in, opts...)
-}
-
-func (m *defaultUsercenter) SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.SearchUserFollow(ctx, in, opts...)
-}
-
-// -----------------------用户联系方式----------------------
-func (m *defaultUsercenter) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.AddUserContact(ctx, in, opts...)
-}
-
-func (m *defaultUsercenter) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.UpdateUserContact(ctx, in, opts...)
-}
-
-func (m *defaultUsercenter) DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.DelUserContact(ctx, in, opts...)
-}
-
-func (m *defaultUsercenter) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.GetUserContactById(ctx, in, opts...)
-}
-
-func (m *defaultUsercenter) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
-	client := pb.NewUsercenterClient(m.cli.Conn())
-	return client.SearchUserContact(ctx, in, opts...)
+	return client.SearchUser(ctx, in, opts...)
 }
 
 // -----------------------用户收货地址表-----------------------
@@ -221,4 +236,108 @@ func (m *defaultUsercenter) GetUserAddressById(ctx context.Context, in *GetUserA
 func (m *defaultUsercenter) SearchUserAddress(ctx context.Context, in *SearchUserAddressReq, opts ...grpc.CallOption) (*SearchUserAddressResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.SearchUserAddress(ctx, in, opts...)
+}
+
+// -----------------------用户授权表-----------------------
+func (m *defaultUsercenter) AddUserAuth(ctx context.Context, in *AddUserAuthReq, opts ...grpc.CallOption) (*AddUserAuthResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserAuth(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserAuth(ctx context.Context, in *UpdateUserAuthReq, opts ...grpc.CallOption) (*UpdateUserAuthResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserAuth(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserAuth(ctx context.Context, in *DelUserAuthReq, opts ...grpc.CallOption) (*DelUserAuthResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserAuth(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserAuthById(ctx context.Context, in *GetUserAuthByIdReq, opts ...grpc.CallOption) (*GetUserAuthByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserAuthById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserAuth(ctx, in, opts...)
+}
+
+// -----------------------抽奖发起人联系方式-----------------------
+func (m *defaultUsercenter) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserContactById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserContact(ctx, in, opts...)
+}
+
+// -----------------------抽奖发起人联系方式-----------------------
+func (m *defaultUsercenter) AddUserFollow(ctx context.Context, in *AddUserFollowReq, opts ...grpc.CallOption) (*AddUserFollowResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserFollow(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserFollow(ctx context.Context, in *UpdateUserFollowReq, opts ...grpc.CallOption) (*UpdateUserFollowResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserFollow(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserFollow(ctx context.Context, in *DelUserFollowReq, opts ...grpc.CallOption) (*DelUserFollowResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserFollow(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserFollowById(ctx context.Context, in *GetUserFollowByIdReq, opts ...grpc.CallOption) (*GetUserFollowByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserFollowById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserFollow(ctx context.Context, in *SearchUserFollowReq, opts ...grpc.CallOption) (*SearchUserFollowResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserFollow(ctx, in, opts...)
+}
+
+// -----------------------userShop-----------------------
+func (m *defaultUsercenter) AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserShop(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserShop(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserShop(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserShopById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserShop(ctx, in, opts...)
 }

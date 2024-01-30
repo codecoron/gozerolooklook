@@ -28,12 +28,12 @@ func NewAddFollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Add
 }
 
 // -----------------------用户引流方式----------------------
-func (l *AddFollowInfoLogic) AddFollowInfo(in *pb.AddFollowInfoReq) (*pb.AddFollowInfoResp, error) {
+func (l *AddFollowInfoLogic) AddFollowInfo(in *pb.AddUserFollowReq) (*pb.AddUserFollowResp, error) {
 	FollowInfo := new(model.UserFollow)
 	_ = copier.Copy(&FollowInfo, in)
 	_, err := l.svcCtx.UserFollowModel.Insert(l.ctx, FollowInfo)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "usercenter Database Exception FollowInfo : %+v , err: %v", FollowInfo, err)
 	}
-	return &pb.AddFollowInfoResp{}, nil
+	return &pb.AddUserFollowResp{}, nil
 }
