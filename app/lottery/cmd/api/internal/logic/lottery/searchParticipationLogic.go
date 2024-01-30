@@ -2,6 +2,7 @@ package lottery
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 
@@ -33,6 +34,7 @@ func (l *SearchParticipationLogic) SearchParticipation(req *types.SearchLotteryP
 		return nil, err
 	}
 
+	userInfos := []*usercenter.User{}
 	for i := range r.List {
 		userId := r.List[i].UserId
 		info, err := l.svcCtx.UsercenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{
@@ -41,7 +43,8 @@ func (l *SearchParticipationLogic) SearchParticipation(req *types.SearchLotteryP
 		if err != nil {
 			return nil, err
 		}
-		resp.List = append(resp.List, info.User.GetAvatar())
+		userInfos = append(userInfos, info.User)
 	}
+	err = copier.Copy(&resp.List, userInfos)
 	return
 }

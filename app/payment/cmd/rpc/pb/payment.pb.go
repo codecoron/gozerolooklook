@@ -24,7 +24,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//req 、resp
+// req 、resp
 type CreatePaymentReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -498,7 +498,7 @@ func (x *GetPaymentSuccessRefundByOrderSnResp) GetPaymentDetail() *PaymentDetail
 	return nil
 }
 
-//更新交易状态
+// 更新交易状态
 type UpdateTradeStateReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

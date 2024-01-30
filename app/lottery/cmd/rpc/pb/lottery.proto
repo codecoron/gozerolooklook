@@ -221,6 +221,8 @@ message AddLotteryParticipationResp{
 
 message SearchLotteryParticipationReq{
   int64 lotteryId = 1;
+  int64 pageIndex = 2;
+  int64 pageSize = 3;
 }
 
 message LotteryParticipation {
@@ -242,6 +244,14 @@ message GetPrizeListByLotteryIdReq {
 
 message GetPrizeListByLotteryIdResp {
   repeated Prize prizes = 1; // 奖品列表
+}
+
+message GetParticipationUserIdsByLotteryIdReq {
+  int64 lotteryId = 1;
+}
+
+message GetParticipationUserIdsByLotteryIdResp {
+  repeated int64 userIds = 1;
 }
 
 // ------------------------------------
@@ -271,4 +281,5 @@ service lottery{
   //-----------------------参与抽奖-----------------------
   rpc AddLotteryParticipation(AddLotteryParticipationReq) returns (AddLotteryParticipationResp);
   rpc SearchLotteryParticipation(SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp);
+  rpc GetParticipationUserIdsByLotteryId(GetParticipationUserIdsByLotteryIdReq) returns (GetParticipationUserIdsByLotteryIdResp);
 }

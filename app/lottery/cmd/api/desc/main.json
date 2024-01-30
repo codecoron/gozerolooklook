@@ -149,11 +149,18 @@
             "format": "int64"
           },
           {
-            "name": "isAll",
+            "name": "pageIndex",
             "in": "query",
             "required": true,
-            "type": "boolean",
-            "format": "boolean"
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "requestBody": {},
@@ -620,15 +627,20 @@
           "type": "integer",
           "format": "int64"
         },
-        "isAll": {
-          "type": "boolean",
-          "format": "boolean"
+        "pageIndex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "SearchLotteryParticipationReq",
       "required": [
         "lotteryId",
-        "isAll"
+        "pageIndex",
+        "pageSize"
       ]
     },
     "SearchLotteryParticipationResp": {
@@ -641,7 +653,7 @@
         "list": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/UserInfo"
           }
         }
       },
@@ -693,6 +705,43 @@
     "UpdateLotteryResp": {
       "type": "object",
       "title": "UpdateLotteryResp"
+    },
+    "UserInfo": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "locationName": {
+          "type": "string"
+        }
+      },
+      "title": "UserInfo",
+      "required": [
+        "mobile",
+        "nickname",
+        "sex",
+        "avatar",
+        "info",
+        "signature",
+        "locationName"
+      ]
     }
   },
   "securityDefinitions": {

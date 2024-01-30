@@ -8,14 +8,13 @@ import (
 	"looklook/app/mqueue/cmd/job/internal/config"
 )
 
-//小程序客户端
+// 小程序客户端
 func newMiniprogramClient(c config.Config) *miniprogram.MiniProgram {
 
-	return  wechat.NewWechat().GetMiniProgram(&miniConfig.Config{
+	return wechat.NewWechat().GetMiniProgram(&miniConfig.Config{
 		AppID:     c.WxMiniConf.AppId,
 		AppSecret: c.WxMiniConf.Secret,
 		Cache:     cache.NewMemory(),
 	})
 
 }
-
