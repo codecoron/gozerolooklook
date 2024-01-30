@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message NoticeLotteryDrawReq{
+  repeated int64 userIds = 1;
+  int64 lotteryId = 2;
+}
+
+message NoticeLotteryDrawResp{
+}
+
+service notice{
+  rpc NoticeLotteryDraw(NoticeLotteryDrawReq) returns (NoticeLotteryDrawResp); // 发送开奖消息
+}

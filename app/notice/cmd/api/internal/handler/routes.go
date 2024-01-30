@@ -18,6 +18,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/event",
 				Handler: event.VerifyEventHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/event",
+				Handler: event.ReceiveEventHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/notice/v1"),
 	)

@@ -10,6 +10,7 @@ type Config struct {
 	service.ServiceConf
 	Redis      redis.RedisConf
 	WxMiniConf WxMiniConf
+	WxMsgConf  WxMsgConf
 
 	SettleRpcConf     zrpc.RpcClientConf
 	OrderRpcConf      zrpc.RpcClientConf

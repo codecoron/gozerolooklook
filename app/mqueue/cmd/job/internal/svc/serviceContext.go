@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
 	"github.com/hibiken/asynq"
 	"github.com/silenceper/wechat/v2/miniprogram"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -10,6 +11,10 @@ import (
 )
 
 type ServiceContext struct {
+	Config        config.Config
+	AsynqServer   *asynq.Server
+	MiniProgram   *miniprogram.MiniProgram // looklook使用
+	WxMiniProgram *miniProgram.MiniProgram // lottery使用
 	Config      config.Config
 	AsynqServer *asynq.Server
 	MiniProgram *miniprogram.MiniProgram
@@ -22,6 +27,9 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:        c,
 		AsynqServer:   newAsynqServer(c),
+		MiniProgram:   newMiniprogramClient(c), // looklook使用
+		WxMiniProgram: MustNewMiniProgram(c),   // lottery使用
+
 		MiniProgram:   newMiniprogramClient(c),
 		OrderRpc:      order.NewOrder(zrpc.MustNewClient(c.OrderRpcConf)),
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
