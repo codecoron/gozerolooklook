@@ -474,17 +474,17 @@
           "format": "int64",
           "description": "是否精选 1是 0否"
         },
-        "anounceType": {
+        "announceType": {
           "type": "integer",
           "format": "int64",
           "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
         },
-        "anounceTime": {
+        "announceTime": {
           "type": "integer",
           "format": "int64",
           "description": "开奖时间"
         },
-        "isAnounced": {
+        "isAnnounced": {
           "type": "integer",
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
@@ -501,9 +501,9 @@
         "introduce",
         "awardDeadline",
         "isSelected",
-        "anounceType",
-        "anounceTime",
-        "isAnounced"
+        "announceType",
+        "announceTime",
+        "isAnnounced"
       ]
     },
     "LotteryDetailReq": {
@@ -563,17 +563,17 @@
           "format": "int64",
           "description": "是否精选 1是 0否"
         },
-        "anounceType": {
+        "announceType": {
           "type": "integer",
           "format": "int64",
           "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
         },
-        "anounceTime": {
+        "announceTime": {
           "type": "integer",
           "format": "int64",
           "description": "开奖时间"
         },
-        "isAnounced": {
+        "isAnnounced": {
           "type": "integer",
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
@@ -601,9 +601,9 @@
         "introduce",
         "awardDeadline",
         "isSelected",
-        "anounceType",
-        "anounceTime",
-        "isAnounced",
+        "announceType",
+        "announceTime",
+        "isAnnounced",
         "prizes",
         "sponsor"
       ]

@@ -42,9 +42,7 @@ func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *t
 	resp = new(types.LotteryDetailResp)
 	_ = copier.Copy(resp, res)
 	_ = copier.Copy(resp, res.Lottery)
-	resp.AnounceTime = res.Lottery.AnnounceTime
-	resp.AnounceType = res.Lottery.AnnounceType
-	resp.IsAnounced = res.Lottery.IsAnnounced
+
 	// 获取赞助商信息
 	res2, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
 		Id: req.Id,
