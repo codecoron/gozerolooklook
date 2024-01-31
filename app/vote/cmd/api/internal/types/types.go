@@ -3,7 +3,6 @@ package types
 
 type CreateVoteRecordReq struct {
 	LotteryId      int64 `json:"lotteryId"`      //抽奖id
-	UserId         int64 `json:"userId"`         //用户id
 	SelectedOption int64 `json:"selectedOption"` //用户选择的投票选项
 }
 
@@ -12,21 +11,27 @@ type CreateVoteRecordResp struct {
 }
 
 type CreateVoteReq struct {
-	UserId     int64              `json:"userId"`     //用户id
-	LotteryId  int64              `json:"lotteryId"`  //抽奖id
-	EnableVote int64              `json:"enableVote"` //是否启用投票功能 1是 0否
-	VoteConfig VoteConfigJSONData `json:"voteConfig"` //投票配置字段说明
+	LotteryId  int64              `json:"lotteryId" validate:"required"`   //抽奖id
+	EnableVote int64              `json:"enableVote" validate:"eq=0|eq=1"` //是否启用投票功能 1是 0否
+	VoteConfig VoteConfigJSONData `json:"voteConfig" validate:"required"`  //投票配置字段说明
 }
 
 type CreateVoteResp struct {
 	Id int64 `json:"id"`
 }
 
+type EnableVoteReq struct {
+	LotteryId int64 `json:"lotteryId" validate:"required"` //抽奖id
+}
+
+type EnableVoteResp struct {
+	DelState int64 `json:"id"` //投票状态
+}
+
 type UpdateVoteReq struct {
-	Id         int64              `json:"id"`         //编辑投票id
-	LotteryId  int64              `json:"lotteryId"`  //抽奖id
-	EnableVote int64              `json:"enableVote"` //是否启用投票功能 1是 0否
-	VoteConfig VoteConfigJSONData `json:"voteConfig"` //投票配置字段说明
+	Id         int64              `json:"id" validate:"required"`          //编辑投票id
+	EnableVote int64              `json:"enableVote" validate:"eq=0|eq=1"` //是否启用投票功能 1是 0否
+	VoteConfig VoteConfigJSONData `json:"voteConfig" validate:"required"`  //投票配置字段说明
 }
 
 type UpdateVoteResp struct {
@@ -61,18 +66,18 @@ type ViewVoteRecordDetailResp struct {
 }
 
 type VoteConfigJSONData struct {
-	Title           string       `json:"title"`           //投票标题
-	Description     string       `json:"description"`     //投票描述【非必填】
-	WinnerSelection int64        `json:"winnerSelection"` //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
-	Type            int64        `json:"type"`            //投票类型：1单选 2多选
-	MinVotes        int64        `json:"minVotes"`        //最小投票范围
-	MaxVotes        int64        `json:"maxVotes"`        //最大投票范围
-	Options         []VoteOption `json:"options"`         //选项列表
+	Title           string       `json:"title" validate:"required"`                 //投票标题
+	Description     string       `json:"description" validate:"required"`           //投票描述【非必填】
+	WinnerSelection int64        `json:"winnerSelection" validate:"eq=0|eq=1"`      //中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取
+	Type            int64        `json:"type" validate:"eq=0|eq=1"`                 //投票类型：1单选 2多选
+	MinVotes        int64        `json:"minVotes" validate:"required"`              //最小投票范围
+	MaxVotes        int64        `json:"maxVotes"`                                  //最大投票范围
+	Options         []VoteOption `json:"options" validate:"required,dive,required"` //选项列表
 }
 
 type VoteOption struct {
-	Text  string `json:"text"`  //选项名称
-	Image string `json:"image"` //选项图片
+	Text  string `json:"text" validate:"required"`  //选项名称
+	Image string `json:"image" validate:"required"` //选项图片
 }
 
 type VoteRecordDetail struct {

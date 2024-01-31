@@ -72,6 +72,34 @@
         ]
       }
     },
+    "vote/v1/vote/enableVoteDetail": {
+      "post": {
+        "summary": "开启或关闭投票设置",
+        "operationId": "enableVote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EnableVoteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EnableVoteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "vote"
+        ]
+      }
+    },
     "vote/v1/vote/updateVote": {
       "post": {
         "summary": "编辑投票设置接口",
@@ -194,11 +222,6 @@
           "format": "int64",
           "description": "抽奖id"
         },
-        "userId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "用户id"
-        },
         "selectedOption": {
           "type": "integer",
           "format": "int64",
@@ -208,7 +231,6 @@
       "title": "CreateVoteRecordReq",
       "required": [
         "lotteryId",
-        "userId",
         "selectedOption"
       ]
     },
@@ -228,11 +250,6 @@
     "CreateVoteReq": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "用户id"
-        },
         "lotteryId": {
           "type": "integer",
           "format": "int64",
@@ -250,9 +267,9 @@
       },
       "title": "CreateVoteReq",
       "required": [
-        "userId",
         "lotteryId",
         "enableVote",
+        "required",
         "voteConfig"
       ]
     },
@@ -269,6 +286,34 @@
         "id"
       ]
     },
+    "EnableVoteReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖id"
+        }
+      },
+      "title": "EnableVoteReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "EnableVoteResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "投票状态"
+        }
+      },
+      "title": "EnableVoteResp",
+      "required": [
+        "id"
+      ]
+    },
     "UpdateVoteReq": {
       "type": "object",
       "properties": {
@@ -276,11 +321,6 @@
           "type": "integer",
           "format": "int64",
           "description": "编辑投票id"
-        },
-        "lotteryId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "抽奖id"
         },
         "enableVote": {
           "type": "integer",
@@ -295,8 +335,8 @@
       "title": "UpdateVoteReq",
       "required": [
         "id",
-        "lotteryId",
         "enableVote",
+        "required",
         "voteConfig"
       ]
     },
@@ -457,6 +497,7 @@
         "title",
         "description",
         "winnerSelection",
+        "required",
         "type",
         "minVotes",
         "maxVotes",
