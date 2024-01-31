@@ -37,6 +37,7 @@ const (
 	Lottery_AddLotteryParticipation_FullMethodName            = "/pb.lottery/AddLotteryParticipation"
 	Lottery_SearchLotteryParticipation_FullMethodName         = "/pb.lottery/SearchLotteryParticipation"
 	Lottery_GetParticipationUserIdsByLotteryId_FullMethodName = "/pb.lottery/GetParticipationUserIdsByLotteryId"
+	Lottery_CheckIsParticipated_FullMethodName                = "/pb.lottery/CheckIsParticipated"
 )
 
 // LotteryClient is the client API for Lottery service.
@@ -64,6 +65,7 @@ type LotteryClient interface {
 	AddLotteryParticipation(ctx context.Context, in *AddLotteryParticipationReq, opts ...grpc.CallOption) (*AddLotteryParticipationResp, error)
 	SearchLotteryParticipation(ctx context.Context, in *SearchLotteryParticipationReq, opts ...grpc.CallOption) (*SearchLotteryParticipationResp, error)
 	GetParticipationUserIdsByLotteryId(ctx context.Context, in *GetParticipationUserIdsByLotteryIdReq, opts ...grpc.CallOption) (*GetParticipationUserIdsByLotteryIdResp, error)
+	CheckIsParticipated(ctx context.Context, in *CheckIsParticipatedReq, opts ...grpc.CallOption) (*CheckIsParticipatedResp, error)
 }
 
 type lotteryClient struct {
@@ -236,6 +238,15 @@ func (c *lotteryClient) GetParticipationUserIdsByLotteryId(ctx context.Context, 
 	return out, nil
 }
 
+func (c *lotteryClient) CheckIsParticipated(ctx context.Context, in *CheckIsParticipatedReq, opts ...grpc.CallOption) (*CheckIsParticipatedResp, error) {
+	out := new(CheckIsParticipatedResp)
+	err := c.cc.Invoke(ctx, Lottery_CheckIsParticipated_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LotteryServer is the server API for Lottery service.
 // All implementations must embed UnimplementedLotteryServer
 // for forward compatibility
@@ -261,6 +272,7 @@ type LotteryServer interface {
 	AddLotteryParticipation(context.Context, *AddLotteryParticipationReq) (*AddLotteryParticipationResp, error)
 	SearchLotteryParticipation(context.Context, *SearchLotteryParticipationReq) (*SearchLotteryParticipationResp, error)
 	GetParticipationUserIdsByLotteryId(context.Context, *GetParticipationUserIdsByLotteryIdReq) (*GetParticipationUserIdsByLotteryIdResp, error)
+	CheckIsParticipated(context.Context, *CheckIsParticipatedReq) (*CheckIsParticipatedResp, error)
 	mustEmbedUnimplementedLotteryServer()
 }
 
@@ -321,6 +333,9 @@ func (UnimplementedLotteryServer) SearchLotteryParticipation(context.Context, *S
 }
 func (UnimplementedLotteryServer) GetParticipationUserIdsByLotteryId(context.Context, *GetParticipationUserIdsByLotteryIdReq) (*GetParticipationUserIdsByLotteryIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParticipationUserIdsByLotteryId not implemented")
+}
+func (UnimplementedLotteryServer) CheckIsParticipated(context.Context, *CheckIsParticipatedReq) (*CheckIsParticipatedResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckIsParticipated not implemented")
 }
 func (UnimplementedLotteryServer) mustEmbedUnimplementedLotteryServer() {}
 
@@ -659,6 +674,24 @@ func _Lottery_GetParticipationUserIdsByLotteryId_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_CheckIsParticipated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckIsParticipatedReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).CheckIsParticipated(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_CheckIsParticipated_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).CheckIsParticipated(ctx, req.(*CheckIsParticipatedReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Lottery_ServiceDesc is the grpc.ServiceDesc for Lottery service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -737,6 +770,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetParticipationUserIdsByLotteryId",
 			Handler:    _Lottery_GetParticipationUserIdsByLotteryId_Handler,
+		},
+		{
+			MethodName: "CheckIsParticipated",
+			Handler:    _Lottery_CheckIsParticipated_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
