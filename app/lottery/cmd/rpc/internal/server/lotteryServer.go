@@ -114,3 +114,8 @@ func (s *LotteryServer) GetParticipationUserIdsByLotteryId(ctx context.Context, 
 	l := logic.NewGetParticipationUserIdsByLotteryIdLogic(ctx, s.svcCtx)
 	return l.GetParticipationUserIdsByLotteryId(in)
 }
+
+func (s *LotteryServer) CheckIsParticipated(ctx context.Context, in *pb.CheckIsParticipatedReq) (*pb.CheckIsParticipatedResp, error) {
+	l := logic.NewCheckIsParticipatedLogic(ctx, s.svcCtx)
+	return l.CheckIsParticipated(in)
+}
