@@ -9,5 +9,8 @@ const DeferCloseHomestayOrder = "defer:homestay_order:close"
 // MsgPaySuccessNotifyUser 支付成功通知用户
 const MsgPaySuccessNotifyUser = "msg:pay_success:notify_user"
 
-// MsgWxMiniProgramSubscribe 给用户发送小程序订阅消息
+// MsgWxMiniProgramNotifyUser 给用户发送小程序订阅消息
 const MsgWxMiniProgramNotifyUser = "msg:wx_mini_program:notify_user"
+
+// ScheduleLotteryDraw 开奖的定时任务
+const ScheduleLotteryDraw = "schedule:lottery:draw"

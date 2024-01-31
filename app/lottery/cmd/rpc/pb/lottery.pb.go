@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// --------------------------------抽奖表--------------------------------
+//--------------------------------抽奖表--------------------------------
 type Lottery struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1311,7 +1311,7 @@ func (*AnnounceLotteryResp) Descriptor() ([]byte, []int) {
 	return file_lottery_proto_rawDescGZIP(), []int{18}
 }
 
-// --------------------------------奖品表--------------------------------
+//--------------------------------奖品表--------------------------------
 type Prize struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
