@@ -66,10 +66,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/lotterySponsor",
-				Handler: lottery.LotterySponsorHandler(serverCtx),
+				Path:    "/lottery/CheckIsParticipated",
+				Handler: lottery.CheckIsParticipatedHandler(serverCtx),
 			},
 		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/lottery/v1"),
 	)
 

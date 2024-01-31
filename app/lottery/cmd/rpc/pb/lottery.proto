@@ -110,6 +110,7 @@ message SetIsSelectedLotteryResp {
 
 message LotteryDetailReq {
   int64 Id = 1; // 抽奖id
+  int64 UserId = 2; // 当前用户id
 }
 
 message LotteryDetailResp {
@@ -254,6 +255,15 @@ message GetParticipationUserIdsByLotteryIdResp {
   repeated int64 userIds = 1;
 }
 
+message CheckIsParticipatedReq {
+  int64 LotteryId = 1; // 当前抽奖id
+  int64 UserId = 2; // 当前用户id
+}
+
+message CheckIsParticipatedResp {
+  int64 IsParticipated = 1; // 当前用户是否已经参与当前抽奖
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -282,4 +292,5 @@ service lottery{
   rpc AddLotteryParticipation(AddLotteryParticipationReq) returns (AddLotteryParticipationResp);
   rpc SearchLotteryParticipation(SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp);
   rpc GetParticipationUserIdsByLotteryId(GetParticipationUserIdsByLotteryIdReq) returns (GetParticipationUserIdsByLotteryIdResp);
+  rpc CheckIsParticipated(CheckIsParticipatedReq) returns (CheckIsParticipatedResp);
 }
