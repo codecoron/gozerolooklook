@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/app/notice/cmd/rpc/notice"
 	"math/rand"
+	"sort"
 	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -31,6 +31,12 @@ type TimeLotteryStrategy struct {
 	CurrentTime time.Time
 }
 
+// PeopleLotteryStrategy 实现基于人数的抽奖策略
+type PeopleLotteryStrategy struct {
+	*AnnounceLotteryLogic
+	CurrentTime time.Time
+}
+
 type Winner struct {
 	LotteryId int64
 	UserId    int64
@@ -43,125 +49,6 @@ func NewAnnounceLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *A
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
-}
-
-func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.AnnounceLotteryResp, error) {
-	// 创建相应的抽奖策略
-	var strategy LotteryStrategy
-	switch in.AnnounceType {
-	case 1:
-		// 开奖时间类型
-		strategy = &TimeLotteryStrategy{
-			AnnounceLotteryLogic: l,
-			CurrentTime:          time.Now(),
-		}
-	}
-	err := strategy.Run()
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("AnnounceFinish") // t
-	return &pb.AnnounceLotteryResp{}, nil
-}
-
-// NotifyParticipators 通知MQ队列
-func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotteryId int64) error {
-	_, err := l.svcCtx.NoticeRpc.NoticeLotteryDraw(l.ctx, &notice.NoticeLotteryDrawReq{
-		LotteryId: lotteryId,
-		UserIds:   participators,
-	})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (s *TimeLotteryStrategy) Run() error {
-	// 查询满足条件的抽奖
-	lotteries, err := s.svcCtx.LotteryModel.QueryLotteries(s.ctx, s.CurrentTime)
-	if err != nil {
-		//fmt.Println("testttasdf", err) // f
-		return err
-	}
-
-	// 遍历每一个抽奖
-	for _, lotteryId := range lotteries {
-		var participators []int64
-		// 事务处理
-		err = s.svcCtx.LotteryModel.Trans(s.ctx, func(context context.Context, session sqlx.Session) error {
-			//根据抽奖id得到对应的所有奖品
-			prizes, err := s.svcCtx.PrizeModel.FindByLotteryId(s.ctx, lotteryId)
-			if err != nil {
-				return err
-			}
-
-			//todo 优化代码
-			// 根据lotteryId获取一个lottery详情，需要joinNumber字段 todo 优化名字 按人数开奖的指定人数
-			lottery, err := s.svcCtx.LotteryModel.FindOne(s.ctx, lotteryId)
-			if err != nil {
-				return err
-			}
-			fmt.Println("开始开奖的lottery:", lottery.Id)
-
-			// 开奖，根据抽奖规则以及参与抽奖用户表，得到最终的获奖名单winners
-			// 利用go切片的特性，传入cpPrizes，他们都指向同一片地址，在DrawLottery内部对cpPrizes的修改也是对Prizes的修改，但是cpPrizes不论是删除元素还是扩容都不影响Prizes底层的数组，符合业务逻辑
-			zeroPrizes := make([]*model.Prize, 0)
-
-			// todo 获取该lotteryId对应的所有参与者
-			//var participators []int64
-			//query := fmt.Sprintf("SELECT user_id FROM lottery_participants WHERE lottery_id = ?")
-			//err := c.QueryRowsNoCacheCtx(ctx, &participants, query, lottery.Id)
-			//if err != nil {
-			//	return nil, err
-			//}
-
-			testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-
-			participators = testParticipators
-
-			winners, err := s.DrawLottery(s.ctx, lottery, prizes, zeroPrizes, participators)
-			if err != nil {
-				return err
-			}
-
-			// 测试查看所有winners
-			for _, w := range winners {
-				fmt.Printf("testwinners:%+v\n", w)
-			}
-
-			//更新抽奖状态为"已开奖" t
-			err = s.svcCtx.LotteryModel.UpdateLotteryStatus(s.ctx, lottery.Id)
-			if err != nil {
-				return err
-			}
-
-			// 更新数据库中Prize表该奖品的数量
-			for _, p := range prizes {
-				fmt.Println("prizeId:", p.Id, "prizeCount:", p.Count)
-				err = s.svcCtx.PrizeModel.Update(s.ctx, p)
-				if err != nil {
-					return err
-				}
-			}
-
-			// todo 将得到的中奖信息，写入数据库participants
-			//err = s.svcCtx.LotteryModel.WriteResultToDB(s.ctx, winners)
-			//if err != nil {
-			//	return err
-			//}
-			return nil
-		})
-		if err != nil {
-			return err
-		}
-
-		// TODO 执行开奖结果通知任务
-		err := s.NotifyParticipators(participators, lotteryId)
-		if err != nil {
-			return err
-		}
-	}
-	return err
 }
 
 /*
@@ -181,22 +68,51 @@ map[userid]{prize}
 		}
 	}
 */
-func (s *TimeLotteryStrategy) DrawLottery(ctx context.Context, lottery *model.Lottery, prizes, zeroPrizes []*model.Prize, participantor []int64) ([]Winner, error) {
+func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.AnnounceLotteryResp, error) {
+	// 创建相应的抽奖策略
+	var strategy LotteryStrategy
+	switch in.AnnounceType {
+	case 1:
+		// 开奖时间类型
+		strategy = &TimeLotteryStrategy{
+			AnnounceLotteryLogic: l,
+			CurrentTime:          time.Now(),
+		}
+	case 2:
+		// 开奖时间类型
+		strategy = &PeopleLotteryStrategy{
+			AnnounceLotteryLogic: l,
+			CurrentTime:          time.Now(),
+		}
+	}
+	err := strategy.Run()
+	if err != nil {
+		return nil, err
+	}
+	//fmt.Println("AnnounceFinish") // t
+	return &pb.AnnounceLotteryResp{}, nil
+}
+
+func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64, prizes []*model.Prize, participantor []int64) ([]Winner, error) {
 	// test1： 用户有10个，奖品总数为5个，预计获奖人数945.即有某一时刻奖品数量为0。报错slice bounds out of range [7:2]    [已解决]
 	// 随机选择中奖者
 	rand.New(rand.NewSource(time.Now().UnixNano()))
-	WinnersNum := lottery.JoinNumber // 中奖者个数,joinNumber在按时开奖的时候表示中奖者个数
+
+	// 获取奖品总数 = 中奖人数
+	var WinnersNum int64
+	for _, p := range prizes {
+		WinnersNum += p.Count
+	}
+
 	winners := make([]Winner, 0)
 
-	//fmt.Println("alltestNumber", testParticipators)
-	for i := 0; i < int(WinnersNum); i++ {
+	for i := 0; i < int(WinnersNum); i++ { // 中奖人数
 		//fmt.Println("WinnersNum", i)
 		var randomWinnerIndex int
 		var winnerUserId int64
 
-		// 如果参与者少于预计中奖人数，就结束开奖。(参与人数 < 预计中奖人数 && 奖品数量 >= 参与人数)
+		// 如果参与者少于预计中奖人数，就结束开奖。(参与人数 < 中奖人数)
 		if len(participantor) == 0 {
-			//fmt.Println("如果参与者少于预计中奖人数，就结束开奖。")
 			break
 		} else {
 			// 随机选择一个参与者,得到中奖者的uid
@@ -204,52 +120,220 @@ func (s *TimeLotteryStrategy) DrawLottery(ctx context.Context, lottery *model.Lo
 			winnerUserId = participantor[randomWinnerIndex]
 		}
 
-		// 随机选择一个奖品，确保奖品的剩余数量大于0
-		prize := new(model.Prize)
-		var randomPrizeIndex int
-		for {
-			// 如果所有奖品的剩余数量都为0，直接返回即可。(该情况可能发生的情形为预计中奖人数 >= 参与人数 > 奖品数量)
-			if len(prizes) == 0 {
-				fmt.Println("no prizes left")
-				return winners, nil
-			}
-			randomPrizeIndex = rand.Intn(len(prizes))
-			prize = prizes[randomPrizeIndex]
-			if prize.Count > 0 {
-				break
-			} else {
-				//
-				prizes = append(prizes[:randomPrizeIndex], prizes[randomPrizeIndex+1:]...)
-			}
+		// 对所有prizes按照type排序 // todo 获取的时候能保证type有序吗？有序则可以不用排序了
+		sort.Slice(prizes, func(i, j int) bool {
+			return prizes[i].Type < prizes[j].Type
+		})
+
+		// 如果当前等级的奖品的剩余数量都为0，去掉，获取下一等级的奖品。
+		if prizes[0].Count == 0 {
+			prizes = prizes[1:]
 		}
-		// 正常情况是参与人数 <>= 奖品数量; 预计中奖人数 == 奖品总数量
+		prizes[0].Count--
+		prizeId := prizes[0].Id
 
 		// 创建中奖者对象
 		winner := Winner{
-			LotteryId: lottery.Id,
+			LotteryId: lotteryId,
 			UserId:    winnerUserId,
-			PrizeId:   prize.Id, // 使用选中的奖品名称
+			PrizeId:   prizeId, // 使用选中的奖品名称
 		}
-
-		//fmt.Printf("%+v\n", winner)
-		//fmt.Println("lenOfPrizes:", len(prizes), "lenOfTestNumber:", len(testParticipators))
 
 		winners = append(winners, winner)
 
 		// 从参与者列表中移除已中奖的用户
 		participantor = append(participantor[:randomWinnerIndex], participantor[randomWinnerIndex+1:]...)
-
-		// 减少选中奖品的剩余数量；如果当前prize的数量为0，则去掉这个奖品
-		prizes[randomPrizeIndex].Count--
-		if prizes[randomPrizeIndex].Count == 0 {
-			zeroPrizes = append(zeroPrizes, prizes[randomPrizeIndex])
-			prizes = append(prizes[:randomPrizeIndex], prizes[randomPrizeIndex+1:]...)
-		}
-		// 测试
-		for _, p := range prizes {
-			fmt.Printf("%+v\n", p)
-		}
 	}
 
 	return winners, nil
+}
+
+// NotifyParticipators 通知MQ队列
+func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotteryId int64) error {
+	_, err := l.svcCtx.NoticeRpc.NoticeLotteryDraw(l.ctx, &notice.NoticeLotteryDrawReq{
+		LotteryId: lotteryId,
+		UserIds:   participators,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (l *AnnounceLotteryLogic) WriteWinnersToLotteryParticipation(winners []Winner) error {
+	for _, w := range winners {
+		err := l.svcCtx.LotteryParticipationModel.UpdateWinners(l.ctx, w.LotteryId, w.UserId, w.PrizeId)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Run 按时间开奖业务逻辑
+func (s *TimeLotteryStrategy) Run() error {
+	// 查询满足条件的抽奖
+	lotteries, err := s.svcCtx.LotteryModel.GetLotterysByLessThanCurrentTime(s.ctx, s.CurrentTime, 1)
+	if err != nil {
+		return err
+	}
+
+	// 遍历每一个抽奖
+	for _, lotteryId := range lotteries {
+		var participators []int64
+		// 事务处理
+		err = s.svcCtx.LotteryModel.Trans(s.ctx, func(context context.Context, session sqlx.Session) error {
+			//根据抽奖id得到对应的所有奖品
+			prizes, err := s.svcCtx.PrizeModel.FindByLotteryId(s.ctx, lotteryId)
+			if err != nil {
+				return err
+			}
+
+			//fmt.Println("开始开奖的lottery:", lotteryId)
+
+			// 获取该lotteryId对应的所有参与者
+			participators, err = s.svcCtx.LotteryParticipationModel.GetParticipationUserIdsByLotteryId(s.ctx, lotteryId)
+			if err != nil {
+				return err
+			}
+
+			//testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+			//participators = testParticipators
+			//fmt.Println("participators:", participators)
+
+			winners, err := s.DrawLottery(s.ctx, lotteryId, prizes, participators)
+			if err != nil {
+				return err
+			}
+
+			// 测试查看所有winners
+			//for _, w := range winners {
+			//	fmt.Printf("testwinners:%+v\n", w)
+			//}
+
+			//更新抽奖状态为"已开奖"
+			err = s.svcCtx.LotteryModel.UpdateLotteryStatus(s.ctx, lotteryId)
+			if err != nil {
+				return err
+			}
+
+			// 将得到的中奖信息，写入数据库participants
+			err = s.WriteWinnersToLotteryParticipation(winners)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		})
+		if err != nil {
+			return err
+		}
+
+		// 执行开奖结果通知任务
+		err := s.NotifyParticipators(participators, lotteryId)
+		if err != nil {
+			return err
+		}
+	}
+	return err
+}
+
+// Run 按人数开奖策略
+func (s *PeopleLotteryStrategy) Run() error {
+
+	// 查询开奖类型为2并且没有开奖的所有抽奖
+	lotteries, err := s.svcCtx.LotteryModel.GetTypeIs2AndIsNotAnnounceLotterys(s.ctx, 2)
+	if err != nil {
+		return err
+	}
+
+	CheckedLottery, err := s.CheckLottery(lotteries)
+	if err != nil {
+		return err
+	}
+	// 遍历每一个抽奖
+	for _, lottery := range CheckedLottery {
+		var participators []int64
+		// 事务处理
+		err = s.svcCtx.LotteryModel.Trans(s.ctx, func(context context.Context, session sqlx.Session) error {
+			//根据抽奖id得到对应的所有奖品
+			prizes, err := s.svcCtx.PrizeModel.FindByLotteryId(s.ctx, lottery.Id)
+			if err != nil {
+				return err
+			}
+
+			//fmt.Println("开始开奖的lottery:", lottery.Id)
+
+			// 获取该lotteryId对应的所有参与者
+			participators, err = s.svcCtx.LotteryParticipationModel.GetParticipationUserIdsByLotteryId(s.ctx, lottery.Id)
+			if err != nil {
+				return err
+			}
+
+			//testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+			//participators = testParticipators
+			//fmt.Println("participators:", participators)
+
+			winners, err := s.DrawLottery(s.ctx, lottery.Id, prizes, participators)
+			if err != nil {
+				return err
+			}
+
+			//测试查看所有winners
+			//for _, w := range winners {
+			//	fmt.Printf("testwinners:%+v\n", w)
+			//}
+
+			//更新抽奖状态为"已开奖"
+			err = s.svcCtx.LotteryModel.UpdateLotteryStatus(s.ctx, lottery.Id)
+			if err != nil {
+				return err
+			}
+
+			// 将得到的中奖信息，写入数据库participants
+			err = s.WriteWinnersToLotteryParticipation(winners)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		})
+		if err != nil {
+			return err
+		}
+
+		// 执行开奖结果通知任务
+		err := s.NotifyParticipators(participators, lottery.Id)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (s *PeopleLotteryStrategy) CheckLottery(lotteries []*model.Lottery) (CheckedLotterys []*model.Lottery, err error) {
+	// 筛选满足条件的抽奖
+	// 1. 超过当前时间的，即使没有满足人数条件也需要进行开奖
+	// 2. 当参与人数 >= 开奖人数，进行开奖
+
+	for _, l := range lotteries {
+		// l.AnnounceTime 小于等于 s.CurrentTime,即超过当前时间，需要开奖
+		if l.AnnounceTime.Before(s.CurrentTime) || l.AnnounceTime.Equal(s.CurrentTime) {
+			CheckedLotterys = append(CheckedLotterys, l)
+		} else {
+			//fmt.Println("lotteryId:", l.Id)
+			ParticipatorCount, err := s.svcCtx.LotteryParticipationModel.GetParticipatorsCountByLotteryId(s.ctx, l.Id)
+			//fmt.Println("ParticipatorCount:", ParticipatorCount)
+			if err != nil {
+				return nil, err
+			}
+			// 检查参与人数是否达到指定人数
+			if ParticipatorCount >= l.JoinNumber {
+				CheckedLotterys = append(CheckedLotterys, l)
+			}
+		}
+	}
+	return
 }
