@@ -124,7 +124,6 @@ message VoteRecordDetail {
 
 message UserVoteRecordDetail {
   int64 LotteryId = 1; //抽奖ID
-  int64 UserId = 2; //用户ID
   int64 SelectedOption = 3; //用户选择的投票选项
 }
 

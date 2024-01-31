@@ -2,8 +2,8 @@
 package types
 
 type CreateVoteRecordReq struct {
-	LotteryId      int64 `json:"lotteryId"`      //抽奖id
-	SelectedOption int64 `json:"selectedOption"` //用户选择的投票选项
+	LotteryId      int64 `json:"lotteryId" validate:"required"` //抽奖id
+	SelectedOption int64 `json:"selectedOption"`                //用户选择的投票选项的序号
 }
 
 type CreateVoteRecordResp struct {
@@ -58,7 +58,7 @@ type ViewVoteDetailResp struct {
 }
 
 type ViewVoteRecordDetailReq struct {
-	LotteryId int64 `json:"lotteryId"` //抽奖id
+	LotteryId int64 `json:"lotteryId" validate:"required"` //抽奖id
 }
 
 type ViewVoteRecordDetailResp struct {
@@ -89,6 +89,5 @@ type VoteRecordDetail struct {
 
 type VoteUserRecordDetail struct {
 	LotteryId      int64 `json:"lotteryId"`      //抽奖id
-	UserId         int64 `json:"userId"`         //用户id
 	SelectedOption int64 `json:"selectedOption"` //用户选择的投票选项
 }

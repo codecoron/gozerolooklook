@@ -51,7 +51,6 @@ func (l *ViewUserVoteRecordDetailLogic) ViewUserVoteRecordDetail(req *types.View
 	for _, userVoteRecordDetail := range res.UserVoteRecordDetails {
 		resp.VoteUserRecordDetails = append(resp.VoteUserRecordDetails, &types.VoteUserRecordDetail{
 			LotteryId:      userVoteRecordDetail.LotteryId,
-			UserId:         userVoteRecordDetail.UserId,
 			SelectedOption: userVoteRecordDetail.SelectedOption,
 		})
 	}

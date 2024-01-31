@@ -225,7 +225,7 @@
         "selectedOption": {
           "type": "integer",
           "format": "int64",
-          "description": "用户选择的投票选项"
+          "description": "用户选择的投票选项的序号"
         }
       },
       "title": "CreateVoteRecordReq",
@@ -269,7 +269,7 @@
       "required": [
         "lotteryId",
         "enableVote",
-        "required",
+        "eq=0|eq=1",
         "voteConfig"
       ]
     },
@@ -336,7 +336,7 @@
       "required": [
         "id",
         "enableVote",
-        "required",
+        "eq=0|eq=1",
         "voteConfig"
       ]
     },
@@ -497,11 +497,12 @@
         "title",
         "description",
         "winnerSelection",
-        "required",
+        "eq=0|eq=1",
         "type",
         "minVotes",
         "maxVotes",
-        "options"
+        "options",
+        "required"
       ]
     },
     "VoteOption": {
@@ -560,11 +561,6 @@
           "format": "int64",
           "description": "抽奖id"
         },
-        "userId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "用户id"
-        },
         "selectedOption": {
           "type": "integer",
           "format": "int64",
@@ -574,7 +570,6 @@
       "title": "VoteUserRecordDetail",
       "required": [
         "lotteryId",
-        "userId",
         "selectedOption"
       ]
     }
