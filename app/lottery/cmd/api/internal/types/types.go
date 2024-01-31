@@ -107,6 +107,18 @@ type CheckIsParticipatedResp struct {
 	IsParticipated int64 `json:"isParticipated"` // 当前用户是否参与了当前抽奖： 0未参与 1已参与
 }
 
+type TestReq struct {
+	Age        int64  `json:"age" validate:"gte=1,lte=130"`
+	Name       string `json:"name" validate:"required"`
+	Email      string `json:"email" validate:"required,email"`
+	Password   string `json:"password" validate:"required"`
+	RePassword string `json:"re_password" validate:"required"`
+	Date       string `json:"date" validate:"required,datetime=2006-01-02,checkDate"`
+}
+
+type TestResp struct {
+}
+
 type AddLotteryParticipationReq struct {
 	LotteryId int64 `json:"lotteryId"`
 }
