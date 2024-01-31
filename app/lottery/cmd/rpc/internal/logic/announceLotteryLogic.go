@@ -6,6 +6,7 @@ import (
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/app/notice/cmd/rpc/notice"
+	"looklook/common/constants"
 	"math/rand"
 	"sort"
 	"time"
@@ -72,13 +73,13 @@ func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.A
 	// 创建相应的抽奖策略
 	var strategy LotteryStrategy
 	switch in.AnnounceType {
-	case 1:
+	case constants.AnnounceTypeTimeLottery:
 		// 开奖时间类型
 		strategy = &TimeLotteryStrategy{
 			AnnounceLotteryLogic: l,
 			CurrentTime:          time.Now(),
 		}
-	case 2:
+	case constants.AnnounceTypePeopleLottery:
 		// 开奖时间类型
 		strategy = &PeopleLotteryStrategy{
 			AnnounceLotteryLogic: l,
