@@ -40,8 +40,6 @@ message GetNoticeSubscribePreferenceResp{
   string openid = 2;
   string templateId = 3;
   int64 acceptCount = 4;
-  int64 createTime = 5;
-  int64 updateTime = 6;
 }
 
 service notice{
