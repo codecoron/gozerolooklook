@@ -11,9 +11,8 @@ type ServiceContext struct {
 	Config      config.Config
 	RedisClient *redis.Redis
 
-	VoteConfigModel    model.VoteConfigModel
-	VoteConfigDiyModel model.VoteConfigDiyModel
-	VoteRecordModel    model.VoteRecordModel
+	VoteConfigModel model.VoteConfigModel
+	VoteRecordModel model.VoteRecordModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
