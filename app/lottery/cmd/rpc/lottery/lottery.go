@@ -23,6 +23,8 @@ type (
 	AnnounceLotteryResp                    = pb.AnnounceLotteryResp
 	CheckIsParticipatedReq                 = pb.CheckIsParticipatedReq
 	CheckIsParticipatedResp                = pb.CheckIsParticipatedResp
+	CheckSelectedLotteryParticipatedReq    = pb.CheckSelectedLotteryParticipatedReq
+	CheckSelectedLotteryParticipatedResp   = pb.CheckSelectedLotteryParticipatedResp
 	DelLotteryReq                          = pb.DelLotteryReq
 	DelLotteryResp                         = pb.DelLotteryResp
 	DelPrizeReq                            = pb.DelPrizeReq
@@ -35,6 +37,8 @@ type (
 	GetPrizeByIdResp                       = pb.GetPrizeByIdResp
 	GetPrizeListByLotteryIdReq             = pb.GetPrizeListByLotteryIdReq
 	GetPrizeListByLotteryIdResp            = pb.GetPrizeListByLotteryIdResp
+	GetSelectedLotteryStatisticReq         = pb.GetSelectedLotteryStatisticReq
+	GetSelectedLotteryStatisticResp        = pb.GetSelectedLotteryStatisticResp
 	Lottery                                = pb.Lottery
 	LotteryDetailReq                       = pb.LotteryDetailReq
 	LotteryDetailResp                      = pb.LotteryDetailResp
@@ -78,6 +82,8 @@ type (
 		SearchLotteryParticipation(ctx context.Context, in *SearchLotteryParticipationReq, opts ...grpc.CallOption) (*SearchLotteryParticipationResp, error)
 		GetParticipationUserIdsByLotteryId(ctx context.Context, in *GetParticipationUserIdsByLotteryIdReq, opts ...grpc.CallOption) (*GetParticipationUserIdsByLotteryIdResp, error)
 		CheckIsParticipated(ctx context.Context, in *CheckIsParticipatedReq, opts ...grpc.CallOption) (*CheckIsParticipatedResp, error)
+		GetSelectedLotteryStatistic(ctx context.Context, in *GetSelectedLotteryStatisticReq, opts ...grpc.CallOption) (*GetSelectedLotteryStatisticResp, error)
+		CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -187,4 +193,14 @@ func (m *defaultLotteryZrpcClient) GetParticipationUserIdsByLotteryId(ctx contex
 func (m *defaultLotteryZrpcClient) CheckIsParticipated(ctx context.Context, in *CheckIsParticipatedReq, opts ...grpc.CallOption) (*CheckIsParticipatedResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.CheckIsParticipated(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) GetSelectedLotteryStatistic(ctx context.Context, in *GetSelectedLotteryStatisticReq, opts ...grpc.CallOption) (*GetSelectedLotteryStatisticResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetSelectedLotteryStatistic(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.CheckSelectedLotteryParticipated(ctx, in, opts...)
 }
