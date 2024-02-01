@@ -44,6 +44,34 @@
         ]
       }
     },
+    "checkin/v1/checkin/claimReward": {
+      "post": {
+        "summary": "领取任务奖励",
+        "operationId": "ClaimReward",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ClaimRewardResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClaimRewardReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "checkin"
+        ]
+      }
+    },
     "checkin/v1/checkin/getCheckin": {
       "post": {
         "summary": "获得签到状态以及积分",
@@ -168,6 +196,23 @@
         "state",
         "integral"
       ]
+    },
+    "ClaimRewardReq": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ClaimRewardReq",
+      "required": [
+        "taskId"
+      ]
+    },
+    "ClaimRewardResp": {
+      "type": "object",
+      "title": "ClaimRewardResp"
     },
     "GetCheckinReq": {
       "type": "object",

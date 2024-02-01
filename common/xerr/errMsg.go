@@ -12,6 +12,10 @@ func init() {
 	message[DB_ERROR] = "数据库繁忙,请稍后再试"
 	message[DB_UPDATE_AFFECTED_ZERO_ERROR] = "更新数据影响行数为0"
 	message[VOTE_VOTE_CONFIG_NOT_FOUND] = "投票信息不存在"
+	message[CHECKIN_RECORD_NOT_FOUND] = "签到信息不存在"
+	message[CHECKIN_REPEAT] = "今日已签到"
+	message[CHECKIN_TASK_NOT_FOUND] = "任务不存在"
+	message[CHECKIN_TASK_REWARD_COLLECTED] = "不可重复领取奖励"
 }
 
 func MapErrMsg(errcode uint32) string {

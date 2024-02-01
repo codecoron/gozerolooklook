@@ -6,8 +6,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-
 	"strings"
+	"time"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"
@@ -22,7 +22,7 @@ import (
 var (
 	taskRecordFieldNames          = builder.RawFieldNames(&TaskRecord{})
 	taskRecordRows                = strings.Join(taskRecordFieldNames, ",")
-	taskRecordRowsExpectAutoSet   = strings.Join(stringx.Remove(taskRecordFieldNames, "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
+	taskRecordRowsExpectAutoSet   = strings.Join(stringx.Remove(taskRecordFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	taskRecordRowsWithPlaceHolder = strings.Join(stringx.Remove(taskRecordFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
 	cacheCheckinTaskRecordIdPrefix = "cache:checkin:taskRecord:id:"
@@ -54,10 +54,12 @@ type (
 	}
 
 	TaskRecord struct {
-		Id         int64 `db:"id"`
-		UserId     int64 `db:"user_id"`
-		TaskId     int64 `db:"task_id"`
-		IsFinished int64 `db:"isFinished"` // 0 means not completed, 1 means completed
+		Id         int64     `db:"id"`
+		Type       int64     `db:"type"`
+		UserId     int64     `db:"user_id"`
+		TaskId     int64     `db:"task_id"`
+		IsFinished int64     `db:"isFinished"` // 0 means not completed, 1 means completed
+		CreateTime time.Time `db:"create_time"`
 	}
 )
 
@@ -98,7 +100,7 @@ func (m *defaultTaskRecordModel) Insert(ctx context.Context, data *TaskRecord) (
 	checkinTaskRecordIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskRecordIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, taskRecordRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Id, data.UserId, data.TaskId, data.IsFinished)
+		return conn.ExecCtx(ctx, query, data.Type, data.UserId, data.TaskId, data.IsFinished)
 	}, checkinTaskRecordIdKey)
 	return ret, err
 }
@@ -107,7 +109,7 @@ func (m *defaultTaskRecordModel) TransInsert(ctx context.Context, session sqlx.S
 	checkinTaskRecordIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskRecordIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, taskRecordRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.Id, data.UserId, data.TaskId, data.IsFinished)
+		return session.ExecCtx(ctx, query, data.Type, data.UserId, data.TaskId, data.IsFinished)
 	}, checkinTaskRecordIdKey)
 	return ret, err
 }
@@ -115,7 +117,7 @@ func (m *defaultTaskRecordModel) Update(ctx context.Context, data *TaskRecord) e
 	checkinTaskRecordIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskRecordIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, taskRecordRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.TaskId, data.IsFinished, data.Id)
+		return conn.ExecCtx(ctx, query, data.Type, data.UserId, data.TaskId, data.IsFinished, data.Id)
 	}, checkinTaskRecordIdKey)
 	return err
 }
@@ -124,7 +126,7 @@ func (m *defaultTaskRecordModel) TransUpdate(ctx context.Context, session sqlx.S
 	checkinTaskRecordIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskRecordIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, taskRecordRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.UserId, data.TaskId, data.IsFinished, data.Id)
+		return session.ExecCtx(ctx, query, data.Type, data.UserId, data.TaskId, data.IsFinished, data.Id)
 	}, checkinTaskRecordIdKey)
 	return err
 }

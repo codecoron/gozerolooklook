@@ -105,6 +105,11 @@ func (s *CheckinServer) SearchTaskRecord(ctx context.Context, in *pb.SearchTaskR
 	return l.SearchTaskRecord(in)
 }
 
+func (s *CheckinServer) GetTaskProgress(ctx context.Context, in *pb.GetTaskProgressReq) (*pb.GetTaskProgressResp, error) {
+	l := logic.NewGetTaskProgressLogic(ctx, s.svcCtx)
+	return l.GetTaskProgress(in)
+}
+
 // -----------------------tasks-----------------------
 func (s *CheckinServer) AddTasks(ctx context.Context, in *pb.AddTasksReq) (*pb.AddTasksResp, error) {
 	l := logic.NewAddTasksLogic(ctx, s.svcCtx)

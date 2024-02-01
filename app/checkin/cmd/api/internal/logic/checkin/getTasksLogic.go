@@ -3,6 +3,7 @@ package checkin
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
 
@@ -27,15 +28,26 @@ func NewGetTasksLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetTasks
 }
 
 func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksResp, err error) {
-	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
+	// todo:查询用户任务进度，返回具体数量
+	_, err = l.svcCtx.CheckinRpc.GetTaskProgress(l.ctx, &checkin.GetTaskProgressReq{
+		UserId: userId,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "req: %+v", req)
+	}
+	// 查询用户完成的任务
 	tasks, err := l.svcCtx.CheckinRpc.GetTaskRecordByUserId(l.ctx, &checkin.GetTaskRecordByUserIdReq{
 		UserId: userId,
 	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "req: %+v", req)
+	}
 	//logx.Error("api,tasks:", tasks.TaskList)
 	var taskList []*types.Tasks
 	_ = copier.Copy(&taskList, tasks.TaskList)
 	//logx.Error("api,taskList:", taskList)
+	// todo: 返回任务进度具体数量
 	return &types.GetTasksResp{
 		TasksList: taskList,
 	}, nil

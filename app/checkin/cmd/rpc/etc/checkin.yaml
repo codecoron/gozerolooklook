@@ -44,3 +44,8 @@ CheckinRpcConf:
   Endpoints:
     - 127.0.0.1:2007
   NonBlock: true
+
+LotteryRpcConf:
+  Endpoints:
+    - 127.0.0.1:2005
+  NonBlock: true
