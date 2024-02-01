@@ -12,9 +12,9 @@ import (
 	"looklook/app/vote/cmd/api/internal/types"
 )
 
-func ViewVoteDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func EnableVoteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ViewVoteDetailReq
+		var req types.EnableVoteReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
@@ -26,8 +26,8 @@ func ViewVoteDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := vote.NewViewVoteDetailLogic(r.Context(), svcCtx)
-		resp, err := l.ViewVoteDetail(&req)
+		l := vote.NewEnableVoteLogic(r.Context(), svcCtx)
+		resp, err := l.EnableVote(&req)
 
 		result.HttpResult(r, w, resp, err)
 	}

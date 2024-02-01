@@ -35,7 +35,7 @@ func (l *ViewUserVoteRecordDetailLogic) ViewUserVoteRecordDetail(req *types.View
 		UserId:    userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get VoteRecordDetail"), "Failed to get VoteRecordDetail err : %v ,req:%+v", err, req)
+		return nil, errors.Wrapf(err, "viewUserVoteRecordDetail rpc fail req: %+v , err : %v ", req, err)
 	}
 
 	//fmt.Println("----res----", res)
@@ -51,7 +51,6 @@ func (l *ViewUserVoteRecordDetailLogic) ViewUserVoteRecordDetail(req *types.View
 	for _, userVoteRecordDetail := range res.UserVoteRecordDetails {
 		resp.VoteUserRecordDetails = append(resp.VoteUserRecordDetails, &types.VoteUserRecordDetail{
 			LotteryId:      userVoteRecordDetail.LotteryId,
-			UserId:         userVoteRecordDetail.UserId,
 			SelectedOption: userVoteRecordDetail.SelectedOption,
 		})
 	}

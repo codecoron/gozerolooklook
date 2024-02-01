@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"looklook/app/vote/cmd/rpc/internal/svc"
 	"looklook/app/vote/cmd/rpc/pb"
 
@@ -39,14 +38,13 @@ func (l *GetUserVoteRecordDetailLogic) GetUserVoteRecordDetail(in *pb.GetUserVot
 	for _, record := range voteRecordData {
 		userVoteRecordDetail := &pb.UserVoteRecordDetail{
 			LotteryId:      record.LotteryId,
-			UserId:         record.UserId,
 			SelectedOption: record.SelectedOption,
 		}
 
 		userVoteRecordDetails = append(userVoteRecordDetails, userVoteRecordDetail)
 	}
 
-	fmt.Println("----record----", userVoteRecordDetails)
+	//fmt.Println("----record----", userVoteRecordDetails)
 
 	//resp := &pb.GetUserVoteRecordDetailResp{
 	//	UserVoteRecordDetail: userVoteRecordDetails,
@@ -58,7 +56,7 @@ func (l *GetUserVoteRecordDetailLogic) GetUserVoteRecordDetail(in *pb.GetUserVot
 	//	return nil, err
 	//}
 
-	fmt.Println("----resp----", resp)
+	//fmt.Println("----resp----", resp)
 
 	return resp, nil
 }

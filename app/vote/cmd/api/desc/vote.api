@@ -32,6 +32,10 @@ service vote {
 	@doc "查看投票设置详情"
 	@handler viewVoteDetail
 	post /vote/viewVoteDetail (ViewVoteDetailReq) returns (ViewVoteDetailResp)
+
+	@doc "开启或关闭投票设置"
+	@handler enableVote
+	post /vote/enableVoteDetail (EnableVoteReq) returns (EnableVoteResp)
 }
 
 //need login
