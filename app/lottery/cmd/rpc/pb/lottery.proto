@@ -24,6 +24,7 @@ message Lottery {
   int64 isAnnounced = 12;
   int64 createTime = 13;
   int64 updateTime = 14;
+  int64 SponsorId = 15;
 }
 
 message AddLotteryReq {
@@ -36,6 +37,7 @@ message AddLotteryReq {
   int64 announceType = 8;
   repeated Prize prizes = 9; //奖品 支持多个
   int64 announceTime = 10;
+  int64 SponsorId = 11;
 }
 
 message AddLotteryResp {
@@ -55,6 +57,7 @@ message UpdateLotteryReq {
   int64 announceType = 10;
   int64 announceTime = 11;
   int64 isAnnounced = 12;
+  int64 SponsorId = 13;
 }
 
 message UpdateLotteryResp {
@@ -93,6 +96,7 @@ message SearchLotteryReq {
   int64 announceType = 15;
   int64 announceTime = 16;
   int64 isAnnounced = 17;
+  int64 SponsorId = 18;// 赞助商id
 }
 
 message SearchLotteryResp {
@@ -120,6 +124,7 @@ message LotteryDetailResp {
 
 message LotterySponsorReq {
   int64 Id = 1; // 抽奖id
+  int64 SponsorId = 2; // 赞助商id
 }
 
 message LotterySponsorResp {

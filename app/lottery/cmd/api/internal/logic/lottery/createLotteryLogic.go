@@ -50,6 +50,7 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		Introduce:     req.Introduce,
 		AwardDeadline: req.AwardDeadline,
 		Prizes:        pbPrizes,
+		SponsorId:     req.SponsorId,
 	})
 	if err != nil {
 		return nil, err
