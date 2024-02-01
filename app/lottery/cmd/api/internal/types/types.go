@@ -11,9 +11,9 @@ type Lottery struct {
 	Introduce     string `json:"introduce"`     //抽奖说明
 	AwardDeadline int64  `json:"awardDeadline"` //领奖截止时间
 	IsSelected    int64  `json:"isSelected"`    //是否精选 1是 0否
-	AnounceType   int64  `json:"anounceType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	AnounceTime   int64  `json:"anounceTime"`   //开奖时间
-	IsAnounced    int64  `json:"isAnounced"`    // 是否已经开奖：0未开奖 1已开奖
+	AnnounceType  int64  `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64  `json:"announceTime"`  //开奖时间
+	IsAnnounced   int64  `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
 }
 
 type LotteryListReq struct {
@@ -92,9 +92,9 @@ type LotteryDetailResp struct {
 	Introduce     string          `json:"introduce"`     //抽奖说明
 	AwardDeadline int64           `json:"awardDeadline"` //领奖截止时间
 	IsSelected    int64           `json:"isSelected"`    //是否精选 1是 0否
-	AnounceType   int64           `json:"anounceType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	AnounceTime   int64           `json:"anounceTime"`   //开奖时间
-	IsAnounced    int64           `json:"isAnounced"`    // 是否已经开奖：0未开奖 1已开奖
+	AnnounceType  int64           `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64           `json:"announceTime"`  //开奖时间
+	IsAnnounced   int64           `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
 	Prizes        []*CreatePrize  `json:"prizes"`        //奖品信息
 	Sponsor       *LotterySponsor `json:"sponsor"`       // 抽奖赞助商信息
 }
@@ -105,6 +105,18 @@ type CheckIsParticipatedReq struct {
 
 type CheckIsParticipatedResp struct {
 	IsParticipated int64 `json:"isParticipated"` // 当前用户是否参与了当前抽奖： 0未参与 1已参与
+}
+
+type TestReq struct {
+	Age        int64  `json:"age" validate:"gte=1,lte=130"`
+	Name       string `json:"name" validate:"required"`
+	Email      string `json:"email" validate:"required,email"`
+	Password   string `json:"password" validate:"required"`
+	RePassword string `json:"re_password" validate:"required"`
+	Date       string `json:"date" validate:"required,datetime=2006-01-02,checkDate"`
+}
+
+type TestResp struct {
 }
 
 type AddLotteryParticipationReq struct {

@@ -20,6 +20,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/vote/enableVoteDetail",
+				Handler: vote.EnableVoteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/vote/updateVote",
 				Handler: vote.UpdateVoteHandler(serverCtx),
 			},

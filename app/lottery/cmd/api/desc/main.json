@@ -44,6 +44,34 @@
         ]
       }
     },
+    "lottery/v1/lottery/TestValidator": {
+      "post": {
+        "summary": "测试Validator",
+        "operationId": "TestValidator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TestResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TestReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/createLottery": {
       "post": {
         "summary": "发起抽奖",
@@ -446,17 +474,17 @@
           "format": "int64",
           "description": "是否精选 1是 0否"
         },
-        "anounceType": {
+        "announceType": {
           "type": "integer",
           "format": "int64",
           "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
         },
-        "anounceTime": {
+        "announceTime": {
           "type": "integer",
           "format": "int64",
           "description": "开奖时间"
         },
-        "isAnounced": {
+        "isAnnounced": {
           "type": "integer",
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
@@ -473,9 +501,9 @@
         "introduce",
         "awardDeadline",
         "isSelected",
-        "anounceType",
-        "anounceTime",
-        "isAnounced"
+        "announceType",
+        "announceTime",
+        "isAnnounced"
       ]
     },
     "LotteryDetailReq": {
@@ -535,17 +563,17 @@
           "format": "int64",
           "description": "是否精选 1是 0否"
         },
-        "anounceType": {
+        "announceType": {
           "type": "integer",
           "format": "int64",
           "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
         },
-        "anounceTime": {
+        "announceTime": {
           "type": "integer",
           "format": "int64",
           "description": "开奖时间"
         },
-        "isAnounced": {
+        "isAnnounced": {
           "type": "integer",
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
@@ -573,9 +601,9 @@
         "introduce",
         "awardDeadline",
         "isSelected",
-        "anounceType",
-        "anounceTime",
-        "isAnounced",
+        "announceType",
+        "announceTime",
+        "isAnnounced",
         "prizes",
         "sponsor"
       ]
@@ -742,6 +770,45 @@
       "required": [
         "isSelected"
       ]
+    },
+    "TestReq": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "re_password": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "title": "TestReq",
+      "required": [
+        "age",
+        "gte=1",
+        "name",
+        "email",
+        "required",
+        "password",
+        "re_password",
+        "date"
+      ]
+    },
+    "TestResp": {
+      "type": "object",
+      "title": "TestResp"
     },
     "UpdateLotteryReq": {
       "type": "object",

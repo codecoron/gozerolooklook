@@ -1,7 +1,10 @@
 package lottery
 
 import (
+	"looklook/app/lottery/cmd/api/internal/handler/translator"
 	"net/http"
+
+	"looklook/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"looklook/app/lottery/cmd/api/internal/logic/lottery"
@@ -17,12 +20,15 @@ func CheckIsParticipatedHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := translator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
+			return
+		}
+
 		l := lottery.NewCheckIsParticipatedLogic(r.Context(), svcCtx)
 		resp, err := l.CheckIsParticipated(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+
+		result.HttpResult(r, w, resp, err)
 	}
 }

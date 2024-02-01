@@ -33,7 +33,7 @@ func (l *ViewVoteDetailLogic) ViewVoteDetail(req *types.ViewVoteDetailReq) (resp
 		Id: req.Id,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get VoteConfigDetail"), "Failed to get VoteConfigDetail err : %v ,req:%+v", err, req)
+		return nil, errors.Wrapf(err, "viewVoteDetail rpc fail req: %+v , err : %v ", req, err)
 	}
 
 	// 解析 VoteConfig 字段
