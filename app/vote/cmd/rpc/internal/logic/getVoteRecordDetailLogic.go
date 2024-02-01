@@ -78,7 +78,9 @@ func MergeResults(voteConfigData *model.VoteConfig, voteRecordData []*model.Vote
 func (l *GetVoteRecordDetailLogic) GetVoteRecordDetail(in *pb.GetVoteRecordDetailReq) (resp *pb.GetVoteRecordDetailResp, err error) {
 	voteConfigId := in.LotteryId
 	//1.查询配置数据x
-	voteConfigData, err := l.svcCtx.VoteConfigModel.FindOne(l.ctx, voteConfigId)
+	//voteConfigData, err := l.svcCtx.VoteConfigModel.FindOne(l.ctx, voteConfigId)
+	whereString := "lottery_id = ? limit 1"
+	voteConfigData, err := l.svcCtx.VoteConfigDiyModel.QueryRow(l.ctx, "", whereString)
 	if err != nil {
 		return nil, err
 	}
