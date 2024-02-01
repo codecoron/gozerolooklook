@@ -36,11 +36,14 @@ func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (resp *pb.Lo
 	resp = new(pb.LotteryDetailResp)
 	resp.Lottery = new(pb.Lottery)
 	_ = copier.Copy(resp.Lottery, lottery)
+	resp.Lottery.AnnounceTime = lottery.AnnounceTime.Unix()
+	resp.Lottery.PublishTime = lottery.PublishTime.Time.Unix()
+	resp.Lottery.AwardDeadline = lottery.AwardDeadline.Unix()
+
 	for _, p := range res {
 		prize := new(pb.Prize)
 		_ = copier.Copy(prize, p)
 		resp.Prizes = append(resp.Prizes, prize)
 	}
 	return resp, nil
-
 }

@@ -1,7 +1,7 @@
 package lottery
 
 import (
-	"looklook/app/lottery/cmd/api/internal/handler/validator"
+	"looklook/app/lottery/cmd/api/internal/handler/translator"
 	"net/http"
 
 	"looklook/common/result"
@@ -20,7 +20,7 @@ func CreateLotteryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		validateErr := validator.Validate(&req)
+		validateErr := translator.Validate(&req)
 		if validateErr != nil {
 			result.ParamErrorResult(r, w, validateErr)
 			return

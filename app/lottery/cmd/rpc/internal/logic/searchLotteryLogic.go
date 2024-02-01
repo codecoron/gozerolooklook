@@ -39,6 +39,11 @@ func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchL
 		for _, lottery := range list {
 			var pbLottery pb.Lottery
 			_ = copier.Copy(&pbLottery, lottery)
+			pbLottery.PublishTime = lottery.PublishTime.Time.Unix()
+			pbLottery.AwardDeadline = lottery.AwardDeadline.Unix()
+			pbLottery.AnnounceType = lottery.AnnounceType
+			pbLottery.AnnounceTime = lottery.AnnounceTime.Unix()
+			pbLottery.IsAnnounced = lottery.IsAnnounced
 			resp = append(resp, &pbLottery)
 		}
 	}

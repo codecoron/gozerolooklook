@@ -15,4 +15,5 @@ type Config struct {
 	SettleRpcConf     zrpc.RpcClientConf
 	OrderRpcConf      zrpc.RpcClientConf
 	UsercenterRpcConf zrpc.RpcClientConf
+	LotteryRpcConf    zrpc.RpcClientConf
 }
