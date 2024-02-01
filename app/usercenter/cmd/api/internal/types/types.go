@@ -9,7 +9,11 @@ type AddAddressResp struct {
 	Id int64 `json:"id"`
 }
 
-type AddfollowInfoReq struct {
+type AddfollowInfoResp struct {
+}
+
+type AddfollowReq struct {
+	UserID     int64  `json:"userId"`
 	Name       string `json:"name"`
 	Desc       string `json:"desc"`
 	Avatar     string `json:"avatar"`
@@ -19,9 +23,6 @@ type AddfollowInfoReq struct {
 	QrCode     string `json:"qr_code"`
 	InputA     string `json:"input_a"`
 	InputB     string `json:"input_b"`
-}
-
-type AddfollowInfoResp struct {
 }
 
 type AddressInfo struct {

@@ -23,16 +23,18 @@ type FollowInfo {
 
 
 type (
-    AddfollowInfoReq {
-        name string `json:"name"`
-        desc string `json:"desc"`
-        avatar string `json:"avatar"`
-        isShow int64 `json:"is_show"`
+    AddfollowReq {
+        UserID int64 `json:"userId"`
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Avatar string `json:"avatar"`
+        IsShow int64 `json:"is_show"`
         Type int64 `json:"type"`
-        appletType int64 `json:"applet_type"`
-        qrCode string `json:"qr_code"`
-        inputA string `json:"input_a"`
-        inputB string `json:"input_b"`
+        AppletType int64 `json:"applet_type"`
+        QrCode string `json:"qr_code"`
+        InputA string `json:"input_a"`
+        InputB string `json:"input_b"`
+
     }
     AddfollowInfoResp {
     }

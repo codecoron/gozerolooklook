@@ -3,10 +3,12 @@ package userfollow
 import (
 	"context"
 	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/logx"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
+
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
-	"looklook/app/usercenter/cmd/rpc/usercenter"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type AddfollowInfoLogic struct {
@@ -23,24 +25,24 @@ func NewAddfollowInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Add
 	}
 }
 
-func (l *AddfollowInfoLogic) AddfollowInfo(req *types.AddfollowInfoReq) (resp *types.AddfollowInfoResp, err error) {
-	//if req == nil {
-	//	return nil, errors.Wrapf(err, "req: %+v", req)
-	//}
-	var pbReq *usercenter.AddUserFollowReq
-	//_ = copier.Copy(&pbReq, req)
-	//var pbReq *usercenter.AddUserFollowReq
-	pbReq.Name = req.Name
-	pbReq.Desc = req.Desc
-	pbReq.QrCode = req.QrCode
-	pbReq.UserId = 1
-	pbReq.Avatar = req.Avatar
-	pbReq.QrCode = req.QrCode
-	pbReq.InputA = req.InputA
-
-	_, err = l.svcCtx.UsercenterRpc.AddUserFollow(l.ctx, pbReq)
+func (l *AddfollowInfoLogic) AddfollowInfo(req *types.AddfollowReq) (resp *types.AddfollowInfoResp, err error) {
+	_, err = l.svcCtx.UsercenterRpc.AddUserFollow(l.ctx, &usercenter.AddUserFollowReq{
+		UserId:     req.UserID,
+		Type:       req.Type,
+		AppletType: req.AppletType,
+		Name:       req.Name,
+		Desc:       req.Desc,
+		Avatar:     req.Avatar,
+		IsShow:     req.IsShow,
+		QrCode:     req.QrCode,
+		InputA:     req.InputA,
+		InputB:     req.InputB,
+	})
+	if err != nil {
+		return nil, err
+	}
 	if err != nil {
 		return nil, errors.Wrapf(err, "req: %+v", req)
 	}
-	return &types.AddfollowInfoResp{}, nil
+	return
 }
