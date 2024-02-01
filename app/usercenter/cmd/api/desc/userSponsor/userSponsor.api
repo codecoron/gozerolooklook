@@ -1,37 +1,38 @@
 syntax = "v1"
 
 info(
-    title: "用户联系方式"
-    desc: "用户联系方式"
-    author: "Mikael"
-    email: "13247629622@163.com"
+    title: "抽奖发起人信息（赞助商）"
+    desc: "抽奖发起人信息（赞助商）"
 )
 
-type ContactInfo {
+type Sponosor {
     Id int64 `json:"id"`
     UserId int64 `json:"userId"`
     Type int64 `json:"type"`
-    Content string `json:"content"`
-    Remark string `json:"remark"`
+    AppletType int64 `json:"appletType"`
+    IsShow int64 `json:"isShow"`
+    Name string `json:"name"`
+    Desc string `json:"desc"`
+    Avatar string `json:"avatar"`
+    QrCode string `json:"qr_code"`
+    InputA string `json:"inputA"`
+    InputB string `json:"inputB"`
 }
 
 type (
-    CreateReq {
+    CreateSponosorReq {
+        UserId int64 `json:"userId"`
         Type int64 `json:"type"`
-        Content string `json:"content"`
-        Remark string `json:"remark"`
+        AppletType int64 `json:"appletType"`
+        IsShow int64 `json:"isShow"`
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Avatar string `json:"avatar"`
+        QrCode string `json:"qr_code"`
+        InputA string `json:"inputA"`
+        InputB string `json:"inputB"`
     }
-    CreateResp {
+    CreateSponosorResp {
         Id int64 `json:"id"`
-    }
-)
-
-
-type (
-    ContactInfoReq {
-        Id int64 `json:"id"`
-    }
-    ContactInfoResp {
-        ContactInfo ContactInfo `json:"contactInfo"`
     }
 )

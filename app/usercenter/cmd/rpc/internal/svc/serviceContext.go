@@ -16,7 +16,7 @@ type ServiceContext struct {
 	UserAuthModel    model.UserAuthModel
 	UserContactModel model.UserContactModel
 	UserAddressModel model.UserAddressModel
-	UserFollowModel  model.UserFollowModel
+	UserSponsorModel model.UserSponsorModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -34,5 +34,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserModel:        model.NewUserModel(sqlConn, c.Cache),
 		UserContactModel: model.NewUserContactModel(sqlConn, c.Cache),
 		UserAddressModel: model.NewUserAddressModel(sqlConn, c.Cache),
+		UserSponsorModel: model.NewUserSponsorModel(sqlConn, c.Cache),
 	}
 }

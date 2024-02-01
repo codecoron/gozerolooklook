@@ -12,7 +12,7 @@ import (
 	"user/user.api"
 	"user_contact/usercontact.api"
 	"address/address.api"
-	"user_follow/userfollow.api"
+	"userSponsor/userSponsor.api"
 )
 
 //============================> usercenter v1 <============================
@@ -90,12 +90,12 @@ service usercenter {
 //need login
 @server (
 	prefix: usercenter/v1
-	group:  userfollow
+	group:  userSponsor
 	jwt:    JwtAuth
 )
 service usercenter {
-	@doc "添加引流信息"
-	@handler addfollowInfo
-	post /userfollow/addfollowInfo (AddfollowReq) returns (AddfollowInfoResp)
+	@doc "抽奖发起人（赞助商）"
+	@handler addSponsor
+	post /userSponsor/addSponsor (CreateSponosorReq) returns (CreateSponosorResp)
 }
 
