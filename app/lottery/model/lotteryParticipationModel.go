@@ -4,8 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/xerr"
 )
 
 var _ LotteryParticipationModel = (*customLotteryParticipationModel)(nil)
@@ -42,7 +44,7 @@ func (m *defaultLotteryParticipationModel) UpdateWinners(ctx context.Context, Lo
 		return res, nil
 	})
 	if err != nil {
-		return err
+		return errors.Wrapf(xerr.NewErrCode(xerr.UPDATE_WINNER_ERROR), "UpdateWinners, PrizeId:%v, LotteryId:%v, UserId:%v, error: %v", PrizeId, LotteryId, UserId, err)
 	}
 	return nil
 }
@@ -52,7 +54,7 @@ func (m *defaultLotteryParticipationModel) GetParticipationUserIdsByLotteryId(ct
 	var resp []int64
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, LotteryId)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_PARTICIPATION_USERIDS_BYLOTTERYID_ERROR), "GetParticipationUserIdsByLotteryId,LotteryId:%v, error: %v", LotteryId, err)
 	}
 	return resp, nil
 }
@@ -62,7 +64,7 @@ func (m *defaultLotteryParticipationModel) GetParticipatorsCountByLotteryId(ctx 
 	var resp int64
 	err := m.QueryRowNoCacheCtx(ctx, &resp, query, LotteryId)
 	if err != nil {
-		return 0, err
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.GET_PARTICIPATORS_COUNT_BYLOTTERYID_ERROR), "GetParticipatorsCountByLotteryId, LotteryId:%v, error: %v", LotteryId, err)
 	}
 	return resp, nil
 }
