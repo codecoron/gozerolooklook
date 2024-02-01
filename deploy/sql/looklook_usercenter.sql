@@ -70,8 +70,8 @@ CREATE TABLE `user_auth`  (
 -- ----------------------------
 -- Table structure for user_contact
 -- ----------------------------
-DROP TABLE IF EXISTS `user_follow`;
-CREATE TABLE `user_follow`  (
+DROP TABLE IF EXISTS `user_sponsor`;
+CREATE TABLE `user_sponsor`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `user_id` int(0) NOT NULL DEFAULT 0,
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1微信号 2公众号 3小程序 4微信群 5视频号',

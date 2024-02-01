@@ -7,7 +7,7 @@ import (
 	address "looklook/app/usercenter/cmd/api/internal/handler/address"
 	user "looklook/app/usercenter/cmd/api/internal/handler/user"
 	userContact "looklook/app/usercenter/cmd/api/internal/handler/userContact"
-	userfollow "looklook/app/usercenter/cmd/api/internal/handler/userfollow"
+	userSponsor "looklook/app/usercenter/cmd/api/internal/handler/userSponsor"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -95,8 +95,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/userfollow/addfollowInfo",
-				Handler: userfollow.AddfollowInfoHandler(serverCtx),
+				Path:    "/userSponsor/addSponsor",
+				Handler: userSponsor.AddSponsorHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
