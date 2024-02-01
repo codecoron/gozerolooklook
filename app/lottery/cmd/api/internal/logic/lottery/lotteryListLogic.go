@@ -3,12 +3,9 @@ package lottery
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/pkg/errors"
-	"looklook/app/lottery/cmd/rpc/lottery"
-	"looklook/common/xerr"
-
 	"looklook/app/lottery/cmd/api/internal/svc"
 	"looklook/app/lottery/cmd/api/internal/types"
+	"looklook/app/lottery/cmd/rpc/lottery"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -35,8 +32,7 @@ func (l *LotteryListLogic) LotteryList(req *types.LotteryListReq) (*types.Lotter
 		IsSelected: req.IsSelected,
 	})
 	if err != nil {
-		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryList"), "Failed to get LotteryList err : %v ,req:%+v", err, req)
+		return nil, err
 	}
 
 	var LotteryList []types.Lottery

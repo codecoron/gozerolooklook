@@ -1,7 +1,7 @@
 package user
 
 import (
-	"looklook/app/usercenter/cmd/api/internal/handler/validator"
+	"looklook/app/usercenter/cmd/api/internal/handler/translator"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -19,7 +19,7 @@ func UpdateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		validateErr := validator.Validate(&req)
+		validateErr := translator.Validate(&req)
 		if validateErr != nil {
 			result.ParamErrorResult(r, w, validateErr)
 			return

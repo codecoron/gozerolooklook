@@ -2,12 +2,11 @@ package lottery
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/lottery/cmd/api/internal/svc"
 	"looklook/app/lottery/cmd/api/internal/types"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/common/ctxdata"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type SetLotteryIsSelectedLogic struct {
