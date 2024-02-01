@@ -7,7 +7,7 @@ Log:
   Mode: console
   # 打印堆栈信息 方便查询错误
   Encoding: plain
-  Level: info
+  Level: error
 
 #监控
 Prometheus:
@@ -28,7 +28,7 @@ Redis:
   Pass: G62m50oigInC30sf
   Key: lottery-rpc
 DB:
-  DataSource: root:PXDN93VRKUm8TeE7@tcp(localhost:33069)/lottery?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/lottery?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 Cache:
   - Host: redis:6379
     Pass: G62m50oigInC30sf
