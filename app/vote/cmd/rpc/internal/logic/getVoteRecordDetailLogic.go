@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"looklook/app/vote/model"
 
@@ -79,12 +80,12 @@ func (l *GetVoteRecordDetailLogic) GetVoteRecordDetail(in *pb.GetVoteRecordDetai
 	voteConfigId := in.LotteryId
 	//1.查询配置数据x
 	//voteConfigData, err := l.svcCtx.VoteConfigModel.FindOne(l.ctx, voteConfigId)
-	whereString := "lottery_id = ? limit 1"
-	voteConfigData, err := l.svcCtx.VoteConfigDiyModel.QueryRow(l.ctx, "", whereString)
+	whereString := fmt.Sprintf("lottery_id = %v limit 1", voteConfigId)
+	voteConfigData, err := l.svcCtx.VoteConfigModel.QueryRow(l.ctx, "", whereString)
 	if err != nil {
 		return nil, err
 	}
-	voteConfig := &pb.VoteConfig{}
+	voteConfig := new(pb.VoteConfig)
 	if err := copier.Copy(voteConfig, voteConfigData); err != nil {
 		return nil, err
 	}
