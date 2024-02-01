@@ -3,13 +3,10 @@ package lottery
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/pkg/errors"
-	"looklook/app/lottery/cmd/rpc/lottery"
-	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
 	"looklook/app/lottery/cmd/api/internal/svc"
 	"looklook/app/lottery/cmd/api/internal/types"
+	"looklook/app/lottery/cmd/rpc/lottery"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -36,8 +33,7 @@ func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *t
 		UserId: userId,
 	})
 	if err != nil {
-		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
+		return nil, err
 	}
 	resp = new(types.LotteryDetailResp)
 	_ = copier.Copy(resp, res)
@@ -48,8 +44,7 @@ func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *t
 		Id: req.Id,
 	})
 	if err != nil {
-		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
+		return nil, err
 	}
 	resp.Sponsor = new(types.LotterySponsor)
 	_ = copier.Copy(resp.Sponsor, res2)
