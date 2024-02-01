@@ -47,7 +47,7 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Lottery Database Exception lottery : %+v , err: %v", lottery, err)
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTLOTTERY_ERROR), "Lottery Database Exception lottery : %+v , err: %v", lottery, err)
 		}
 		lotteryId, _ = insert.LastInsertId()
 		//添加奖品信息
@@ -55,13 +55,12 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 			prize := new(model.Prize)
 			err := copier.Copy(&prize, pbPrize)
 			if err != nil {
-				//todo 优化错误码
-				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "copier : %+v , err: %v", prize, err)
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTPRIZE_ERROR), "copier : %+v , err: %v", prize, err)
 			}
 			prize.LotteryId = lotteryId
 			_, err = l.svcCtx.PrizeModel.TransInsert(l.ctx, session, prize)
 			if err != nil {
-				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Lottery Database Exception prize : %+v , err: %v", prize, err)
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTPRIZE_ERROR), "Lottery Database Exception prize : %+v , err: %v", prize, err)
 			}
 		}
 		return nil

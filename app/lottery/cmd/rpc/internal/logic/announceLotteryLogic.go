@@ -2,11 +2,13 @@ package logic
 
 import (
 	"context"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/lottery/model"
 	"looklook/app/notice/cmd/rpc/notice"
 	"looklook/common/constants"
+	"looklook/common/xerr"
 	"math/rand"
 	"sort"
 	"time"
@@ -88,7 +90,7 @@ func (l *AnnounceLotteryLogic) AnnounceLottery(in *pb.AnnounceLotteryReq) (*pb.A
 	}
 	err := strategy.Run()
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.AnnounceLottery_ERROR), "AnnounceStrategy run error: %v", err)
 	}
 	//fmt.Println("AnnounceFinish") // t
 	return &pb.AnnounceLotteryResp{}, nil
@@ -161,6 +163,7 @@ func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotter
 	return nil
 }
 
+// WriteWinnersToLotteryParticipation 更新参与抽奖表
 func (l *AnnounceLotteryLogic) WriteWinnersToLotteryParticipation(winners []Winner) error {
 	for _, w := range winners {
 		err := l.svcCtx.LotteryParticipationModel.UpdateWinners(l.ctx, w.LotteryId, w.UserId, w.PrizeId)
@@ -174,7 +177,7 @@ func (l *AnnounceLotteryLogic) WriteWinnersToLotteryParticipation(winners []Winn
 // Run 按时间开奖业务逻辑
 func (s *TimeLotteryStrategy) Run() error {
 	// 查询满足条件的抽奖
-	lotteries, err := s.svcCtx.LotteryModel.GetLotterysByLessThanCurrentTime(s.ctx, s.CurrentTime, 1)
+	lotteries, err := s.svcCtx.LotteryModel.GetLotterysByLessThanCurrentTime(s.ctx, s.CurrentTime, constants.AnnounceTypeTimeLottery)
 	if err != nil {
 		return err
 	}
@@ -205,7 +208,7 @@ func (s *TimeLotteryStrategy) Run() error {
 
 			winners, err := s.DrawLottery(s.ctx, lotteryId, prizes, participators)
 			if err != nil {
-				return err
+				return errors.Wrapf(xerr.NewErrCode(xerr.AnnounceLottery_ERROR), "DrawLottery,lotteryId:%v,prizes:%v,participators:%v error: %v", lotteryId, prizes, participators, err)
 			}
 
 			// 测试查看所有winners
@@ -228,7 +231,7 @@ func (s *TimeLotteryStrategy) Run() error {
 			return nil
 		})
 		if err != nil {
-			return err
+			return errors.Wrapf(xerr.NewErrCode(xerr.AnnounceLottery_ERROR), "AnnounceLotteryTrans error: %v", err)
 		}
 
 		// 执行开奖结果通知任务
@@ -244,7 +247,7 @@ func (s *TimeLotteryStrategy) Run() error {
 func (s *PeopleLotteryStrategy) Run() error {
 
 	// 查询开奖类型为2并且没有开奖的所有抽奖
-	lotteries, err := s.svcCtx.LotteryModel.GetTypeIs2AndIsNotAnnounceLotterys(s.ctx, 2)
+	lotteries, err := s.svcCtx.LotteryModel.GetTypeIs2AndIsNotAnnounceLotterys(s.ctx, constants.AnnounceTypePeopleLottery)
 	if err != nil {
 		return err
 	}
@@ -279,7 +282,7 @@ func (s *PeopleLotteryStrategy) Run() error {
 
 			winners, err := s.DrawLottery(s.ctx, lottery.Id, prizes, participators)
 			if err != nil {
-				return err
+				return errors.Wrapf(xerr.NewErrCode(xerr.AnnounceLottery_ERROR), "DrawLottery,lotteryId:%v,prizes:%v,participators:%v, error: %v", lottery.Id, prizes, participators, err)
 			}
 
 			//测试查看所有winners
@@ -302,7 +305,7 @@ func (s *PeopleLotteryStrategy) Run() error {
 			return nil
 		})
 		if err != nil {
-			return err
+			return errors.Wrapf(xerr.NewErrCode(xerr.AnnounceLottery_ERROR), "AnnounceLotteryTrans error: %v", err)
 		}
 
 		// 执行开奖结果通知任务

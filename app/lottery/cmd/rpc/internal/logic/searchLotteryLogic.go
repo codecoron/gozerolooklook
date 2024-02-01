@@ -3,12 +3,9 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/pkg/errors"
-	"looklook/app/lottery/model"
-	"looklook/common/xerr"
-
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
+	"looklook/app/lottery/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -31,7 +28,7 @@ func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchL
 	//list, err := l.svcCtx.LotteryModel.FindPageListByIdDESC(l.ctx, whereBuilder, in.LastId, in.PageSize)
 	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Page, in.Limit, in.IsSelected, in.LastId)
 	if err != nil && err != model.ErrNotFound {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to get user's homestay order err : %v , in :%+v", err, in)
+		return nil, err
 	}
 
 	var resp []*pb.Lottery

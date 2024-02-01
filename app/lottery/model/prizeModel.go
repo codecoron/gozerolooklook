@@ -4,8 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/xerr"
 )
 
 var _ PrizeModel = (*customPrizeModel)(nil)
@@ -53,7 +55,7 @@ func (m *defaultPrizeModel) FindByLotteryId(ctx context.Context, lotteryId int64
 	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ?", m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, lotteryId)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_PRIZES_BYLOTTERYID_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lotteryId:%v, error: %v", &resp, query, lotteryId, err)
 	}
 	return resp, nil
 }
