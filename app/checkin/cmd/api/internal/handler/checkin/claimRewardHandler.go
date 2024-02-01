@@ -1,6 +1,7 @@
 package checkin
 
 import (
+	"looklook/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -19,10 +20,6 @@ func ClaimRewardHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := checkin.NewClaimRewardLogic(r.Context(), svcCtx)
 		resp, err := l.ClaimReward(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }

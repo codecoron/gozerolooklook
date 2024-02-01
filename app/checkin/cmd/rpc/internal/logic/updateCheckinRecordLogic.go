@@ -30,16 +30,22 @@ func NewUpdateCheckinRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext
 
 func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecordReq) (*pb.UpdateCheckinRecordResp, error) {
 	checkinRecord, err := l.svcCtx.CheckinRecordModel.FindOneByUserId(l.ctx, in.UserId)
-	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find check-in data : %+v , err: %v", checkinRecord, err)
+	if err != nil && err != model.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "checkinRecord : %+v , err: %v", checkinRecord, err)
+	}
+	if err == model.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_RECORD_NOT_FOUND), "checkinRecord NOT FOUND: %+v , err: %v", checkinRecord, err)
 	}
 	integarl, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
-	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find integral data : %+v , err: %v", integarl, err)
+	if err != nil && err != model.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "integral : %+v , err: %v", integarl, err)
+	}
+	if err == model.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_RECORD_NOT_FOUND), "integral NOT FOUND: %+v , err: %v", integarl, err)
 	}
 	err = l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		if checkinRecord.State == 1 {
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "今日已签到")
+			return errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_REPEAT), "err : %v", err)
 		}
 		var i int64
 		switch checkinRecord.ContinuousCheckinDays {

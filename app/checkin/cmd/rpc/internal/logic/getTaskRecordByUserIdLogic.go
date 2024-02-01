@@ -27,7 +27,7 @@ func NewGetTaskRecordByUserIdLogic(ctx context.Context, svcCtx *svc.ServiceConte
 func (l *GetTaskRecordByUserIdLogic) GetTaskRecordByUserId(in *pb.GetTaskRecordByUserIdReq) (*pb.GetTaskRecordByUserIdResp, error) {
 	// 查询所有任务列表
 	query := squirrel.Select().From("tasks")
-	tasks, err := l.svcCtx.TasksModelModel.FindAll(l.ctx, query, "id ASC")
+	tasks, err := l.svcCtx.TasksModel.FindAll(l.ctx, query, "id ASC")
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func (l *GetTaskRecordByUserIdLogic) GetTaskRecordByUserId(in *pb.GetTaskRecordB
 	_ = copier.Copy(&taskList, tasks)
 	logx.Error("rpc,taskList:", taskList)
 
-	// 查询该用户完成任务情况
+	// todo:查询该用户完成任务情况（新手任务，每日任务，每周任务）
 	query = squirrel.Select().From("task_record")
 	finishTasks, err := l.svcCtx.TaskRecordModel.FindByUserId(l.ctx, in.UserId, query, "id ASC")
 	logx.Error("finishTashs", finishTasks)

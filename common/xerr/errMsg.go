@@ -13,7 +13,12 @@ func init() {
 	message[DB_UPDATE_AFFECTED_ZERO_ERROR] = "更新数据影响行数为0"
 	message[VOTE_VOTE_CONFIG_NOT_FOUND] = "投票配置有问题,请检查配置" //投票配置通用错误,内容可根据业务来定义
 	message[VOTE_VOTE_RECORD_NOT_FOUND] = "投票记录有问题,请检查配置" //投票记录通用错误,内容可根据业务来定义
+	//签到模块
 	message[VOTE_VOTE_CONFIG_NOT_FOUND] = "投票信息不存在"
+	message[CHECKIN_RECORD_NOT_FOUND] = "签到信息不存在"
+	message[CHECKIN_REPEAT] = "今日已签到"
+	message[CHECKIN_TASK_NOT_FOUND] = "任务不存在"
+	message[CHECKIN_TASK_REWARD_COLLECTED] = "不可重复领取奖励"
 	// 抽奖模块
 	// 开奖
 	message[DB_FIND_PARTICIPATOR_ERROR] = "获取当前用户参与抽奖信息失败"

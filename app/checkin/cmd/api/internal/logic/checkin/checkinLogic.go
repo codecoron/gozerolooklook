@@ -3,12 +3,10 @@ package checkin
 import (
 	"context"
 	"github.com/pkg/errors"
-	"looklook/app/checkin/cmd/rpc/checkin"
-	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
 	"looklook/app/checkin/cmd/api/internal/svc"
 	"looklook/app/checkin/cmd/api/internal/types"
+	"looklook/app/checkin/cmd/rpc/checkin"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -34,7 +32,7 @@ func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, 
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg(err.Error()), "checkin rpc GetCheckin fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(err, "req: %+v", req)
 	}
 
 	return &types.CheckinResp{
