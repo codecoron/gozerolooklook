@@ -331,8 +331,6 @@ message SearchUserAddressResp {
   repeated UserAddress userAddress = 1; //userAddress
 }
 
-
-
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
