@@ -1,7 +1,10 @@
 package lottery
 
 import (
+	"looklook/app/lottery/cmd/api/internal/handler/translator"
 	"net/http"
+
+	"looklook/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"looklook/app/lottery/cmd/api/internal/logic/lottery"
@@ -17,12 +20,15 @@ func SearchParticipationHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := translator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
+			return
+		}
+
 		l := lottery.NewSearchParticipationLogic(r.Context(), svcCtx)
 		resp, err := l.SearchParticipation(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+
+		result.HttpResult(r, w, resp, err)
 	}
 }

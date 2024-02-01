@@ -36,7 +36,7 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		pbPrize := new(pb.Prize)
 		err := copier.Copy(&pbPrize, reqPrize)
 		if err != nil {
-			return nil, err
+			return nil, errors.Wrapf(xerr.NewErrMsg("Copy pbPrize Error"), "Copy pbPrize Error req: %+v , err : %v ", pbPrize, err)
 		}
 		pbPrizes = append(pbPrizes, pbPrize)
 	}
@@ -52,7 +52,7 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		Prizes:        pbPrizes,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("create lottery fail"), "create lottery rpc CreateLottery fail req: %+v , err : %v ", req, err)
+		return nil, err
 	}
 	return &types.CreateLotteryResp{
 		Id: addLottery.Id,

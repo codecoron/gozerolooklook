@@ -110,6 +110,7 @@ message SetIsSelectedLotteryResp {
 
 message LotteryDetailReq {
   int64 Id = 1; // 抽奖id
+  int64 UserId = 2; // 当前用户id
 }
 
 message LotteryDetailResp {
@@ -133,6 +134,14 @@ message AnnounceLotteryReq {
 }
 
 message AnnounceLotteryResp {
+}
+
+message CheckUserCreatedLotteryReq {
+  int64 UserId = 1; // 用户id
+}
+
+message CheckUserCreatedLotteryResp {
+  int64 IsCreated = 1; // 用户是否发起过抽奖：0否; 1是
 }
 
 //--------------------------------奖品表--------------------------------
@@ -221,6 +230,8 @@ message AddLotteryParticipationResp{
 
 message SearchLotteryParticipationReq{
   int64 lotteryId = 1;
+  int64 pageIndex = 2;
+  int64 pageSize = 3;
 }
 
 message LotteryParticipation {
@@ -244,6 +255,23 @@ message GetPrizeListByLotteryIdResp {
   repeated Prize prizes = 1; // 奖品列表
 }
 
+message GetParticipationUserIdsByLotteryIdReq {
+  int64 lotteryId = 1;
+}
+
+message GetParticipationUserIdsByLotteryIdResp {
+  repeated int64 userIds = 1;
+}
+
+message CheckIsParticipatedReq {
+  int64 LotteryId = 1; // 当前抽奖id
+  int64 UserId = 2; // 当前用户id
+}
+
+message CheckIsParticipatedResp {
+  int64 IsParticipated = 1; // 当前用户是否已经参与当前抽奖
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -260,6 +288,7 @@ service lottery{
   rpc LotteryDetail(LotteryDetailReq) returns (LotteryDetailResp);
   rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
   rpc AnnounceLottery(AnnounceLotteryReq) returns (AnnounceLotteryResp);
+  rpc CheckUserCreatedLottery(CheckUserCreatedLotteryReq) returns (CheckUserCreatedLotteryResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);
@@ -271,4 +300,6 @@ service lottery{
   //-----------------------参与抽奖-----------------------
   rpc AddLotteryParticipation(AddLotteryParticipationReq) returns (AddLotteryParticipationResp);
   rpc SearchLotteryParticipation(SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp);
+  rpc GetParticipationUserIdsByLotteryId(GetParticipationUserIdsByLotteryIdReq) returns (GetParticipationUserIdsByLotteryIdResp);
+  rpc CheckIsParticipated(CheckIsParticipatedReq) returns (CheckIsParticipatedResp);
 }

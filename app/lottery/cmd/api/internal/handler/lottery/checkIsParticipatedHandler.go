@@ -1,7 +1,7 @@
 package lottery
 
 import (
-	"looklook/app/lottery/cmd/api/internal/handler/validator"
+	"looklook/app/lottery/cmd/api/internal/handler/translator"
 	"net/http"
 
 	"looklook/common/result"
@@ -12,22 +12,22 @@ import (
 	"looklook/app/lottery/cmd/api/internal/types"
 )
 
-func LotterySponsorHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func CheckIsParticipatedHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LotterySponsorReq
+		var req types.CheckIsParticipatedReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		validateErr := validator.Validate(&req)
+		validateErr := translator.Validate(&req)
 		if validateErr != nil {
 			result.ParamErrorResult(r, w, validateErr)
 			return
 		}
 
-		l := lottery.NewLotterySponsorLogic(r.Context(), svcCtx)
-		resp, err := l.LotterySponsor(&req)
+		l := lottery.NewCheckIsParticipatedLogic(r.Context(), svcCtx)
+		resp, err := l.CheckIsParticipated(&req)
 
 		result.HttpResult(r, w, resp, err)
 	}

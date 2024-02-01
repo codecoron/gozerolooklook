@@ -16,6 +16,62 @@
     "application/json"
   ],
   "paths": {
+    "lottery/v1/lottery/CheckIsParticipated": {
+      "post": {
+        "summary": "CheckIsParticipated",
+        "operationId": "CheckIsParticipated",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CheckIsParticipatedResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckIsParticipatedReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/TestValidator": {
+      "post": {
+        "summary": "测试Validator",
+        "operationId": "TestValidator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TestResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TestReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/createLottery": {
       "post": {
         "summary": "发起抽奖",
@@ -100,34 +156,6 @@
         ]
       }
     },
-    "lottery/v1/lottery/lotterySponsor": {
-      "post": {
-        "summary": "lottery sponsor",
-        "operationId": "lotterySponsor",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/LotterySponsorResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LotterySponsorReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      }
-    },
     "lottery/v1/lottery/participation": {
       "get": {
         "summary": "抽奖人",
@@ -149,11 +177,18 @@
             "format": "int64"
           },
           {
-            "name": "isAll",
+            "name": "pageIndex",
             "in": "query",
             "required": true,
-            "type": "boolean",
-            "format": "boolean"
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "requestBody": {},
@@ -263,6 +298,34 @@
       "type": "object",
       "title": "AddLotteryParticipationResp"
     },
+    "CheckIsParticipatedReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 当前抽奖Id"
+        }
+      },
+      "title": "CheckIsParticipatedReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "CheckIsParticipatedResp": {
+      "type": "object",
+      "properties": {
+        "isParticipated": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 当前用户是否参与了当前抽奖： 0未参与 1已参与"
+        }
+      },
+      "title": "CheckIsParticipatedResp",
+      "required": [
+        "isParticipated"
+      ]
+    },
     "CreateLotteryReq": {
       "type": "object",
       "properties": {
@@ -284,7 +347,7 @@
           "format": "int64",
           "description": "开奖时间"
         },
-        "join_number": {
+        "joinNumber": {
           "type": "integer",
           "format": "int64",
           "description": "自动开奖人数标准"
@@ -312,7 +375,7 @@
         "thumb",
         "announceType",
         "announceTime",
-        "join_number",
+        "joinNumber",
         "introduce",
         "awardDeadline",
         "prizes"
@@ -387,22 +450,12 @@
           "type": "string",
           "description": "默认一等奖配图"
         },
-        "publishType": {
+        "publishTime": {
           "type": "integer",
           "format": "int64",
-          "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
+          "description": "发布抽奖时间"
         },
-        "isSelected": {
-          "type": "integer",
-          "format": "int64",
-          "description": "是否精选 1是 0否"
-        },
-        "publish_time": {
-          "type": "integer",
-          "format": "int64",
-          "description": "开奖时间"
-        },
-        "join_number": {
+        "joinNumber": {
           "type": "integer",
           "format": "int64",
           "description": "自动开奖人数标准"
@@ -415,6 +468,26 @@
           "type": "integer",
           "format": "int64",
           "description": "领奖截止时间"
+        },
+        "isSelected": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否精选 1是 0否"
+        },
+        "announceType": {
+          "type": "integer",
+          "format": "int64",
+          "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
+        },
+        "announceTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "开奖时间"
+        },
+        "isAnnounced": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否已经开奖：0未开奖 1已开奖"
         }
       },
       "title": "Lottery",
@@ -423,12 +496,14 @@
         "userId",
         "name",
         "thumb",
-        "publishType",
-        "isSelected",
-        "publish_time",
-        "join_number",
+        "publishTime",
+        "joinNumber",
         "introduce",
-        "awardDeadline"
+        "awardDeadline",
+        "isSelected",
+        "announceType",
+        "announceTime",
+        "isAnnounced"
       ]
     },
     "LotteryDetailReq": {
@@ -451,30 +526,25 @@
           "type": "integer",
           "format": "int64"
         },
-        "name": {
-          "type": "string"
-        },
         "userId": {
           "type": "integer",
           "format": "int64",
           "description": "发起抽奖用户ID"
         },
-        "publishType": {
+        "name": {
+          "type": "string",
+          "description": "默认一等奖名称"
+        },
+        "thumb": {
+          "type": "string",
+          "description": "默认一等奖配图"
+        },
+        "publishTime": {
           "type": "integer",
           "format": "int64",
-          "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
+          "description": "发布抽奖时间"
         },
-        "isSelected": {
-          "type": "integer",
-          "format": "int64",
-          "description": "是否精选 1是 0否"
-        },
-        "publish_time": {
-          "type": "integer",
-          "format": "int64",
-          "description": "开奖时间"
-        },
-        "join_number": {
+        "joinNumber": {
           "type": "integer",
           "format": "int64",
           "description": "自动开奖人数标准"
@@ -488,26 +558,54 @@
           "format": "int64",
           "description": "领奖截止时间"
         },
+        "isSelected": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否精选 1是 0否"
+        },
+        "announceType": {
+          "type": "integer",
+          "format": "int64",
+          "description": "开奖设置：1按时间开奖 2按人数开奖 3即抽即中"
+        },
+        "announceTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "开奖时间"
+        },
+        "isAnnounced": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否已经开奖：0未开奖 1已开奖"
+        },
         "prizes": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/CreatePrize"
           },
           "description": "奖品信息"
+        },
+        "sponsor": {
+          "$ref": "#/definitions/LotterySponsor",
+          "description": " 抽奖赞助商信息"
         }
       },
       "title": "LotteryDetailResp",
       "required": [
         "id",
-        "name",
         "userId",
-        "publishType",
-        "isSelected",
-        "publish_time",
-        "join_number",
+        "name",
+        "thumb",
+        "publishTime",
+        "joinNumber",
         "introduce",
         "awardDeadline",
-        "prizes"
+        "isSelected",
+        "announceType",
+        "announceTime",
+        "isAnnounced",
+        "prizes",
+        "sponsor"
       ]
     },
     "LotteryListReq": {
@@ -553,37 +651,28 @@
         "list"
       ]
     },
-    "LotterySponsorReq": {
+    "LotterySponsor": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "LotterySponsorReq",
-      "required": [
-        "id"
-      ]
-    },
-    "LotterySponsorResp": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": " 赞助商Id"
         },
         "nickName": {
-          "type": "string"
+          "type": "string",
+          "description": " 赞助商昵称"
         },
         "avatar": {
-          "type": "string"
+          "type": "string",
+          "description": " 赞助商头像"
         },
         "info": {
-          "type": "string"
+          "type": "string",
+          "description": " 赞助商信息"
         }
       },
-      "title": "LotterySponsorResp",
+      "title": "LotterySponsor",
       "required": [
         "id",
         "nickName",
@@ -620,15 +709,20 @@
           "type": "integer",
           "format": "int64"
         },
-        "isAll": {
-          "type": "boolean",
-          "format": "boolean"
+        "pageIndex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "SearchLotteryParticipationReq",
       "required": [
         "lotteryId",
-        "isAll"
+        "pageIndex",
+        "pageSize"
       ]
     },
     "SearchLotteryParticipationResp": {
@@ -641,7 +735,7 @@
         "list": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/UserInfo"
           }
         }
       },
@@ -677,6 +771,45 @@
         "isSelected"
       ]
     },
+    "TestReq": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "re_password": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "title": "TestReq",
+      "required": [
+        "age",
+        "gte=1",
+        "name",
+        "email",
+        "required",
+        "password",
+        "re_password",
+        "date"
+      ]
+    },
+    "TestResp": {
+      "type": "object",
+      "title": "TestResp"
+    },
     "UpdateLotteryReq": {
       "type": "object",
       "properties": {
@@ -693,6 +826,43 @@
     "UpdateLotteryResp": {
       "type": "object",
       "title": "UpdateLotteryResp"
+    },
+    "UserInfo": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "locationName": {
+          "type": "string"
+        }
+      },
+      "title": "UserInfo",
+      "required": [
+        "mobile",
+        "nickname",
+        "sex",
+        "avatar",
+        "info",
+        "signature",
+        "locationName"
+      ]
     }
   },
   "securityDefinitions": {

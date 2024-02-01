@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Notice_NoticeLotteryDraw_FullMethodName = "/pb.notice/NoticeLotteryDraw"
+	Notice_NoticeLotteryDraw_FullMethodName             = "/pb.notice/NoticeLotteryDraw"
+	Notice_GetNoticeSubscribePreference_FullMethodName  = "/pb.notice/GetNoticeSubscribePreference"
+	Notice_SaveNoticeSubscribePreference_FullMethodName = "/pb.notice/SaveNoticeSubscribePreference"
 )
 
 // NoticeClient is the client API for Notice service.
@@ -27,6 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NoticeClient interface {
 	NoticeLotteryDraw(ctx context.Context, in *NoticeLotteryDrawReq, opts ...grpc.CallOption) (*NoticeLotteryDrawResp, error)
+	GetNoticeSubscribePreference(ctx context.Context, in *GetNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*GetNoticeSubscribePreferenceResp, error)
+	SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error)
 }
 
 type noticeClient struct {
@@ -46,11 +50,31 @@ func (c *noticeClient) NoticeLotteryDraw(ctx context.Context, in *NoticeLotteryD
 	return out, nil
 }
 
+func (c *noticeClient) GetNoticeSubscribePreference(ctx context.Context, in *GetNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*GetNoticeSubscribePreferenceResp, error) {
+	out := new(GetNoticeSubscribePreferenceResp)
+	err := c.cc.Invoke(ctx, Notice_GetNoticeSubscribePreference_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeClient) SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error) {
+	out := new(SaveNoticeSubscribePreferenceResp)
+	err := c.cc.Invoke(ctx, Notice_SaveNoticeSubscribePreference_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NoticeServer is the server API for Notice service.
 // All implementations must embed UnimplementedNoticeServer
 // for forward compatibility
 type NoticeServer interface {
 	NoticeLotteryDraw(context.Context, *NoticeLotteryDrawReq) (*NoticeLotteryDrawResp, error)
+	GetNoticeSubscribePreference(context.Context, *GetNoticeSubscribePreferenceReq) (*GetNoticeSubscribePreferenceResp, error)
+	SaveNoticeSubscribePreference(context.Context, *SaveNoticeSubscribePreferenceReq) (*SaveNoticeSubscribePreferenceResp, error)
 	mustEmbedUnimplementedNoticeServer()
 }
 
@@ -60,6 +84,12 @@ type UnimplementedNoticeServer struct {
 
 func (UnimplementedNoticeServer) NoticeLotteryDraw(context.Context, *NoticeLotteryDrawReq) (*NoticeLotteryDrawResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NoticeLotteryDraw not implemented")
+}
+func (UnimplementedNoticeServer) GetNoticeSubscribePreference(context.Context, *GetNoticeSubscribePreferenceReq) (*GetNoticeSubscribePreferenceResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNoticeSubscribePreference not implemented")
+}
+func (UnimplementedNoticeServer) SaveNoticeSubscribePreference(context.Context, *SaveNoticeSubscribePreferenceReq) (*SaveNoticeSubscribePreferenceResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveNoticeSubscribePreference not implemented")
 }
 func (UnimplementedNoticeServer) mustEmbedUnimplementedNoticeServer() {}
 
@@ -92,6 +122,42 @@ func _Notice_NoticeLotteryDraw_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Notice_GetNoticeSubscribePreference_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNoticeSubscribePreferenceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).GetNoticeSubscribePreference(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Notice_GetNoticeSubscribePreference_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).GetNoticeSubscribePreference(ctx, req.(*GetNoticeSubscribePreferenceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Notice_SaveNoticeSubscribePreference_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveNoticeSubscribePreferenceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NoticeServer).SaveNoticeSubscribePreference(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Notice_SaveNoticeSubscribePreference_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NoticeServer).SaveNoticeSubscribePreference(ctx, req.(*SaveNoticeSubscribePreferenceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Notice_ServiceDesc is the grpc.ServiceDesc for Notice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +168,14 @@ var Notice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NoticeLotteryDraw",
 			Handler:    _Notice_NoticeLotteryDraw_Handler,
+		},
+		{
+			MethodName: "GetNoticeSubscribePreference",
+			Handler:    _Notice_GetNoticeSubscribePreference_Handler,
+		},
+		{
+			MethodName: "SaveNoticeSubscribePreference",
+			Handler:    _Notice_SaveNoticeSubscribePreference_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
