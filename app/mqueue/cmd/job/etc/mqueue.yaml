@@ -52,3 +52,9 @@ LotteryRpcConf:
   Endpoints:
     - 127.0.0.1:2005
   NonBlock: true
+
+NoticeRpcConf:
+  Endpoints:
+    - 127.0.0.1:2006
+  NonBlock: true
+  Timeout: 500000 #调试
