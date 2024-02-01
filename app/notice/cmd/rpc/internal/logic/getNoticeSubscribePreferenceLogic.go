@@ -33,7 +33,7 @@ func (l *GetNoticeSubscribePreferenceLogic) GetNoticeSubscribePreference(in *pb.
 		return &pb.GetNoticeSubscribePreferenceResp{}, nil
 	}
 	if err != nil {
-		return nil, errors.Wrapf(ErrSaveNoticeSubscribePreferenceFail, "Failed to query the preference, NoticeSubscribePreferenceModel FindOneByUserOpenidMsgTemplateId fail , req : %+v , err : %v", in, err)
+		return nil, errors.Wrapf(ErrGetNoticeSubscribePreferenceFail, "Failed to query the preference, NoticeSubscribePreferenceModel FindOneByUserOpenidMsgTemplateId fail , req : %+v , err : %v", in, err)
 	}
 
 	return &pb.GetNoticeSubscribePreferenceResp{

@@ -7,6 +7,7 @@ import (
 	"github.com/zeromicro/go-zero/zrpc"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/mqueue/cmd/job/internal/config"
+	"looklook/app/notice/cmd/rpc/notice"
 	"looklook/app/order/cmd/rpc/order"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 )
@@ -20,6 +21,7 @@ type ServiceContext struct {
 	OrderRpc      order.Order
 	UsercenterRpc usercenter.Usercenter
 	LotteryRpc    lottery.LotteryZrpcClient
+	NoticeRpc     notice.Notice
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -32,5 +34,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		OrderRpc:      order.NewOrder(zrpc.MustNewClient(c.OrderRpcConf)),
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
 		LotteryRpc:    lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
+		NoticeRpc:     notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
 	}
 }

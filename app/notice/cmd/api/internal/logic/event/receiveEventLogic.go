@@ -3,8 +3,9 @@ package event
 import (
 	"context"
 	"encoding/xml"
-	"fmt"
 	"github.com/pkg/errors"
+	"looklook/app/notice/cmd/rpc/pb"
+	"looklook/common/constants"
 	"net/http"
 
 	"looklook/app/notice/cmd/api/internal/svc"
@@ -50,8 +51,25 @@ func (l *ReceiveEventLogic) ReceiveEvent(_ *types.ReceiveEventReq, r *http.Reque
 	// 处理事件
 	userSubscribeSettings := msg.SubscribeMsgPopupEvent.List
 	for _, setting := range userSubscribeSettings {
-		// TODO 将用户设置落库
-		fmt.Println(setting)
+		// 落库
+		var typ int64
+		switch setting.SubscribeStatusString {
+		case "accept":
+			typ = constants.TypeAcceptSubscribeMessage
+		case "reject":
+			typ = constants.TypeRejectSubscribeMessage
+		default:
+			return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic event invalid setting, setting:%+v", setting)
+		}
+
+		_, err = l.svcCtx.NoticeRpc.SaveNoticeSubscribePreference(l.ctx, &pb.SaveNoticeSubscribePreferenceReq{
+			Openid:     msg.ToUserName,
+			TemplateId: setting.TemplateId,
+			Type:       typ,
+		})
+		if err != nil {
+			return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic NoticeRpc.SaveNoticeSubscribePreference err:%v, setting:%+v", err, setting)
+		}
 	}
 
 	return
