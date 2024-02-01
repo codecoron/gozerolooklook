@@ -22,6 +22,7 @@ func NewUsercenterServer(svcCtx *svc.ServiceContext) *UsercenterServer {
 	}
 }
 
+// 自定义的服务
 func (s *UsercenterServer) Login(ctx context.Context, in *pb.LoginReq) (*pb.LoginResp, error) {
 	l := logic.NewLoginLogic(ctx, s.svcCtx)
 	return l.Login(in)
@@ -62,6 +63,32 @@ func (s *UsercenterServer) SetAdmin(ctx context.Context, in *pb.SetAdminReq) (*p
 	return l.SetAdmin(in)
 }
 
+// -----------------------用户表-----------------------
+func (s *UsercenterServer) AddUser(ctx context.Context, in *pb.AddUserReq) (*pb.AddUserResp, error) {
+	l := logic.NewAddUserLogic(ctx, s.svcCtx)
+	return l.AddUser(in)
+}
+
+func (s *UsercenterServer) UpdateUser(ctx context.Context, in *pb.UpdateUserReq) (*pb.UpdateUserResp, error) {
+	l := logic.NewUpdateUserLogic(ctx, s.svcCtx)
+	return l.UpdateUser(in)
+}
+
+func (s *UsercenterServer) DelUser(ctx context.Context, in *pb.DelUserReq) (*pb.DelUserResp, error) {
+	l := logic.NewDelUserLogic(ctx, s.svcCtx)
+	return l.DelUser(in)
+}
+
+func (s *UsercenterServer) GetUserById(ctx context.Context, in *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
+	l := logic.NewGetUserByIdLogic(ctx, s.svcCtx)
+	return l.GetUserById(in)
+}
+
+func (s *UsercenterServer) SearchUser(ctx context.Context, in *pb.SearchUserReq) (*pb.SearchUserResp, error) {
+	l := logic.NewSearchUserLogic(ctx, s.svcCtx)
+	return l.SearchUser(in)
+}
+
 func (s *UsercenterServer) CheckIsAdmin(ctx context.Context, in *pb.CheckIsAdminReq) (*pb.CheckIsAdminResp, error) {
 	l := logic.NewCheckIsAdminLogic(ctx, s.svcCtx)
 	return l.CheckIsAdmin(in)
@@ -70,32 +97,6 @@ func (s *UsercenterServer) CheckIsAdmin(ctx context.Context, in *pb.CheckIsAdmin
 func (s *UsercenterServer) WxMiniRegister(ctx context.Context, in *pb.WXMiniRegisterReq) (*pb.WXMiniRegisterResp, error) {
 	l := logic.NewWxMiniRegisterLogic(ctx, s.svcCtx)
 	return l.WxMiniRegister(in)
-}
-
-// -----------------------用户联系方式----------------------
-func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
-	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)
-	return l.AddUserContact(in)
-}
-
-func (s *UsercenterServer) UpdateUserContact(ctx context.Context, in *pb.UpdateUserContactReq) (*pb.UpdateUserContactResp, error) {
-	l := logic.NewUpdateUserContactLogic(ctx, s.svcCtx)
-	return l.UpdateUserContact(in)
-}
-
-func (s *UsercenterServer) DelUserContact(ctx context.Context, in *pb.DelUserContactReq) (*pb.DelUserContactResp, error) {
-	l := logic.NewDelUserContactLogic(ctx, s.svcCtx)
-	return l.DelUserContact(in)
-}
-
-func (s *UsercenterServer) GetUserContactById(ctx context.Context, in *pb.GetUserContactByIdReq) (*pb.GetUserContactByIdResp, error) {
-	l := logic.NewGetUserContactByIdLogic(ctx, s.svcCtx)
-	return l.GetUserContactById(in)
-}
-
-func (s *UsercenterServer) SearchUserContact(ctx context.Context, in *pb.SearchUserContactReq) (*pb.SearchUserContactResp, error) {
-	l := logic.NewSearchUserContactLogic(ctx, s.svcCtx)
-	return l.SearchUserContact(in)
 }
 
 // -----------------------用户收货地址表-----------------------
@@ -122,4 +123,108 @@ func (s *UsercenterServer) GetUserAddressById(ctx context.Context, in *pb.GetUse
 func (s *UsercenterServer) SearchUserAddress(ctx context.Context, in *pb.SearchUserAddressReq) (*pb.SearchUserAddressResp, error) {
 	l := logic.NewSearchUserAddressLogic(ctx, s.svcCtx)
 	return l.SearchUserAddress(in)
+}
+
+// -----------------------用户授权表-----------------------
+func (s *UsercenterServer) AddUserAuth(ctx context.Context, in *pb.AddUserAuthReq) (*pb.AddUserAuthResp, error) {
+	l := logic.NewAddUserAuthLogic(ctx, s.svcCtx)
+	return l.AddUserAuth(in)
+}
+
+func (s *UsercenterServer) UpdateUserAuth(ctx context.Context, in *pb.UpdateUserAuthReq) (*pb.UpdateUserAuthResp, error) {
+	l := logic.NewUpdateUserAuthLogic(ctx, s.svcCtx)
+	return l.UpdateUserAuth(in)
+}
+
+func (s *UsercenterServer) DelUserAuth(ctx context.Context, in *pb.DelUserAuthReq) (*pb.DelUserAuthResp, error) {
+	l := logic.NewDelUserAuthLogic(ctx, s.svcCtx)
+	return l.DelUserAuth(in)
+}
+
+func (s *UsercenterServer) GetUserAuthById(ctx context.Context, in *pb.GetUserAuthByIdReq) (*pb.GetUserAuthByIdResp, error) {
+	l := logic.NewGetUserAuthByIdLogic(ctx, s.svcCtx)
+	return l.GetUserAuthById(in)
+}
+
+func (s *UsercenterServer) SearchUserAuth(ctx context.Context, in *pb.SearchUserAuthReq) (*pb.SearchUserAuthResp, error) {
+	l := logic.NewSearchUserAuthLogic(ctx, s.svcCtx)
+	return l.SearchUserAuth(in)
+}
+
+// -----------------------抽奖发起人联系方式-----------------------
+func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserContactReq) (*pb.AddUserContactResp, error) {
+	l := logic.NewAddUserContactLogic(ctx, s.svcCtx)
+	return l.AddUserContact(in)
+}
+
+func (s *UsercenterServer) UpdateUserContact(ctx context.Context, in *pb.UpdateUserContactReq) (*pb.UpdateUserContactResp, error) {
+	l := logic.NewUpdateUserContactLogic(ctx, s.svcCtx)
+	return l.UpdateUserContact(in)
+}
+
+func (s *UsercenterServer) DelUserContact(ctx context.Context, in *pb.DelUserContactReq) (*pb.DelUserContactResp, error) {
+	l := logic.NewDelUserContactLogic(ctx, s.svcCtx)
+	return l.DelUserContact(in)
+}
+
+func (s *UsercenterServer) GetUserContactById(ctx context.Context, in *pb.GetUserContactByIdReq) (*pb.GetUserContactByIdResp, error) {
+	l := logic.NewGetUserContactByIdLogic(ctx, s.svcCtx)
+	return l.GetUserContactById(in)
+}
+
+func (s *UsercenterServer) SearchUserContact(ctx context.Context, in *pb.SearchUserContactReq) (*pb.SearchUserContactResp, error) {
+	l := logic.NewSearchUserContactLogic(ctx, s.svcCtx)
+	return l.SearchUserContact(in)
+}
+
+// -----------------------userShop-----------------------
+func (s *UsercenterServer) AddUserShop(ctx context.Context, in *pb.AddUserShopReq) (*pb.AddUserShopResp, error) {
+	l := logic.NewAddUserShopLogic(ctx, s.svcCtx)
+	return l.AddUserShop(in)
+}
+
+func (s *UsercenterServer) UpdateUserShop(ctx context.Context, in *pb.UpdateUserShopReq) (*pb.UpdateUserShopResp, error) {
+	l := logic.NewUpdateUserShopLogic(ctx, s.svcCtx)
+	return l.UpdateUserShop(in)
+}
+
+func (s *UsercenterServer) DelUserShop(ctx context.Context, in *pb.DelUserShopReq) (*pb.DelUserShopResp, error) {
+	l := logic.NewDelUserShopLogic(ctx, s.svcCtx)
+	return l.DelUserShop(in)
+}
+
+func (s *UsercenterServer) GetUserShopById(ctx context.Context, in *pb.GetUserShopByIdReq) (*pb.GetUserShopByIdResp, error) {
+	l := logic.NewGetUserShopByIdLogic(ctx, s.svcCtx)
+	return l.GetUserShopById(in)
+}
+
+func (s *UsercenterServer) SearchUserShop(ctx context.Context, in *pb.SearchUserShopReq) (*pb.SearchUserShopResp, error) {
+	l := logic.NewSearchUserShopLogic(ctx, s.svcCtx)
+	return l.SearchUserShop(in)
+}
+
+// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+func (s *UsercenterServer) AddUserSponsor(ctx context.Context, in *pb.AddUserSponsorReq) (*pb.AddUserSponsorResp, error) {
+	l := logic.NewAddUserSponsorLogic(ctx, s.svcCtx)
+	return l.AddUserSponsor(in)
+}
+
+func (s *UsercenterServer) UpdateUserSponsor(ctx context.Context, in *pb.UpdateUserSponsorReq) (*pb.UpdateUserSponsorResp, error) {
+	l := logic.NewUpdateUserSponsorLogic(ctx, s.svcCtx)
+	return l.UpdateUserSponsor(in)
+}
+
+func (s *UsercenterServer) DelUserSponsor(ctx context.Context, in *pb.DelUserSponsorReq) (*pb.DelUserSponsorResp, error) {
+	l := logic.NewDelUserSponsorLogic(ctx, s.svcCtx)
+	return l.DelUserSponsor(in)
+}
+
+func (s *UsercenterServer) GetUserSponsorById(ctx context.Context, in *pb.GetUserSponsorByIdReq) (*pb.GetUserSponsorByIdResp, error) {
+	l := logic.NewGetUserSponsorByIdLogic(ctx, s.svcCtx)
+	return l.GetUserSponsorById(in)
+}
+
+func (s *UsercenterServer) SearchUserSponsor(ctx context.Context, in *pb.SearchUserSponsorReq) (*pb.SearchUserSponsorResp, error) {
+	l := logic.NewSearchUserSponsorLogic(ctx, s.svcCtx)
+	return l.SearchUserSponsor(in)
 }

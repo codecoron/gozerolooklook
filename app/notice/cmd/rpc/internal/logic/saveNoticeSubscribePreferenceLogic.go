@@ -49,9 +49,13 @@ func (l *SaveNoticeSubscribePreferenceLogic) SaveNoticeSubscribePreference(in *p
 	case constants.TypeRejectSubscribeMessage:
 		acceptCount = 0
 	case constants.TypeSendSubscribeMessage:
-		acceptCount--
+		if acceptCount > 0 {
+			acceptCount--
+		} else {
+			return nil, errors.Wrapf(ErrSaveNoticeSubscribePreferenceFail, "SaveNoticeSubscribePreferenceLogic insufficient accept count, req : %+v", in)
+		}
 	default:
-
+		return nil, errors.Wrapf(ErrSaveNoticeSubscribePreferenceFail, "SaveNoticeSubscribePreferenceLogic invalid type, req : %+v", in)
 	}
 
 	subscribePreference.AcceptCount = acceptCount

@@ -49,6 +49,7 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert integarl data : %+v , err: %v", insert, err)
 			}
+			// todo:新增用户任务进度记录
 			return nil
 		} else if err != nil {
 			// 其他错误

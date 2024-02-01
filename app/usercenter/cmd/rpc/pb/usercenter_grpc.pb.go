@@ -27,24 +27,45 @@ const (
 	Usercenter_GenerateToken_FullMethodName        = "/pb.usercenter/generateToken"
 	Usercenter_UpdateUserBaseInfo_FullMethodName   = "/pb.usercenter/updateUserBaseInfo"
 	Usercenter_SetAdmin_FullMethodName             = "/pb.usercenter/setAdmin"
+	Usercenter_AddUser_FullMethodName              = "/pb.usercenter/AddUser"
+	Usercenter_UpdateUser_FullMethodName           = "/pb.usercenter/UpdateUser"
+	Usercenter_DelUser_FullMethodName              = "/pb.usercenter/DelUser"
+	Usercenter_GetUserById_FullMethodName          = "/pb.usercenter/GetUserById"
+	Usercenter_SearchUser_FullMethodName           = "/pb.usercenter/SearchUser"
 	Usercenter_CheckIsAdmin_FullMethodName         = "/pb.usercenter/CheckIsAdmin"
 	Usercenter_WxMiniRegister_FullMethodName       = "/pb.usercenter/WxMiniRegister"
-	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
-	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
-	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
-	Usercenter_GetUserContactById_FullMethodName   = "/pb.usercenter/GetUserContactById"
-	Usercenter_SearchUserContact_FullMethodName    = "/pb.usercenter/SearchUserContact"
 	Usercenter_AddUserAddress_FullMethodName       = "/pb.usercenter/AddUserAddress"
 	Usercenter_UpdateUserAddress_FullMethodName    = "/pb.usercenter/UpdateUserAddress"
 	Usercenter_DelUserAddress_FullMethodName       = "/pb.usercenter/DelUserAddress"
 	Usercenter_GetUserAddressById_FullMethodName   = "/pb.usercenter/GetUserAddressById"
 	Usercenter_SearchUserAddress_FullMethodName    = "/pb.usercenter/SearchUserAddress"
+	Usercenter_AddUserAuth_FullMethodName          = "/pb.usercenter/AddUserAuth"
+	Usercenter_UpdateUserAuth_FullMethodName       = "/pb.usercenter/UpdateUserAuth"
+	Usercenter_DelUserAuth_FullMethodName          = "/pb.usercenter/DelUserAuth"
+	Usercenter_GetUserAuthById_FullMethodName      = "/pb.usercenter/GetUserAuthById"
+	Usercenter_SearchUserAuth_FullMethodName       = "/pb.usercenter/SearchUserAuth"
+	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
+	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
+	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
+	Usercenter_GetUserContactById_FullMethodName   = "/pb.usercenter/GetUserContactById"
+	Usercenter_SearchUserContact_FullMethodName    = "/pb.usercenter/SearchUserContact"
+	Usercenter_AddUserShop_FullMethodName          = "/pb.usercenter/AddUserShop"
+	Usercenter_UpdateUserShop_FullMethodName       = "/pb.usercenter/UpdateUserShop"
+	Usercenter_DelUserShop_FullMethodName          = "/pb.usercenter/DelUserShop"
+	Usercenter_GetUserShopById_FullMethodName      = "/pb.usercenter/GetUserShopById"
+	Usercenter_SearchUserShop_FullMethodName       = "/pb.usercenter/SearchUserShop"
+	Usercenter_AddUserSponsor_FullMethodName       = "/pb.usercenter/AddUserSponsor"
+	Usercenter_UpdateUserSponsor_FullMethodName    = "/pb.usercenter/UpdateUserSponsor"
+	Usercenter_DelUserSponsor_FullMethodName       = "/pb.usercenter/DelUserSponsor"
+	Usercenter_GetUserSponsorById_FullMethodName   = "/pb.usercenter/GetUserSponsorById"
+	Usercenter_SearchUserSponsor_FullMethodName    = "/pb.usercenter/SearchUserSponsor"
 )
 
 // UsercenterClient is the client API for Usercenter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsercenterClient interface {
+	// 自定义的服务
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
@@ -53,20 +74,44 @@ type UsercenterClient interface {
 	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 	UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
 	SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error)
+	// -----------------------用户表-----------------------
+	AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error)
+	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
+	DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error)
+	GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
+	SearchUser(ctx context.Context, in *SearchUserReq, opts ...grpc.CallOption) (*SearchUserResp, error)
 	CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error)
 	WxMiniRegister(ctx context.Context, in *WXMiniRegisterReq, opts ...grpc.CallOption) (*WXMiniRegisterResp, error)
-	// -----------------------用户联系方式----------------------
-	AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
-	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
-	DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
-	GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
-	SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
 	// -----------------------用户收货地址表-----------------------
 	AddUserAddress(ctx context.Context, in *AddUserAddressReq, opts ...grpc.CallOption) (*AddUserAddressResp, error)
 	UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error)
 	DelUserAddress(ctx context.Context, in *DelUserAddressReq, opts ...grpc.CallOption) (*DelUserAddressResp, error)
 	GetUserAddressById(ctx context.Context, in *GetUserAddressByIdReq, opts ...grpc.CallOption) (*GetUserAddressByIdResp, error)
 	SearchUserAddress(ctx context.Context, in *SearchUserAddressReq, opts ...grpc.CallOption) (*SearchUserAddressResp, error)
+	// -----------------------用户授权表-----------------------
+	AddUserAuth(ctx context.Context, in *AddUserAuthReq, opts ...grpc.CallOption) (*AddUserAuthResp, error)
+	UpdateUserAuth(ctx context.Context, in *UpdateUserAuthReq, opts ...grpc.CallOption) (*UpdateUserAuthResp, error)
+	DelUserAuth(ctx context.Context, in *DelUserAuthReq, opts ...grpc.CallOption) (*DelUserAuthResp, error)
+	GetUserAuthById(ctx context.Context, in *GetUserAuthByIdReq, opts ...grpc.CallOption) (*GetUserAuthByIdResp, error)
+	SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error)
+	// -----------------------抽奖发起人联系方式-----------------------
+	AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
+	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
+	DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
+	GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
+	SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
+	// -----------------------userShop-----------------------
+	AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error)
+	UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error)
+	DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error)
+	GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error)
+	SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error)
+	// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+	AddUserSponsor(ctx context.Context, in *AddUserSponsorReq, opts ...grpc.CallOption) (*AddUserSponsorResp, error)
+	UpdateUserSponsor(ctx context.Context, in *UpdateUserSponsorReq, opts ...grpc.CallOption) (*UpdateUserSponsorResp, error)
+	DelUserSponsor(ctx context.Context, in *DelUserSponsorReq, opts ...grpc.CallOption) (*DelUserSponsorResp, error)
+	GetUserSponsorById(ctx context.Context, in *GetUserSponsorByIdReq, opts ...grpc.CallOption) (*GetUserSponsorByIdResp, error)
+	SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error)
 }
 
 type usercenterClient struct {
@@ -149,6 +194,51 @@ func (c *usercenterClient) SetAdmin(ctx context.Context, in *SetAdminReq, opts .
 	return out, nil
 }
 
+func (c *usercenterClient) AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error) {
+	out := new(AddUserResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error) {
+	out := new(UpdateUserResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error) {
+	out := new(DelUserResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error) {
+	out := new(GetUserByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUser(ctx context.Context, in *SearchUserReq, opts ...grpc.CallOption) (*SearchUserResp, error) {
+	out := new(SearchUserResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *usercenterClient) CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq, opts ...grpc.CallOption) (*CheckIsAdminResp, error) {
 	out := new(CheckIsAdminResp)
 	err := c.cc.Invoke(ctx, Usercenter_CheckIsAdmin_FullMethodName, in, out, opts...)
@@ -161,51 +251,6 @@ func (c *usercenterClient) CheckIsAdmin(ctx context.Context, in *CheckIsAdminReq
 func (c *usercenterClient) WxMiniRegister(ctx context.Context, in *WXMiniRegisterReq, opts ...grpc.CallOption) (*WXMiniRegisterResp, error) {
 	out := new(WXMiniRegisterResp)
 	err := c.cc.Invoke(ctx, Usercenter_WxMiniRegister_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
-	out := new(AddUserContactResp)
-	err := c.cc.Invoke(ctx, Usercenter_AddUserContact_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
-	out := new(UpdateUserContactResp)
-	err := c.cc.Invoke(ctx, Usercenter_UpdateUserContact_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error) {
-	out := new(DelUserContactResp)
-	err := c.cc.Invoke(ctx, Usercenter_DelUserContact_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
-	out := new(GetUserContactByIdResp)
-	err := c.cc.Invoke(ctx, Usercenter_GetUserContactById_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
-	out := new(SearchUserContactResp)
-	err := c.cc.Invoke(ctx, Usercenter_SearchUserContact_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -257,10 +302,191 @@ func (c *usercenterClient) SearchUserAddress(ctx context.Context, in *SearchUser
 	return out, nil
 }
 
+func (c *usercenterClient) AddUserAuth(ctx context.Context, in *AddUserAuthReq, opts ...grpc.CallOption) (*AddUserAuthResp, error) {
+	out := new(AddUserAuthResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserAuth_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserAuth(ctx context.Context, in *UpdateUserAuthReq, opts ...grpc.CallOption) (*UpdateUserAuthResp, error) {
+	out := new(UpdateUserAuthResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserAuth_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserAuth(ctx context.Context, in *DelUserAuthReq, opts ...grpc.CallOption) (*DelUserAuthResp, error) {
+	out := new(DelUserAuthResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserAuth_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserAuthById(ctx context.Context, in *GetUserAuthByIdReq, opts ...grpc.CallOption) (*GetUserAuthByIdResp, error) {
+	out := new(GetUserAuthByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserAuthById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error) {
+	out := new(SearchUserAuthResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserAuth_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
+	out := new(AddUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
+	out := new(UpdateUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error) {
+	out := new(DelUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
+	out := new(GetUserContactByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserContactById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
+	out := new(SearchUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error) {
+	out := new(AddUserShopResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserShop_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error) {
+	out := new(UpdateUserShopResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserShop_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error) {
+	out := new(DelUserShopResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserShop_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error) {
+	out := new(GetUserShopByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserShopById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error) {
+	out := new(SearchUserShopResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserShop_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) AddUserSponsor(ctx context.Context, in *AddUserSponsorReq, opts ...grpc.CallOption) (*AddUserSponsorResp, error) {
+	out := new(AddUserSponsorResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserSponsor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserSponsor(ctx context.Context, in *UpdateUserSponsorReq, opts ...grpc.CallOption) (*UpdateUserSponsorResp, error) {
+	out := new(UpdateUserSponsorResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserSponsor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserSponsor(ctx context.Context, in *DelUserSponsorReq, opts ...grpc.CallOption) (*DelUserSponsorResp, error) {
+	out := new(DelUserSponsorResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserSponsor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserSponsorById(ctx context.Context, in *GetUserSponsorByIdReq, opts ...grpc.CallOption) (*GetUserSponsorByIdResp, error) {
+	out := new(GetUserSponsorByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserSponsorById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error) {
+	out := new(SearchUserSponsorResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserSponsor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsercenterServer is the server API for Usercenter service.
 // All implementations must embed UnimplementedUsercenterServer
 // for forward compatibility
 type UsercenterServer interface {
+	// 自定义的服务
 	Login(context.Context, *LoginReq) (*LoginResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoResp, error)
@@ -269,20 +495,44 @@ type UsercenterServer interface {
 	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
 	UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error)
 	SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error)
+	// -----------------------用户表-----------------------
+	AddUser(context.Context, *AddUserReq) (*AddUserResp, error)
+	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
+	DelUser(context.Context, *DelUserReq) (*DelUserResp, error)
+	GetUserById(context.Context, *GetUserByIdReq) (*GetUserByIdResp, error)
+	SearchUser(context.Context, *SearchUserReq) (*SearchUserResp, error)
 	CheckIsAdmin(context.Context, *CheckIsAdminReq) (*CheckIsAdminResp, error)
 	WxMiniRegister(context.Context, *WXMiniRegisterReq) (*WXMiniRegisterResp, error)
-	// -----------------------用户联系方式----------------------
-	AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error)
-	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
-	DelUserContact(context.Context, *DelUserContactReq) (*DelUserContactResp, error)
-	GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error)
-	SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error)
 	// -----------------------用户收货地址表-----------------------
 	AddUserAddress(context.Context, *AddUserAddressReq) (*AddUserAddressResp, error)
 	UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error)
 	DelUserAddress(context.Context, *DelUserAddressReq) (*DelUserAddressResp, error)
 	GetUserAddressById(context.Context, *GetUserAddressByIdReq) (*GetUserAddressByIdResp, error)
 	SearchUserAddress(context.Context, *SearchUserAddressReq) (*SearchUserAddressResp, error)
+	// -----------------------用户授权表-----------------------
+	AddUserAuth(context.Context, *AddUserAuthReq) (*AddUserAuthResp, error)
+	UpdateUserAuth(context.Context, *UpdateUserAuthReq) (*UpdateUserAuthResp, error)
+	DelUserAuth(context.Context, *DelUserAuthReq) (*DelUserAuthResp, error)
+	GetUserAuthById(context.Context, *GetUserAuthByIdReq) (*GetUserAuthByIdResp, error)
+	SearchUserAuth(context.Context, *SearchUserAuthReq) (*SearchUserAuthResp, error)
+	// -----------------------抽奖发起人联系方式-----------------------
+	AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error)
+	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
+	DelUserContact(context.Context, *DelUserContactReq) (*DelUserContactResp, error)
+	GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error)
+	SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error)
+	// -----------------------userShop-----------------------
+	AddUserShop(context.Context, *AddUserShopReq) (*AddUserShopResp, error)
+	UpdateUserShop(context.Context, *UpdateUserShopReq) (*UpdateUserShopResp, error)
+	DelUserShop(context.Context, *DelUserShopReq) (*DelUserShopResp, error)
+	GetUserShopById(context.Context, *GetUserShopByIdReq) (*GetUserShopByIdResp, error)
+	SearchUserShop(context.Context, *SearchUserShopReq) (*SearchUserShopResp, error)
+	// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+	AddUserSponsor(context.Context, *AddUserSponsorReq) (*AddUserSponsorResp, error)
+	UpdateUserSponsor(context.Context, *UpdateUserSponsorReq) (*UpdateUserSponsorResp, error)
+	DelUserSponsor(context.Context, *DelUserSponsorReq) (*DelUserSponsorResp, error)
+	GetUserSponsorById(context.Context, *GetUserSponsorByIdReq) (*GetUserSponsorByIdResp, error)
+	SearchUserSponsor(context.Context, *SearchUserSponsorReq) (*SearchUserSponsorResp, error)
 	mustEmbedUnimplementedUsercenterServer()
 }
 
@@ -314,11 +564,56 @@ func (UnimplementedUsercenterServer) UpdateUserBaseInfo(context.Context, *Update
 func (UnimplementedUsercenterServer) SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetAdmin not implemented")
 }
+func (UnimplementedUsercenterServer) AddUser(context.Context, *AddUserReq) (*AddUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUser not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUsercenterServer) DelUser(context.Context, *DelUserReq) (*DelUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUser not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserById(context.Context, *GetUserByIdReq) (*GetUserByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUser(context.Context, *SearchUserReq) (*SearchUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUser not implemented")
+}
 func (UnimplementedUsercenterServer) CheckIsAdmin(context.Context, *CheckIsAdminReq) (*CheckIsAdminResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckIsAdmin not implemented")
 }
 func (UnimplementedUsercenterServer) WxMiniRegister(context.Context, *WXMiniRegisterReq) (*WXMiniRegisterResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WxMiniRegister not implemented")
+}
+func (UnimplementedUsercenterServer) AddUserAddress(context.Context, *AddUserAddressReq) (*AddUserAddressResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserAddress not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserAddress not implemented")
+}
+func (UnimplementedUsercenterServer) DelUserAddress(context.Context, *DelUserAddressReq) (*DelUserAddressResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserAddress not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserAddressById(context.Context, *GetUserAddressByIdReq) (*GetUserAddressByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAddressById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserAddress(context.Context, *SearchUserAddressReq) (*SearchUserAddressResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserAddress not implemented")
+}
+func (UnimplementedUsercenterServer) AddUserAuth(context.Context, *AddUserAuthReq) (*AddUserAuthResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserAuth not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserAuth(context.Context, *UpdateUserAuthReq) (*UpdateUserAuthResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserAuth not implemented")
+}
+func (UnimplementedUsercenterServer) DelUserAuth(context.Context, *DelUserAuthReq) (*DelUserAuthResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserAuth not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserAuthById(context.Context, *GetUserAuthByIdReq) (*GetUserAuthByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserAuth(context.Context, *SearchUserAuthReq) (*SearchUserAuthResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserAuth not implemented")
 }
 func (UnimplementedUsercenterServer) AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserContact not implemented")
@@ -335,20 +630,35 @@ func (UnimplementedUsercenterServer) GetUserContactById(context.Context, *GetUse
 func (UnimplementedUsercenterServer) SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchUserContact not implemented")
 }
-func (UnimplementedUsercenterServer) AddUserAddress(context.Context, *AddUserAddressReq) (*AddUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddUserAddress not implemented")
+func (UnimplementedUsercenterServer) AddUserShop(context.Context, *AddUserShopReq) (*AddUserShopResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserShop not implemented")
 }
-func (UnimplementedUsercenterServer) UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserAddress not implemented")
+func (UnimplementedUsercenterServer) UpdateUserShop(context.Context, *UpdateUserShopReq) (*UpdateUserShopResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserShop not implemented")
 }
-func (UnimplementedUsercenterServer) DelUserAddress(context.Context, *DelUserAddressReq) (*DelUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DelUserAddress not implemented")
+func (UnimplementedUsercenterServer) DelUserShop(context.Context, *DelUserShopReq) (*DelUserShopResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserShop not implemented")
 }
-func (UnimplementedUsercenterServer) GetUserAddressById(context.Context, *GetUserAddressByIdReq) (*GetUserAddressByIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAddressById not implemented")
+func (UnimplementedUsercenterServer) GetUserShopById(context.Context, *GetUserShopByIdReq) (*GetUserShopByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserShopById not implemented")
 }
-func (UnimplementedUsercenterServer) SearchUserAddress(context.Context, *SearchUserAddressReq) (*SearchUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchUserAddress not implemented")
+func (UnimplementedUsercenterServer) SearchUserShop(context.Context, *SearchUserShopReq) (*SearchUserShopResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserShop not implemented")
+}
+func (UnimplementedUsercenterServer) AddUserSponsor(context.Context, *AddUserSponsorReq) (*AddUserSponsorResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserSponsor not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserSponsor(context.Context, *UpdateUserSponsorReq) (*UpdateUserSponsorResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserSponsor not implemented")
+}
+func (UnimplementedUsercenterServer) DelUserSponsor(context.Context, *DelUserSponsorReq) (*DelUserSponsorResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserSponsor not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserSponsorById(context.Context, *GetUserSponsorByIdReq) (*GetUserSponsorByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserSponsorById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserSponsor(context.Context, *SearchUserSponsorReq) (*SearchUserSponsorResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserSponsor not implemented")
 }
 func (UnimplementedUsercenterServer) mustEmbedUnimplementedUsercenterServer() {}
 
@@ -507,6 +817,96 @@ func _Usercenter_SetAdmin_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_AddUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUser(ctx, req.(*AddUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUser(ctx, req.(*UpdateUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUser(ctx, req.(*DelUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserById(ctx, req.(*GetUserByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUser(ctx, req.(*SearchUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Usercenter_CheckIsAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckIsAdminReq)
 	if err := dec(in); err != nil {
@@ -539,96 +939,6 @@ func _Usercenter_WxMiniRegister_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UsercenterServer).WxMiniRegister(ctx, req.(*WXMiniRegisterReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_AddUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddUserContactReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).AddUserContact(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_AddUserContact_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).AddUserContact(ctx, req.(*AddUserContactReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_UpdateUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserContactReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).UpdateUserContact(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_UpdateUserContact_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).UpdateUserContact(ctx, req.(*UpdateUserContactReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_DelUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DelUserContactReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).DelUserContact(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_DelUserContact_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).DelUserContact(ctx, req.(*DelUserContactReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_GetUserContactById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserContactByIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).GetUserContactById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_GetUserContactById_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).GetUserContactById(ctx, req.(*GetUserContactByIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_SearchUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchUserContactReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).SearchUserContact(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_SearchUserContact_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).SearchUserContact(ctx, req.(*SearchUserContactReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -723,6 +1033,366 @@ func _Usercenter_SearchUserAddress_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_AddUserAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserAuthReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserAuth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserAuth(ctx, req.(*AddUserAuthReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserAuthReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserAuth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserAuth(ctx, req.(*UpdateUserAuthReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserAuthReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserAuth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserAuth(ctx, req.(*DelUserAuthReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserAuthById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserAuthByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserAuthById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserAuthById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserAuthById(ctx, req.(*GetUserAuthByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserAuthReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserAuth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserAuth(ctx, req.(*SearchUserAuthReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_AddUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserContact(ctx, req.(*AddUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserContact(ctx, req.(*UpdateUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserContact(ctx, req.(*DelUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserContactById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserContactByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserContactById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserContactById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserContactById(ctx, req.(*GetUserContactByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserContact(ctx, req.(*SearchUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_AddUserShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserShopReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserShop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserShop(ctx, req.(*AddUserShopReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserShopReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserShop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserShop(ctx, req.(*UpdateUserShopReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserShopReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserShop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserShop(ctx, req.(*DelUserShopReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserShopById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserShopByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserShopById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserShopById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserShopById(ctx, req.(*GetUserShopByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserShopReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserShop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserShop(ctx, req.(*SearchUserShopReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_AddUserSponsor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserSponsorReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserSponsor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserSponsor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserSponsor(ctx, req.(*AddUserSponsorReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserSponsor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserSponsorReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserSponsor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserSponsor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserSponsor(ctx, req.(*UpdateUserSponsorReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserSponsor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserSponsorReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserSponsor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserSponsor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserSponsor(ctx, req.(*DelUserSponsorReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserSponsorById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserSponsorByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserSponsorById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserSponsorById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserSponsorById(ctx, req.(*GetUserSponsorByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserSponsor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserSponsorReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserSponsor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserSponsor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserSponsor(ctx, req.(*SearchUserSponsorReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Usercenter_ServiceDesc is the grpc.ServiceDesc for Usercenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -763,12 +1433,72 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Usercenter_SetAdmin_Handler,
 		},
 		{
+			MethodName: "AddUser",
+			Handler:    _Usercenter_AddUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _Usercenter_UpdateUser_Handler,
+		},
+		{
+			MethodName: "DelUser",
+			Handler:    _Usercenter_DelUser_Handler,
+		},
+		{
+			MethodName: "GetUserById",
+			Handler:    _Usercenter_GetUserById_Handler,
+		},
+		{
+			MethodName: "SearchUser",
+			Handler:    _Usercenter_SearchUser_Handler,
+		},
+		{
 			MethodName: "CheckIsAdmin",
 			Handler:    _Usercenter_CheckIsAdmin_Handler,
 		},
 		{
 			MethodName: "WxMiniRegister",
 			Handler:    _Usercenter_WxMiniRegister_Handler,
+		},
+		{
+			MethodName: "AddUserAddress",
+			Handler:    _Usercenter_AddUserAddress_Handler,
+		},
+		{
+			MethodName: "UpdateUserAddress",
+			Handler:    _Usercenter_UpdateUserAddress_Handler,
+		},
+		{
+			MethodName: "DelUserAddress",
+			Handler:    _Usercenter_DelUserAddress_Handler,
+		},
+		{
+			MethodName: "GetUserAddressById",
+			Handler:    _Usercenter_GetUserAddressById_Handler,
+		},
+		{
+			MethodName: "SearchUserAddress",
+			Handler:    _Usercenter_SearchUserAddress_Handler,
+		},
+		{
+			MethodName: "AddUserAuth",
+			Handler:    _Usercenter_AddUserAuth_Handler,
+		},
+		{
+			MethodName: "UpdateUserAuth",
+			Handler:    _Usercenter_UpdateUserAuth_Handler,
+		},
+		{
+			MethodName: "DelUserAuth",
+			Handler:    _Usercenter_DelUserAuth_Handler,
+		},
+		{
+			MethodName: "GetUserAuthById",
+			Handler:    _Usercenter_GetUserAuthById_Handler,
+		},
+		{
+			MethodName: "SearchUserAuth",
+			Handler:    _Usercenter_SearchUserAuth_Handler,
 		},
 		{
 			MethodName: "AddUserContact",
@@ -791,24 +1521,44 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Usercenter_SearchUserContact_Handler,
 		},
 		{
-			MethodName: "AddUserAddress",
-			Handler:    _Usercenter_AddUserAddress_Handler,
+			MethodName: "AddUserShop",
+			Handler:    _Usercenter_AddUserShop_Handler,
 		},
 		{
-			MethodName: "UpdateUserAddress",
-			Handler:    _Usercenter_UpdateUserAddress_Handler,
+			MethodName: "UpdateUserShop",
+			Handler:    _Usercenter_UpdateUserShop_Handler,
 		},
 		{
-			MethodName: "DelUserAddress",
-			Handler:    _Usercenter_DelUserAddress_Handler,
+			MethodName: "DelUserShop",
+			Handler:    _Usercenter_DelUserShop_Handler,
 		},
 		{
-			MethodName: "GetUserAddressById",
-			Handler:    _Usercenter_GetUserAddressById_Handler,
+			MethodName: "GetUserShopById",
+			Handler:    _Usercenter_GetUserShopById_Handler,
 		},
 		{
-			MethodName: "SearchUserAddress",
-			Handler:    _Usercenter_SearchUserAddress_Handler,
+			MethodName: "SearchUserShop",
+			Handler:    _Usercenter_SearchUserShop_Handler,
+		},
+		{
+			MethodName: "AddUserSponsor",
+			Handler:    _Usercenter_AddUserSponsor_Handler,
+		},
+		{
+			MethodName: "UpdateUserSponsor",
+			Handler:    _Usercenter_UpdateUserSponsor_Handler,
+		},
+		{
+			MethodName: "DelUserSponsor",
+			Handler:    _Usercenter_DelUserSponsor_Handler,
+		},
+		{
+			MethodName: "GetUserSponsorById",
+			Handler:    _Usercenter_GetUserSponsorById_Handler,
+		},
+		{
+			MethodName: "SearchUserSponsor",
+			Handler:    _Usercenter_SearchUserSponsor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

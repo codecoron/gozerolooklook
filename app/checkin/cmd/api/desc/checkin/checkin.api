@@ -75,19 +75,10 @@ type (
     }
 )
 
-type (
-    FinishTaskReq {
-        TaskId                int64 `json:"taskId"`
-        UserId                int64 `json:"userId"`
-    }
-    FinishTaskResp {
-    }
-)
 
 type (
     ClaimRewardReq {
         TaskId                int64 `json:"taskId"`
-        UserId                int64 `json:"userId"`
     }
     ClaimRewardResp {
     }

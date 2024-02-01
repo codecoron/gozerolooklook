@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
-	"looklook/app/usercenter/cmd/rpc/usercenter"
-
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

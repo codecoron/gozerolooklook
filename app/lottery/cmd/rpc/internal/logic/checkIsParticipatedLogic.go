@@ -2,7 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/xerr"
 
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
@@ -31,7 +33,7 @@ func (l *CheckIsParticipatedLogic) CheckIsParticipated(in *pb.CheckIsParticipate
 	if err == sqlx.ErrNotFound {
 		resp.IsParticipated = 0
 	} else if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_PARTICIPATOR_ERROR), "FindOneByLotteryIdUserId,in.LotteryId:%v, in.UserId:%v, error: %v", in.LotteryId, in.UserId, err)
 	} else {
 		resp.IsParticipated = 1
 	}

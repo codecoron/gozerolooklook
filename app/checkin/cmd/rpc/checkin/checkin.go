@@ -38,6 +38,8 @@ type (
 	GetIntegralRecordByIdResp     = pb.GetIntegralRecordByIdResp
 	GetIntegralRecordByUserIdReq  = pb.GetIntegralRecordByUserIdReq
 	GetIntegralRecordByUserIdResp = pb.GetIntegralRecordByUserIdResp
+	GetTaskProgressReq            = pb.GetTaskProgressReq
+	GetTaskProgressResp           = pb.GetTaskProgressResp
 	GetTaskRecordByIdReq          = pb.GetTaskRecordByIdReq
 	GetTaskRecordByIdResp         = pb.GetTaskRecordByIdResp
 	GetTaskRecordByUserIdReq      = pb.GetTaskRecordByUserIdReq
@@ -52,6 +54,7 @@ type (
 	SearchTaskRecordResp          = pb.SearchTaskRecordResp
 	SearchTasksReq                = pb.SearchTasksReq
 	SearchTasksResp               = pb.SearchTasksResp
+	TaskProgress                  = pb.TaskProgress
 	TaskRecord                    = pb.TaskRecord
 	Tasks                         = pb.Tasks
 	UpdateCheckinRecordReq        = pb.UpdateCheckinRecordReq
@@ -85,6 +88,7 @@ type (
 		GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error)
 		GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error)
 		SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error)
+		GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error)
 		// -----------------------tasks-----------------------
 		AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error)
 		UpdateTasks(ctx context.Context, in *UpdateTasksReq, opts ...grpc.CallOption) (*UpdateTasksResp, error)
@@ -185,6 +189,11 @@ func (m *defaultCheckin) GetTaskRecordByUserId(ctx context.Context, in *GetTaskR
 func (m *defaultCheckin) SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.SearchTaskRecord(ctx, in, opts...)
+}
+
+func (m *defaultCheckin) GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.GetTaskProgress(ctx, in, opts...)
 }
 
 // -----------------------tasks-----------------------

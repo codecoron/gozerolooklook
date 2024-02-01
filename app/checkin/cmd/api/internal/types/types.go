@@ -20,18 +20,9 @@ type CheckinResp struct {
 
 type ClaimRewardReq struct {
 	TaskId int64 `json:"taskId"`
-	UserId int64 `json:"userId"`
 }
 
 type ClaimRewardResp struct {
-}
-
-type FinishTaskReq struct {
-	TaskId int64 `json:"taskId"`
-	UserId int64 `json:"userId"`
-}
-
-type FinishTaskResp struct {
 }
 
 type GetCheckinReq struct {

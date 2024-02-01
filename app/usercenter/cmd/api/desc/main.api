@@ -12,6 +12,7 @@ import (
 	"user/user.api"
 	"user_contact/usercontact.api"
 	"address/address.api"
+	"userSponsor/userSponsor.api"
 )
 
 //============================> usercenter v1 <============================
@@ -84,5 +85,17 @@ service usercenter {
 	@doc "识别并转换收货地址"
 	@handler convertAddress
 	post /user/convertAddress (ConvertAddressReq) returns (ConvertAddressResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userSponsor
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "抽奖发起人（赞助商）"
+	@handler addSponsor
+	post /userSponsor/addSponsor (CreateSponosorReq) returns (CreateSponosorResp)
 }
 
