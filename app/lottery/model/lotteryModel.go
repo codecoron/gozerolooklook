@@ -26,6 +26,7 @@ type (
 		GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error)
 		UpdateLotteryStatus(ctx context.Context, lotteryID int64) error
 		GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error)
+		GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error)
 	}
 
 	customLotteryModel struct {
@@ -66,7 +67,7 @@ func (c *customLotteryModel) FindUserIdByLotteryId(ctx context.Context, lotteryI
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_USERID_NOTFOUND), "FindUserIdByLotteryId, lotteryId:%v, error: %v", lotteryId, err)
 	default:
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_USERID_BYLOTTERYID_ERROR), "FindOne, lotteryId:%v, error: %v", lotteryId, err)
 	}
@@ -111,4 +112,22 @@ func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Cont
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_TYPEIS2_AND_ISNOT_ANNOUNCE_LOTTERYS_ERROR), "GetTypeIs2AndIsNotAnnounceLotterys,announceType:%v, error: %v", announceType, err)
 	}
 	return resp, nil
+}
+
+func (c *customLotteryModel) GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error) {
+	//func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	query := fmt.Sprintf("select id from %s where user_id = ?", c.table)
+	//	return conn.QueryRowCtx(ctx, v, query, UserId)
+	//}
+	var resp int64
+	err := c.QueryRowNoCacheCtx(ctx, &resp, query, UserId)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		//errors.Wrapf(xerr.NewErrCode(xerr.DB_LOTTERYID_NOTFOUND), "GetLotteryIdByUserId, UserId:%v, error: %v", UserId, err)
+		return nil, nil
+	default:
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_LOTTERYID_BYUSERID_ERROR), "FindOne, UserId:%v, error: %v", UserId, err)
+	}
 }

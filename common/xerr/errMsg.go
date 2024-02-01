@@ -26,11 +26,15 @@ func init() {
 	message[DB_FIND_PRIZES_BYLOTTERYID_ERROR] = "根据抽奖Id获取奖品列表失败"
 	message[DB_FIND_LOTTERY_BYLOTTERYID_ERROR] = "根据抽奖Id获取抽奖失败"
 	message[DB_FIND_USERID_BYLOTTERYID_ERROR] = "根据抽奖Id获取赞助商Id失败"
+	message[DB_USERID_NOTFOUND] = "当前抽奖没有赞助商Id"
 	// 发起抽奖
 	message[DB_INSERTLOTTERY_ERROR] = "发起抽奖插入抽奖信息失败"
 	message[DB_INSERTPRIZE_ERROR] = "插入奖品信息失败"
 	// 抽奖列表
 	message[DB_GET_LOTTERY_LIST_ERROR] = "获取抽奖列表失败"
+	// 检验当前用户是否发起过抽奖
+	message[DB_GET_LOTTERYID_BYUSERID_ERROR] = "获取当前用户抽奖Id失败"
+	message[DB_LOTTERYID_NOTFOUND] = "当前用户没有发起过抽奖"
 }
 
 func MapErrMsg(errcode uint32) string {
