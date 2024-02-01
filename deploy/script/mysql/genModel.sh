@@ -3,6 +3,7 @@
 # 使用方法：
 # ./genModel.sh lottery lottery
 # ./genModel.sh lottery prize
+# ./genModel.sh looklook_usercenter user_sponsor
 # 再将./genModel下的文件剪切到对应服务的model目录里面，记得改package
 
 #生成的表名

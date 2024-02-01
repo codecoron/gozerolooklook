@@ -19,12 +19,22 @@ type (
 		FindOneByUserId(ctx context.Context, userId int64) (*Integral, error)
 		TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *Integral) error
 		TransInsertByUserId(ctx context.Context, session sqlx.Session, data *Integral) (sql.Result, error)
+		UpdateByUserId(ctx context.Context, data *Integral) error
 	}
 
 	customIntegralModel struct {
 		*defaultIntegralModel
 	}
 )
+
+func (m *defaultIntegralModel) UpdateByUserId(ctx context.Context, data *Integral) error {
+	checkinIntegralUserIdKey := fmt.Sprintf("%s%v", "cache:checkin:integral:userId:", data.UserId)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, integralRowsWithPlaceHolder)
+		return conn.ExecCtx(ctx, query, data.UserId, data.Integral, data.Id)
+	}, checkinIntegralUserIdKey)
+	return err
+}
 
 func (m *defaultIntegralModel) TransInsertByUserId(ctx context.Context, session sqlx.Session, data *Integral) (sql.Result, error) {
 	checkinIntegralUserIdKey := fmt.Sprintf("%s%v", "cache:checkin:integral:userId:", data.UserId)

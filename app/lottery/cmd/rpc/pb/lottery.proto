@@ -277,6 +277,23 @@ message CheckIsParticipatedResp {
   int64 IsParticipated = 1; // 当前用户是否已经参与当前抽奖
 }
 
+message GetSelectedLotteryStatisticReq{
+  int64 userId = 1;
+}
+
+message GetSelectedLotteryStatisticResp{
+  int64 dayCount = 1;
+  int64 weekCount = 2;
+}
+
+message CheckSelectedLotteryParticipatedReq{
+  int64 userId = 1;
+}
+
+message CheckSelectedLotteryParticipatedResp{
+  int64 participated = 1;
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -307,4 +324,6 @@ service lottery{
   rpc SearchLotteryParticipation(SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp);
   rpc GetParticipationUserIdsByLotteryId(GetParticipationUserIdsByLotteryIdReq) returns (GetParticipationUserIdsByLotteryIdResp);
   rpc CheckIsParticipated(CheckIsParticipatedReq) returns (CheckIsParticipatedResp);
+  rpc GetSelectedLotteryStatistic(GetSelectedLotteryStatisticReq) returns (GetSelectedLotteryStatisticResp);
+  rpc CheckSelectedLotteryParticipated(CheckSelectedLotteryParticipatedReq) returns (CheckSelectedLotteryParticipatedResp);
 }

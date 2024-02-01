@@ -21,6 +21,7 @@ const (
 )
 
 // 投票模块
+
 const (
 	VOTE_VOTE_CONFIG_NOT_FOUND uint32 = 120001 + iota
 	VOTE_VOTE_RECORD_NOT_FOUND
@@ -58,3 +59,11 @@ const (
 
 // 抽奖模块
 const LOTTERY_HAS_BEEN_ANOUNCED uint32 = 200001
+
+// 签到模块
+const (
+	CHECKIN_RECORD_NOT_FOUND      uint32 = 700001
+	CHECKIN_REPEAT                uint32 = 700002
+	CHECKIN_TASK_NOT_FOUND        uint32 = 700003
+	CHECKIN_TASK_REWARD_COLLECTED uint32 = 700004
+)

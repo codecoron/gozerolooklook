@@ -5,3 +5,8 @@ const (
 	AnnounceTypeTimeLottery
 	AnnounceTypePeopleLottery
 )
+
+const (
+	IsSelectedLottery  = 1
+	NotSelectedLottery = 0
+)

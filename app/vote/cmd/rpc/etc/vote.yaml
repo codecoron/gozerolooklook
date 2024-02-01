@@ -20,6 +20,12 @@ Redis:
   Pass: G62m50oigInC30sf
   Key: vote-rpc
 
+Log:
+  ServiceName: vote-rpc
+  Level: error
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
+
 #DB
 DB:
   DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/vote?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai

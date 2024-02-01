@@ -20,6 +20,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.17.0
 	github.com/golang-module/carbon/v2 v2.0.1
+	github.com/jinzhu/now v1.1.5
 	github.com/satori/go.uuid v1.2.0
 )
 

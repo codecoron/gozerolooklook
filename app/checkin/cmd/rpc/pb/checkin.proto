@@ -151,18 +151,36 @@ message SearchIntegralRecordResp {
   repeated IntegralRecord integralRecord = 1; //integralRecord
 }
 
+//--------------------------------taskProgress--------------------------------
+message TaskProgress {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 isParticipatedLottery = 3;
+  int64 isInitiatedLottery = 4;
+  int64 is_sub_checkin = 5;
+}
+
+message GetTaskProgressReq {
+  int64 userId = 1;
+}
+
+message GetTaskProgressResp {
+}
 //--------------------------------taskRecord--------------------------------
 message TaskRecord {
   int64 id = 1; //id
-  int64 userId = 2; //userId
-  int64 taskId = 3; //taskId
-  int64 isFinished = 4; //0为未完成，1为已完成
+  int64 type = 2;
+  int64 userId = 3; //userId
+  int64 taskId = 4; //taskId
+  int64 isFinished = 5; //0为未完成，1为已完成
 }
+
 
 message AddTaskRecordReq {
   int64 userId = 1; //userId
   int64 taskId = 2; //taskId
   int64 isFinished = 3; //0为未完成，1为已完成
+  int64 type = 4;
 }
 
 message AddTaskRecordResp {
@@ -296,6 +314,7 @@ service checkin{
   rpc GetTaskRecordById(GetTaskRecordByIdReq) returns (GetTaskRecordByIdResp);
   rpc GetTaskRecordByUserId(GetTaskRecordByUserIdReq) returns (GetTaskRecordByUserIdResp);
   rpc SearchTaskRecord(SearchTaskRecordReq) returns (SearchTaskRecordResp);
+  rpc GetTaskProgress(GetTaskProgressReq) returns (GetTaskProgressResp);
   //-----------------------tasks-----------------------
   rpc AddTasks(AddTasksReq) returns (AddTasksResp);
   rpc UpdateTasks(UpdateTasksReq) returns (UpdateTasksResp);
