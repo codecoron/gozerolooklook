@@ -26,3 +26,13 @@ func (s *NoticeServer) NoticeLotteryDraw(ctx context.Context, in *pb.NoticeLotte
 	l := logic.NewNoticeLotteryDrawLogic(ctx, s.svcCtx)
 	return l.NoticeLotteryDraw(in)
 }
+
+func (s *NoticeServer) GetNoticeSubscribePreference(ctx context.Context, in *pb.GetNoticeSubscribePreferenceReq) (*pb.GetNoticeSubscribePreferenceResp, error) {
+	l := logic.NewGetNoticeSubscribePreferenceLogic(ctx, s.svcCtx)
+	return l.GetNoticeSubscribePreference(in)
+}
+
+func (s *NoticeServer) SaveNoticeSubscribePreference(ctx context.Context, in *pb.SaveNoticeSubscribePreferenceReq) (*pb.SaveNoticeSubscribePreferenceResp, error) {
+	l := logic.NewSaveNoticeSubscribePreferenceLogic(ctx, s.svcCtx)
+	return l.SaveNoticeSubscribePreference(in)
+}

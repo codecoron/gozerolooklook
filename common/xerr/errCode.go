@@ -23,6 +23,7 @@ const (
 // 投票模块
 const (
 	VOTE_VOTE_CONFIG_NOT_FOUND uint32 = 120001 + iota
+	VOTE_VOTE_RECORD_NOT_FOUND
 )
 
 // 抽奖模块
@@ -54,3 +55,6 @@ const (
 	DB_GET_LOTTERYID_BYUSERID_ERROR
 	DB_LOTTERYID_NOTFOUND
 )
+
+// 抽奖模块
+const LOTTERY_HAS_BEEN_ANOUNCED uint32 = 200001

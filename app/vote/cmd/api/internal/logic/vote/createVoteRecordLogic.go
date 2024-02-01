@@ -4,12 +4,10 @@ import (
 	"context"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
-	"looklook/app/vote/cmd/rpc/pb"
-	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
 	"looklook/app/vote/cmd/api/internal/svc"
 	"looklook/app/vote/cmd/api/internal/types"
+	"looklook/app/vote/cmd/rpc/pb"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -38,7 +36,7 @@ func (l *CreateVoteRecordLogic) CreateVoteRecord(req *types.CreateVoteRecordReq)
 
 	addVoteRecord, err := l.svcCtx.VoteRpc.AddVoteRecord(l.ctx, AddVoteRecordReq)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("add vote_record fail"), "add vote_record rpc AddVoteRecord fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(err, "add vote_record rpc fail req: %+v , err : %v ", req, err)
 	}
 
 	return &types.CreateVoteRecordResp{Id: addVoteRecord.Id}, nil

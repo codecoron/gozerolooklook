@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
-	"looklook/app/vote/cmd/rpc/pb"
-	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
 	"looklook/app/vote/cmd/api/internal/svc"
 	"looklook/app/vote/cmd/api/internal/types"
+	"looklook/app/vote/cmd/rpc/pb"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -44,7 +42,7 @@ func (l *CreateVoteLogic) CreateVote(req *types.CreateVoteReq) (resp *types.Crea
 
 	addVoteConfig, err := l.svcCtx.VoteRpc.AddVoteConfig(l.ctx, AddVoteConfigReq)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("add address fail"), "add address rpc AddUserAddress fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(err, "add vote_config rpc fail req: %+v , err : %v ", req, err)
 	}
 
 	return &types.CreateVoteResp{Id: addVoteConfig.Id}, nil

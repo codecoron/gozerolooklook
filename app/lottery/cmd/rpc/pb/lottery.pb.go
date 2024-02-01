@@ -1319,6 +1319,7 @@ func (*AnnounceLotteryResp) Descriptor() ([]byte, []int) {
 	return file_lottery_proto_rawDescGZIP(), []int{18}
 }
 
+// --------------------------------奖品表--------------------------------
 type CheckUserCreatedLotteryReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
