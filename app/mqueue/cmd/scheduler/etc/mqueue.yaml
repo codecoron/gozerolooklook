@@ -17,7 +17,10 @@ Telemetry:
  Batcher: jaeger
 
 Log:
-  ServiceName: mqueue-scheduler
+  ServiceName: mqueue-job
+  Mode: console
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
   Level: error
 
 Redis:

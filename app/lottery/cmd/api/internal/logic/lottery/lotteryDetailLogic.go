@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"looklook/app/lottery/cmd/rpc/lottery"
+	"looklook/common/ctxdata"
 	"looklook/common/xerr"
 
 	"looklook/app/lottery/cmd/api/internal/svc"
@@ -27,25 +28,30 @@ func NewLotteryDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lot
 	}
 }
 
-func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (*types.LotteryDetailResp, error) {
-	resp, err := l.svcCtx.LotteryRpc.LotteryDetail(l.ctx, &lottery.LotteryDetailReq{
+func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *types.LotteryDetailResp, err error) {
+	// 需要获取当前用户id，从而判断当前用户是否有参与当前lottery
+	userId := ctxdata.GetUidFromCtx(l.ctx)
+	res, err := l.svcCtx.LotteryRpc.LotteryDetail(l.ctx, &lottery.LotteryDetailReq{
+		Id:     req.Id,
+		UserId: userId,
+	})
+	if err != nil {
+		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
+		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
+	}
+	resp = new(types.LotteryDetailResp)
+	_ = copier.Copy(resp, res)
+	_ = copier.Copy(resp, res.Lottery)
+
+	// 获取赞助商信息
+	res2, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
 		Id: req.Id,
 	})
 	if err != nil {
 		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
 		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get LotteryDetail"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
 	}
-	var lotteryDetail types.LotteryDetail
-	_ = copier.Copy(&lotteryDetail, resp)
-	lotteryDetail.Id = resp.Lottery.Id
-	lotteryDetail.Name = resp.Lottery.Name
-	lotteryDetail.IsSelected = resp.Lottery.IsSelected
-	lotteryDetail.UserId = resp.Lottery.UserId
-	lotteryDetail.AwardDeadline = resp.Lottery.AwardDeadline
-	lotteryDetail.Introduce = resp.Lottery.Introduce
-	lotteryDetail.JoinNumber = resp.Lottery.JoinNumber
-	lotteryDetail.PublishTime = resp.Lottery.PublishTime
-	lotteryDetail.PublishType = resp.Lottery.PublishType
-
-	return &types.LotteryDetailResp{LotteryDetail: lotteryDetail}, nil
+	resp.Sponsor = new(types.LotterySponsor)
+	_ = copier.Copy(resp.Sponsor, res2)
+	return
 }

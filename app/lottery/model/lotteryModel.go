@@ -7,6 +7,7 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"time"
 )
 
 var _ LotteryModel = (*customLotteryModel)(nil)
@@ -20,6 +21,9 @@ type (
 		UpdatePublishTime(ctx context.Context, data *Lottery) error
 		LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error)
+		GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error)
+		UpdateLotteryStatus(ctx context.Context, lotteryID int64) error
+		GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error)
 	}
 
 	customLotteryModel struct {
@@ -71,4 +75,38 @@ func NewLotteryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 	return &customLotteryModel{
 		defaultLotteryModel: newLotteryModel(conn, c, opts...),
 	}
+}
+
+func (c *customLotteryModel) GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error) {
+	var resp []int64
+	query := fmt.Sprintf("SELECT id FROM %s WHERE announce_type = ? AND is_announced = 0 AND announce_time <= ?", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType, currentTime)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// UpdateLotteryStatus 根据lotteryId更新lottery状态为已开奖
+func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryID int64) error {
+	// 准备更新数据的SQL语句
+	query := fmt.Sprintf("UPDATE %s SET is_announced = 1 WHERE id = ?", c.table)
+
+	_, err := c.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
+		return conn.Exec(query, lotteryID)
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error) {
+	var resp []*Lottery
+	query := fmt.Sprintf("SELECT * FROM %s WHERE announce_type = ? AND is_announced = 0", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

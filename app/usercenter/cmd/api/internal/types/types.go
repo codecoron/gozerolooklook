@@ -125,6 +125,13 @@ type RegisterResp struct {
 	RefreshAfter int64  `json:"refreshAfter"`
 }
 
+type SetAdminReq struct {
+	Id int64 `json:"id"`
+}
+
+type SetAdminResp struct {
+}
+
 type User struct {
 	Id       int64  `json:"id"`
 	Mobile   string `json:"mobile"`
@@ -165,6 +172,8 @@ type WXMiniAuthReq struct {
 	Code          string `json:"code"`
 	IV            string `json:"iv"`
 	EncryptedData string `json:"encryptedData"`
+	Nickname      string `json:"nickname, optional"`
+	Avatar        string `json:"avatar, optional"`
 }
 
 type WXMiniAuthResp struct {

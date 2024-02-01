@@ -22,8 +22,9 @@ service notice {
 	@doc "验证小程序回调消息"
 	@handler verifyEvent
 	get /event (VerifyEventReq) returns (VerifyEventResp)
-//    @doc "接收小程序回调消息"
-//    @handler receiveEvent
-//    post /event (ReceiveEventReq) returns (ReceiveEventResp)
+
+	@doc "接收小程序回调消息"
+	@handler receiveEvent
+	post /event (ReceiveEventReq) returns (ReceiveEventResp)
 }
 

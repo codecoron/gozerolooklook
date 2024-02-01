@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
-
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
 
@@ -24,9 +23,9 @@ func NewLotteryDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lot
 	}
 }
 
-func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (*pb.LotteryDetailResp, error) {
+func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (resp *pb.LotteryDetailResp, err error) {
 	lotteryId := in.Id
-	prizes, err := l.svcCtx.PrizeModel.FindByLotteryId(l.ctx, lotteryId)
+	res, err := l.svcCtx.PrizeModel.FindByLotteryId(l.ctx, lotteryId)
 	if err != nil {
 		return nil, err
 	}
@@ -34,19 +33,17 @@ func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (*pb.Lottery
 	if err != nil {
 		return nil, err
 	}
-	var pbprizes []*pb.Prize
-	for _, p := range prizes {
-		var prize pb.Prize
-		_ = copier.Copy(&prize, p)
-		pbprizes = append(pbprizes, &prize)
-	}
-	resp := new(pb.LotteryDetailResp)
+	resp = new(pb.LotteryDetailResp)
 	resp.Lottery = new(pb.Lottery)
-	err = copier.Copy(resp.Lottery, lottery)
-	if err != nil {
-		return nil, err
-	}
-	resp.Prizes = pbprizes
-	return resp, nil
+	_ = copier.Copy(resp.Lottery, lottery)
+	resp.Lottery.AnnounceTime = lottery.AnnounceTime.Unix()
+	resp.Lottery.PublishTime = lottery.PublishTime.Time.Unix()
+	resp.Lottery.AwardDeadline = lottery.AwardDeadline.Unix()
 
+	for _, p := range res {
+		prize := new(pb.Prize)
+		_ = copier.Copy(prize, p)
+		resp.Prizes = append(resp.Prizes, prize)
+	}
+	return resp, nil
 }

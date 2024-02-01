@@ -184,15 +184,15 @@
         ]
       }
     },
-    "usercenter/v1/user/update": {
-      "put": {
-        "summary": "修改用户基本信息",
-        "operationId": "update",
+    "usercenter/v1/user/setAdmin": {
+      "post": {
+        "summary": "设置user为admin",
+        "operationId": "setAdmin",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/UserUpdateResp"
+              "$ref": "#/definitions/SetAdminResp"
             }
           }
         },
@@ -202,7 +202,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UserUpdateReq"
+              "$ref": "#/definitions/SetAdminReq"
             }
           }
         ],
@@ -267,34 +267,6 @@
           "userContact"
         ]
       }
-    },
-    "usercenter/v1/userfollow/addfollowInfo": {
-      "post": {
-        "summary": "添加引流信息",
-        "operationId": "addfollowInfo",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/AddfollowInfoResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/AddfollowInfoReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "userfollow"
-        ]
-      }
     }
   },
   "definitions": {
@@ -319,57 +291,6 @@
       "required": [
         "id"
       ]
-    },
-    "AddfollowInfoReq": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "desc": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "is_show": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "type": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "applet_type": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "qr_code": {
-          "type": "string"
-        },
-        "input_a": {
-          "type": "string"
-        },
-        "input_b": {
-          "type": "string"
-        }
-      },
-      "title": "AddfollowInfoReq",
-      "required": [
-        "name",
-        "desc",
-        "avatar",
-        "is_show",
-        "type",
-        "applet_type",
-        "qr_code",
-        "input_a",
-        "input_b"
-      ]
-    },
-    "AddfollowInfoResp": {
-      "type": "object",
-      "title": "AddfollowInfoResp"
     },
     "AddressInfo": {
       "type": "object",
@@ -588,63 +509,6 @@
         "name"
       ]
     },
-    "FollowInfo": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "userId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "type": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "applet_type": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "desc": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "is_show": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "qr_code": {
-          "type": "string"
-        },
-        "input_a": {
-          "type": "string"
-        },
-        "input_b": {
-          "type": "string"
-        }
-      },
-      "title": "FollowInfo",
-      "required": [
-        "id",
-        "userId",
-        "type",
-        "applet_type",
-        "name",
-        "desc",
-        "avatar",
-        "is_show",
-        "qr_code",
-        "input_a",
-        "input_b"
-      ]
-    },
     "LoginReq": {
       "type": "object",
       "properties": {
@@ -721,6 +585,23 @@
         "refreshAfter"
       ]
     },
+    "SetAdminReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SetAdminReq",
+      "required": [
+        "id"
+      ]
+    },
+    "SetAdminResp": {
+      "type": "object",
+      "title": "SetAdminResp"
+    },
     "User": {
       "type": "object",
       "properties": {
@@ -796,49 +677,6 @@
       "required": [
         "userInfo"
       ]
-    },
-    "UserUpdateReq": {
-      "type": "object",
-      "properties": {
-        "nickname": {
-          "type": "string"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "info": {
-          "type": "string"
-        },
-        "signature": {
-          "type": "string"
-        },
-        "longitude": {
-          "type": "number",
-          "format": "double"
-        },
-        "latitude": {
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "title": "UserUpdateReq",
-      "required": [
-        "nickname",
-        "sex",
-        "avatar",
-        "info",
-        "signature",
-        "longitude",
-        "latitude"
-      ]
-    },
-    "UserUpdateResp": {
-      "type": "object",
-      "title": "UserUpdateResp"
     },
     "WXMiniAuthReq": {
       "type": "object",

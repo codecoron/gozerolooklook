@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message NoticeLotteryDrawReq{
+  repeated int64 userIds = 1;
+  int64 lotteryId = 2;
+}
+
+message NoticeLotteryDrawResp{
+}
+
+message NoticeSubscribePreference{
+  int64 id = 1;
+  string openid = 2;
+  string templateId = 3;
+  int64 acceptCount = 4;
+  int64 createTime = 5;
+  int64 updateTime = 6;
+}
+
+message SaveNoticeSubscribePreferenceReq{
+  string openid = 1;
+  string templateId = 2;
+  int64 type = 3;
+}
+
+message SaveNoticeSubscribePreferenceResp{
+}
+
+message GetNoticeSubscribePreferenceReq{
+  string openid = 1;
+  string templateId = 2;
+}
+
+message GetNoticeSubscribePreferenceResp{
+  int64 id = 1;
+  string openid = 2;
+  string templateId = 3;
+  int64 acceptCount = 4;
+  int64 createTime = 5;
+  int64 updateTime = 6;
+}
+
+service notice{
+  rpc NoticeLotteryDraw(NoticeLotteryDrawReq) returns (NoticeLotteryDrawResp); // 发送开奖消息
+  rpc GetNoticeSubscribePreference(GetNoticeSubscribePreferenceReq) returns (GetNoticeSubscribePreferenceResp); // 获取用户消息订阅偏好设置
+  rpc SaveNoticeSubscribePreference(SaveNoticeSubscribePreferenceReq) returns (SaveNoticeSubscribePreferenceResp); // 保存用户消息订阅偏好设置
+}

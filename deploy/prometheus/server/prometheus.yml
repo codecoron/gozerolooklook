@@ -86,4 +86,62 @@ scrape_configs:
           job: mqueue-scheduler
           app: mqueue-scheduler
           env: dev
+  - job_name: 'checkin-api'
+    static_configs:
+      - targets: [ 'looklook:4017' ]
+        labels:
+          job: checkin-api
+          app: checkin-api
+          env: dev
+  - job_name: 'checkin-rpc'
+    static_configs:
+      - targets: [ 'looklook:4018' ]
+        labels:
+          job: checkin-rpc
+          app: checkin-rpc
+          env: dev
+  - job_name: 'upload-api'
+    static_configs:
+      - targets: ['looklook:4012']
+        labels:
+          job: upload-api
+          app: upload-api
+          env: dev
+  - job_name: 'upload-rpc'
+    static_configs:
+      - targets: ['looklook:4013']
+        labels:
+          job: upload-rpc
+          app: upload-rpc
+          env: dev
+  - job_name: 'lottery-api'
+    static_configs:
+      - targets: [ 'looklook:4012' ]
+        labels:
+          job: lottery-api
+          app: lottery-api
+          env: dev
+  - job_name: 'lottery-rpc'
+    static_configs:
+      - targets: [ 'looklook:4013' ]
+        labels:
+          job: lottery-rpc
+          app: lottery-rpc
+          env: dev
+
+  - job_name: 'vote-api'
+    static_configs:
+      - targets: [ 'looklook:4027' ]
+        labels:
+          job: vote-api
+          app: vote-api
+          env: dev
+  - job_name: 'vote-rpc'
+    static_configs:
+      - targets: [ 'looklook:4028' ]
+        labels:
+          job: vote-rpc
+          app: vote-rpc
+          env: dev
+
 

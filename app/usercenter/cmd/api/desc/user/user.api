@@ -46,6 +46,8 @@ type (
 		Code          string `json:"code"`
 		IV            string `json:"iv"`
 		EncryptedData string `json:"encryptedData"`
+		Nickname 	  string `json:"nickname, optional"`
+		Avatar        string `json:"avatar, optional"`
 	}
 	WXMiniAuthResp {
 		AccessToken  string `json:"accessToken"`
@@ -74,5 +76,13 @@ type (
 	}
 
 	UserUpdateResp {
+	}
+)
+
+type (
+	SetAdminReq {
+		Id int64  `json:"id"`
+	}
+	SetAdminResp {
 	}
 )
