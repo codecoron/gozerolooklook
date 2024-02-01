@@ -96,4 +96,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithPrefix("/lottery/v1"),
 	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/TestValidator",
+				Handler: lottery.TestValidatorHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/lottery/v1"),
+	)
 }

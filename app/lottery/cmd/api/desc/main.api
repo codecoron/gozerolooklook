@@ -107,3 +107,13 @@ service lottery {
 	@handler searchParticipation
 	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
 }
+
+@server (
+	prefix: lottery/v1
+	group:  lottery
+)
+service lottery {
+	@doc "测试Validator"
+	@handler TestValidator
+	post /lottery/TestValidator (TestReq) returns (TestResp)
+}
