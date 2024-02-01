@@ -12,6 +12,7 @@ import (
 	"user/user.api"
 	"user_contact/usercontact.api"
 	"address/address.api"
+	"user_follow/userfollow.api"
 )
 
 //============================> usercenter v1 <============================
@@ -84,5 +85,17 @@ service usercenter {
 	@doc "识别并转换收货地址"
 	@handler convertAddress
 	post /user/convertAddress (ConvertAddressReq) returns (ConvertAddressResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userfollow
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "添加引流信息"
+	@handler addfollowInfo
+	post /userfollow/addfollowInfo (AddfollowReq) returns (AddfollowInfoResp)
 }
 

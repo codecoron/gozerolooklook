@@ -9,22 +9,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DelUserContactLogic struct {
+type DelUserLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewDelUserContactLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelUserContactLogic {
-	return &DelUserContactLogic{
+func NewDelUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelUserLogic {
+	return &DelUserLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *DelUserContactLogic) DelUserContact(in *pb.DelUserContactReq) (*pb.DelUserContactResp, error) {
+func (l *DelUserLogic) DelUser(in *pb.DelUserReq) (*pb.DelUserResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &pb.DelUserContactResp{}, nil
+	return &pb.DelUserResp{}, nil
 }
