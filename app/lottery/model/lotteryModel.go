@@ -53,7 +53,10 @@ func (c *customLotteryModel) LotteryList(ctx context.Context, page, limit, selec
 	var resp []*Lottery
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
-	return resp, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_USERID_BYLOTTERYID_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_USERID_BYLOTTERYID_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
+	}
+	return resp, nil
 }
 
 func (c *customLotteryModel) FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error) {
