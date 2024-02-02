@@ -55,6 +55,7 @@ type (
 
 	UserSponsor struct {
 		Id         int64        `db:"id"`
+		SponsorId  int64        `db:"sponsor_id"`
 		UserId     int64        `db:"user_id"`
 		Type       int64        `db:"type"`        // 1微信号 2公众号 3小程序 4微信群 5视频号
 		AppletType int64        `db:"applet_type"` // type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
@@ -107,8 +108,8 @@ func (m *defaultUserSponsorModel) FindOne(ctx context.Context, id int64) (*UserS
 func (m *defaultUserSponsorModel) Insert(ctx context.Context, data *UserSponsor) (sql.Result, error) {
 	looklookUsercenterUserSponsorIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserSponsorIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userSponsorRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userSponsorRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.SponsorId, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime)
 	}, looklookUsercenterUserSponsorIdKey)
 	return ret, err
 }
@@ -116,8 +117,8 @@ func (m *defaultUserSponsorModel) Insert(ctx context.Context, data *UserSponsor)
 func (m *defaultUserSponsorModel) TransInsert(ctx context.Context, session sqlx.Session, data *UserSponsor) (sql.Result, error) {
 	looklookUsercenterUserSponsorIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserSponsorIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userSponsorRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userSponsorRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.SponsorId, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime)
 	}, looklookUsercenterUserSponsorIdKey)
 	return ret, err
 }
@@ -125,7 +126,7 @@ func (m *defaultUserSponsorModel) Update(ctx context.Context, data *UserSponsor)
 	looklookUsercenterUserSponsorIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserSponsorIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userSponsorRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime, data.Id)
+		return conn.ExecCtx(ctx, query, data.SponsorId, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime, data.Id)
 	}, looklookUsercenterUserSponsorIdKey)
 	return err
 }
@@ -134,7 +135,7 @@ func (m *defaultUserSponsorModel) TransUpdate(ctx context.Context, session sqlx.
 	looklookUsercenterUserSponsorIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserSponsorIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userSponsorRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime, data.Id)
+		return session.ExecCtx(ctx, query, data.SponsorId, data.UserId, data.Type, data.AppletType, data.Name, data.Desc, data.Avatar, data.IsShow, data.QrCode, data.InputA, data.InputB, data.DeleteTime, data.Id)
 	}, looklookUsercenterUserSponsorIdKey)
 	return err
 }

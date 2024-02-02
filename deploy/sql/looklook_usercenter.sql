@@ -73,6 +73,7 @@ CREATE TABLE `user_auth`  (
 DROP TABLE IF EXISTS `user_sponsor`;
 CREATE TABLE `user_sponsor`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
+  `sponsor_id` int(0) NOT NULL DEFAULT 1,
   `user_id` int(0) NOT NULL DEFAULT 0,
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1微信号 2公众号 3小程序 4微信群 5视频号',
   `applet_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转',

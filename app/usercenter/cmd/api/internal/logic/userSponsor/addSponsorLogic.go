@@ -26,7 +26,7 @@ func NewAddSponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddSpo
 	}
 }
 
-func (l *AddSponsorLogic) AddSponsor(req *types.CreateSponosorReq) (resp *types.CreateSponosorResp, err error) {
+func (l *AddSponsorLogic) AddSponsor(req *types.CreateSponsorReq) (resp *types.CreateSponsorResp, err error) {
 	pbSponsor := new(pb.AddUserSponsorReq)
 	err = copier.Copy(pbSponsor, req)
 	if err != nil {
@@ -37,5 +37,7 @@ func (l *AddSponsorLogic) AddSponsor(req *types.CreateSponosorReq) (resp *types.
 	if err != nil {
 		return nil, err
 	}
-	return
+	return &types.CreateSponsorResp{
+		Id: pbSponsor.GetSponsorId(),
+	}, nil
 }

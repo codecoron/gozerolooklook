@@ -96,6 +96,6 @@ service usercenter {
 service usercenter {
 	@doc "抽奖发起人（赞助商）"
 	@handler addSponsor
-	post /userSponsor/addSponsor (CreateSponosorReq) returns (CreateSponosorResp)
+	post /userSponsor/addSponsor (CreateSponsorReq) returns (CreateSponsorResp)
 }
 
