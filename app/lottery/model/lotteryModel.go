@@ -27,6 +27,8 @@ type (
 		UpdateLotteryStatus(ctx context.Context, lotteryID int64) error
 		GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error)
 		GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error)
+		GetTodayLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
+		GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
 	}
 
 	customLotteryModel struct {
@@ -133,4 +135,24 @@ func (c *customLotteryModel) GetLotteryIdByUserId(ctx context.Context, UserId in
 	default:
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_LOTTERYID_BYUSERID_ERROR), "FindOne, UserId:%v, error: %v", UserId, err)
 	}
+}
+
+func (c *customLotteryModel) GetTodayLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error) {
+	var resp []int64
+	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND DATE(publish_time) = CURDATE()", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetTodayLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+	}
+	return resp, nil
+}
+
+func (c *customLotteryModel) GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error) {
+	var resp []int64
+	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND YEARWEEK(publish_time) = YEARWEEK(CURDATE())", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetWeekLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+	}
+	return resp, nil
 }
