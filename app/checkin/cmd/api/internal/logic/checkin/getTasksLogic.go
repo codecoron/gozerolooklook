@@ -29,8 +29,8 @@ func NewGetTasksLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetTasks
 
 func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksResp, err error) {
 	userId := ctxdata.GetUidFromCtx(l.ctx)
-	// todo:查询用户任务进度，返回具体数量
-	_, err = l.svcCtx.CheckinRpc.GetTaskProgress(l.ctx, &checkin.GetTaskProgressReq{
+	// 查询用户任务进度，返回具体数量
+	count, err := l.svcCtx.CheckinRpc.GetTaskProgress(l.ctx, &checkin.GetTaskProgressReq{
 		UserId: userId,
 	})
 	if err != nil {
@@ -47,8 +47,10 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 	var taskList []*types.Tasks
 	_ = copier.Copy(&taskList, tasks.TaskList)
 	//logx.Error("api,taskList:", taskList)
-	// todo: 返回任务进度具体数量
+	// 返回任务进度具体数量
 	return &types.GetTasksResp{
 		TasksList: taskList,
+		DayCount:  count.DayCount,
+		WeekCount: count.WeekCount,
 	}, nil
 }

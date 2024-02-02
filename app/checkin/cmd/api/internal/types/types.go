@@ -39,6 +39,8 @@ type GetTasksReq struct {
 
 type GetTasksResp struct {
 	TasksList []*Tasks `json:"tasksList"`
+	DayCount  int64    `json:"dayCount"`
+	WeekCount int64    `json:"weekCount"`
 }
 
 type IntegralRecord struct {

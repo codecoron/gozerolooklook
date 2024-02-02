@@ -72,6 +72,8 @@ type (
     }
     GetTasksResp {
         TasksList             []*Tasks `json:"tasksList"`
+        DayCount              int64 `json:"dayCount"`
+        WeekCount             int64 `json:"weekCount"`
     }
 )
 

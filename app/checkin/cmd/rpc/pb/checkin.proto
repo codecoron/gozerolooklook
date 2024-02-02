@@ -165,6 +165,8 @@ message GetTaskProgressReq {
 }
 
 message GetTaskProgressResp {
+  int64 dayCount = 1;
+  int64 weekCount = 2;
 }
 //--------------------------------taskRecord--------------------------------
 message TaskRecord {

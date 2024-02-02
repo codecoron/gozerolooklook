@@ -28,7 +28,7 @@ type (
 
 func (m *defaultTaskRecordModel) FindByUserIdAndTaskId(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error) {
 	var resp TaskRecord
-	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? LIMIT 1", taskRecordRows, m.table)
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? ORDER BY id DESC LIMIT 1", taskRecordRows, m.table)
 	err := m.QueryRowNoCacheCtx(ctx, &resp, query, userId, taskId)
 	switch err {
 	case nil:
