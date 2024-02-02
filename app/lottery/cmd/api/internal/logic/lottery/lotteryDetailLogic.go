@@ -41,13 +41,13 @@ func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *t
 	_ = copier.Copy(resp, res.Lottery)
 
 	// todo 获取赞助商信息
-	res2, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
-		Id: req.Id,
-	})
-	if err != nil {
-		return nil, err
-	}
-	resp.Sponsor = new(types.LotterySponsor)
-	_ = copier.Copy(resp.Sponsor, res2)
+	//res2, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
+	//	Id: req.Id,
+	//})
+	//if err != nil {
+	//	return nil, err
+	//}
+	//resp.Sponsor = new(types.LotterySponsor)
+	//_ = copier.Copy(resp.Sponsor, res2)
 	return
 }
