@@ -142,7 +142,7 @@ func (c *customLotteryModel) GetTodayLotteryIdsByUserId(ctx context.Context, Use
 	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND DATE(publish_time) = CURDATE()", c.table)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetTodayLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_WEEKLOTTERYIDS_BYUSREID_ERROR), "GetTodayLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
 	}
 	return resp, nil
 }
@@ -152,7 +152,7 @@ func (c *customLotteryModel) GetWeekLotteryIdsByUserId(ctx context.Context, User
 	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND YEARWEEK(publish_time) = YEARWEEK(CURDATE())", c.table)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetWeekLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_TODAYLOTTERYIDSBYUSERID_ERROR), "GetWeekLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
 	}
 	return resp, nil
 }

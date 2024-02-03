@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"looklook/common/constants"
 
 	"looklook/app/lottery/cmd/rpc/internal/svc"
@@ -32,7 +31,7 @@ func (l *CheckUserCreatedLotteryAndThisWeekLogic) CheckUserCreatedLotteryAndThis
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("lotterys:", LotteryIds)
+	//fmt.Println("lotterys:", LotteryIds)
 	// 判断是否有一个抽奖符合，有一个符合就跳出循环，返回yes = 1
 	for _, lotteryId := range LotteryIds {
 		yes, err := l.CheckLotteryThisWeek(lotteryId)
@@ -50,13 +49,13 @@ func (l *CheckUserCreatedLotteryAndThisWeekLogic) CheckUserCreatedLotteryAndThis
 	}, nil
 }
 
-// CheckLotteryToday 检查抽奖是否在今天之内发起并有超过五个人参加
+// CheckLotteryThisWeek 检查抽奖是否在今天之内发起并有超过五个人参加
 func (l *CheckUserCreatedLotteryAndThisWeekLogic) CheckLotteryThisWeek(lotteryID int64) (bool, error) {
 	participantsCount, err := l.svcCtx.LotteryParticipationModel.GetParticipatorsCountByLotteryId(l.ctx, lotteryID)
 	if err != nil {
 		return false, err
 	}
-	fmt.Println("participantsCount:", participantsCount)
+	//fmt.Println("participantsCount:", participantsCount)
 	// 判断抽奖是否在今天之内发起并有超过五个人参加
 	return participantsCount > constants.LotteryThisWeekParticipantsCount, nil
 }

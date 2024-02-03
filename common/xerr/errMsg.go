@@ -42,6 +42,8 @@ func init() {
 	// 检验当前用户是否发起过抽奖
 	message[DB_GET_LOTTERYID_BYUSERID_ERROR] = "获取当前用户抽奖Id失败"
 	message[DB_LOTTERYID_NOTFOUND] = "当前用户没有发起过抽奖"
+	message[DB_GET_WEEKLOTTERYIDS_BYUSREID_ERROR] = "根据当前用户id获取本周抽奖ids失败"
+	message[DB_GET_TODAYLOTTERYIDSBYUSERID_ERROR] = "根据当前用户id获取本日抽奖ids失败"
 }
 
 func MapErrMsg(errcode uint32) string {
