@@ -149,6 +149,23 @@ message CheckUserCreatedLotteryResp {
   int64 IsCreated = 1; // 用户是否发起过抽奖：0否; 1是
 }
 
+message CheckUserCreatedLotteryAndTodayReq {
+  int64 UserId = 1; // 用户id
+}
+
+message CheckUserCreatedLotteryAndTodayResp {
+  int64 Yes = 1; // 用户是否在今天之内发布并有超过五个人参加：0否; 1是
+}
+
+message CheckUserCreatedLotteryAndThisWeekReq {
+  int64 UserId = 1; // 用户id
+}
+
+message CheckUserCreatedLotteryAndThisWeekResp {
+  int64 Yes = 1; // 用户是否在这周之内发起并有超过十个人参加：0否; 1是
+}
+
+
 //--------------------------------奖品表--------------------------------
 message Prize {
   int64 id = 1; //id
@@ -311,6 +328,8 @@ service lottery{
   rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
   rpc AnnounceLottery(AnnounceLotteryReq) returns (AnnounceLotteryResp);
   rpc CheckUserCreatedLottery(CheckUserCreatedLotteryReq) returns (CheckUserCreatedLotteryResp);
+  rpc CheckUserCreatedLotteryAndToday(CheckUserCreatedLotteryAndTodayReq) returns (CheckUserCreatedLotteryAndTodayResp);
+  rpc CheckUserCreatedLotteryAndThisWeek(CheckUserCreatedLotteryAndThisWeekReq) returns (CheckUserCreatedLotteryAndThisWeekResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);

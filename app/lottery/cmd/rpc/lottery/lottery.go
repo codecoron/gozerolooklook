@@ -25,6 +25,10 @@ type (
 	CheckIsParticipatedResp                = pb.CheckIsParticipatedResp
 	CheckSelectedLotteryParticipatedReq    = pb.CheckSelectedLotteryParticipatedReq
 	CheckSelectedLotteryParticipatedResp   = pb.CheckSelectedLotteryParticipatedResp
+	CheckUserCreatedLotteryAndThisWeekReq  = pb.CheckUserCreatedLotteryAndThisWeekReq
+	CheckUserCreatedLotteryAndThisWeekResp = pb.CheckUserCreatedLotteryAndThisWeekResp
+	CheckUserCreatedLotteryAndTodayReq     = pb.CheckUserCreatedLotteryAndTodayReq
+	CheckUserCreatedLotteryAndTodayResp    = pb.CheckUserCreatedLotteryAndTodayResp
 	CheckUserCreatedLotteryReq             = pb.CheckUserCreatedLotteryReq
 	CheckUserCreatedLotteryResp            = pb.CheckUserCreatedLotteryResp
 	DelLotteryReq                          = pb.DelLotteryReq
@@ -73,6 +77,8 @@ type (
 		LotterySponsor(ctx context.Context, in *LotterySponsorReq, opts ...grpc.CallOption) (*LotterySponsorResp, error)
 		AnnounceLottery(ctx context.Context, in *AnnounceLotteryReq, opts ...grpc.CallOption) (*AnnounceLotteryResp, error)
 		CheckUserCreatedLottery(ctx context.Context, in *CheckUserCreatedLotteryReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryResp, error)
+		CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error)
+		CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -149,6 +155,16 @@ func (m *defaultLotteryZrpcClient) AnnounceLottery(ctx context.Context, in *Anno
 func (m *defaultLotteryZrpcClient) CheckUserCreatedLottery(ctx context.Context, in *CheckUserCreatedLotteryReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.CheckUserCreatedLottery(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.CheckUserCreatedLotteryAndToday(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.CheckUserCreatedLotteryAndThisWeek(ctx, in, opts...)
 }
 
 // -----------------------奖品表-----------------------

@@ -38,6 +38,7 @@ CREATE TABLE `lottery`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
   `is_announced` tinyint(1) NULL DEFAULT 0 COMMENT '是否开奖：0未开奖；1已经开奖',
+  `sponsor_id` int NOT NULL DEFAULT 0 COMMENT '发起抽奖赞助商ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = DYNAMIC;
 
