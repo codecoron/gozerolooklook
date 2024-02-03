@@ -121,7 +121,7 @@ func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Cont
 
 func (c *customLotteryModel) GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error) {
 	//func(ctx context.Context, conn sqlx.SqlConn, v any) error {
-	query := fmt.Sprintf("select id from %s where user_id = ?", c.table)
+	query := fmt.Sprintf("select id from %s where user_id = ? AND publish_time IS NOT NULL", c.table)
 	//	return conn.QueryRowCtx(ctx, v, query, UserId)
 	//}
 	var resp int64

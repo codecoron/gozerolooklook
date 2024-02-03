@@ -29,7 +29,7 @@ func NewAddTaskRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Add
 
 // -----------------------taskRecord-----------------------
 func (l *AddTaskRecordLogic) AddTaskRecord(in *pb.AddTaskRecordReq) (*pb.AddTaskRecordResp, error) {
-	_, err := l.svcCtx.TasksModel.FindOne(l.ctx, in.TaskId)
+	task, err := l.svcCtx.TasksModel.FindOne(l.ctx, in.TaskId)
 	if err == sqlc.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_TASK_NOT_FOUND), "任务不存在")
 	} else if err != nil {
@@ -38,7 +38,7 @@ func (l *AddTaskRecordLogic) AddTaskRecord(in *pb.AddTaskRecordReq) (*pb.AddTask
 	taskRecord := new(model.TaskRecord)
 	taskRecord.TaskId = in.TaskId
 	taskRecord.UserId = in.UserId
-	taskRecord.Type = in.Type
+	taskRecord.Type = task.Type
 	taskRecord.IsFinished = 1
 	_, err = l.svcCtx.TaskRecordModel.Insert(l.ctx, taskRecord)
 	if err != nil {
