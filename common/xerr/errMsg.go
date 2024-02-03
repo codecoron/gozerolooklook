@@ -44,6 +44,9 @@ func init() {
 	message[DB_LOTTERYID_NOTFOUND] = "当前用户没有发起过抽奖"
 	message[DB_GET_WEEKLOTTERYIDS_BYUSREID_ERROR] = "根据当前用户id获取本周抽奖ids失败"
 	message[DB_GET_TODAYLOTTERYIDSBYUSERID_ERROR] = "根据当前用户id获取本日抽奖ids失败"
+	message[DB_GET_LOTTERY_BYLOTTERYID_ERROR] = "根据抽奖id查询抽奖失败"
+	message[DB_UPDATE_LOTTERY_ERROR] = "更新抽奖信息失败"
+	message[DB_NO_SET_LOTTERY_ISSELECT_PERMISSION_ERROR] = "没有修改抽奖是否精选的权限"
 }
 
 func MapErrMsg(errcode uint32) string {
