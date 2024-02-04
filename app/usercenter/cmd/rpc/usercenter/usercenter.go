@@ -19,8 +19,6 @@ type (
 	AddUserAuthResp          = pb.AddUserAuthResp
 	AddUserContactReq        = pb.AddUserContactReq
 	AddUserContactResp       = pb.AddUserContactResp
-	AddUserFollowReq         = pb.AddUserFollowReq
-	AddUserFollowResp        = pb.AddUserFollowResp
 	AddUserReq               = pb.AddUserReq
 	AddUserResp              = pb.AddUserResp
 	AddUserShopReq           = pb.AddUserShopReq
@@ -35,8 +33,6 @@ type (
 	DelUserAuthResp          = pb.DelUserAuthResp
 	DelUserContactReq        = pb.DelUserContactReq
 	DelUserContactResp       = pb.DelUserContactResp
-	DelUserFollowReq         = pb.DelUserFollowReq
-	DelUserFollowResp        = pb.DelUserFollowResp
 	DelUserReq               = pb.DelUserReq
 	DelUserResp              = pb.DelUserResp
 	DelUserShopReq           = pb.DelUserShopReq
@@ -57,8 +53,6 @@ type (
 	GetUserByIdResp          = pb.GetUserByIdResp
 	GetUserContactByIdReq    = pb.GetUserContactByIdReq
 	GetUserContactByIdResp   = pb.GetUserContactByIdResp
-	GetUserFollowByIdReq     = pb.GetUserFollowByIdReq
-	GetUserFollowByIdResp    = pb.GetUserFollowByIdResp
 	GetUserInfoReq           = pb.GetUserInfoReq
 	GetUserInfoResp          = pb.GetUserInfoResp
 	GetUserShopByIdReq       = pb.GetUserShopByIdReq
@@ -75,8 +69,6 @@ type (
 	SearchUserAuthResp       = pb.SearchUserAuthResp
 	SearchUserContactReq     = pb.SearchUserContactReq
 	SearchUserContactResp    = pb.SearchUserContactResp
-	SearchUserFollowReq      = pb.SearchUserFollowReq
-	SearchUserFollowResp     = pb.SearchUserFollowResp
 	SearchUserReq            = pb.SearchUserReq
 	SearchUserResp           = pb.SearchUserResp
 	SearchUserShopReq        = pb.SearchUserShopReq
@@ -93,8 +85,6 @@ type (
 	UpdateUserBaseInfoResp   = pb.UpdateUserBaseInfoResp
 	UpdateUserContactReq     = pb.UpdateUserContactReq
 	UpdateUserContactResp    = pb.UpdateUserContactResp
-	UpdateUserFollowReq      = pb.UpdateUserFollowReq
-	UpdateUserFollowResp     = pb.UpdateUserFollowResp
 	UpdateUserReq            = pb.UpdateUserReq
 	UpdateUserResp           = pb.UpdateUserResp
 	UpdateUserShopReq        = pb.UpdateUserShopReq
@@ -105,7 +95,6 @@ type (
 	UserAddress              = pb.UserAddress
 	UserAuth                 = pb.UserAuth
 	UserContact              = pb.UserContact
-	UserFollow               = pb.UserFollow
 	UserShop                 = pb.UserShop
 	UserSponsor              = pb.UserSponsor
 	WXMiniRegisterReq        = pb.WXMiniRegisterReq

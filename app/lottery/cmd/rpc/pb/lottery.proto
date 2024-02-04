@@ -24,6 +24,7 @@ message Lottery {
   int64 isAnnounced = 12;
   int64 createTime = 13;
   int64 updateTime = 14;
+  int64 SponsorId = 15;
 }
 
 message AddLotteryReq {
@@ -36,6 +37,7 @@ message AddLotteryReq {
   int64 announceType = 8;
   repeated Prize prizes = 9; //奖品 支持多个
   int64 announceTime = 10;
+  int64 SponsorId = 11;
 }
 
 message AddLotteryResp {
@@ -55,6 +57,7 @@ message UpdateLotteryReq {
   int64 announceType = 10;
   int64 announceTime = 11;
   int64 isAnnounced = 12;
+  int64 SponsorId = 13;
 }
 
 message UpdateLotteryResp {
@@ -93,6 +96,7 @@ message SearchLotteryReq {
   int64 announceType = 15;
   int64 announceTime = 16;
   int64 isAnnounced = 17;
+  int64 SponsorId = 18;// 赞助商id
 }
 
 message SearchLotteryResp {
@@ -120,6 +124,7 @@ message LotteryDetailResp {
 
 message LotterySponsorReq {
   int64 Id = 1; // 抽奖id
+  int64 SponsorId = 2; // 赞助商id
 }
 
 message LotterySponsorResp {
@@ -143,6 +148,23 @@ message CheckUserCreatedLotteryReq {
 message CheckUserCreatedLotteryResp {
   int64 IsCreated = 1; // 用户是否发起过抽奖：0否; 1是
 }
+
+message CheckUserCreatedLotteryAndTodayReq {
+  int64 UserId = 1; // 用户id
+}
+
+message CheckUserCreatedLotteryAndTodayResp {
+  int64 Yes = 1; // 用户是否在今天之内发布并有超过五个人参加：0否; 1是
+}
+
+message CheckUserCreatedLotteryAndThisWeekReq {
+  int64 UserId = 1; // 用户id
+}
+
+message CheckUserCreatedLotteryAndThisWeekResp {
+  int64 Yes = 1; // 用户是否在这周之内发起并有超过十个人参加：0否; 1是
+}
+
 
 //--------------------------------奖品表--------------------------------
 message Prize {
@@ -306,6 +328,8 @@ service lottery{
   rpc LotterySponsor(LotterySponsorReq) returns (LotterySponsorResp);
   rpc AnnounceLottery(AnnounceLotteryReq) returns (AnnounceLotteryResp);
   rpc CheckUserCreatedLottery(CheckUserCreatedLotteryReq) returns (CheckUserCreatedLotteryResp);
+  rpc CheckUserCreatedLotteryAndToday(CheckUserCreatedLotteryAndTodayReq) returns (CheckUserCreatedLotteryAndTodayResp);
+  rpc CheckUserCreatedLotteryAndThisWeek(CheckUserCreatedLotteryAndThisWeekReq) returns (CheckUserCreatedLotteryAndThisWeekResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);

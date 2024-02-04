@@ -361,6 +361,11 @@
           "format": "int64",
           "description": "领奖截止时间"
         },
+        "sponsorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 赞助商Id"
+        },
         "prizes": {
           "type": "array",
           "items": {
@@ -378,6 +383,7 @@
         "joinNumber",
         "introduce",
         "awardDeadline",
+        "sponsorId",
         "prizes"
       ]
     },
@@ -488,6 +494,11 @@
           "type": "integer",
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
+        },
+        "sponsorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 赞助商Id"
         }
       },
       "title": "Lottery",
@@ -503,7 +514,8 @@
         "isSelected",
         "announceType",
         "announceTime",
-        "isAnnounced"
+        "isAnnounced",
+        "sponsorId"
       ]
     },
     "LotteryDetailReq": {
