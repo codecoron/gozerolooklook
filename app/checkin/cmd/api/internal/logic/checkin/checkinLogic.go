@@ -26,7 +26,6 @@ func NewCheckinLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckinLo
 }
 
 func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, err error) {
-	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	record, err := l.svcCtx.CheckinRpc.UpdateCheckinRecord(l.ctx, &checkin.UpdateCheckinRecordReq{
 		UserId: userId,

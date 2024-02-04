@@ -22,6 +22,7 @@ type (
 		FindOneByUserId(ctx context.Context, userId int64) (*TaskProgress, error)
 		InsertByUserId(ctx context.Context, data *TaskProgress) (sql.Result, error)
 		TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *TaskProgress) error
+		UpdateByUserId(ctx context.Context, data *TaskProgress) error
 	}
 
 	customTaskProgressModel struct {
@@ -60,6 +61,15 @@ func (m *defaultTaskProgressModel) TransUpdateByUserId(ctx context.Context, sess
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, taskProgressRowsWithPlaceHolder)
 		return session.ExecCtx(ctx, query, data.UserId, data.IsParticipatedLottery, data.IsInitiatedLottery, data.IsSubCheckin, data.Id)
+	}, checkinTaskProgressUserIdKey)
+	return err
+}
+
+func (m *defaultTaskProgressModel) UpdateByUserId(ctx context.Context, data *TaskProgress) error {
+	checkinTaskProgressUserIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskProgressUserIdPrefix, data.UserId)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, taskProgressRowsWithPlaceHolder)
+		return conn.ExecCtx(ctx, query, data.UserId, data.IsParticipatedLottery, data.IsInitiatedLottery, data.IsSubCheckin, data.Id)
 	}, checkinTaskProgressUserIdKey)
 	return err
 }

@@ -7,7 +7,6 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/app/checkin/cmd/rpc/internal/svc"
 	"looklook/app/checkin/cmd/rpc/pb"
 	"looklook/app/checkin/model"
@@ -34,6 +33,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 	// todo: 调用其他服务，查询任务进度
 	progress := &model.TaskProgress{}
 	out := pb.GetTaskProgressResp{}
+	logic := NewAddTaskRecordLogic(l.ctx, l.svcCtx)
 	getProgress, err := l.svcCtx.TaskProgressModel.FindOneByUserId(l.ctx, in.UserId)
 	if err == sqlc.ErrNotFound {
 		// 没查询到，新增数据
@@ -66,10 +66,11 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				}
 				// 如果返回1，说明用户已完成该任务，增加任务记录，返回0不做处理
 				if check.Participated == 1 {
-					_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+					addTaskRecord := &pb.AddTaskRecordReq{
 						UserId: in.UserId,
 						TaskId: 1,
-					})
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
 					if err != nil {
 						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 1, err: %v", err)
 					}
@@ -85,6 +86,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord, err: %v", err)
 			}
 			// todo 任务二：订阅签到提醒
+
 			// 任务三：发起任意抽奖
 			_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 3)
 			if err == sqlc.ErrNotFound {
@@ -97,12 +99,13 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				}
 				// 如果返回1，说明用户已完成该任务，增加任务记录，返回0不做处理
 				if check.IsCreated == 1 {
-					_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+					addTaskRecord := &pb.AddTaskRecordReq{
 						UserId: in.UserId,
 						TaskId: 3,
-					})
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
 					if err != nil {
-						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord, err: %v", err)
+						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 3, err: %v", err)
 					}
 					// 修改task_progress记录
 					progress.IsInitiatedLottery = 1
@@ -129,10 +132,11 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			}
 			logx.Error("day,week num :", check.DayCount, check.WeekCount)
 			if check.DayCount >= 3 {
-				_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+				addTaskRecord := &pb.AddTaskRecordReq{
 					UserId: in.UserId,
 					TaskId: 4,
-				})
+				}
+				_, err := logic.AddTaskRecord(addTaskRecord)
 				if err != nil {
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 4, err: %v", err)
 				}
@@ -156,10 +160,11 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to GetSelectedLotteryStatistic, err: %v", err)
 				}
 				if check.DayCount >= 3 {
-					_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+					addTaskRecord := &pb.AddTaskRecordReq{
 						UserId: in.UserId,
 						TaskId: 4,
-					})
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
 					if err != nil {
 						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 4, err: %v", err)
 					}
@@ -187,10 +192,11 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			}
 			logx.Error("day,week num :", check.DayCount, check.WeekCount)
 			if check.WeekCount >= 30 {
-				_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+				addTaskRecord := &pb.AddTaskRecordReq{
 					UserId: in.UserId,
 					TaskId: 7,
-				})
+				}
+				_, err := logic.AddTaskRecord(addTaskRecord)
 				if err != nil {
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 7, err: %v", err)
 				}
@@ -207,7 +213,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			// 获取本周的开始时间和结束时间
 			startOfWeek := now.AddDate(0, 0, -int(now.Weekday())).Truncate(24 * time.Hour)
 			endOfWeek := startOfWeek.AddDate(0, 0, 7)
-			// 判断 taskRecord.CreateTime 是否是今天
+			// 判断 taskRecord.CreateTime 是否是本周之内
 			if !taskRecord.CreateTime.After(startOfWeek) || !taskRecord.CreateTime.Before(endOfWeek) {
 				// 如果不是本周，判断用户本周是否完成
 				check, err := l.svcCtx.LotteryRpc.GetSelectedLotteryStatistic(l.ctx, &lottery.GetSelectedLotteryStatisticReq{
@@ -217,10 +223,11 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to GetSelectedLotteryStatistic, err: %v", err)
 				}
 				if check.WeekCount >= 30 {
-					_, err := l.svcCtx.CheckinRpc.AddTaskRecord(l.ctx, &checkin.AddTaskRecordReq{
+					addTaskRecord := &pb.AddTaskRecordReq{
 						UserId: in.UserId,
 						TaskId: 7,
-					})
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
 					if err != nil {
 						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 7, err: %v", err)
 					}

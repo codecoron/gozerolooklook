@@ -48,6 +48,9 @@ type (
 	GetTasksByIdResp              = pb.GetTasksByIdResp
 	Integral                      = pb.Integral
 	IntegralRecord                = pb.IntegralRecord
+	NoticeWishCheckinData         = pb.NoticeWishCheckinData
+	NoticeWishCheckinReq          = pb.NoticeWishCheckinReq
+	NoticeWishCheckinResp         = pb.NoticeWishCheckinResp
 	SearchIntegralRecordReq       = pb.SearchIntegralRecordReq
 	SearchIntegralRecordResp      = pb.SearchIntegralRecordResp
 	SearchTaskRecordReq           = pb.SearchTaskRecordReq
@@ -63,17 +66,19 @@ type (
 	UpdateIntegralRecordResp      = pb.UpdateIntegralRecordResp
 	UpdateIntegralReq             = pb.UpdateIntegralReq
 	UpdateIntegralResp            = pb.UpdateIntegralResp
+	UpdateSubReq                  = pb.UpdateSubReq
+	UpdateSubResp                 = pb.UpdateSubResp
 	UpdateTaskRecordReq           = pb.UpdateTaskRecordReq
 	UpdateTaskRecordResp          = pb.UpdateTaskRecordResp
 	UpdateTasksReq                = pb.UpdateTasksReq
 	UpdateTasksResp               = pb.UpdateTasksResp
 
 	Checkin interface {
-		// -----------------------checkinRecord-----------------------
+		// -----------------------checkinRecord--------------------
 		AddCheckinRecord(ctx context.Context, in *AddCheckinRecordReq, opts ...grpc.CallOption) (*AddCheckinRecordResp, error)
 		UpdateCheckinRecord(ctx context.Context, in *UpdateCheckinRecordReq, opts ...grpc.CallOption) (*UpdateCheckinRecordResp, error)
 		GetCheckinRecordByUserId(ctx context.Context, in *GetCheckinRecordByUserIdReq, opts ...grpc.CallOption) (*GetCheckinRecordByUserIdResp, error)
-		// -----------------------integralRecord-----------------------
+		// -----------------------integralRecord-------------------
 		AddIntegral(ctx context.Context, in *AddIntegralReq, opts ...grpc.CallOption) (*AddIntegralResp, error)
 		AddIntegralRecord(ctx context.Context, in *AddIntegralRecordReq, opts ...grpc.CallOption) (*AddIntegralRecordResp, error)
 		UpdateIntegralRecord(ctx context.Context, in *UpdateIntegralRecordReq, opts ...grpc.CallOption) (*UpdateIntegralRecordResp, error)
@@ -88,13 +93,17 @@ type (
 		GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error)
 		GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error)
 		SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error)
-		GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error)
-		// -----------------------tasks-----------------------
+		// -----------------------tasks-----------------------------
 		AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error)
 		UpdateTasks(ctx context.Context, in *UpdateTasksReq, opts ...grpc.CallOption) (*UpdateTasksResp, error)
 		DelTasks(ctx context.Context, in *DelTasksReq, opts ...grpc.CallOption) (*DelTasksResp, error)
 		GetTasksById(ctx context.Context, in *GetTasksByIdReq, opts ...grpc.CallOption) (*GetTasksByIdResp, error)
 		SearchTasks(ctx context.Context, in *SearchTasksReq, opts ...grpc.CallOption) (*SearchTasksResp, error)
+		// -----------------------taskProgress----------------------
+		GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error)
+		UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error)
+		// -----------------------others----------------------
+		NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error)
 	}
 
 	defaultCheckin struct {
@@ -108,7 +117,7 @@ func NewCheckin(cli zrpc.Client) Checkin {
 	}
 }
 
-// -----------------------checkinRecord-----------------------
+// -----------------------checkinRecord--------------------
 func (m *defaultCheckin) AddCheckinRecord(ctx context.Context, in *AddCheckinRecordReq, opts ...grpc.CallOption) (*AddCheckinRecordResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.AddCheckinRecord(ctx, in, opts...)
@@ -124,7 +133,7 @@ func (m *defaultCheckin) GetCheckinRecordByUserId(ctx context.Context, in *GetCh
 	return client.GetCheckinRecordByUserId(ctx, in, opts...)
 }
 
-// -----------------------integralRecord-----------------------
+// -----------------------integralRecord-------------------
 func (m *defaultCheckin) AddIntegral(ctx context.Context, in *AddIntegralReq, opts ...grpc.CallOption) (*AddIntegralResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.AddIntegral(ctx, in, opts...)
@@ -191,12 +200,7 @@ func (m *defaultCheckin) SearchTaskRecord(ctx context.Context, in *SearchTaskRec
 	return client.SearchTaskRecord(ctx, in, opts...)
 }
 
-func (m *defaultCheckin) GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error) {
-	client := pb.NewCheckinClient(m.cli.Conn())
-	return client.GetTaskProgress(ctx, in, opts...)
-}
-
-// -----------------------tasks-----------------------
+// -----------------------tasks-----------------------------
 func (m *defaultCheckin) AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.AddTasks(ctx, in, opts...)
@@ -220,4 +224,21 @@ func (m *defaultCheckin) GetTasksById(ctx context.Context, in *GetTasksByIdReq, 
 func (m *defaultCheckin) SearchTasks(ctx context.Context, in *SearchTasksReq, opts ...grpc.CallOption) (*SearchTasksResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.SearchTasks(ctx, in, opts...)
+}
+
+// -----------------------taskProgress----------------------
+func (m *defaultCheckin) GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.GetTaskProgress(ctx, in, opts...)
+}
+
+func (m *defaultCheckin) UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.UpdateSub(ctx, in, opts...)
+}
+
+// -----------------------others----------------------
+func (m *defaultCheckin) NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.NoticeWishCheckin(ctx, in, opts...)
 }

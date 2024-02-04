@@ -56,10 +56,25 @@ type Intergral struct {
 	Integral int64 `json:"integral"` //心愿值
 }
 
+type TaskProgress struct {
+	Id                    int64 `json:"id"`
+	UserId                int64 `json:"userId"`
+	IsParticipatedLottery int64 `json:"isParticipatedLottery"`
+	IsInitiatedLottery    int64 `json:"isInitiatedLottery"`
+	IsSubCheckin          int64 `json:"isSubCheckin"`
+}
+
 type Tasks struct {
 	Id         int64  `json:"id"`
 	Type       int64  `json:"type"`
 	Content    string `json:"content"`
 	Integral   int64  `json:"integral"`
 	IsFinished int64  `json:"isFinished"`
+}
+
+type UpdateSubReq struct {
+	State int64 `json:"state"`
+}
+
+type UpdateSubResp struct {
 }
