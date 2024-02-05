@@ -168,6 +168,14 @@ message GetTaskProgressResp {
   int64 dayCount = 1;
   int64 weekCount = 2;
 }
+
+message UpdateSubReq {
+  int64 userId = 1;
+  int64 state = 2;
+}
+
+message UpdateSubResp {
+}
 //--------------------------------taskRecord--------------------------------
 message TaskRecord {
   int64 id = 1; //id
@@ -290,6 +298,21 @@ message SearchTasksResp {
   repeated Tasks tasks = 1; //tasks
 }
 
+//--------------------------------others--------------------------------
+message NoticeWishCheckinData{
+  int64 userId=1; //用户
+  int64 reward=2; //心愿值奖励
+  int64 accumulate=3; //累计次数
+}
+
+message NoticeWishCheckinReq{
+
+}
+
+message NoticeWishCheckinResp{
+  repeated NoticeWishCheckinData wishCheckinDatas=1;
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------
@@ -297,11 +320,11 @@ message SearchTasksResp {
 
 service checkin{
 
-  //-----------------------checkinRecord-----------------------
+  //-----------------------checkinRecord--------------------
   rpc AddCheckinRecord(AddCheckinRecordReq) returns (AddCheckinRecordResp);
   rpc UpdateCheckinRecord(UpdateCheckinRecordReq) returns (UpdateCheckinRecordResp);
   rpc GetCheckinRecordByUserId(GetCheckinRecordByUserIdReq) returns (GetCheckinRecordByUserIdResp);
-  //-----------------------integralRecord-----------------------
+  //-----------------------integralRecord-------------------
   rpc AddIntegral(AddIntegralReq) returns (AddIntegralResp);
   rpc AddIntegralRecord(AddIntegralRecordReq) returns (AddIntegralRecordResp);
   rpc UpdateIntegralRecord(UpdateIntegralRecordReq) returns (UpdateIntegralRecordResp);
@@ -316,13 +339,16 @@ service checkin{
   rpc GetTaskRecordById(GetTaskRecordByIdReq) returns (GetTaskRecordByIdResp);
   rpc GetTaskRecordByUserId(GetTaskRecordByUserIdReq) returns (GetTaskRecordByUserIdResp);
   rpc SearchTaskRecord(SearchTaskRecordReq) returns (SearchTaskRecordResp);
-  rpc GetTaskProgress(GetTaskProgressReq) returns (GetTaskProgressResp);
-  //-----------------------tasks-----------------------
+  //-----------------------tasks-----------------------------
   rpc AddTasks(AddTasksReq) returns (AddTasksResp);
   rpc UpdateTasks(UpdateTasksReq) returns (UpdateTasksResp);
   rpc DelTasks(DelTasksReq) returns (DelTasksResp);
   rpc GetTasksById(GetTasksByIdReq) returns (GetTasksByIdResp);
   rpc SearchTasks(SearchTasksReq) returns (SearchTasksResp);
-
+  //-----------------------taskProgress----------------------
+  rpc GetTaskProgress(GetTaskProgressReq) returns (GetTaskProgressResp);
+  rpc UpdateSub(UpdateSubReq) returns (UpdateSubResp);
+  //-----------------------others----------------------
+  rpc NoticeWishCheckin(NoticeWishCheckinReq) returns (NoticeWishCheckinResp);
 }
 

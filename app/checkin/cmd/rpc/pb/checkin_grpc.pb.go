@@ -35,23 +35,25 @@ const (
 	Checkin_GetTaskRecordById_FullMethodName         = "/pb.checkin/GetTaskRecordById"
 	Checkin_GetTaskRecordByUserId_FullMethodName     = "/pb.checkin/GetTaskRecordByUserId"
 	Checkin_SearchTaskRecord_FullMethodName          = "/pb.checkin/SearchTaskRecord"
-	Checkin_GetTaskProgress_FullMethodName           = "/pb.checkin/GetTaskProgress"
 	Checkin_AddTasks_FullMethodName                  = "/pb.checkin/AddTasks"
 	Checkin_UpdateTasks_FullMethodName               = "/pb.checkin/UpdateTasks"
 	Checkin_DelTasks_FullMethodName                  = "/pb.checkin/DelTasks"
 	Checkin_GetTasksById_FullMethodName              = "/pb.checkin/GetTasksById"
 	Checkin_SearchTasks_FullMethodName               = "/pb.checkin/SearchTasks"
+	Checkin_GetTaskProgress_FullMethodName           = "/pb.checkin/GetTaskProgress"
+	Checkin_UpdateSub_FullMethodName                 = "/pb.checkin/UpdateSub"
+	Checkin_NoticeWishCheckin_FullMethodName         = "/pb.checkin/NoticeWishCheckin"
 )
 
 // CheckinClient is the client API for Checkin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CheckinClient interface {
-	// -----------------------checkinRecord-----------------------
+	// -----------------------checkinRecord--------------------
 	AddCheckinRecord(ctx context.Context, in *AddCheckinRecordReq, opts ...grpc.CallOption) (*AddCheckinRecordResp, error)
 	UpdateCheckinRecord(ctx context.Context, in *UpdateCheckinRecordReq, opts ...grpc.CallOption) (*UpdateCheckinRecordResp, error)
 	GetCheckinRecordByUserId(ctx context.Context, in *GetCheckinRecordByUserIdReq, opts ...grpc.CallOption) (*GetCheckinRecordByUserIdResp, error)
-	// -----------------------integralRecord-----------------------
+	// -----------------------integralRecord-------------------
 	AddIntegral(ctx context.Context, in *AddIntegralReq, opts ...grpc.CallOption) (*AddIntegralResp, error)
 	AddIntegralRecord(ctx context.Context, in *AddIntegralRecordReq, opts ...grpc.CallOption) (*AddIntegralRecordResp, error)
 	UpdateIntegralRecord(ctx context.Context, in *UpdateIntegralRecordReq, opts ...grpc.CallOption) (*UpdateIntegralRecordResp, error)
@@ -66,13 +68,17 @@ type CheckinClient interface {
 	GetTaskRecordById(ctx context.Context, in *GetTaskRecordByIdReq, opts ...grpc.CallOption) (*GetTaskRecordByIdResp, error)
 	GetTaskRecordByUserId(ctx context.Context, in *GetTaskRecordByUserIdReq, opts ...grpc.CallOption) (*GetTaskRecordByUserIdResp, error)
 	SearchTaskRecord(ctx context.Context, in *SearchTaskRecordReq, opts ...grpc.CallOption) (*SearchTaskRecordResp, error)
-	GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error)
-	// -----------------------tasks-----------------------
+	// -----------------------tasks-----------------------------
 	AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error)
 	UpdateTasks(ctx context.Context, in *UpdateTasksReq, opts ...grpc.CallOption) (*UpdateTasksResp, error)
 	DelTasks(ctx context.Context, in *DelTasksReq, opts ...grpc.CallOption) (*DelTasksResp, error)
 	GetTasksById(ctx context.Context, in *GetTasksByIdReq, opts ...grpc.CallOption) (*GetTasksByIdResp, error)
 	SearchTasks(ctx context.Context, in *SearchTasksReq, opts ...grpc.CallOption) (*SearchTasksResp, error)
+	// -----------------------taskProgress----------------------
+	GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error)
+	UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error)
+	// -----------------------others----------------------
+	NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error)
 }
 
 type checkinClient struct {
@@ -227,15 +233,6 @@ func (c *checkinClient) SearchTaskRecord(ctx context.Context, in *SearchTaskReco
 	return out, nil
 }
 
-func (c *checkinClient) GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error) {
-	out := new(GetTaskProgressResp)
-	err := c.cc.Invoke(ctx, Checkin_GetTaskProgress_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *checkinClient) AddTasks(ctx context.Context, in *AddTasksReq, opts ...grpc.CallOption) (*AddTasksResp, error) {
 	out := new(AddTasksResp)
 	err := c.cc.Invoke(ctx, Checkin_AddTasks_FullMethodName, in, out, opts...)
@@ -281,15 +278,42 @@ func (c *checkinClient) SearchTasks(ctx context.Context, in *SearchTasksReq, opt
 	return out, nil
 }
 
+func (c *checkinClient) GetTaskProgress(ctx context.Context, in *GetTaskProgressReq, opts ...grpc.CallOption) (*GetTaskProgressResp, error) {
+	out := new(GetTaskProgressResp)
+	err := c.cc.Invoke(ctx, Checkin_GetTaskProgress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *checkinClient) UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error) {
+	out := new(UpdateSubResp)
+	err := c.cc.Invoke(ctx, Checkin_UpdateSub_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *checkinClient) NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error) {
+	out := new(NoticeWishCheckinResp)
+	err := c.cc.Invoke(ctx, Checkin_NoticeWishCheckin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CheckinServer is the server API for Checkin service.
 // All implementations must embed UnimplementedCheckinServer
 // for forward compatibility
 type CheckinServer interface {
-	// -----------------------checkinRecord-----------------------
+	// -----------------------checkinRecord--------------------
 	AddCheckinRecord(context.Context, *AddCheckinRecordReq) (*AddCheckinRecordResp, error)
 	UpdateCheckinRecord(context.Context, *UpdateCheckinRecordReq) (*UpdateCheckinRecordResp, error)
 	GetCheckinRecordByUserId(context.Context, *GetCheckinRecordByUserIdReq) (*GetCheckinRecordByUserIdResp, error)
-	// -----------------------integralRecord-----------------------
+	// -----------------------integralRecord-------------------
 	AddIntegral(context.Context, *AddIntegralReq) (*AddIntegralResp, error)
 	AddIntegralRecord(context.Context, *AddIntegralRecordReq) (*AddIntegralRecordResp, error)
 	UpdateIntegralRecord(context.Context, *UpdateIntegralRecordReq) (*UpdateIntegralRecordResp, error)
@@ -304,13 +328,17 @@ type CheckinServer interface {
 	GetTaskRecordById(context.Context, *GetTaskRecordByIdReq) (*GetTaskRecordByIdResp, error)
 	GetTaskRecordByUserId(context.Context, *GetTaskRecordByUserIdReq) (*GetTaskRecordByUserIdResp, error)
 	SearchTaskRecord(context.Context, *SearchTaskRecordReq) (*SearchTaskRecordResp, error)
-	GetTaskProgress(context.Context, *GetTaskProgressReq) (*GetTaskProgressResp, error)
-	// -----------------------tasks-----------------------
+	// -----------------------tasks-----------------------------
 	AddTasks(context.Context, *AddTasksReq) (*AddTasksResp, error)
 	UpdateTasks(context.Context, *UpdateTasksReq) (*UpdateTasksResp, error)
 	DelTasks(context.Context, *DelTasksReq) (*DelTasksResp, error)
 	GetTasksById(context.Context, *GetTasksByIdReq) (*GetTasksByIdResp, error)
 	SearchTasks(context.Context, *SearchTasksReq) (*SearchTasksResp, error)
+	// -----------------------taskProgress----------------------
+	GetTaskProgress(context.Context, *GetTaskProgressReq) (*GetTaskProgressResp, error)
+	UpdateSub(context.Context, *UpdateSubReq) (*UpdateSubResp, error)
+	// -----------------------others----------------------
+	NoticeWishCheckin(context.Context, *NoticeWishCheckinReq) (*NoticeWishCheckinResp, error)
 	mustEmbedUnimplementedCheckinServer()
 }
 
@@ -366,9 +394,6 @@ func (UnimplementedCheckinServer) GetTaskRecordByUserId(context.Context, *GetTas
 func (UnimplementedCheckinServer) SearchTaskRecord(context.Context, *SearchTaskRecordReq) (*SearchTaskRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTaskRecord not implemented")
 }
-func (UnimplementedCheckinServer) GetTaskProgress(context.Context, *GetTaskProgressReq) (*GetTaskProgressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTaskProgress not implemented")
-}
 func (UnimplementedCheckinServer) AddTasks(context.Context, *AddTasksReq) (*AddTasksResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTasks not implemented")
 }
@@ -383,6 +408,15 @@ func (UnimplementedCheckinServer) GetTasksById(context.Context, *GetTasksByIdReq
 }
 func (UnimplementedCheckinServer) SearchTasks(context.Context, *SearchTasksReq) (*SearchTasksResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTasks not implemented")
+}
+func (UnimplementedCheckinServer) GetTaskProgress(context.Context, *GetTaskProgressReq) (*GetTaskProgressResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaskProgress not implemented")
+}
+func (UnimplementedCheckinServer) UpdateSub(context.Context, *UpdateSubReq) (*UpdateSubResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSub not implemented")
+}
+func (UnimplementedCheckinServer) NoticeWishCheckin(context.Context, *NoticeWishCheckinReq) (*NoticeWishCheckinResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NoticeWishCheckin not implemented")
 }
 func (UnimplementedCheckinServer) mustEmbedUnimplementedCheckinServer() {}
 
@@ -685,24 +719,6 @@ func _Checkin_SearchTaskRecord_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Checkin_GetTaskProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTaskProgressReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CheckinServer).GetTaskProgress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Checkin_GetTaskProgress_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CheckinServer).GetTaskProgress(ctx, req.(*GetTaskProgressReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Checkin_AddTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddTasksReq)
 	if err := dec(in); err != nil {
@@ -793,6 +809,60 @@ func _Checkin_SearchTasks_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Checkin_GetTaskProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTaskProgressReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CheckinServer).GetTaskProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Checkin_GetTaskProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CheckinServer).GetTaskProgress(ctx, req.(*GetTaskProgressReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Checkin_UpdateSub_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSubReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CheckinServer).UpdateSub(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Checkin_UpdateSub_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CheckinServer).UpdateSub(ctx, req.(*UpdateSubReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Checkin_NoticeWishCheckin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NoticeWishCheckinReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CheckinServer).NoticeWishCheckin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Checkin_NoticeWishCheckin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CheckinServer).NoticeWishCheckin(ctx, req.(*NoticeWishCheckinReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Checkin_ServiceDesc is the grpc.ServiceDesc for Checkin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -865,10 +935,6 @@ var Checkin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Checkin_SearchTaskRecord_Handler,
 		},
 		{
-			MethodName: "GetTaskProgress",
-			Handler:    _Checkin_GetTaskProgress_Handler,
-		},
-		{
 			MethodName: "AddTasks",
 			Handler:    _Checkin_AddTasks_Handler,
 		},
@@ -887,6 +953,18 @@ var Checkin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchTasks",
 			Handler:    _Checkin_SearchTasks_Handler,
+		},
+		{
+			MethodName: "GetTaskProgress",
+			Handler:    _Checkin_GetTaskProgress_Handler,
+		},
+		{
+			MethodName: "UpdateSub",
+			Handler:    _Checkin_UpdateSub_Handler,
+		},
+		{
+			MethodName: "NoticeWishCheckin",
+			Handler:    _Checkin_NoticeWishCheckin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

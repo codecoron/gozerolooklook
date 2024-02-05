@@ -127,6 +127,34 @@
           "checkin"
         ]
       }
+    },
+    "checkin/v1/checkin/updateSub": {
+      "post": {
+        "summary": "改变订阅签到状态",
+        "operationId": "UpdateSub",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateSubResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateSubReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "checkin"
+        ]
+      }
     }
   },
   "definitions": {
@@ -256,11 +284,21 @@
           "items": {
             "$ref": "#/definitions/Tasks"
           }
+        },
+        "dayCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "weekCount": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "GetTasksResp",
       "required": [
-        "tasksList"
+        "tasksList",
+        "dayCount",
+        "weekCount"
       ]
     },
     "IntegralRecord": {
@@ -318,6 +356,39 @@
         "integral"
       ]
     },
+    "TaskProgress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isParticipatedLottery": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isInitiatedLottery": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isSubCheckin": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "TaskProgress",
+      "required": [
+        "id",
+        "userId",
+        "isParticipatedLottery",
+        "isInitiatedLottery",
+        "isSubCheckin"
+      ]
+    },
     "Tasks": {
       "type": "object",
       "properties": {
@@ -349,6 +420,23 @@
         "integral",
         "isFinished"
       ]
+    },
+    "UpdateSubReq": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UpdateSubReq",
+      "required": [
+        "state"
+      ]
+    },
+    "UpdateSubResp": {
+      "type": "object",
+      "title": "UpdateSubResp"
     }
   },
   "securityDefinitions": {

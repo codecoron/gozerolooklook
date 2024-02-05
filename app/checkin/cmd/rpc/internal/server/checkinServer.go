@@ -22,7 +22,7 @@ func NewCheckinServer(svcCtx *svc.ServiceContext) *CheckinServer {
 	}
 }
 
-// -----------------------checkinRecord-----------------------
+// -----------------------checkinRecord--------------------
 func (s *CheckinServer) AddCheckinRecord(ctx context.Context, in *pb.AddCheckinRecordReq) (*pb.AddCheckinRecordResp, error) {
 	l := logic.NewAddCheckinRecordLogic(ctx, s.svcCtx)
 	return l.AddCheckinRecord(in)
@@ -38,7 +38,7 @@ func (s *CheckinServer) GetCheckinRecordByUserId(ctx context.Context, in *pb.Get
 	return l.GetCheckinRecordByUserId(in)
 }
 
-// -----------------------integralRecord-----------------------
+// -----------------------integralRecord-------------------
 func (s *CheckinServer) AddIntegral(ctx context.Context, in *pb.AddIntegralReq) (*pb.AddIntegralResp, error) {
 	l := logic.NewAddIntegralLogic(ctx, s.svcCtx)
 	return l.AddIntegral(in)
@@ -105,12 +105,7 @@ func (s *CheckinServer) SearchTaskRecord(ctx context.Context, in *pb.SearchTaskR
 	return l.SearchTaskRecord(in)
 }
 
-func (s *CheckinServer) GetTaskProgress(ctx context.Context, in *pb.GetTaskProgressReq) (*pb.GetTaskProgressResp, error) {
-	l := logic.NewGetTaskProgressLogic(ctx, s.svcCtx)
-	return l.GetTaskProgress(in)
-}
-
-// -----------------------tasks-----------------------
+// -----------------------tasks-----------------------------
 func (s *CheckinServer) AddTasks(ctx context.Context, in *pb.AddTasksReq) (*pb.AddTasksResp, error) {
 	l := logic.NewAddTasksLogic(ctx, s.svcCtx)
 	return l.AddTasks(in)
@@ -134,4 +129,21 @@ func (s *CheckinServer) GetTasksById(ctx context.Context, in *pb.GetTasksByIdReq
 func (s *CheckinServer) SearchTasks(ctx context.Context, in *pb.SearchTasksReq) (*pb.SearchTasksResp, error) {
 	l := logic.NewSearchTasksLogic(ctx, s.svcCtx)
 	return l.SearchTasks(in)
+}
+
+// -----------------------taskProgress----------------------
+func (s *CheckinServer) GetTaskProgress(ctx context.Context, in *pb.GetTaskProgressReq) (*pb.GetTaskProgressResp, error) {
+	l := logic.NewGetTaskProgressLogic(ctx, s.svcCtx)
+	return l.GetTaskProgress(in)
+}
+
+func (s *CheckinServer) UpdateSub(ctx context.Context, in *pb.UpdateSubReq) (*pb.UpdateSubResp, error) {
+	l := logic.NewUpdateSubLogic(ctx, s.svcCtx)
+	return l.UpdateSub(in)
+}
+
+// -----------------------others----------------------
+func (s *CheckinServer) NoticeWishCheckin(ctx context.Context, in *pb.NoticeWishCheckinReq) (*pb.NoticeWishCheckinResp, error) {
+	l := logic.NewNoticeWishCheckinLogic(ctx, s.svcCtx)
+	return l.NoticeWishCheckin(in)
 }
