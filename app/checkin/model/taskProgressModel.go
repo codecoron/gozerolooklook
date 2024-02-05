@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -23,6 +24,7 @@ type (
 		InsertByUserId(ctx context.Context, data *TaskProgress) (sql.Result, error)
 		TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *TaskProgress) error
 		UpdateByUserId(ctx context.Context, data *TaskProgress) error
+		FindAllSubId(ctx context.Context) ([]int64, error)
 	}
 
 	customTaskProgressModel struct {
@@ -72,6 +74,26 @@ func (m *defaultTaskProgressModel) UpdateByUserId(ctx context.Context, data *Tas
 		return conn.ExecCtx(ctx, query, data.UserId, data.IsParticipatedLottery, data.IsInitiatedLottery, data.IsSubCheckin, data.Id)
 	}, checkinTaskProgressUserIdKey)
 	return err
+}
+
+func (m *defaultTaskProgressModel) FindAllSubId(ctx context.Context) ([]int64, error) {
+	builder := squirrel.Select("user_id").
+		From(m.table).
+		Where("is_sub_checkin = 1")
+
+	query, values, err := builder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var userIDs []int64
+	err = m.QueryRowsNoCacheCtx(ctx, &userIDs, query, values...)
+	switch err {
+	case nil:
+		return userIDs, nil
+	default:
+		return nil, err
+	}
 }
 
 // NewTaskProgressModel returns a model for the database table.

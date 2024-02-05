@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"looklook/common/xerr"
 
 	"looklook/app/checkin/cmd/rpc/internal/svc"
@@ -34,6 +35,20 @@ func (l *UpdateSubLogic) UpdateSub(in *pb.UpdateSubReq) (*pb.UpdateSubResp, erro
 	err = l.svcCtx.TaskProgressModel.UpdateByUserId(l.ctx, getProgress)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update taskProgress data : %+v , err: %v", getProgress, err)
+	}
+	if in.State == 1 {
+		_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 2)
+		if err == sqlc.ErrNotFound {
+			addTaskRecord := &pb.AddTaskRecordReq{
+				UserId: in.UserId,
+				TaskId: 2,
+			}
+			logic := NewAddTaskRecordLogic(l.ctx, l.svcCtx)
+			_, err := logic.AddTaskRecord(addTaskRecord)
+			if err != nil {
+				return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 2, err: %v", err)
+			}
+		}
 	}
 	return &pb.UpdateSubResp{}, nil
 }

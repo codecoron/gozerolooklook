@@ -36,7 +36,7 @@ service checkin {
 	@handler ClaimReward
 	post /checkin/claimReward (ClaimRewardReq) returns (ClaimRewardResp)
 
-	@doc "改变签到状态"
+	@doc "改变订阅签到状态"
 	@handler UpdateSub
 	post /checkin/updateSub (UpdateSubReq) returns (UpdateSubResp)
 }

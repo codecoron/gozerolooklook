@@ -83,11 +83,13 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				}
 			} else if err != nil {
 				// 其他错误
-				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord, err: %v", err)
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 1, err: %v", err)
 			}
-			// todo 任务二：订阅签到提醒
+		}
+		// 任务二：订阅签到提醒（UpdateSub中完成）
 
-			// 任务三：发起任意抽奖
+		// 任务三：发起任意抽奖
+		if progress.IsInitiatedLottery != 1 {
 			_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 3)
 			if err == sqlc.ErrNotFound {
 				// 没查询到数据，判断用户是否完成
@@ -119,6 +121,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 3, err: %v", err)
 			}
 		}
+
 		// 每日任务（首先查询首先查询表task_record中有无数据，如果有并且是今天说明完成，不是今天的话就需要判断）
 		// 任务四：参加3个首页抽奖
 		taskRecord, err := l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 4)
@@ -145,7 +148,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			out.DayCount = check.DayCount
 		} else if err != nil {
 			// 其他错误
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord, err: %v", err)
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 4, err: %v", err)
 		} else {
 			// 查到数据了
 			// 获取今天的日期
@@ -177,7 +180,54 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			}
 		}
 		// todo 任务五：观看完整视频1次
-		// todo 任务六：发起抽奖并超过5个人参加
+		// 任务六：发起抽奖并超过5个人参加
+		taskRecord, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 6)
+		if err == sqlc.ErrNotFound {
+			// 没查询到任何一条数据，判断用户今天是否完成
+			check, err := l.svcCtx.LotteryRpc.CheckUserCreatedLotteryAndToday(l.ctx, &lottery.CheckUserCreatedLotteryAndTodayReq{
+				UserId: in.UserId,
+			})
+			if err != nil {
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to CheckUserCreatedLotteryAndToday, err: %v", err)
+			}
+			if check.Yes == 1 {
+				addTaskRecord := &pb.AddTaskRecordReq{
+					UserId: in.UserId,
+					TaskId: 6,
+				}
+				_, err := logic.AddTaskRecord(addTaskRecord)
+				if err != nil {
+					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 6, err: %v", err)
+				}
+			}
+		} else if err != nil {
+			// 其他错误
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 6, err: %v", err)
+		} else {
+			// 查到数据了
+			// 获取今天的日期
+			today := time.Now().Format("2006-01-02")
+			// 判断 taskRecord.CreateTime 是否是今天
+			if taskRecord.CreateTime.Format("2006-01-02") != today {
+				// 如果不是今天，判断用户今天是否完成
+				check, err := l.svcCtx.LotteryRpc.CheckUserCreatedLotteryAndToday(l.ctx, &lottery.CheckUserCreatedLotteryAndTodayReq{
+					UserId: in.UserId,
+				})
+				if err != nil {
+					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to CheckUserCreatedLotteryAndToday, err: %v", err)
+				}
+				if check.Yes == 1 {
+					addTaskRecord := &pb.AddTaskRecordReq{
+						UserId: in.UserId,
+						TaskId: 6,
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
+					if err != nil {
+						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 6, err: %v", err)
+					}
+				}
+			}
+		}
 
 		// 每周任务（首先查询首先查询表task_record中有无数据，如果有并且是本周说明完成，不是本周的话就需要判断）
 		// 任务七：参与首页抽奖30次以上
@@ -205,7 +255,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			out.WeekCount = check.WeekCount
 		} else if err != nil {
 			// 其他错误
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord, err: %v", err)
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 7, err: %v", err)
 		} else {
 			// 查到数据了
 			// 获取当前时间
@@ -239,7 +289,57 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 				out.WeekCount = 30
 			}
 		}
-		// todo 任务八：发起抽奖并超过10人参与
+		// 任务八：发起抽奖并超过10人参与
+		taskRecord, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 8)
+		if err == sqlc.ErrNotFound {
+			// 没查询到任何一条数据，判断用户今天是否完成
+			check, err := l.svcCtx.LotteryRpc.CheckUserCreatedLotteryAndThisWeek(l.ctx, &lottery.CheckUserCreatedLotteryAndThisWeekReq{
+				UserId: in.UserId,
+			})
+			if err != nil {
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to CheckUserCreatedLotteryAndThisWeek, err: %v", err)
+			}
+			if check.Yes == 1 {
+				addTaskRecord := &pb.AddTaskRecordReq{
+					UserId: in.UserId,
+					TaskId: 8,
+				}
+				_, err := logic.AddTaskRecord(addTaskRecord)
+				if err != nil {
+					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 8, err: %v", err)
+				}
+			}
+		} else if err != nil {
+			// 其他错误
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 8, err: %v", err)
+		} else {
+			// 查到数据了
+			// 获取当前时间
+			now := time.Now()
+			// 获取本周的开始时间和结束时间
+			startOfWeek := now.AddDate(0, 0, -int(now.Weekday())).Truncate(24 * time.Hour)
+			endOfWeek := startOfWeek.AddDate(0, 0, 7)
+			// 判断 taskRecord.CreateTime 是否是本周之内
+			if !taskRecord.CreateTime.After(startOfWeek) || !taskRecord.CreateTime.Before(endOfWeek) {
+				// 如果不是本周，判断用户本周是否完成
+				check, err := l.svcCtx.LotteryRpc.CheckUserCreatedLotteryAndThisWeek(l.ctx, &lottery.CheckUserCreatedLotteryAndThisWeekReq{
+					UserId: in.UserId,
+				})
+				if err != nil {
+					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to CheckUserCreatedLotteryAndThisWeek, err: %v", err)
+				}
+				if check.Yes == 1 {
+					addTaskRecord := &pb.AddTaskRecordReq{
+						UserId: in.UserId,
+						TaskId: 8,
+					}
+					_, err := logic.AddTaskRecord(addTaskRecord)
+					if err != nil {
+						return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 8, err: %v", err)
+					}
+				}
+			}
+		}
 		// todo 任务九：给晒单的锦鲤点个赞
 		return nil
 	})

@@ -310,7 +310,7 @@ message NoticeWishCheckinReq{
 }
 
 message NoticeWishCheckinResp{
-  repeated NoticeWishCheckinData wishSignInDatas=1;
+  repeated NoticeWishCheckinData wishCheckinDatas=1;
 }
 
 // ------------------------------------

@@ -2,13 +2,11 @@ package checkin
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/checkin/cmd/api/internal/svc"
 	"looklook/app/checkin/cmd/api/internal/types"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type CheckinLogic struct {
@@ -31,7 +29,7 @@ func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, 
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "req: %+v", req)
+		return nil, err
 	}
 
 	return &types.CheckinResp{

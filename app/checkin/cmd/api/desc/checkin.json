@@ -130,7 +130,7 @@
     },
     "checkin/v1/checkin/updateSub": {
       "post": {
-        "summary": "改变签到状态",
+        "summary": "改变订阅签到状态",
         "operationId": "UpdateSub",
         "responses": {
           "200": {
