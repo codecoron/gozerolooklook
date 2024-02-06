@@ -99,3 +99,14 @@ service usercenter {
 	post /userSponsor/addSponsor (CreateSponosorReq) returns (CreateSponosorResp)
 }
 
+//no need login
+@server (
+	prefix: usercenter/v1
+	group:  userSponsor
+)
+service usercenter {
+	@doc "sponsor detail"
+	@handler sponsorDetail
+	post /userSponsor/sponsorDetail (SponosorDetailReq) returns (SponosorDetailResp)
+}
+

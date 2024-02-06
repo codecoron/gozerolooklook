@@ -323,6 +323,34 @@
           "userSponsor"
         ]
       }
+    },
+    "usercenter/v1/userSponsor/sponsorDetail": {
+      "post": {
+        "summary": "sponsor detail",
+        "operationId": "sponsorDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SponosorDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SponosorDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
+        ]
+      }
     }
   },
   "definitions": {
@@ -766,6 +794,76 @@
         }
       },
       "title": "Sponosor",
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "appletType",
+        "isShow",
+        "name",
+        "desc",
+        "avatar",
+        "qr_code",
+        "inputA",
+        "inputB"
+      ]
+    },
+    "SponosorDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SponosorDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "SponosorDetailResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isShow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "inputA": {
+          "type": "string"
+        },
+        "inputB": {
+          "type": "string"
+        }
+      },
+      "title": "SponosorDetailResp",
       "required": [
         "id",
         "userId",

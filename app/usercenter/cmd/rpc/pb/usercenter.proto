@@ -647,6 +647,24 @@ message SearchUserSponsorReq {
 message SearchUserSponsorResp {
   repeated UserSponsor userSponsor = 1; //userSponsor
 }
+
+message SponsorDetailReq {
+  int64 id = 1;
+}
+message SponsorDetailResp {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 4; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 5; //名称
+  string desc = 6; //描述
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1显示 2不显示
+  string qrCode = 9; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 10; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 11; //type=5 applet_type=2输入框B
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------
@@ -698,4 +716,5 @@ service usercenter{
   rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp);
   rpc GetUserSponsorById(GetUserSponsorByIdReq) returns (GetUserSponsorByIdResp);
   rpc SearchUserSponsor(SearchUserSponsorReq) returns (SearchUserSponsorResp);
+  rpc SponsorDetail(SponsorDetailReq) returns(SponsorDetailResp);
 }

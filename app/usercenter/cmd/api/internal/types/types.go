@@ -133,6 +133,24 @@ type Sponosor struct {
 	InputB     string `json:"inputB"`
 }
 
+type SponosorDetailReq struct {
+	Id int64 `json:"id"`
+}
+
+type SponosorDetailResp struct {
+	Id         int64  `json:"id"`
+	UserId     int64  `json:"userId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"appletType"`
+	IsShow     int64  `json:"isShow"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"inputA"`
+	InputB     string `json:"inputB"`
+}
+
 type User struct {
 	Id       int64  `json:"id"`
 	Mobile   string `json:"mobile"`
