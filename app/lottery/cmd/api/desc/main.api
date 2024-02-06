@@ -35,7 +35,7 @@ service lottery {
 	@doc "发起抽奖"
 	@handler createLottery
 	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
-
+	
 	@doc "发布抽奖"
 	@handler updateLottery
 	post /lottery/updateLottery (UpdateLotteryReq) returns (UpdateLotteryResp)
@@ -64,16 +64,28 @@ service lottery {
 	post /lottery/lotteryDetail (LotteryDetailReq) returns (LotteryDetailResp)
 }
 
-//no need login
+//need login
 @server (
 	prefix: lottery/v1
 	group:  lottery
+	jwt:    JwtAuth
 )
 service lottery {
-	@doc "lottery sponsor"
-	@handler lotterySponsor
-	post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
+	@doc "CheckIsParticipated"
+	@handler CheckIsParticipated
+	post /lottery/CheckIsParticipated (CheckIsParticipatedReq) returns (CheckIsParticipatedResp)
 }
+
+//no need login
+//@server (
+//	prefix: lottery/v1
+//	group:  lottery
+//)
+//service lottery {
+//	@doc "lottery sponsor"
+//	@handler lotterySponsor
+//	post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
+//}
 
 @server (
 	prefix: lottery/v1
@@ -96,3 +108,12 @@ service lottery {
 	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
 }
 
+@server (
+	prefix: lottery/v1
+	group:  lottery
+)
+service lottery {
+	@doc "测试Validator"
+	@handler TestValidator
+	post /lottery/TestValidator (TestReq) returns (TestResp)
+}

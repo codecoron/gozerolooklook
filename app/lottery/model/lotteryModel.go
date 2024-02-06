@@ -4,10 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"math/rand"
+	"looklook/common/xerr"
 	"time"
 )
 
@@ -22,10 +23,12 @@ type (
 		UpdatePublishTime(ctx context.Context, data *Lottery) error
 		LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error)
-		QueryLotteries(ctx context.Context, currentTime time.Time) ([]int64, error)
-		DrawLottery(ctx context.Context, lottery *Lottery, prizes, zeroPrizes []*Prize) ([]Winner, error)
-		WriteResultToDB(ctx context.Context, winners []*Winner) error
+		GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error)
 		UpdateLotteryStatus(ctx context.Context, lotteryID int64) error
+		GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error)
+		GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error)
+		GetTodayLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
+		GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
 	}
 
 	customLotteryModel struct {
@@ -52,7 +55,10 @@ func (c *customLotteryModel) LotteryList(ctx context.Context, page, limit, selec
 	var resp []*Lottery
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
-	return resp, err
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_USERID_BYLOTTERYID_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
+	}
+	return resp, nil
 }
 
 func (c *customLotteryModel) FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error) {
@@ -66,9 +72,9 @@ func (c *customLotteryModel) FindUserIdByLotteryId(ctx context.Context, lotteryI
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_USERID_NOTFOUND), "FindUserIdByLotteryId, lotteryId:%v, error: %v", lotteryId, err)
 	default:
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_USERID_BYLOTTERYID_ERROR), "FindOne, lotteryId:%v, error: %v", lotteryId, err)
 	}
 }
 
@@ -79,133 +85,74 @@ func NewLotteryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 	}
 }
 
-func (c *customLotteryModel) QueryLotteries(ctx context.Context, currentTime time.Time) ([]int64, error) {
+func (c *customLotteryModel) GetLotterysByLessThanCurrentTime(ctx context.Context, currentTime time.Time, announceType int64) ([]int64, error) {
 	var resp []int64
-	query := fmt.Sprintf("SELECT id FROM %s WHERE announce_type = 1 AND is_announced = 0 AND announce_time <= ?", c.table)
-	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, currentTime)
+	query := fmt.Sprintf("SELECT id FROM %s WHERE announce_type = ? AND is_announced = 0 AND announce_time <= ?", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType, currentTime)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GETLOTTERY_BYLESSTHAN_CURRENTTIME_ERROR), "GetLotterysByLessThanCurrentTime, CurrentTime:%v, anounceType:%v, error: %v", currentTime, announceType, err)
 	}
 	return resp, nil
 }
 
-type Winner struct {
-	LotteryId int64
-	UserId    int64
-	PrizeId   int64
-}
-
-func (c *customLotteryModel) DrawLottery(ctx context.Context, lottery *Lottery, prizes, zeroPrizes []*Prize) ([]Winner, error) {
-	//var participators []int64
-	//query := fmt.Sprintf("SELECT user_id FROM lottery_participants WHERE lottery_id = ?")
-	//err := c.QueryRowsNoCacheCtx(ctx, &participants, query, lottery.Id)
-	//if err != nil {
-	//	return nil, err
-	//}
-
-	testParticipators := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-
-	// test1： 用户有10个，奖品总数为5个，预计获奖人数945.即有某一时刻奖品数量为0。报错slice bounds out of range [7:2]    [已解决]
-	// 随机选择中奖者
-	rand.New(rand.NewSource(time.Now().UnixNano()))
-	WinnersNum := lottery.JoinNumber // 中奖者个数,joinNumber在按时开奖的时候表示中奖者个数
-	winners := make([]Winner, 0)
-
-	//fmt.Println("alltestNumber", testParticipators)
-	for i := 0; i < int(WinnersNum); i++ {
-		//fmt.Println("WinnersNum", i)
-		var randomWinnerIndex int
-		var winnerUserId int64
-
-		// 如果参与者少于预计中奖人数，就结束开奖。(参与人数 < 预计中奖人数 && 奖品数量 >= 参与人数)
-		if len(testParticipators) == 0 {
-			//fmt.Println("如果参与者少于预计中奖人数，就结束开奖。")
-			break
-		} else {
-			// 随机选择一个参与者,得到中奖者的uid
-			randomWinnerIndex = rand.Intn(len(testParticipators))
-			winnerUserId = testParticipators[randomWinnerIndex]
-		}
-
-		// 随机选择一个奖品，确保奖品的剩余数量大于0
-		prize := new(Prize)
-		var randomPrizeIndex int
-		for {
-			// 如果所有奖品的剩余数量都为0，直接返回即可。(该情况可能发生的情形为预计中奖人数 >= 参与人数 > 奖品数量)
-			if len(prizes) == 0 {
-				fmt.Println("no prizes left")
-				return winners, nil
-			}
-			randomPrizeIndex = rand.Intn(len(prizes))
-			prize = prizes[randomPrizeIndex]
-			if prize.Count > 0 {
-				break
-			} else {
-				prizes = append(prizes[:randomPrizeIndex], prizes[randomPrizeIndex+1:]...)
-			}
-		}
-		// 正常情况是参与人数 <>= 预计参与人数; 预计参与人数 <= 奖品总数量
-
-		// 创建中奖者对象
-		winner := Winner{
-			LotteryId: lottery.Id,
-			UserId:    winnerUserId,
-			PrizeId:   prize.Id, // 使用选中的奖品名称
-		}
-
-		//fmt.Printf("%+v\n", winner)
-		//fmt.Println("lenOfPrizes:", len(prizes), "lenOfTestNumber:", len(testParticipators))
-
-		winners = append(winners, winner)
-
-		// 从参与者列表中移除已中奖的用户
-		testParticipators = append(testParticipators[:randomWinnerIndex], testParticipators[randomWinnerIndex+1:]...)
-
-		// 减少选中奖品的剩余数量；如果当前prize的数量为0，则去掉这个奖品
-		prizes[randomPrizeIndex].Count--
-		if prizes[randomPrizeIndex].Count == 0 {
-			zeroPrizes = append(zeroPrizes, prizes[randomPrizeIndex])
-			prizes = append(prizes[:randomPrizeIndex], prizes[randomPrizeIndex+1:]...)
-		}
-		for _, p := range prizes {
-			fmt.Printf("%+v\n", p)
-		}
-	}
-
-	return winners, nil
-}
-
-// WriteResultToDB todo 将resultList换成表对应的数据结构
-func (c *customLotteryModel) WriteResultToDB(ctx context.Context, winners []*Winner) error {
-	// 准备插入数据的SQL语句
-	query := "INSERT INTO lottery_result (result) VALUES (?)"
-
-	err := c.Trans(ctx, func(ctx context.Context, session sqlx.Session) error {
-		// 执行插入操作
-		for _, result := range winners {
-			_, err := session.Exec(query, result)
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 // UpdateLotteryStatus 根据lotteryId更新lottery状态为已开奖
-func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryID int64) error {
+func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryId int64) error {
 	// 准备更新数据的SQL语句
 	query := fmt.Sprintf("UPDATE %s SET is_announced = 1 WHERE id = ?", c.table)
 
 	_, err := c.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
-		return conn.Exec(query, lotteryID)
+		return conn.Exec(query, lotteryId)
 	})
 	if err != nil {
-		return err
+		return errors.Wrapf(xerr.NewErrCode(xerr.UPDATE_LOTTERY_STATUS_ERROR), "UpdateLotteryStatus, lotteryId:%v error: %v", lotteryId, err)
 	}
 	return nil
+}
+
+func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error) {
+	var resp []*Lottery
+	query := fmt.Sprintf("SELECT * FROM %s WHERE announce_type = ? AND is_announced = 0", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_TYPEIS2_AND_ISNOT_ANNOUNCE_LOTTERYS_ERROR), "GetTypeIs2AndIsNotAnnounceLotterys,announceType:%v, error: %v", announceType, err)
+	}
+	return resp, nil
+}
+
+func (c *customLotteryModel) GetLotteryIdByUserId(ctx context.Context, UserId int64) (*int64, error) {
+	//func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	query := fmt.Sprintf("select id from %s where user_id = ? AND publish_time IS NOT NULL", c.table)
+	//	return conn.QueryRowCtx(ctx, v, query, UserId)
+	//}
+	var resp int64
+	err := c.QueryRowNoCacheCtx(ctx, &resp, query, UserId)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		//errors.Wrapf(xerr.NewErrCode(xerr.DB_LOTTERYID_NOTFOUND), "GetLotteryIdByUserId, UserId:%v, error: %v", UserId, err)
+		return nil, nil
+	default:
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_LOTTERYID_BYUSERID_ERROR), "FindOne, UserId:%v, error: %v", UserId, err)
+	}
+}
+
+func (c *customLotteryModel) GetTodayLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error) {
+	var resp []int64
+	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND DATE(publish_time) = CURDATE()", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_WEEKLOTTERYIDS_BYUSREID_ERROR), "GetTodayLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+	}
+	return resp, nil
+}
+
+func (c *customLotteryModel) GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error) {
+	var resp []int64
+	query := fmt.Sprintf("SELECT id FROM %s WHERE user_id = ? AND YEARWEEK(publish_time) = YEARWEEK(CURDATE())", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_TODAYLOTTERYIDSBYUSERID_ERROR), "GetWeekLotteryIdsByUserId, user_id:%v, error: %v", UserId, err)
+	}
+	return resp, nil
 }

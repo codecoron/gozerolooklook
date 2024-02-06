@@ -3,7 +3,9 @@ package event
 import (
 	"context"
 	"encoding/xml"
-	"fmt"
+	"github.com/pkg/errors"
+	"looklook/app/notice/cmd/rpc/pb"
+	"looklook/common/constants"
 	"net/http"
 
 	"looklook/app/notice/cmd/api/internal/svc"
@@ -11,6 +13,8 @@ import (
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
+
+var ErrReceiveEventFail = errors.New("receive event fail")
 
 type ReceiveEventLogic struct {
 	logx.Logger
@@ -30,21 +34,42 @@ func (l *ReceiveEventLogic) ReceiveEvent(_ *types.ReceiveEventReq, r *http.Reque
 	// 接收回调事件
 	_, callbackMsgHeader, err := l.svcCtx.WxMiniProgram.Server.GetEvent(r)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic get event err:%v", err)
 	}
+
+	logx.WithContext(l.ctx).Infow("ReceiveEventLogic received an event",
+		logx.Field("content", string(callbackMsgHeader.Content)),
+	)
 
 	// 解析事件内容
 	var msg types.MsgEvent
 	err = xml.Unmarshal(callbackMsgHeader.Content, &msg)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic event xml unmarshal err:%v", err)
 	}
 
 	// 处理事件
 	userSubscribeSettings := msg.SubscribeMsgPopupEvent.List
 	for _, setting := range userSubscribeSettings {
-		// TODO 将用户设置落库
-		fmt.Println(setting)
+		// 落库
+		var typ int64
+		switch setting.SubscribeStatusString {
+		case "accept":
+			typ = constants.TypeAcceptSubscribeMessage
+		case "reject":
+			typ = constants.TypeRejectSubscribeMessage
+		default:
+			return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic event invalid setting, setting:%+v", setting)
+		}
+
+		_, err = l.svcCtx.NoticeRpc.SaveNoticeSubscribePreference(l.ctx, &pb.SaveNoticeSubscribePreferenceReq{
+			Openid:     msg.ToUserName,
+			TemplateId: setting.TemplateId,
+			Type:       typ,
+		})
+		if err != nil {
+			return nil, errors.Wrapf(ErrReceiveEventFail, "ReceiveEventLogic NoticeRpc.SaveNoticeSubscribePreference err:%v, setting:%+v", err, setting)
+		}
 	}
 
 	return

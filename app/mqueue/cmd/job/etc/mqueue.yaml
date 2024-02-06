@@ -18,6 +18,9 @@ Telemetry:
 
 Log:
   ServiceName: mqueue-job
+  Mode: console
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
   Level: error
 
 Redis:
@@ -44,3 +47,14 @@ UsercenterRpcConf:
   Endpoints:
     - 127.0.0.1:2004
   NonBlock: true
+
+LotteryRpcConf:
+  Endpoints:
+    - 127.0.0.1:2005
+  NonBlock: true
+
+NoticeRpcConf:
+  Endpoints:
+    - 127.0.0.1:2006
+  NonBlock: true
+  Timeout: 500000 #调试

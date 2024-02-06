@@ -4,40 +4,386 @@ option go_package = "./pb";
 
 package pb;
 
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
 
-//model
+//--------------------------------用户表--------------------------------
 message User {
-  int64 id = 1;
-  string mobile = 2;
-  string nickname = 3;
-  int64  sex = 4;
-  string avatar = 5;
-  string info = 6;
-  int64 isAdmin = 7;
+  int64 id = 1; //id
+  int64 createTime = 2; //createTime
+  int64 updateTime = 3; //updateTime
+  string mobile = 4; //mobile
+  string password = 5; //password
+  string nickname = 6; //nickname
+  int64 sex = 7; //性别 0:男 1:女
+  string avatar = 8; //avatar
+  string info = 9; //info
+  int64 isAdmin = 10; //是否管理员 1是 0否
+  string signature = 11; //个性签名
+  string locationName = 12; //地址名称
+  double longitude = 13; //经度
+  double latitude = 14; //纬度
+  int64 totalPrize = 15; //累计奖品
+  int64 fans = 16; //粉丝数量
+  int64 allLottery = 17; //全部抽奖包含我发起的、我中奖的
+  int64 initiationRecord = 18; //发起抽奖记录
+  int64 winningRecord = 19; //中奖记录
 }
 
+message AddUserReq {
+  string mobile = 1; //mobile
+  string password = 2; //password
+  string nickname = 3; //nickname
+  int64 sex = 4; //性别 0:男 1:女
+  string avatar = 5; //avatar
+  string info = 6; //info
+  int64 isAdmin = 7; //是否管理员 1是 0否
+  string signature = 8; //个性签名
+  string locationName = 9; //地址名称
+  double longitude = 10; //经度
+  double latitude = 11; //纬度
+  int64 totalPrize = 12; //累计奖品
+  int64 fans = 13; //粉丝数量
+  int64 allLottery = 14; //全部抽奖包含我发起的、我中奖的
+  int64 initiationRecord = 15; //发起抽奖记录
+  int64 winningRecord = 16; //中奖记录
+}
+
+message AddUserResp {
+}
+
+message UpdateUserReq {
+  int64 id = 1; //id
+  string mobile = 2; //mobile
+  string password = 3; //password
+  string nickname = 4; //nickname
+  int64 sex = 5; //性别 0:男 1:女
+  string avatar = 6; //avatar
+  string info = 7; //info
+  int64 isAdmin = 8; //是否管理员 1是 0否
+  string signature = 9; //个性签名
+  string locationName = 10; //地址名称
+  double longitude = 11; //经度
+  double latitude = 12; //纬度
+  int64 totalPrize = 13; //累计奖品
+  int64 fans = 14; //粉丝数量
+  int64 allLottery = 15; //全部抽奖包含我发起的、我中奖的
+  int64 initiationRecord = 16; //发起抽奖记录
+  int64 winningRecord = 17; //中奖记录
+}
+
+message UpdateUserResp {
+}
+
+message DelUserReq {
+  int64 id = 1; //id
+}
+
+message DelUserResp {
+}
+
+message GetUserByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserByIdResp {
+  User user = 1; //user
+}
+
+message SearchUserReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+  string mobile = 6; //mobile
+  string password = 7; //password
+  string nickname = 8; //nickname
+  int64 sex = 9; //性别 0:男 1:女
+  string avatar = 10; //avatar
+  string info = 11; //info
+  int64 isAdmin = 12; //是否管理员 1是 0否
+  string signature = 13; //个性签名
+  string locationName = 14; //地址名称
+  double longitude = 15; //经度
+  double latitude = 16; //纬度
+  int64 totalPrize = 17; //累计奖品
+  int64 fans = 18; //粉丝数量
+  int64 allLottery = 19; //全部抽奖包含我发起的、我中奖的
+  int64 initiationRecord = 20; //发起抽奖记录
+  int64 winningRecord = 21; //中奖记录
+}
+
+message SearchUserResp {
+  repeated User user = 1; //user
+}
+
+//--------------------------------用户收货地址表--------------------------------
+message UserAddress {
+  int64 id = 1; //id
+  int64 userId = 2; //用户id
+  string contactName = 3; //联系人姓名
+  string contactMobile = 4; //联系人手机号码
+  string district = 5; //地区信息
+  string detail = 6; //详细地址
+  string postcode = 7; //邮政编码
+  int64 isDefault = 8; //是否为默认地址 1是 0否
+  int64 createTime = 9; //createTime
+  int64 updateTime = 10; //updateTime
+}
+
+message AddUserAddressReq {
+  int64 userId = 1; //用户id
+  string contactName = 2; //联系人姓名
+  string contactMobile = 3; //联系人手机号码
+  string district = 4; //地区信息
+  string detail = 5; //详细地址
+  string postcode = 6; //邮政编码
+  int64 isDefault = 7; //是否为默认地址 1是 0否
+}
+
+message AddUserAddressResp {
+  int64 Id = 1;
+}
+
+message UpdateUserAddressReq {
+  int64 id = 1; //id
+  int64 userId = 2; //用户id
+  string contactName = 3; //联系人姓名
+  string contactMobile = 4; //联系人手机号码
+  string district = 5; //地区信息
+  string detail = 6; //详细地址
+  string postcode = 7; //邮政编码
+  int64 isDefault = 8; //是否为默认地址 1是 0否
+}
+
+message UpdateUserAddressResp {
+}
+
+message DelUserAddressReq {
+  int64 id = 1; //id
+}
+
+message DelUserAddressResp {
+}
+
+message GetUserAddressByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserAddressByIdResp {
+  UserAddress userAddress = 1; //userAddress
+}
+
+message SearchUserAddressReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //用户id
+  string contactName = 5; //联系人姓名
+  string contactMobile = 6; //联系人手机号码
+  string district = 7; //地区信息
+  string detail = 8; //详细地址
+  string postcode = 9; //邮政编码
+  int64 isDefault = 10; //是否为默认地址 1是 0否
+  int64 createTime = 11; //createTime
+  int64 updateTime = 12; //updateTime
+}
+
+message SearchUserAddressResp {
+  repeated UserAddress userAddress = 1; //userAddress
+}
+
+//--------------------------------用户授权表--------------------------------
 message UserAuth {
-  int64  id = 1;
-  int64  userId = 2;
-  string authType = 3;
-  string authKey = 4;
+  int64 id = 1; //id
+  int64 createTime = 2; //createTime
+  int64 updateTime = 3; //updateTime
+  int64 userId = 4; //userId
+  string authKey = 5; //平台唯一id
+  string authType = 6; //平台类型
+}
+
+message AddUserAuthReq {
+  int64 userId = 1; //userId
+  string authKey = 2; //平台唯一id
+  string authType = 3; //平台类型
+}
+
+message AddUserAuthResp {
+}
+
+message UpdateUserAuthReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string authKey = 3; //平台唯一id
+  string authType = 4; //平台类型
+}
+
+message UpdateUserAuthResp {
+}
+
+message DelUserAuthReq {
+  int64 id = 1; //id
+}
+
+message DelUserAuthResp {
+}
+
+message GetUserAuthByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserAuthByIdResp {
+  UserAuth userAuth = 1; //userAuth
+}
+
+message SearchUserAuthReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+  int64 userId = 6; //userId
+  string authKey = 7; //平台唯一id
+  string authType = 8; //平台类型
+}
+
+message SearchUserAuthResp {
+  repeated UserAuth userAuth = 1; //userAuth
+}
+
+//--------------------------------抽奖发起人联系方式--------------------------------
+message UserContact {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1qrcode 2phone 3shop
+  string content = 4; //content
+  string remark = 5; //remark
+  int64 createTime = 6; //createTime
+  int64 updateTime = 7; //updateTime
+}
+
+message AddUserContactReq {
+  int64 userId = 1; //userId
+  int64 type = 2; //1qrcode 2phone 3shop
+  string content = 3; //content
+  string remark = 4; //remark
+}
+
+message AddUserContactResp {
+  int64 id = 1; //id
+}
+
+message UpdateUserContactReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1qrcode 2phone 3shop
+  string content = 4; //content
+  string remark = 5; //remark
+}
+
+message UpdateUserContactResp {
+}
+
+message DelUserContactReq {
+  int64 id = 1; //id
+}
+
+message DelUserContactResp {
+}
+
+message GetUserContactByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserContactByIdResp {
+  UserContact userContact = 1; //userContact
+}
+
+message SearchUserContactReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  int64 type = 5; //1qrcode 2phone 3shop
+  string content = 6; //content
+  string remark = 7; //remark
+  int64 createTime = 8; //createTime
+  int64 updateTime = 9; //updateTime
+}
+
+message SearchUserContactResp {
+  repeated UserContact userContact = 1; //userContact
 }
 
 
-//req 、resp
-message RegisterReq {
-  string mobile = 1;
-  string nickname = 2;
-  string password = 3;
-  string authKey = 4;
-  string authType = 5;
-}
-message RegisterResp {
-  string accessToken = 1;
-  int64  accessExpire = 2;
-  int64  refreshAfter = 3;
+//--------------------------------userShop--------------------------------
+message UserShop {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string name = 3; //name
+  double location = 4; //location
+  int64 createTime = 5; //createTime
+  int64 updateTime = 6; //updateTime
 }
 
+message AddUserShopReq {
+  int64 userId = 1; //userId
+  string name = 2; //name
+  double location = 3; //location
+}
+
+message AddUserShopResp {
+}
+
+message UpdateUserShopReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string name = 3; //name
+  double location = 4; //location
+}
+
+message UpdateUserShopResp {
+}
+
+message DelUserShopReq {
+  int64 id = 1; //id
+}
+
+message DelUserShopResp {
+}
+
+message GetUserShopByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserShopByIdResp {
+  UserShop userShop = 1; //userShop
+}
+
+message SearchUserShopReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  string name = 5; //name
+  double location = 6; //location
+  int64 createTime = 7; //createTime
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchUserShopResp {
+  repeated UserShop userShop = 1; //userShop
+}
+
+message CheckIsAdminReq {
+  int64 userId = 1;
+}
+message CheckIsAdminResp {
+  bool isAdmin = 1;
+}
 message WXMiniRegisterReq {
   string nickname = 1;
   string avatar = 2;
@@ -93,7 +439,19 @@ message GenerateTokenResp {
   int64  accessExpire = 2;
   int64  refreshAfter = 3;
 }
-
+//req 、resp
+message RegisterReq {
+  string mobile = 1;
+  string nickname = 2;
+  string password = 3;
+  string authKey = 4;
+  string authType = 5;
+}
+message RegisterResp {
+  string accessToken = 1;
+  int64  accessExpire = 2;
+  int64  refreshAfter = 3;
+}
 message UpdateUserBaseInfoReq {
   int64 id = 1;
   string Nickname = 2;
@@ -108,163 +466,110 @@ message UpdateUserBaseInfoReq {
 message UpdateUserBaseInfoResp {
 }
 
-
 message SetAdminReq {
   int64 userId = 1;
 }
 message SetAdminResp {
 }
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------
 
-message CheckIsAdminReq {
-  int64 userId = 1;
-}
-message CheckIsAdminResp {
-  bool isAdmin = 1;
-}
-//--------------------------------用户联系方式-------------------------------
-message UserContact {
+//--------------------------------抽奖发起人联系方式（抽奖赞助商）--------------------------------
+message UserSponsor {
   int64 id = 1; //id
   int64 userId = 2; //userId
-  int64 type = 3; //1qrcode 2phone 3shop
-  string content = 4; //content
-  string remark = 5; //remark
-  int64 createTime = 6; //createTime
-  int64 updateTime = 7; //updateTime
+  int64 sponsorId = 3;
+  int64 type = 4; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 5; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 6; //名称
+  string desc = 7; //描述
+  string avatar = 8; //avatar
+  int64 isShow = 9; //1显示 2不显示
+  string qrCode = 10; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 11; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 12; //type=5 applet_type=2输入框B
+  int64 createTime = 13; //createTime
+  int64 updateTime = 14; //updateTime
 }
 
-message AddUserContactReq {
+message AddUserSponsorReq {
   int64 userId = 1; //userId
-  int64 type = 2; //1qrcode 2phone 3shop
-  string content = 3; //content
-  string remark = 4; //remark
+  int64 sponsorId = 2;
+  int64 type = 3; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 4; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 5; //名称
+  string desc = 6; //描述
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1显示 2不显示
+  string qrCode = 9; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 10; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 11; //type=5 applet_type=2输入框B
 }
 
-message AddUserContactResp {
-  int64 Id = 1; //Id
+message AddUserSponsorResp {
 }
 
-message UpdateUserContactReq {
+message UpdateUserSponsorReq {
   int64 id = 1; //id
   int64 userId = 2; //userId
-  int64 type = 3; //1qrcode 2phone 3shop
-  string content = 4; //content
-  string remark = 5; //remark
+  int64 sponsorId = 3;
+  int64 type = 4; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 5; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 6; //名称
+  string desc = 7; //描述
+  string avatar = 8; //avatar
+  int64 isShow = 9; //1显示 2不显示
+  string qrCode = 10; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 11; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 12; //type=5 applet_type=2输入框B
 }
 
-message UpdateUserContactResp {
+message UpdateUserSponsorResp {
 }
 
-message DelUserContactReq {
+message DelUserSponsorReq {
   int64 id = 1; //id
 }
 
-message DelUserContactResp {
+message DelUserSponsorResp {
 }
 
-message GetUserContactByIdReq {
+message GetUserSponsorByIdReq {
   int64 id = 1; //id
 }
 
-message GetUserContactByIdResp {
-  UserContact userContact = 1; //userContact
+message GetUserSponsorByIdResp {
+  UserSponsor userSponsor = 1; //userSponsor
 }
 
-message SearchUserContactReq {
+message SearchUserSponsorReq {
   int64 page = 1; //page
   int64 limit = 2; //limit
   int64 id = 3; //id
   int64 userId = 4; //userId
-  int64 type = 5; //1qrcode 2phone 3shop
-  string content = 6; //content
-  string remark = 7; //remark
-  int64 createTime = 8; //createTime
-  int64 updateTime = 9; //updateTime
+  int64 sponsorId = 5;
+  int64 type = 6; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 7; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 8; //名称
+  string desc = 9; //描述
+  string avatar = 10; //avatar
+  int64 isShow = 11; //1显示 2不显示
+  string qrCode = 12; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 13; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 14; //type=5 applet_type=2输入框B
+  int64 createTime = 15; //createTime
+  int64 updateTime = 16; //updateTime
 }
 
-message SearchUserContactResp {
-  repeated UserContact userContact = 1; //userContact
+message SearchUserSponsorResp {
+  repeated UserSponsor userSponsor = 1; //userSponsor
 }
-
-//--------------------------------用户收货地址表--------------------------------
-message UserAddress {
-  int64 id = 1; //id
-  int64 userId = 2; //用户id
-  string contactName = 3; //联系人姓名
-  string contactMobile = 4; //联系人手机号码
-  string district = 5; //地区信息
-  string detail = 6; //详细地址
-  string postcode = 7; //邮政编码
-  int64 isDefault = 8; //是否为默认地址 1是 0否
-  int64 createTime = 9; //createTime
-  int64 updateTime = 10; //updateTime
-}
-
-message AddUserAddressReq {
-  int64 userId = 1; //用户id
-  string contactName = 2; //联系人姓名
-  string contactMobile = 3; //联系人手机号码
-  string district = 4; //地区信息
-  string detail = 5; //详细地址
-  string postcode = 6; //邮政编码
-  int64 isDefault = 7; //是否为默认地址 1是 0否
-}
-
-message AddUserAddressResp {
-  int64 id = 1; //地址id
-}
-
-message UpdateUserAddressReq {
-  int64 id = 1; //id
-  int64 userId = 2; //用户id
-  string contactName = 3; //联系人姓名
-  string contactMobile = 4; //联系人手机号码
-  string district = 5; //地区信息
-  string detail = 6; //详细地址
-  string postcode = 7; //邮政编码
-  int64 isDefault = 8; //是否为默认地址 1是 0否
-}
-
-message UpdateUserAddressResp {
-}
-
-message DelUserAddressReq {
-  int64 id = 1; //id
-}
-
-message DelUserAddressResp {
-}
-
-message GetUserAddressByIdReq {
-  int64 id = 1; //id
-}
-
-message GetUserAddressByIdResp {
-  UserAddress userAddress = 1; //userAddress
-}
-
-message SearchUserAddressReq {
-  int64 page = 1; //page
-  int64 limit = 2; //limit
-  int64 id = 3; //id
-  int64 userId = 4; //用户id
-  string contactName = 5; //联系人姓名
-  string contactMobile = 6; //联系人手机号码
-  string district = 7; //地区信息
-  string detail = 8; //详细地址
-  string postcode = 9; //邮政编码
-  int64 isDefault = 10; //是否为默认地址 1是 0否
-  int64 createTime = 11; //createTime
-  int64 updateTime = 12; //updateTime
-}
-
-message SearchUserAddressResp {
-  repeated UserAddress userAddress = 1; //userAddress
-}
-
-
-
-//service
-service usercenter {
+// ------------------------------------
+// Rpc Func
+// ------------------------------------
+service usercenter{
+  // 自定义的服务
   rpc login(LoginReq) returns(LoginResp);
   rpc register(RegisterReq) returns(RegisterResp);
   rpc getUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
@@ -273,18 +578,42 @@ service usercenter {
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   rpc setAdmin(SetAdminReq) returns(SetAdminResp);
+  //-----------------------用户表-----------------------
+  rpc AddUser(AddUserReq) returns (AddUserResp);
+  rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp);
+  rpc DelUser(DelUserReq) returns (DelUserResp);
+  rpc GetUserById(GetUserByIdReq) returns (GetUserByIdResp);
+  rpc SearchUser(SearchUserReq) returns (SearchUserResp);
   rpc CheckIsAdmin(CheckIsAdminReq) returns(CheckIsAdminResp);
   rpc WxMiniRegister(WXMiniRegisterReq) returns (WXMiniRegisterResp);
-  //-----------------------用户联系方式----------------------
-  rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
-  rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
-  rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp);
-  rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp);
-  rpc SearchUserContact(SearchUserContactReq) returns (SearchUserContactResp);
   //-----------------------用户收货地址表-----------------------
   rpc AddUserAddress(AddUserAddressReq) returns (AddUserAddressResp);
   rpc UpdateUserAddress(UpdateUserAddressReq) returns (UpdateUserAddressResp);
   rpc DelUserAddress(DelUserAddressReq) returns (DelUserAddressResp);
   rpc GetUserAddressById(GetUserAddressByIdReq) returns (GetUserAddressByIdResp);
   rpc SearchUserAddress(SearchUserAddressReq) returns (SearchUserAddressResp);
+  //-----------------------用户授权表-----------------------
+  rpc AddUserAuth(AddUserAuthReq) returns (AddUserAuthResp);
+  rpc UpdateUserAuth(UpdateUserAuthReq) returns (UpdateUserAuthResp);
+  rpc DelUserAuth(DelUserAuthReq) returns (DelUserAuthResp);
+  rpc GetUserAuthById(GetUserAuthByIdReq) returns (GetUserAuthByIdResp);
+  rpc SearchUserAuth(SearchUserAuthReq) returns (SearchUserAuthResp);
+  //-----------------------抽奖发起人联系方式-----------------------
+  rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
+  rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
+  rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp);
+  rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp);
+  rpc SearchUserContact(SearchUserContactReq) returns (SearchUserContactResp);
+  //-----------------------userShop-----------------------
+  rpc AddUserShop(AddUserShopReq) returns (AddUserShopResp);
+  rpc UpdateUserShop(UpdateUserShopReq) returns (UpdateUserShopResp);
+  rpc DelUserShop(DelUserShopReq) returns (DelUserShopResp);
+  rpc GetUserShopById(GetUserShopByIdReq) returns (GetUserShopByIdResp);
+  rpc SearchUserShop(SearchUserShopReq) returns (SearchUserShopResp);
+  //-----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+  rpc AddUserSponsor(AddUserSponsorReq) returns (AddUserSponsorResp);
+  rpc UpdateUserSponsor(UpdateUserSponsorReq) returns (UpdateUserSponsorResp);
+  rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp);
+  rpc GetUserSponsorById(GetUserSponsorByIdReq) returns (GetUserSponsorByIdResp);
+  rpc SearchUserSponsor(SearchUserSponsorReq) returns (SearchUserSponsorResp);
 }

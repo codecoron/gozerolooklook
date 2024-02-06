@@ -24,7 +24,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//model
+// model
 type Homestay struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -176,7 +176,7 @@ func (x *Homestay) GetMarketHomestayPrice() int64 {
 	return 0
 }
 
-//req 、resp
+// req 、resp
 type HomestayDetailReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

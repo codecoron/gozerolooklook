@@ -32,7 +32,7 @@ func (l *ViewVoteRecordDetailLogic) ViewVoteRecordDetail(req *types.ViewVoteReco
 		LotteryId: req.LotteryId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get VoteRecordDetail"), "Failed to get VoteRecordDetail err : %v ,req:%+v", err, req)
+		return nil, errors.Wrapf(err, "VoteRecordDetail rpc fail req: %+v , err : %v ", req, err)
 	}
 
 	//fmt.Println("----res----", res)

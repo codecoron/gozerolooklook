@@ -1,8 +1,10 @@
 package vote
 
 import (
-	"looklook/common/result"
+	"looklook/app/vote/cmd/api/internal/handler/validator"
 	"net/http"
+
+	"looklook/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"looklook/app/vote/cmd/api/internal/logic/vote"
@@ -15,6 +17,12 @@ func CreateVoteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		var req types.CreateVoteReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		validateErr := validator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
 			return
 		}
 

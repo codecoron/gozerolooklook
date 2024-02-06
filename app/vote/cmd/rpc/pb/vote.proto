@@ -47,7 +47,6 @@ message AddVoteConfigResp {
 
 message UpdateVoteConfigReq {
   int64 id = 1; //id
-  int64 userId = 2; //用户id
   int64 lotteryId = 3; //抽奖ID
   int64 enableVote = 4; //是否启用投票功能 1是 0否
   string voteConfig = 5; //投票配置字段说明: {"title": "投票标题", "description": "投票描述【非必填】", "winner_selection": "中奖者设置：1从所有投票者中抽取 2从票数最多的一方中抽取", "type": "投票类型：1单选 2多选", "min_votes": "最小投票范围", "max_votes": "最大投票范围", "options": [{"text": "张三", "image": "path/to/zhangsan.jpg"}, {"text": "李四", "image": "path/to/lisi.jpg"}, {"text": "王五", "image": "path/to/wangwu.jpg"}]}
@@ -125,7 +124,6 @@ message VoteRecordDetail {
 
 message UserVoteRecordDetail {
   int64 LotteryId = 1; //抽奖ID
-  int64 UserId = 2; //用户ID
   int64 SelectedOption = 3; //用户选择的投票选项
 }
 

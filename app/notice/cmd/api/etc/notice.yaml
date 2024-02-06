@@ -39,3 +39,10 @@ WxMiniConf:
 WxMsgConf:
   EventToken: RKeAteaxQU5zH16Wywq1v4nuOj2J4L6t
   EncodingAESKey: 4HkPH9w1HyZR45ayqTGhYM2OmINT7rp2VCkSxpwuClz
+
+#Rpc
+NoticeRpcConf:
+  Endpoints:
+    - 127.0.0.1:2006
+  NonBlock: true
+  Timeout: 500000 #调试

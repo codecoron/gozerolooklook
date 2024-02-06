@@ -13,11 +13,18 @@ import (
 )
 
 type (
-	NoticeLotteryDrawReq  = pb.NoticeLotteryDrawReq
-	NoticeLotteryDrawResp = pb.NoticeLotteryDrawResp
+	GetNoticeSubscribePreferenceReq   = pb.GetNoticeSubscribePreferenceReq
+	GetNoticeSubscribePreferenceResp  = pb.GetNoticeSubscribePreferenceResp
+	NoticeLotteryDrawReq              = pb.NoticeLotteryDrawReq
+	NoticeLotteryDrawResp             = pb.NoticeLotteryDrawResp
+	NoticeSubscribePreference         = pb.NoticeSubscribePreference
+	SaveNoticeSubscribePreferenceReq  = pb.SaveNoticeSubscribePreferenceReq
+	SaveNoticeSubscribePreferenceResp = pb.SaveNoticeSubscribePreferenceResp
 
 	Notice interface {
 		NoticeLotteryDraw(ctx context.Context, in *NoticeLotteryDrawReq, opts ...grpc.CallOption) (*NoticeLotteryDrawResp, error)
+		GetNoticeSubscribePreference(ctx context.Context, in *GetNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*GetNoticeSubscribePreferenceResp, error)
+		SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error)
 	}
 
 	defaultNotice struct {
@@ -34,4 +41,14 @@ func NewNotice(cli zrpc.Client) Notice {
 func (m *defaultNotice) NoticeLotteryDraw(ctx context.Context, in *NoticeLotteryDrawReq, opts ...grpc.CallOption) (*NoticeLotteryDrawResp, error) {
 	client := pb.NewNoticeClient(m.cli.Conn())
 	return client.NoticeLotteryDraw(ctx, in, opts...)
+}
+
+func (m *defaultNotice) GetNoticeSubscribePreference(ctx context.Context, in *GetNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*GetNoticeSubscribePreferenceResp, error) {
+	client := pb.NewNoticeClient(m.cli.Conn())
+	return client.GetNoticeSubscribePreference(ctx, in, opts...)
+}
+
+func (m *defaultNotice) SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error) {
+	client := pb.NewNoticeClient(m.cli.Conn())
+	return client.SaveNoticeSubscribePreference(ctx, in, opts...)
 }

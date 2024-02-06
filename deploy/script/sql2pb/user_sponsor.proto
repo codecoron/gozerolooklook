@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------抽奖发起人联系方式（抽奖赞助商）--------------------------------
+message UserSponsor {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 4; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 5; //名称
+  string desc = 6; //描述
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1显示 2不显示
+  string qrCode = 9; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 10; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 11; //type=5 applet_type=2输入框B
+  int64 createTime = 12; //createTime
+  int64 updateTime = 13; //updateTime
+}
+
+message AddUserSponsorReq {
+  int64 userId = 1; //userId
+  int64 type = 2; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 3; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 4; //名称
+  string desc = 5; //描述
+  string avatar = 6; //avatar
+  int64 isShow = 7; //1显示 2不显示
+  string qrCode = 8; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 9; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 10; //type=5 applet_type=2输入框B
+}
+
+message AddUserSponsorResp {
+}
+
+message UpdateUserSponsorReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 4; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 5; //名称
+  string desc = 6; //描述
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1显示 2不显示
+  string qrCode = 9; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 10; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 11; //type=5 applet_type=2输入框B
+}
+
+message UpdateUserSponsorResp {
+}
+
+message DelUserSponsorReq {
+  int64 id = 1; //id
+}
+
+message DelUserSponsorResp {
+}
+
+message GetUserSponsorByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserSponsorByIdResp {
+  UserSponsor userSponsor = 1; //userSponsor
+}
+
+message SearchUserSponsorReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  int64 type = 5; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 6; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 7; //名称
+  string desc = 8; //描述
+  string avatar = 9; //avatar
+  int64 isShow = 10; //1显示 2不显示
+  string qrCode = 11; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 12; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 13; //type=5 applet_type=2输入框B
+  int64 createTime = 14; //createTime
+  int64 updateTime = 15; //updateTime
+}
+
+message SearchUserSponsorResp {
+  repeated UserSponsor userSponsor = 1; //userSponsor
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service user_sponsor{ 
+
+	 //-----------------------抽奖发起人联系方式（抽奖赞助商）----------------------- 
+	 rpc AddUserSponsor(AddUserSponsorReq) returns (AddUserSponsorResp); 
+	 rpc UpdateUserSponsor(UpdateUserSponsorReq) returns (UpdateUserSponsorResp); 
+	 rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp); 
+	 rpc GetUserSponsorById(GetUserSponsorByIdReq) returns (GetUserSponsorByIdResp); 
+	 rpc SearchUserSponsor(SearchUserSponsorReq) returns (SearchUserSponsorResp); 
+
+}

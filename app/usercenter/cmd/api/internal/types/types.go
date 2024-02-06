@@ -61,6 +61,24 @@ type CreateResp struct {
 	Id int64 `json:"id"`
 }
 
+type CreateSponsorReq struct {
+	UserId     int64  `json:"userId"`
+	SponsorId  int64  `json:"sponsorId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"appletType"`
+	IsShow     int64  `json:"isShow"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"inputA"`
+	InputB     string `json:"inputB"`
+}
+
+type CreateSponsorResp struct {
+	Id int64 `json:"id"`
+}
+
 type DistrictInfo struct {
 	Province DistrictItem `json:"province"`
 	City     DistrictItem `json:"city"`
@@ -100,6 +118,21 @@ type SetAdminReq struct {
 }
 
 type SetAdminResp struct {
+}
+
+type Sponsor struct {
+	Id         int64  `json:"id"`
+	UserId     int64  `json:"userId"`
+	SponsorId  int64  `json:"sponsorId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"appletType"`
+	IsShow     int64  `json:"isShow"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"inputA"`
+	InputB     string `json:"inputB"`
 }
 
 type User struct {

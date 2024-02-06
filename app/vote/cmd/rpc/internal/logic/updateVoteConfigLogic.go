@@ -32,17 +32,12 @@ func (l *UpdateVoteConfigLogic) UpdateVoteConfig(in *pb.UpdateVoteConfigReq) (*p
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "voteConfig err:%v,voteConfig:%+v", err, voteConfig)
 	}
 	if err == model.ErrNotFound {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.VOTE_VOTE_CONFIG_NOT_FOUND), "voteConfig NOT FOUND err:%v,voteConfig:%+v", err, voteConfig)
+		return nil, errors.Wrapf(xerr.NewErrCodeMsg(xerr.VOTE_VOTE_CONFIG_NOT_FOUND, "投票信息不存在!"), "voteConfig NOT FOUND err:%v,voteConfig:%+v", err, voteConfig)
 	}
 	err = copier.Copy(voteConfig, in)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "copier : %+v , err: %v", in, err)
 	}
-
-	//fmt.Println("fuck !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ")
-	//fmt.Println("voteConfig: ", voteConfig)
-	////fmt.Println("voteConfig.voteConfig: ", in.VoteConfig)
-	//fmt.Println("fuck !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: ")
 
 	err = l.svcCtx.VoteConfigModel.Update(l.ctx, voteConfig)
 	if err != nil {

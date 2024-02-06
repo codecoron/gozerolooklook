@@ -10,6 +10,8 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/mqueue/cmd/job/internal/svc"
 	"looklook/app/mqueue/cmd/job/jobtype"
+	"looklook/app/notice/cmd/rpc/pb"
+	"looklook/common/constants"
 	"looklook/common/wxnotice"
 	"looklook/common/xerr"
 )
@@ -73,6 +75,29 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 			logx.Field("payload", p))
 	}
 
+	// 判断用户是否允许接收订阅消息
+	preference, err := l.svcCtx.NoticeRpc.GetNoticeSubscribePreference(ctx, &pb.GetNoticeSubscribePreferenceReq{
+		Openid:     p.OpenId,
+		TemplateId: templateId,
+	})
+	if err != nil {
+		// 不可重试的错误
+		logx.Error("WxMiniProgramNotifyUserHandler ProcessTask NoticeRpc.GetNoticeSubscribePreference err",
+			logx.Field("err", err),
+			logx.Field("openid", p.OpenId),
+			logx.Field("templateId", templateId),
+		)
+		return nil
+	}
+	if preference.AcceptCount == 0 {
+		// 不可重试的错误
+		logx.WithContext(ctx).Errorw("NoticeLotteryDrawLogic user reject to receive msg",
+			logx.Field("openid", p.OpenId),
+			logx.Field("templateId", templateId),
+		)
+		return nil
+	}
+
 	reqData := &request.RequestSubscribeMessageSend{
 		ToUser:           p.OpenId,
 		TemplateID:       templateId,
@@ -102,6 +127,20 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 			// 可重试的错误码，后续进行细分
 			return errors.Wrapf(ErrNotifyUserFail, "WxMiniProgramNotifyUserHandler send message fail, errCode:%v, errMsg: %v, reqData:%+v", resp.ErrCode, resp.ErrMsg, reqData)
 		}
+	}
+
+	_, err = l.svcCtx.NoticeRpc.SaveNoticeSubscribePreference(ctx, &pb.SaveNoticeSubscribePreferenceReq{
+		Openid:     p.OpenId,
+		TemplateId: templateId,
+		Type:       constants.TypeSendSubscribeMessage,
+	})
+	if err != nil {
+		logx.Error("WxMiniProgramNotifyUserHandler NoticeRpc.SaveNoticeSubscribePreference err",
+			logx.Field("err", err),
+			logx.Field("openid", p.OpenId),
+			logx.Field("templateId", templateId),
+		)
+		return nil
 	}
 
 	return nil

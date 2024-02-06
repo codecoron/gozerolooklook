@@ -1,0 +1,976 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "用户中心服务",
+    "description": "用户中心服务",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "usercenter/v1/user/addAddress": {
+      "post": {
+        "summary": "添加收货地址",
+        "operationId": "addAddress",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddAddressResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddAddressReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "address"
+        ]
+      }
+    },
+    "usercenter/v1/user/addressList": {
+      "post": {
+        "summary": "收货地址列表",
+        "operationId": "addressList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddressListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddressListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "address"
+        ]
+      }
+    },
+    "usercenter/v1/user/convertAddress": {
+      "post": {
+        "summary": "识别并转换收货地址",
+        "operationId": "convertAddress",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ConvertAddressResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConvertAddressReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "address"
+        ]
+      }
+    },
+    "usercenter/v1/user/detail": {
+      "post": {
+        "summary": "获得用户数据",
+        "operationId": "detail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInfoReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/login": {
+      "post": {
+        "summary": "登录",
+        "operationId": "login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/register": {
+      "post": {
+        "summary": "注册",
+        "operationId": "register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegisterResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/setAdmin": {
+      "post": {
+        "summary": "设置user为admin",
+        "operationId": "setAdmin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetAdminResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetAdminReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/update": {
+      "put": {
+        "summary": "修改用户基本信息",
+        "operationId": "update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpdateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/wxMiniAuth": {
+      "post": {
+        "summary": "小程序注册登录",
+        "operationId": "wxMiniAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/WXMiniAuthResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WXMiniAuthReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "usercenter/v1/userContact/create": {
+      "post": {
+        "summary": "添加联系方式",
+        "operationId": "create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userContact"
+        ]
+      }
+    },
+    "usercenter/v1/userSponsor/addSponsor": {
+      "post": {
+        "summary": "抽奖发起人（赞助商）",
+        "operationId": "addSponsor",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateSponsorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSponsorReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AddAddressReq": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/AddressInfo"
+        }
+      },
+      "title": "AddAddressReq"
+    },
+    "AddAddressResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "AddAddressResp",
+      "required": [
+        "id"
+      ]
+    },
+    "AddressInfo": {
+      "type": "object",
+      "properties": {
+        "contactName": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "district": {
+          "$ref": "#/definitions/DistrictInfo"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "AddressInfo",
+      "required": [
+        "contactName",
+        "contactMobile",
+        "district",
+        "detail",
+        "postcode",
+        "isDefault"
+      ]
+    },
+    "AddressListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "AddressListReq",
+      "required": [
+        "page",
+        "pageSize"
+      ]
+    },
+    "AddressListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserAddress"
+          }
+        }
+      },
+      "title": "AddressListResp",
+      "required": [
+        "list"
+      ]
+    },
+    "ContactInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "ContactInfo",
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "content",
+        "remark"
+      ]
+    },
+    "ContactInfoReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ContactInfoReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ContactInfoResp": {
+      "type": "object",
+      "properties": {
+        "contactInfo": {
+          "$ref": "#/definitions/ContactInfo"
+        }
+      },
+      "title": "ContactInfoResp",
+      "required": [
+        "contactInfo"
+      ]
+    },
+    "ConvertAddressReq": {
+      "type": "object",
+      "properties": {
+        "originalAddressInfo": {
+          "type": "string"
+        }
+      },
+      "title": "ConvertAddressReq",
+      "required": [
+        "originalAddressInfo"
+      ]
+    },
+    "ConvertAddressResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/AddressInfo"
+        }
+      },
+      "title": "ConvertAddressResp"
+    },
+    "CreateReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "CreateReq",
+      "required": [
+        "type",
+        "content",
+        "remark"
+      ]
+    },
+    "CreateResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateResp",
+      "required": [
+        "id"
+      ]
+    },
+    "CreateSponsorReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sponsorId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isShow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "inputA": {
+          "type": "string"
+        },
+        "inputB": {
+          "type": "string"
+        }
+      },
+      "title": "CreateSponsorReq",
+      "required": [
+        "userId",
+        "sponsorId",
+        "type",
+        "appletType",
+        "isShow",
+        "name",
+        "desc",
+        "avatar",
+        "qr_code",
+        "inputA",
+        "inputB"
+      ]
+    },
+    "CreateSponsorResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateSponsorResp",
+      "required": [
+        "id"
+      ]
+    },
+    "DistrictInfo": {
+      "type": "object",
+      "properties": {
+        "province": {
+          "$ref": "#/definitions/DistrictItem"
+        },
+        "city": {
+          "$ref": "#/definitions/DistrictItem"
+        },
+        "county": {
+          "$ref": "#/definitions/DistrictItem"
+        },
+        "town": {
+          "$ref": "#/definitions/DistrictItem"
+        }
+      },
+      "title": "DistrictInfo",
+      "required": [
+        "province",
+        "city",
+        "county",
+        "town"
+      ]
+    },
+    "DistrictItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "DistrictItem",
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "mobile",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "accessExpire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refreshAfter": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "accessToken",
+        "accessExpire",
+        "refreshAfter"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "mobile",
+        "password"
+      ]
+    },
+    "RegisterResp": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "accessExpire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refreshAfter": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "RegisterResp",
+      "required": [
+        "accessToken",
+        "accessExpire",
+        "refreshAfter"
+      ]
+    },
+    "SetAdminReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SetAdminReq",
+      "required": [
+        "id"
+      ]
+    },
+    "SetAdminResp": {
+      "type": "object",
+      "title": "SetAdminResp"
+    },
+    "Sponsor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sponsorId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isShow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "inputA": {
+          "type": "string"
+        },
+        "inputB": {
+          "type": "string"
+        }
+      },
+      "title": "Sponsor",
+      "required": [
+        "id",
+        "userId",
+        "sponsorId",
+        "type",
+        "appletType",
+        "isShow",
+        "name",
+        "desc",
+        "avatar",
+        "qr_code",
+        "inputA",
+        "inputB"
+      ]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "User",
+      "required": [
+        "id",
+        "mobile",
+        "nickname",
+        "sex",
+        "avatar",
+        "info",
+        "isAdmin"
+      ]
+    },
+    "UserAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "": {
+          "$ref": "#/definitions/AddressInfo"
+        }
+      },
+      "title": "UserAddress",
+      "required": [
+        "id",
+        "userId"
+      ]
+    },
+    "UserInfoReq": {
+      "type": "object",
+      "title": "UserInfoReq"
+    },
+    "UserInfoResp": {
+      "type": "object",
+      "properties": {
+        "userInfo": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "title": "UserInfoResp",
+      "required": [
+        "userInfo"
+      ]
+    },
+    "UserUpdateReq": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "UserUpdateReq",
+      "required": [
+        "nickname",
+        "sex",
+        "avatar",
+        "info",
+        "signature",
+        "longitude",
+        "latitude"
+      ]
+    },
+    "UserUpdateResp": {
+      "type": "object",
+      "title": "UserUpdateResp"
+    },
+    "WXMiniAuthReq": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "iv": {
+          "type": "string"
+        },
+        "encryptedData": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        }
+      },
+      "title": "WXMiniAuthReq",
+      "required": [
+        "code",
+        "iv",
+        "encryptedData",
+        "nickname",
+        "avatar"
+      ]
+    },
+    "WXMiniAuthResp": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "accessExpire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refreshAfter": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "WXMiniAuthResp",
+      "required": [
+        "accessToken",
+        "accessExpire",
+        "refreshAfter"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}
