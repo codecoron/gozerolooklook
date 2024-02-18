@@ -30,8 +30,11 @@ func (l *SponsorDetailLogic) SponsorDetail(in *pb.SponsorDetailReq) (*pb.Sponsor
 	sponsorId := in.Id
 	var res *model.UserSponsor
 	res, err := l.svcCtx.UserSponsorModel.FindOne(l.ctx, sponsorId)
-	if err != nil {
+	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "SponsorDetail, sponsorId:%v, error: %v", sponsorId, err)
+	}
+	if err == model.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR_NOT_FOUND), "SponsorDetail, sponsorId:%v, error: %v", sponsorId, err)
 	}
 	return &pb.SponsorDetailResp{
 		Id:         res.Id,

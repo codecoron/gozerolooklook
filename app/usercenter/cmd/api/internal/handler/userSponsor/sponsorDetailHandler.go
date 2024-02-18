@@ -1,6 +1,8 @@
 package userSponsor
 
 import (
+	"looklook/app/usercenter/cmd/api/internal/handler/translator"
+	"looklook/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -17,12 +19,15 @@ func SponsorDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		validateErr := translator.Validate(&req)
+		if validateErr != nil {
+			result.ParamErrorResult(r, w, validateErr)
+			return
+		}
+
 		l := userSponsor.NewSponsorDetailLogic(r.Context(), svcCtx)
 		resp, err := l.SponsorDetail(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+
+		result.HttpResult(r, w, resp, err)
 	}
 }

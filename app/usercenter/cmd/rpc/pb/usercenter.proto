@@ -505,6 +505,7 @@ message AddUserSponsorReq {
 }
 
 message AddUserSponsorResp {
+  int64 Id = 1; //id
 }
 
 message UpdateUserSponsorReq {

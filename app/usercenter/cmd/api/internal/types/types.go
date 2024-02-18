@@ -63,7 +63,6 @@ type CreateResp struct {
 
 type CreateSponsorReq struct {
 	UserId     int64  `json:"userId"`
-	SponsorId  int64  `json:"sponsorId"`
 	Type       int64  `json:"type"`
 	AppletType int64  `json:"appletType"`
 	IsShow     int64  `json:"isShow"`
@@ -120,10 +119,13 @@ type SetAdminReq struct {
 type SetAdminResp struct {
 }
 
-type Sponsor struct {
+type SponosorDetailReq struct {
+	Id int64 `json:"id"`
+}
+
+type SponosorDetailResp struct {
 	Id         int64  `json:"id"`
 	UserId     int64  `json:"userId"`
-	SponsorId  int64  `json:"sponsorId"`
 	Type       int64  `json:"type"`
 	AppletType int64  `json:"appletType"`
 	IsShow     int64  `json:"isShow"`
@@ -135,11 +137,7 @@ type Sponsor struct {
 	InputB     string `json:"inputB"`
 }
 
-type SponosorDetailReq struct {
-	Id int64 `json:"id"`
-}
-
-type SponosorDetailResp struct {
+type Sponsor struct {
 	Id         int64  `json:"id"`
 	UserId     int64  `json:"userId"`
 	Type       int64  `json:"type"`

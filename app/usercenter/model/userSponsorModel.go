@@ -12,20 +12,12 @@ type (
 	// and implement the added methods in customUserSponsorModel.
 	UserSponsorModel interface {
 		userSponsorModel
-		//FindBySponsorId(ctx context.Context, SponsorId int64) ([]*UserSponsor, error)
 	}
 
 	customUserSponsorModel struct {
 		*defaultUserSponsorModel
 	}
 )
-
-//func (c customUserSponsorModel) FindBySponsorId(ctx context.Context, SponsorId int64) ([]*UserSponsor, error) {
-//	//TODO implement me
-//	var resp []*UserSponsor
-//	query := fmt.Sprintf("SELECT * FROM %s WHERE id = ?", SponsorId)
-//	panic("implement me")
-//}
 
 // NewUserSponsorModel returns a model for the database table.
 func NewUserSponsorModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) UserSponsorModel {

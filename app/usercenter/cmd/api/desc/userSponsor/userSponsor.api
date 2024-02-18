@@ -8,7 +8,6 @@ info(
 type Sponsor {
     Id int64 `json:"id"`
     UserId int64 `json:"userId"`
-    SponsorId int64 `json:"sponsorId"`
     Type int64 `json:"type"`
     AppletType int64 `json:"appletType"`
     IsShow int64 `json:"isShow"`
@@ -23,7 +22,6 @@ type Sponsor {
 type (
     CreateSponsorReq {
         UserId int64 `json:"userId"`
-        SponsorId int64 `json:"sponsorId"`
         Type int64 `json:"type"`
         AppletType int64 `json:"appletType"`
         IsShow int64 `json:"isShow"`
