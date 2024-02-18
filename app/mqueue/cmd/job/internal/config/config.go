@@ -17,4 +17,5 @@ type Config struct {
 	UsercenterRpcConf zrpc.RpcClientConf
 	LotteryRpcConf    zrpc.RpcClientConf
 	NoticeRpcConf     zrpc.RpcClientConf
+	CheckinRpcConf    zrpc.RpcClientConf
 }

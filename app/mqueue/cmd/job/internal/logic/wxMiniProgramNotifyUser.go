@@ -70,6 +70,45 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 				logx.Field("data", data))
 			return nil
 		}
+	case wxnotice.TypeLotteryStart:
+		// 转换数据
+		var msg wxnotice.MessageLotteryStart
+		err = json.Unmarshal([]byte(p.Data), &msg)
+		if err != nil {
+			// 不可重试的错误，记录日志
+			logx.Error("WxMiniProgramNotifyUserHandler ProcessTask data json unmarshal err",
+				logx.Field("err", err),
+				logx.Field("data", p.Data))
+			return nil
+		}
+		templateId = msg.TemplateId()
+		data, err = power.StructToHashMap(&msg)
+		if err != nil {
+			// 不可重试的错误，记录日志
+			logx.Error("WxMiniProgramNotifyUserHandler ProcessTask data convert err",
+				logx.Field("err", err),
+				logx.Field("data", data))
+			return nil
+		}
+	case wxnotice.TypeWishSign:
+		var msg wxnotice.MessageWishCheckin
+		err := json.Unmarshal([]byte(p.Data), &msg)
+		if err != nil {
+			// 不可重试的错误，记录日志
+			logx.Error("WxMiniProgramNotifyUserHandler ProcessTask data json unmarshal err",
+				logx.Field("err", err),
+				logx.Field("data", p.Data))
+			return nil
+		}
+		templateId = msg.TemplateId()
+		data, err = power.StructToHashMap(&msg)
+		if err != nil {
+			// 不可重试的错误，记录日志
+			logx.Error("WxMiniProgramNotifyUserHandler ProcessTask data convert err",
+				logx.Field("err", err),
+				logx.Field("data", data))
+			return nil
+		}
 	default:
 		logx.Error("WxMiniProgramNotifyUserHandler ProcessTask payload data invalid",
 			logx.Field("payload", p))

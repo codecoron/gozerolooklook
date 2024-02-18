@@ -10,7 +10,7 @@ Mode: dev
 #监控
 Prometheus:
   Host: 0.0.0.0
-  Port: 4014
+  Port: 4029
   Path: /metrics
 
 #链路追踪
