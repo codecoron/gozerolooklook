@@ -17,7 +17,11 @@ type (
 	GetNoticeSubscribePreferenceResp  = pb.GetNoticeSubscribePreferenceResp
 	NoticeLotteryDrawReq              = pb.NoticeLotteryDrawReq
 	NoticeLotteryDrawResp             = pb.NoticeLotteryDrawResp
+	NoticeLotteryStartReq             = pb.NoticeLotteryStartReq
+	NoticeLotteryStartResp            = pb.NoticeLotteryStartResp
 	NoticeSubscribePreference         = pb.NoticeSubscribePreference
+	NoticeWishSignInReq               = pb.NoticeWishSignInReq
+	NoticeWishSignInResp              = pb.NoticeWishSignInResp
 	SaveNoticeSubscribePreferenceReq  = pb.SaveNoticeSubscribePreferenceReq
 	SaveNoticeSubscribePreferenceResp = pb.SaveNoticeSubscribePreferenceResp
 
@@ -25,6 +29,8 @@ type (
 		NoticeLotteryDraw(ctx context.Context, in *NoticeLotteryDrawReq, opts ...grpc.CallOption) (*NoticeLotteryDrawResp, error)
 		GetNoticeSubscribePreference(ctx context.Context, in *GetNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*GetNoticeSubscribePreferenceResp, error)
 		SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error)
+		NoticeLotteryStart(ctx context.Context, in *NoticeLotteryStartReq, opts ...grpc.CallOption) (*NoticeLotteryStartResp, error)
+		NoticeWishSign(ctx context.Context, in *NoticeWishSignInReq, opts ...grpc.CallOption) (*NoticeWishSignInResp, error)
 	}
 
 	defaultNotice struct {
@@ -51,4 +57,14 @@ func (m *defaultNotice) GetNoticeSubscribePreference(ctx context.Context, in *Ge
 func (m *defaultNotice) SaveNoticeSubscribePreference(ctx context.Context, in *SaveNoticeSubscribePreferenceReq, opts ...grpc.CallOption) (*SaveNoticeSubscribePreferenceResp, error) {
 	client := pb.NewNoticeClient(m.cli.Conn())
 	return client.SaveNoticeSubscribePreference(ctx, in, opts...)
+}
+
+func (m *defaultNotice) NoticeLotteryStart(ctx context.Context, in *NoticeLotteryStartReq, opts ...grpc.CallOption) (*NoticeLotteryStartResp, error) {
+	client := pb.NewNoticeClient(m.cli.Conn())
+	return client.NoticeLotteryStart(ctx, in, opts...)
+}
+
+func (m *defaultNotice) NoticeWishSign(ctx context.Context, in *NoticeWishSignInReq, opts ...grpc.CallOption) (*NoticeWishSignInResp, error) {
+	client := pb.NewNoticeClient(m.cli.Conn())
+	return client.NoticeWishSign(ctx, in, opts...)
 }

@@ -144,4 +144,19 @@ scrape_configs:
           app: vote-rpc
           env: dev
 
+  - job_name: 'notic-api'
+    static_configs:
+      - targets: [ 'looklook:4029' ]
+        labels:
+          job: notic-api
+          app: notic-api
+          env: dev
+  - job_name: 'notic-rpc'
+    static_configs:
+      - targets: [ 'looklook:4030' ]
+        labels:
+          job: notic-rpc
+          app: notic-rpc
+          env: dev
+
 
