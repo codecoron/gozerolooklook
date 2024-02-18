@@ -19,6 +19,8 @@ type (
 		taskRecordModel
 		FindByUserId(ctx context.Context, userId int64, builder squirrel.SelectBuilder, orderBy string) ([]*TaskRecord, error)
 		FindByUserIdAndTaskId(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error)
+		FindByUserIdAndTaskIdByDay(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error)
+		FindByUserIdAndTaskIdByWeek(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error)
 	}
 
 	customTaskRecordModel struct {
@@ -63,6 +65,34 @@ func (m *defaultTaskRecordModel) FindByUserId(ctx context.Context, userId int64,
 	switch err {
 	case nil:
 		return resp, nil
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTaskRecordModel) FindByUserIdAndTaskIdByDay(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error) {
+	var resp TaskRecord
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? AND DATE(create_time) = CURDATE() ORDER BY id DESC LIMIT 1", taskRecordRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, userId, taskId)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTaskRecordModel) FindByUserIdAndTaskIdByWeek(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error) {
+	var resp TaskRecord
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? AND WEEK(create_time) = WEEK(CURDATE()) ORDER BY id DESC LIMIT 1", taskRecordRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, userId, taskId)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
 	default:
 		return nil, err
 	}
