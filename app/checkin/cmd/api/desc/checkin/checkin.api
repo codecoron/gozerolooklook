@@ -43,6 +43,16 @@ type Tasks {
     isFinished int64  `json:"isFinished"`
 }
 
+//===========================TaskProgress===========================
+
+type TaskProgress {
+    Id  int64 `json:"id"`
+    UserId int64 `json:"userId"`
+    IsParticipatedLottery int64 `json:"isParticipatedLottery"`
+    IsInitiatedLottery int64 `json:"isInitiatedLottery"`
+    IsSubCheckin int64 `json:"isSubCheckin"`
+}
+
 //===========================Req&&Resp===========================
 
 type (
@@ -72,6 +82,8 @@ type (
     }
     GetTasksResp {
         TasksList             []*Tasks `json:"tasksList"`
+        DayCount              int64 `json:"dayCount"`
+        WeekCount             int64 `json:"weekCount"`
     }
 )
 
@@ -83,6 +95,14 @@ type (
     ClaimRewardResp {
     }
 
+)
+
+type (
+    UpdateSubReq {
+        State                 int64 `json:"state"`
+    }
+    UpdateSubResp {
+    }
 )
 
 

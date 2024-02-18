@@ -58,17 +58,14 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 
 		// 查询积分，任务列表
 		getIntegral, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
-		logx.Error("getIntegral:", getIntegral)
 		// 将getCheckinRecord 复制到 checkinRecord
 		_ = copier.Copy(checkinRecord, getCheckinRecord)
 		_ = copier.Copy(integarl, getIntegral)
 
 		// 将现在的时间转换为UTC时间，然后截断为当天的起始时间，只需要知道日期就行
 		today := time.Now().UTC().Truncate(24 * time.Hour)
-		//logx.Error("现在的日期today:", today)
 		// 也是截断为当天的起始时间
 		targetDate := getCheckinRecord.LastCheckinDate.Time.Truncate(24 * time.Hour)
-		//logx.Error("上次签到的日期targetDate:", targetDate)
 
 		switch {
 		case targetDate.Equal(today):
@@ -107,7 +104,6 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 	if err != nil {
 		return nil, err
 	}
-	logx.Error("integarl.Integral: ", integarl.Integral)
 	return &pb.GetCheckinRecordByUserIdResp{
 		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
 		State:                 checkinRecord.State,

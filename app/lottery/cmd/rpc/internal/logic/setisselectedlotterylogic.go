@@ -8,6 +8,7 @@ import (
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
+	"looklook/common/xerr"
 )
 
 type SetIsSelectedLotteryLogic struct {
@@ -39,7 +40,7 @@ func (l *SetIsSelectedLotteryLogic) SetIsSelectedLottery(in *pb.SetIsSelectedLot
 		if userinfo.User.IsAdmin != 0 {
 			lottery, err := l.svcCtx.LotteryModel.FindOne(l.ctx, in.Id)
 			if err != nil {
-				return err
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_GET_LOTTERY_BYLOTTERYID_ERROR), "SetIsSelectedLottery, id:%v, error: %v", in.Id, err)
 			}
 			if lottery.IsSelected == 1 {
 				lottery.IsSelected = 0
@@ -49,10 +50,10 @@ func (l *SetIsSelectedLotteryLogic) SetIsSelectedLottery(in *pb.SetIsSelectedLot
 			}
 			err = l.svcCtx.LotteryModel.Update(l.ctx, lottery)
 			if err != nil {
-				return err
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_UPDATE_LOTTERY_ERROR), "SetIsSelectedLottery, lottery:%v, error: %v", lottery, err)
 			}
 		} else {
-			return errors.New("没有修改权限")
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_NO_SET_LOTTERY_ISSELECT_PERMISSION_ERROR), "SetIsSelectedLottery, userinfo.User.IsAdmin:%v, error: %v", userinfo.User.IsAdmin, err)
 		}
 		return nil
 	})

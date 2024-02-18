@@ -14,6 +14,7 @@ type Lottery struct {
 	AnnounceType  int64  `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
 	AnnounceTime  int64  `json:"announceTime"`  //开奖时间
 	IsAnnounced   int64  `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
+	SponsorId     int64  `json:"sponsorId"`     // 赞助商Id
 }
 
 type LotteryListReq struct {
@@ -49,6 +50,7 @@ type CreateLotteryReq struct {
 	JoinNumber    int64          `json:"joinNumber"`    //自动开奖人数标准
 	Introduce     string         `json:"introduce"`     //抽奖说明
 	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
+	SponsorId     int64          `json:"sponsorId"`     // 赞助商Id
 	Prizes        []*CreatePrize `json:"prizes"`        //奖品 支持多个
 }
 
@@ -95,6 +97,7 @@ type LotteryDetailResp struct {
 	AnnounceType  int64           `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
 	AnnounceTime  int64           `json:"announceTime"`  //开奖时间
 	IsAnnounced   int64           `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
+	SponsorId     int64           `json:"sponsorId"`     // 赞助商Id
 	Prizes        []*CreatePrize  `json:"prizes"`        //奖品信息
 	Sponsor       *LotterySponsor `json:"sponsor"`       // 抽奖赞助商信息
 }

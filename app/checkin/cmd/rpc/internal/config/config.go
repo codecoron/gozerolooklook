@@ -11,7 +11,6 @@ type Config struct {
 		DataSource string
 	}
 	Cache             cache.CacheConf
-	CheckinRpcConf    zrpc.RpcClientConf
 	UserCenterRpcConf zrpc.RpcClientConf
 	LotteryRpcConf    zrpc.RpcClientConf
 }

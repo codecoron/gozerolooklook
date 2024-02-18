@@ -44,6 +44,7 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.Thumb = in.Thumb
 		lottery.IsSelected = 0
 		lottery.IsAnnounced = 0
+		lottery.SponsorId = in.SponsorId
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {

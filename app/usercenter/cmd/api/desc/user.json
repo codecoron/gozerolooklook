@@ -304,7 +304,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/CreateSponosorResp"
+              "$ref": "#/definitions/CreateSponsorResp"
             }
           }
         },
@@ -314,7 +314,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CreateSponosorReq"
+              "$ref": "#/definitions/CreateSponsorReq"
             }
           }
         ],
@@ -553,10 +553,14 @@
         "id"
       ]
     },
-    "CreateSponosorReq": {
+    "CreateSponsorReq": {
       "type": "object",
       "properties": {
         "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sponsorId": {
           "type": "integer",
           "format": "int64"
         },
@@ -591,9 +595,10 @@
           "type": "string"
         }
       },
-      "title": "CreateSponosorReq",
+      "title": "CreateSponsorReq",
       "required": [
         "userId",
+        "sponsorId",
         "type",
         "appletType",
         "isShow",
@@ -605,7 +610,7 @@
         "inputB"
       ]
     },
-    "CreateSponosorResp": {
+    "CreateSponsorResp": {
       "type": "object",
       "properties": {
         "id": {
@@ -613,7 +618,7 @@
           "format": "int64"
         }
       },
-      "title": "CreateSponosorResp",
+      "title": "CreateSponsorResp",
       "required": [
         "id"
       ]
@@ -751,7 +756,7 @@
       "type": "object",
       "title": "SetAdminResp"
     },
-    "Sponosor": {
+    "Sponsor": {
       "type": "object",
       "properties": {
         "id": {
@@ -759,6 +764,10 @@
           "format": "int64"
         },
         "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sponsorId": {
           "type": "integer",
           "format": "int64"
         },
@@ -793,10 +802,11 @@
           "type": "string"
         }
       },
-      "title": "Sponosor",
+      "title": "Sponsor",
       "required": [
         "id",
         "userId",
+        "sponsorId",
         "type",
         "appletType",
         "isShow",

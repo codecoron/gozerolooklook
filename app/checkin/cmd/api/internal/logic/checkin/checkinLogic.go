@@ -2,13 +2,11 @@ package checkin
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/checkin/cmd/api/internal/svc"
 	"looklook/app/checkin/cmd/api/internal/types"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type CheckinLogic struct {
@@ -26,13 +24,12 @@ func NewCheckinLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckinLo
 }
 
 func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, err error) {
-	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	record, err := l.svcCtx.CheckinRpc.UpdateCheckinRecord(l.ctx, &checkin.UpdateCheckinRecordReq{
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "req: %+v", req)
+		return nil, err
 	}
 
 	return &types.CheckinResp{
