@@ -94,8 +94,19 @@ service usercenter {
 	jwt:    JwtAuth
 )
 service usercenter {
-	@doc "抽奖发起人（赞助商）"
+	@doc "添加 抽奖发起人（赞助商）"
 	@handler addSponsor
 	post /userSponsor/addSponsor (CreateSponsorReq) returns (CreateSponsorResp)
+}
+
+//no need login
+@server (
+	prefix: usercenter/v1
+	group:  userSponsor
+)
+service usercenter {
+	@doc "抽奖发起人（赞助商）详情"
+	@handler sponsorDetail
+	post /userSponsor/sponsorDetail (SponosorDetailReq) returns (SponosorDetailResp)
 }
 

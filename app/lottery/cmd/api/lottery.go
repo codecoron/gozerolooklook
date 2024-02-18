@@ -3,12 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 	"looklook/app/lottery/cmd/api/internal/config"
 	"looklook/app/lottery/cmd/api/internal/handler"
 	"looklook/app/lottery/cmd/api/internal/svc"
-
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/lottery.yaml", "the config file")

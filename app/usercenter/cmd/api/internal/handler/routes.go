@@ -102,4 +102,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/usercenter/v1"),
 	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/userSponsor/sponsorDetail",
+				Handler: userSponsor.SponsorDetailHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/usercenter/v1"),
+	)
 }
