@@ -2,6 +2,7 @@ package userContact
 
 import (
 	"context"
+	"looklook/app/usercenter/cmd/rpc/pb"
 
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
@@ -24,7 +25,11 @@ func NewContactDelLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Contac
 }
 
 func (l *ContactDelLogic) ContactDel(req *types.ContactDelReq) (resp *types.ContactDelResp, err error) {
-	// todo: add your logic here and delete this line
-
+	_, err = l.svcCtx.UsercenterRpc.DelUserContact(l.ctx, &pb.DelUserContactReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
 	return
 }
