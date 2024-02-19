@@ -10,9 +10,9 @@ info (
 
 import (
 	"user/user.api"
-	"user_contact/usercontact.api"
 	"address/address.api"
 	"userSponsor/userSponsor.api"
+	"userContact/userContact.api"
 )
 
 //============================> usercenter v1 <============================
@@ -58,18 +58,6 @@ service usercenter {
 //need login
 @server (
 	prefix: usercenter/v1
-	group:  userContact
-	jwt:    JwtAuth
-)
-service usercenter {
-	@doc "添加联系方式"
-	@handler create
-	post /userContact/create (CreateReq) returns (CreateResp)
-}
-
-//need login
-@server (
-	prefix: usercenter/v1
 	group:  address
 	jwt:    JwtAuth
 )
@@ -108,5 +96,25 @@ service usercenter {
 	@doc "抽奖发起人（赞助商）详情"
 	@handler sponsorDetail
 	post /userSponsor/sponsorDetail (SponosorDetailReq) returns (SponosorDetailResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userContact
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "添加抽奖发起人联系方式"
+	@handler addContact
+	post /userContact/addContact (CreateContactReq) returns (CreateContactResp)
+
+	@doc "我的联系方式列表"
+	@handler contactList
+	post /userContact/contactList (ContactListReq) returns (ContactListResp)
+
+	@doc "批量删除联系方式"
+	@handler ContactDel
+	post /userContact/ContactDel (ContactDelReq) returns (ContactDelResp)
 }
 

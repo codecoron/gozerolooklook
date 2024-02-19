@@ -68,7 +68,7 @@ CREATE TABLE `user_auth`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户授权表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for user_contact
+-- Table structure for user_sponsor
 -- ----------------------------
 DROP TABLE IF EXISTS `user_sponsor`;
 CREATE TABLE `user_sponsor`  (
@@ -129,3 +129,18 @@ CREATE TABLE `user_address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='用户收货地址表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- ----------------------------
+-- Table structure for user_contact
+-- ----------------------------
+DROP TABLE IF EXISTS `user_contact`;
+CREATE TABLE `user_contact`  (
+                                 `id` int(0) NOT NULL AUTO_INCREMENT,
+                                 `user_id` int(0) NOT NULL DEFAULT 0,
+                                 `content` json NOT NULL COMMENT 'content',
+                                 `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'remark',
+                                 `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                 `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
