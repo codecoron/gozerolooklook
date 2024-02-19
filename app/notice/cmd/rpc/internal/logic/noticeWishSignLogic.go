@@ -48,7 +48,7 @@ func (l *NoticeWishSignLogic) NoticeWishSign(in *pb.NoticeWishSignInReq) (*pb.No
 	pageAddr := fmt.Sprintf("pages/detail/prize?lotterId=%d&userId=%d", in.UserId, in.UserId)
 
 	//构建微信消息
-	checkinType := "每日心愿签到"
+	checkinType := "心愿签到"
 	remindText := "别忘记签到哦"
 	msg := wxnotice.MessageWishCheckin{
 		CheckinType: wxnotice.Item{Value: checkinType},
