@@ -405,6 +405,7 @@ func (m *defaultThirdPaymentModel) Delete(ctx context.Context, session sqlx.Sess
 	}, looklookPaymentThirdPaymentIdKey, looklookPaymentThirdPaymentSnKey)
 	return err
 }
+
 func (m *defaultThirdPaymentModel) formatPrimary(primary interface{}) string {
 	return fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, primary)
 }

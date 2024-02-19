@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
-	"looklook/app/usercenter/cmd/rpc/usercenter"
-
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,12 +25,13 @@ func NewLotterySponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lo
 
 func (l *LotterySponsorLogic) LotterySponsor(in *pb.LotterySponsorReq) (*pb.LotterySponsorResp, error) {
 	lotteryId := in.Id
-	// 1 根据lotteryId获取到uid
+	// 1 根据lotteryId获取到uid和sponsorId
 	uid, err := l.svcCtx.LotteryModel.FindUserIdByLotteryId(l.ctx, lotteryId)
 	if err != nil {
 		return nil, err
 	}
 	// 2 根据uid找到对应的user信息，在lotteryModel.go编写sql语句
+	//  todo 根据uid和sponsorId从用户服务获取赞助商信息，返回
 	userInfo, err := l.svcCtx.UserCenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{
 		Id: *uid,
 	})

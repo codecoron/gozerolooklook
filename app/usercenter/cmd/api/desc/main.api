@@ -1,0 +1,112 @@
+syntax = "v1"
+
+info (
+	title:   "用户中心服务"
+	desc:    "用户中心服务"
+	author:  "王中阳"
+	email:   "425772719@qq.com"
+	version: "v1"
+)
+
+import (
+	"user/user.api"
+	"user_contact/usercontact.api"
+	"address/address.api"
+	"userSponsor/userSponsor.api"
+)
+
+//============================> usercenter v1 <============================
+//no need login
+@server (
+	prefix: usercenter/v1
+	group:  user
+)
+service usercenter {
+	@doc "注册"
+	@handler register
+	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@doc "登录"
+	@handler login
+	post /user/login (LoginReq) returns (LoginResp)
+
+	@doc "小程序注册登录"
+	@handler wxMiniAuth
+	post /user/wxMiniAuth (WXMiniAuthReq) returns (WXMiniAuthResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  user
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "获得用户数据"
+	@handler detail
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
+
+	@doc "修改用户基本信息"
+	@handler update
+	put /user/update (UserUpdateReq) returns (UserUpdateResp)
+
+	@doc "设置user为admin"
+	@handler setAdmin
+	post /user/setAdmin (SetAdminReq) returns (SetAdminResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userContact
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "添加联系方式"
+	@handler create
+	post /userContact/create (CreateReq) returns (CreateResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  address
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "收货地址列表"
+	@handler addressList
+	post /user/addressList (AddressListReq) returns (AddressListResp)
+
+	@doc "添加收货地址"
+	@handler addAddress
+	post /user/addAddress (AddAddressReq) returns (AddAddressResp)
+
+	@doc "识别并转换收货地址"
+	@handler convertAddress
+	post /user/convertAddress (ConvertAddressReq) returns (ConvertAddressResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userSponsor
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "添加 抽奖发起人（赞助商）"
+	@handler addSponsor
+	post /userSponsor/addSponsor (CreateSponsorReq) returns (CreateSponsorResp)
+}
+
+//no need login
+@server (
+	prefix: usercenter/v1
+	group:  userSponsor
+)
+service usercenter {
+	@doc "抽奖发起人（赞助商）详情"
+	@handler sponsorDetail
+	post /userSponsor/sponsorDetail (SponosorDetailReq) returns (SponosorDetailResp)
+}
+

@@ -65,10 +65,11 @@ type (
 		IsSelected    int64        `db:"is_selected"`    // 是否精选 1是 0否
 		AnnounceType  int64        `db:"announce_type"`  // 开奖设置：1按时间开奖 2按人数开奖 3即抽即中
 		AnnounceTime  time.Time    `db:"announce_time"`  // 开奖时间
+		IsAnnounced   int64        `db:"is_announced"`   // 是否开奖：0未开奖；1已经开奖
 		CreateTime    time.Time    `db:"create_time"`
 		UpdateTime    time.Time    `db:"update_time"`
-		DeleteTime    sql.NullTime `db:"delete_time"`  // 删除时间
-		IsAnnounced   int64        `db:"is_announced"` // 是否开奖：0未开奖；1已经开奖
+		DeleteTime    sql.NullTime `db:"delete_time"` // 删除时间
+		SponsorId     int64        `db:"sponsor_id"`  // 发起抽奖赞助商ID
 	}
 )
 
@@ -108,8 +109,8 @@ func (m *defaultLotteryModel) FindOne(ctx context.Context, id int64) (*Lottery, 
 func (m *defaultLotteryModel) Insert(ctx context.Context, data *Lottery) (sql.Result, error) {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.DeleteTime, data.IsAnnounced)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.IsAnnounced, data.DeleteTime, data.SponsorId)
 	}, lotteryLotteryIdKey)
 	return ret, err
 }
@@ -117,8 +118,8 @@ func (m *defaultLotteryModel) Insert(ctx context.Context, data *Lottery) (sql.Re
 func (m *defaultLotteryModel) TransInsert(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.DeleteTime, data.IsAnnounced)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, lotteryRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.IsAnnounced, data.DeleteTime, data.SponsorId)
 	}, lotteryLotteryIdKey)
 	return ret, err
 }
@@ -126,7 +127,7 @@ func (m *defaultLotteryModel) Update(ctx context.Context, data *Lottery) error {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, lotteryRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.DeleteTime, data.IsAnnounced, data.Id)
+		return conn.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.IsAnnounced, data.DeleteTime, data.SponsorId, data.Id)
 	}, lotteryLotteryIdKey)
 	return err
 }
@@ -135,7 +136,7 @@ func (m *defaultLotteryModel) TransUpdate(ctx context.Context, session sqlx.Sess
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, lotteryRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.DeleteTime, data.IsAnnounced, data.Id)
+		return session.ExecCtx(ctx, query, data.UserId, data.Name, data.Thumb, data.PublishTime, data.JoinNumber, data.Introduce, data.AwardDeadline, data.IsSelected, data.AnnounceType, data.AnnounceTime, data.IsAnnounced, data.DeleteTime, data.SponsorId, data.Id)
 	}, lotteryLotteryIdKey)
 	return err
 }

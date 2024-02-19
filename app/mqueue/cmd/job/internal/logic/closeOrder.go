@@ -12,7 +12,6 @@ import (
 	"looklook/common/xerr"
 )
 
-
 var ErrCloseOrderFal = xerr.NewErrMsg("close order fail")
 
 // CloseHomestayOrderHandler close no pay homestayOrder
@@ -22,7 +21,7 @@ type CloseHomestayOrderHandler struct {
 
 func NewCloseHomestayOrderHandler(svcCtx *svc.ServiceContext) *CloseHomestayOrderHandler {
 	return &CloseHomestayOrderHandler{
-		svcCtx:svcCtx,
+		svcCtx: svcCtx,
 	}
 }
 

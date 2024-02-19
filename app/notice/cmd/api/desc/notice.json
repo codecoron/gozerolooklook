@@ -60,10 +60,62 @@
         "consumes": [
           "multipart/form-data"
         ]
+      },
+      "post": {
+        "summary": "接收小程序回调消息",
+        "operationId": "receiveEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ReceiveEventResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReceiveEventReq"
+            }
+          }
+        ],
+        "tags": [
+          "event"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
       }
     }
   },
   "definitions": {
+    "ReceiveEventReq": {
+      "type": "object",
+      "properties": {
+        "signature": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "string"
+        }
+      },
+      "title": "ReceiveEventReq",
+      "required": [
+        "signature",
+        "timestamp",
+        "nonce"
+      ]
+    },
+    "ReceiveEventResp": {
+      "type": "object",
+      "title": "ReceiveEventResp"
+    },
     "VerifyEventReq": {
       "type": "object",
       "properties": {

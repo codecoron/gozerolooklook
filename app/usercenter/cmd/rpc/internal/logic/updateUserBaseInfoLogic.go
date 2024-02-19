@@ -37,7 +37,10 @@ func (l *UpdateUserBaseInfoLogic) UpdateUserBaseInfo(in *pb.UpdateUserBaseInfoRe
 		user.Sex = in.Sex
 		user.Info = in.Info
 		user.Avatar = in.Avatar
-		_, err = l.svcCtx.UserModel.Update(context, session, user)
+		user.Signature = in.Signature
+		user.Longitude = in.Longitude
+		user.Latitude = in.Latitude
+		err = l.svcCtx.UserModel.Update(context, user)
 		if err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "update user base info err:%v,user:%+v", err, user)
 		}

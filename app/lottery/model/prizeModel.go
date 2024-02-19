@@ -4,8 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/xerr"
 )
 
 var _ PrizeModel = (*customPrizeModel)(nil)
@@ -19,6 +21,7 @@ type (
 		TransInsert(ctx context.Context, session sqlx.Session, data *Prize) (sql.Result, error)
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		FindByLotteryId(ctx context.Context, lotteryId int64) ([]*Prize, error)
+		FindPageByLotteryId(ctx context.Context, lotteryId int64, offset int64, limit int64) ([]*Prize, error)
 	}
 
 	customPrizeModel struct {
@@ -52,6 +55,15 @@ func (m *defaultPrizeModel) FindByLotteryId(ctx context.Context, lotteryId int64
 	var resp []*Prize
 	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ?", m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, lotteryId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_PRIZES_BYLOTTERYID_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lotteryId:%v, error: %v", &resp, query, lotteryId, err)
+	}
+	return resp, nil
+}
+func (m *defaultPrizeModel) FindPageByLotteryId(ctx context.Context, lotteryId int64, offset int64, limit int64) ([]*Prize, error) {
+	var resp []*Prize
+	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ? limit ?,?", m.table)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, lotteryId, (offset-1)*limit, limit)
 	if err != nil {
 		return nil, err
 	}

@@ -7,6 +7,7 @@ import (
 	address "looklook/app/usercenter/cmd/api/internal/handler/address"
 	user "looklook/app/usercenter/cmd/api/internal/handler/user"
 	userContact "looklook/app/usercenter/cmd/api/internal/handler/userContact"
+	userSponsor "looklook/app/usercenter/cmd/api/internal/handler/userSponsor"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -17,13 +18,35 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/register",
-				Handler: user.RegisterHandler(serverCtx),
+				Path:    "/user/addAddress",
+				Handler: address.AddAddressHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/addressList",
+				Handler: address.AddressListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/convertAddress",
+				Handler: address.ConvertAddressHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/login",
 				Handler: user.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/register",
+				Handler: user.RegisterHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -43,13 +66,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/update",
-				Handler: user.UpdateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/user/setAdmin",
 				Handler: user.SetAdminHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/user/update",
+				Handler: user.UpdateHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
@@ -72,21 +95,22 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/addressList",
-				Handler: address.AddressListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/addAddress",
-				Handler: address.AddAddressHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/convertAddress",
-				Handler: address.ConvertAddressHandler(serverCtx),
+				Path:    "/userSponsor/addSponsor",
+				Handler: userSponsor.AddSponsorHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/userSponsor/sponsorDetail",
+				Handler: userSponsor.SponsorDetailHandler(serverCtx),
+			},
+		},
 		rest.WithPrefix("/usercenter/v1"),
 	)
 }

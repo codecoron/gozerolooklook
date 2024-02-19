@@ -6,12 +6,15 @@ type Lottery struct {
 	UserId        int64  `json:"userId"`        //发起抽奖用户ID
 	Name          string `json:"name"`          //默认一等奖名称
 	Thumb         string `json:"thumb"`         //默认一等奖配图
-	PublishType   int64  `json:"publishType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	IsSelected    int64  `json:"isSelected"`    //是否精选 1是 0否
-	PublishTime   int64  `json:"publish_time"`  //开奖时间
-	JoinNumber    int64  `json:"join_number"`   //自动开奖人数标准
+	PublishTime   int64  `json:"publishTime"`   //发布抽奖时间
+	JoinNumber    int64  `json:"joinNumber"`    //自动开奖人数标准
 	Introduce     string `json:"introduce"`     //抽奖说明
 	AwardDeadline int64  `json:"awardDeadline"` //领奖截止时间
+	IsSelected    int64  `json:"isSelected"`    //是否精选 1是 0否
+	AnnounceType  int64  `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64  `json:"announceTime"`  //开奖时间
+	IsAnnounced   int64  `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
+	SponsorId     int64  `json:"sponsorId"`     // 赞助商Id
 }
 
 type LotteryListReq struct {
@@ -44,9 +47,10 @@ type CreateLotteryReq struct {
 	Thumb         string         `json:"thumb"`         //默认一等奖配图
 	AnnounceType  int64          `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
 	AnnounceTime  int64          `json:"announceTime"`  //开奖时间
-	JoinNumber    int64          `json:"join_number"`   //自动开奖人数标准
+	JoinNumber    int64          `json:"joinNumber"`    //自动开奖人数标准
 	Introduce     string         `json:"introduce"`     //抽奖说明
 	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
+	SponsorId     int64          `json:"sponsorId"`     // 赞助商Id
 	Prizes        []*CreatePrize `json:"prizes"`        //奖品 支持多个
 }
 
@@ -69,30 +73,79 @@ type SetLotteryIsSelectedResp struct {
 	IsSelected int64 `json:"isSelected"`
 }
 
+type LotterySponsor struct {
+	Id       int64  `json:"id"`       // 赞助商Id
+	NickName string `json:"nickName"` // 赞助商昵称
+	Avatar   string `json:"avatar"`   // 赞助商头像
+	Info     string `json:"info"`     // 赞助商信息
+}
+
 type LotteryDetailReq struct {
 	Id int64 `json:"id"`
 }
 
 type LotteryDetailResp struct {
-	Id            int64          `json:"id"`
-	Name          string         `json:"name"`
-	UserId        int64          `json:"userId"`        //发起抽奖用户ID
-	PublishType   int64          `json:"publishType"`   //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	IsSelected    int64          `json:"isSelected"`    //是否精选 1是 0否
-	PublishTime   int64          `json:"publish_time"`  //开奖时间
-	JoinNumber    int64          `json:"join_number"`   //自动开奖人数标准
-	Introduce     string         `json:"introduce"`     //抽奖说明
-	AwardDeadline int64          `json:"awardDeadline"` //领奖截止时间
-	Prizes        []*CreatePrize `json:"prizes"`        //奖品信息
+	Id            int64           `json:"id"`
+	UserId        int64           `json:"userId"`        //发起抽奖用户ID
+	Name          string          `json:"name"`          //默认一等奖名称
+	Thumb         string          `json:"thumb"`         //默认一等奖配图
+	PublishTime   int64           `json:"publishTime"`   //发布抽奖时间
+	JoinNumber    int64           `json:"joinNumber"`    //自动开奖人数标准
+	Introduce     string          `json:"introduce"`     //抽奖说明
+	AwardDeadline int64           `json:"awardDeadline"` //领奖截止时间
+	IsSelected    int64           `json:"isSelected"`    //是否精选 1是 0否
+	AnnounceType  int64           `json:"announceType"`  //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64           `json:"announceTime"`  //开奖时间
+	IsAnnounced   int64           `json:"isAnnounced"`   // 是否已经开奖：0未开奖 1已开奖
+	SponsorId     int64           `json:"sponsorId"`     // 赞助商Id
+	Prizes        []*CreatePrize  `json:"prizes"`        //奖品信息
+	Sponsor       *LotterySponsor `json:"sponsor"`       // 抽奖赞助商信息
 }
 
-type LotterySponsorReq struct {
-	Id int64 `json:"id"`
+type CheckIsParticipatedReq struct {
+	LotteryId int64 `json:"lotteryId"` // 当前抽奖Id
 }
 
-type LotterySponsorResp struct {
-	Id       int64  `json:"id"`
-	NickName string `json:"nickName"`
-	Avatar   string `json:"avatar"`
-	Info     string `json:"info"`
+type CheckIsParticipatedResp struct {
+	IsParticipated int64 `json:"isParticipated"` // 当前用户是否参与了当前抽奖： 0未参与 1已参与
+}
+
+type TestReq struct {
+	Age        int64  `json:"age" validate:"gte=1,lte=130"`
+	Name       string `json:"name" validate:"required"`
+	Email      string `json:"email" validate:"required,email"`
+	Password   string `json:"password" validate:"required"`
+	RePassword string `json:"re_password" validate:"required"`
+	Date       string `json:"date" validate:"required,datetime=2006-01-02,checkDate"`
+}
+
+type TestResp struct {
+}
+
+type AddLotteryParticipationReq struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type AddLotteryParticipationResp struct {
+}
+
+type SearchLotteryParticipationReq struct {
+	LotteryId int64 `json:"lotteryId"`
+	PageIndex int64 `json:"pageIndex"`
+	PageSize  int64 `json:"pageSize"`
+}
+
+type UserInfo struct {
+	Mobile       string `json:"mobile"`
+	Nickname     string `json:"nickname"`
+	Sex          int64  `json:"sex"`
+	Avatar       string `json:"avatar"`
+	Info         string `json:"info"`
+	Signature    string `json:"signature"`
+	LocationName string `json:"locationName"`
+}
+
+type SearchLotteryParticipationResp struct {
+	Count int64       `json:"count"`
+	List  []*UserInfo `json:"list"`
 }

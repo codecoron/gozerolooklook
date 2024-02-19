@@ -18,6 +18,9 @@ Telemetry:
 
 Log:
   ServiceName: mqueue-job
+  Mode: console
+  # 打印堆栈信息 方便查询错误
+  Encoding: plain
   Level: error
 
 Redis:
@@ -27,8 +30,12 @@ Redis:
 
 #WxMiniConf
 WxMiniConf:
-  AppId: wx2add729fadddddd
-  Secret: 20365395b3de9b2a9351ddddddd
+  AppId: wx0fe80d42b0d37cc8
+  Secret: 495f7df09f227dde93f57f875a8f0e9f
+
+WxMsgConf:
+  EventToken: RKeAteaxQU5zH16Wywq1v4nuOj2J4L6t
+  EncodingAESKey: 4HkPH9w1HyZR45ayqTGhYM2OmINT7rp2VCkSxpwuClz
 
 #rpc service.
 OrderRpcConf:
@@ -40,3 +47,19 @@ UsercenterRpcConf:
   Endpoints:
     - 127.0.0.1:2004
   NonBlock: true
+
+LotteryRpcConf:
+  Endpoints:
+    - 127.0.0.1:2005
+  NonBlock: true
+
+NoticeRpcConf:
+  Endpoints:
+    - 127.0.0.1:2006
+  NonBlock: true
+  Timeout: 500000 #调试
+
+  CheckinRpcConf:
+    Endpoints:
+      - 127.0.0.1:2007
+    NonBlock: true

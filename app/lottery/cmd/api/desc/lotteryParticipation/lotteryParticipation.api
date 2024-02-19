@@ -1,0 +1,37 @@
+syntax = "v1"
+
+info (
+	title:   "参与抽奖"
+	desc:    "参与抽奖"
+	author:  "jiangxue"
+	email:   "896419134@qq.com"
+	version: "v1"
+)
+
+type AddLotteryParticipationReq {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type AddLotteryParticipationResp {
+}
+
+type SearchLotteryParticipationReq {
+	LotteryId int64 `json:"lotteryId"`
+	PageIndex int64 `json:"pageIndex"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type UserInfo {
+	Mobile    		 string `json:"mobile"`
+	Nickname         string `json:"nickname"`
+	Sex              int64 `json:"sex"`
+	Avatar           string `json:"avatar"`
+	Info             string `json:"info"`
+	Signature        string `json:"signature"`
+	LocationName     string `json:"locationName"`
+}
+
+type SearchLotteryParticipationResp {
+	Count int64 `json:"count"`
+	List []*UserInfo `json:"list"`
+}

@@ -17,7 +17,7 @@ func {{.HandlerName}}(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		validateErr := validate.Validate(&req)
+		validateErr := translator.Validate(&req)
         if validateErr != nil {
             result.ParamErrorResult(r, w, validateErr)
             return

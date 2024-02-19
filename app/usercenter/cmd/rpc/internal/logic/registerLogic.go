@@ -47,7 +47,7 @@ func (l *RegisterLogic) Register(in *usercenter.RegisterReq) (*usercenter.Regist
 		if len(in.Password) > 0 {
 			user.Password = tool.Md5ByString(in.Password)
 		}
-		insertResult, err := l.svcCtx.UserModel.Insert(ctx, session, user)
+		insertResult, err := l.svcCtx.UserModel.Insert(ctx, user)
 		if err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Register db user Insert err:%v,user:%+v", err, user)
 		}

@@ -10,6 +10,7 @@
 data/*
 !data/.gitkeep
 test/
+deploy/script/mysql/genModel
 
 # gitlab ci
 .cache
@@ -24,3 +25,5 @@ default.etcd
 
 docker-compose-changlin.yml
 
+#package powerwechat log
+wechat

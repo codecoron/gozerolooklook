@@ -63,6 +63,26 @@ func (s *LotteryServer) LotterySponsor(ctx context.Context, in *pb.LotterySponso
 	return l.LotterySponsor(in)
 }
 
+func (s *LotteryServer) AnnounceLottery(ctx context.Context, in *pb.AnnounceLotteryReq) (*pb.AnnounceLotteryResp, error) {
+	l := logic.NewAnnounceLotteryLogic(ctx, s.svcCtx)
+	return l.AnnounceLottery(in)
+}
+
+func (s *LotteryServer) CheckUserCreatedLottery(ctx context.Context, in *pb.CheckUserCreatedLotteryReq) (*pb.CheckUserCreatedLotteryResp, error) {
+	l := logic.NewCheckUserCreatedLotteryLogic(ctx, s.svcCtx)
+	return l.CheckUserCreatedLottery(in)
+}
+
+func (s *LotteryServer) CheckUserCreatedLotteryAndToday(ctx context.Context, in *pb.CheckUserCreatedLotteryAndTodayReq) (*pb.CheckUserCreatedLotteryAndTodayResp, error) {
+	l := logic.NewCheckUserCreatedLotteryAndTodayLogic(ctx, s.svcCtx)
+	return l.CheckUserCreatedLotteryAndToday(in)
+}
+
+func (s *LotteryServer) CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *pb.CheckUserCreatedLotteryAndThisWeekReq) (*pb.CheckUserCreatedLotteryAndThisWeekResp, error) {
+	l := logic.NewCheckUserCreatedLotteryAndThisWeekLogic(ctx, s.svcCtx)
+	return l.CheckUserCreatedLotteryAndThisWeek(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
@@ -87,4 +107,40 @@ func (s *LotteryServer) GetPrizeById(ctx context.Context, in *pb.GetPrizeByIdReq
 func (s *LotteryServer) SearchPrize(ctx context.Context, in *pb.SearchPrizeReq) (*pb.SearchPrizeResp, error) {
 	l := logic.NewSearchPrizeLogic(ctx, s.svcCtx)
 	return l.SearchPrize(in)
+}
+
+func (s *LotteryServer) GetPrizeListByLotteryId(ctx context.Context, in *pb.GetPrizeListByLotteryIdReq) (*pb.GetPrizeListByLotteryIdResp, error) {
+	l := logic.NewGetPrizeListByLotteryIdLogic(ctx, s.svcCtx)
+	return l.GetPrizeListByLotteryId(in)
+}
+
+// -----------------------参与抽奖-----------------------
+func (s *LotteryServer) AddLotteryParticipation(ctx context.Context, in *pb.AddLotteryParticipationReq) (*pb.AddLotteryParticipationResp, error) {
+	l := logic.NewAddLotteryParticipationLogic(ctx, s.svcCtx)
+	return l.AddLotteryParticipation(in)
+}
+
+func (s *LotteryServer) SearchLotteryParticipation(ctx context.Context, in *pb.SearchLotteryParticipationReq) (*pb.SearchLotteryParticipationResp, error) {
+	l := logic.NewSearchLotteryParticipationLogic(ctx, s.svcCtx)
+	return l.SearchLotteryParticipation(in)
+}
+
+func (s *LotteryServer) GetParticipationUserIdsByLotteryId(ctx context.Context, in *pb.GetParticipationUserIdsByLotteryIdReq) (*pb.GetParticipationUserIdsByLotteryIdResp, error) {
+	l := logic.NewGetParticipationUserIdsByLotteryIdLogic(ctx, s.svcCtx)
+	return l.GetParticipationUserIdsByLotteryId(in)
+}
+
+func (s *LotteryServer) CheckIsParticipated(ctx context.Context, in *pb.CheckIsParticipatedReq) (*pb.CheckIsParticipatedResp, error) {
+	l := logic.NewCheckIsParticipatedLogic(ctx, s.svcCtx)
+	return l.CheckIsParticipated(in)
+}
+
+func (s *LotteryServer) GetSelectedLotteryStatistic(ctx context.Context, in *pb.GetSelectedLotteryStatisticReq) (*pb.GetSelectedLotteryStatisticResp, error) {
+	l := logic.NewGetSelectedLotteryStatisticLogic(ctx, s.svcCtx)
+	return l.GetSelectedLotteryStatistic(in)
+}
+
+func (s *LotteryServer) CheckSelectedLotteryParticipated(ctx context.Context, in *pb.CheckSelectedLotteryParticipatedReq) (*pb.CheckSelectedLotteryParticipatedResp, error) {
+	l := logic.NewCheckSelectedLotteryParticipatedLogic(ctx, s.svcCtx)
+	return l.CheckSelectedLotteryParticipated(in)
 }
