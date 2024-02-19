@@ -302,7 +302,6 @@ message GetUserContactByIdResp {
 message SearchUserContactReq {
   int64 page = 1; //page
   int64 limit = 2; //limit
-  int64 id = 3; //id
   int64 userId = 4; //userId
 }
 
@@ -609,6 +608,7 @@ service usercenter{
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
   rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp);
   rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp);
+  rpc SearchUserContact(SearchUserContactReq) returns (SearchUserContactResp);
   //-----------------------userShop-----------------------
   rpc AddUserShop(AddUserShopReq) returns (AddUserShopResp);
   rpc UpdateUserShop(UpdateUserShopReq) returns (UpdateUserShopResp);

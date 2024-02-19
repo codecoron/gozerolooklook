@@ -324,15 +324,15 @@
         ]
       }
     },
-    "usercenter/v1/userContact/myContactList": {
+    "usercenter/v1/userContact/contactList": {
       "post": {
         "summary": "我的联系方式列表",
-        "operationId": "myContactList",
+        "operationId": "contactList",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/MyContactListResp"
+              "$ref": "#/definitions/ContactListResp"
             }
           }
         },
@@ -342,7 +342,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/MyContactListReq"
+              "$ref": "#/definitions/ContactListReq"
             }
           }
         ],
@@ -578,6 +578,39 @@
         "remark"
       ]
     },
+    "ContactListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ContactListReq",
+      "required": [
+        "page",
+        "pageSize"
+      ]
+    },
+    "ContactListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contact"
+          }
+        }
+      },
+      "title": "ContactListResp",
+      "required": [
+        "list"
+      ]
+    },
     "ConvertAddressReq": {
       "type": "object",
       "properties": {
@@ -769,25 +802,6 @@
         "accessToken",
         "accessExpire",
         "refreshAfter"
-      ]
-    },
-    "MyContactListReq": {
-      "type": "object",
-      "title": "MyContactListReq"
-    },
-    "MyContactListResp": {
-      "type": "object",
-      "properties": {
-        "list": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Contact"
-          }
-        }
-      },
-      "title": "MyContactListResp",
-      "required": [
-        "list"
       ]
     },
     "RegisterReq": {

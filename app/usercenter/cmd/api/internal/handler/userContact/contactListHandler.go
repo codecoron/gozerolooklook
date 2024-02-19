@@ -12,9 +12,9 @@ import (
 	"looklook/app/usercenter/cmd/api/internal/types"
 )
 
-func MyContactListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func ContactListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.MyContactListReq
+		var req types.ContactListReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
@@ -26,8 +26,8 @@ func MyContactListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := userContact.NewMyContactListLogic(r.Context(), svcCtx)
-		resp, err := l.MyContactList(&req)
+		l := userContact.NewContactListLogic(r.Context(), svcCtx)
+		resp, err := l.ContactList(&req)
 
 		result.HttpResult(r, w, resp, err)
 	}

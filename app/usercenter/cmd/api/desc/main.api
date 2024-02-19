@@ -110,8 +110,8 @@ service usercenter {
 	post /userContact/addContact (CreateContactReq) returns (CreateContactResp)
 
 	@doc "我的联系方式列表"
-	@handler myContactList
-	post /userContact/myContactList (MyContactListReq) returns (MyContactListResp)
+	@handler contactList
+	post /userContact/contactList (ContactListReq) returns (ContactListResp)
 
 	@doc "批量删除联系方式"
 	@handler ContactDel

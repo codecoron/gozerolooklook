@@ -93,8 +93,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/userContact/myContactList",
-				Handler: userContact.MyContactListHandler(serverCtx),
+				Path:    "/userContact/contactList",
+				Handler: userContact.ContactListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

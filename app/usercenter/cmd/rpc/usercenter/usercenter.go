@@ -137,6 +137,7 @@ type (
 		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
 		DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
 		GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
+		SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
 		// -----------------------userShop-----------------------
 		AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error)
 		UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error)
@@ -311,6 +312,11 @@ func (m *defaultUsercenter) DelUserContact(ctx context.Context, in *DelUserConta
 func (m *defaultUsercenter) GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GetUserContactById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserContact(ctx, in, opts...)
 }
 
 // -----------------------userShop-----------------------

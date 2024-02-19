@@ -51,6 +51,15 @@ type ContactDetailResp struct {
 	Remark  string `json:"remark"`
 }
 
+type ContactListReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type ContactListResp struct {
+	List []Contact `json:"list"`
+}
+
 type ConvertAddressReq struct {
 	OriginalAddressInfo string `json:"originalAddressInfo"`
 }
@@ -106,13 +115,6 @@ type LoginResp struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
 	RefreshAfter int64  `json:"refreshAfter"`
-}
-
-type MyContactListReq struct {
-}
-
-type MyContactListResp struct {
-	List []Contact `json:"list"`
 }
 
 type RegisterReq struct {

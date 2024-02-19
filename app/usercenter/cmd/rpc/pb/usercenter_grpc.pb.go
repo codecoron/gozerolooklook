@@ -48,6 +48,7 @@ const (
 	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
 	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
 	Usercenter_GetUserContactById_FullMethodName   = "/pb.usercenter/GetUserContactById"
+	Usercenter_SearchUserContact_FullMethodName    = "/pb.usercenter/SearchUserContact"
 	Usercenter_AddUserShop_FullMethodName          = "/pb.usercenter/AddUserShop"
 	Usercenter_UpdateUserShop_FullMethodName       = "/pb.usercenter/UpdateUserShop"
 	Usercenter_DelUserShop_FullMethodName          = "/pb.usercenter/DelUserShop"
@@ -99,6 +100,7 @@ type UsercenterClient interface {
 	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
 	DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
 	GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
+	SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error)
 	// -----------------------userShop-----------------------
 	AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error)
 	UpdateUserShop(ctx context.Context, in *UpdateUserShopReq, opts ...grpc.CallOption) (*UpdateUserShopResp, error)
@@ -383,6 +385,15 @@ func (c *usercenterClient) GetUserContactById(ctx context.Context, in *GetUserCo
 	return out, nil
 }
 
+func (c *usercenterClient) SearchUserContact(ctx context.Context, in *SearchUserContactReq, opts ...grpc.CallOption) (*SearchUserContactResp, error) {
+	out := new(SearchUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *usercenterClient) AddUserShop(ctx context.Context, in *AddUserShopReq, opts ...grpc.CallOption) (*AddUserShopResp, error) {
 	out := new(AddUserShopResp)
 	err := c.cc.Invoke(ctx, Usercenter_AddUserShop_FullMethodName, in, out, opts...)
@@ -520,6 +531,7 @@ type UsercenterServer interface {
 	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
 	DelUserContact(context.Context, *DelUserContactReq) (*DelUserContactResp, error)
 	GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error)
+	SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error)
 	// -----------------------userShop-----------------------
 	AddUserShop(context.Context, *AddUserShopReq) (*AddUserShopResp, error)
 	UpdateUserShop(context.Context, *UpdateUserShopReq) (*UpdateUserShopResp, error)
@@ -626,6 +638,9 @@ func (UnimplementedUsercenterServer) DelUserContact(context.Context, *DelUserCon
 }
 func (UnimplementedUsercenterServer) GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserContactById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserContact(context.Context, *SearchUserContactReq) (*SearchUserContactResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserContact not implemented")
 }
 func (UnimplementedUsercenterServer) AddUserShop(context.Context, *AddUserShopReq) (*AddUserShopResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserShop not implemented")
@@ -1195,6 +1210,24 @@ func _Usercenter_GetUserContactById_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_SearchUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserContact(ctx, req.(*SearchUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Usercenter_AddUserShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddUserShopReq)
 	if err := dec(in); err != nil {
@@ -1515,6 +1548,10 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserContactById",
 			Handler:    _Usercenter_GetUserContactById_Handler,
+		},
+		{
+			MethodName: "SearchUserContact",
+			Handler:    _Usercenter_SearchUserContact_Handler,
 		},
 		{
 			MethodName: "AddUserShop",

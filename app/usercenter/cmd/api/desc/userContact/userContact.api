@@ -42,9 +42,11 @@ type (
 )
 
 type (
-    MyContactListReq {
+    ContactListReq {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
     }
-    MyContactListResp {
+    ContactListResp {
         List []Contact `json:"list"`
     }
 )
