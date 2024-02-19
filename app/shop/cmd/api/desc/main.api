@@ -1,0 +1,25 @@
+syntax = "v1"
+
+info (
+	title:   "type title here"
+	desc:    "type desc here"
+	author:  "type author here"
+	email:   "type email here"
+	version: "type version here"
+)
+
+import (
+	"goods/goods.api"
+)
+
+@server (
+	prefix: shop/v1
+	group:  goodsInfo
+	jwt:    JwtAuth
+)
+service goods {
+	@doc "查询商品信息"
+	@handler query
+	post /goodsInfo/query (GoodsInfoReq) returns (GoodsInfoResp)
+}
+
