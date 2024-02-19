@@ -268,15 +268,15 @@
         ]
       }
     },
-    "usercenter/v1/userContact/create": {
+    "usercenter/v1/userContact/ContactDel": {
       "post": {
-        "summary": "添加联系方式",
-        "operationId": "create",
+        "summary": "批量删除联系方式",
+        "operationId": "ContactDel",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/CreateResp"
+              "$ref": "#/definitions/ContactDelResp"
             }
           }
         },
@@ -286,7 +286,63 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CreateReq"
+              "$ref": "#/definitions/ContactDelReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userContact"
+        ]
+      }
+    },
+    "usercenter/v1/userContact/addContact": {
+      "post": {
+        "summary": "添加抽奖发起人联系方式",
+        "operationId": "addContact",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateContactResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateContactReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userContact"
+        ]
+      }
+    },
+    "usercenter/v1/userContact/myContactList": {
+      "post": {
+        "summary": "我的联系方式列表",
+        "operationId": "myContactList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/MyContactListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MyContactListReq"
             }
           }
         ],
@@ -442,7 +498,7 @@
         "list"
       ]
     },
-    "ContactInfo": {
+    "Contact": {
       "type": "object",
       "properties": {
         "id": {
@@ -453,7 +509,58 @@
           "type": "integer",
           "format": "int64"
         },
-        "type": {
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "Contact",
+      "required": [
+        "id",
+        "userId",
+        "content",
+        "remark"
+      ]
+    },
+    "ContactDelReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "ContactDelReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ContactDelResp": {
+      "type": "object",
+      "title": "ContactDelResp"
+    },
+    "ContactDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ContactDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ContactDetailResp": {
+      "type": "object",
+      "properties": {
+        "id": {
           "type": "integer",
           "format": "int64"
         },
@@ -464,38 +571,11 @@
           "type": "string"
         }
       },
-      "title": "ContactInfo",
+      "title": "ContactDetailResp",
       "required": [
         "id",
-        "userId",
-        "type",
         "content",
         "remark"
-      ]
-    },
-    "ContactInfoReq": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "ContactInfoReq",
-      "required": [
-        "id"
-      ]
-    },
-    "ContactInfoResp": {
-      "type": "object",
-      "properties": {
-        "contactInfo": {
-          "$ref": "#/definitions/ContactInfo"
-        }
-      },
-      "title": "ContactInfoResp",
-      "required": [
-        "contactInfo"
       ]
     },
     "ConvertAddressReq": {
@@ -519,13 +599,9 @@
       },
       "title": "ConvertAddressResp"
     },
-    "CreateReq": {
+    "CreateContactReq": {
       "type": "object",
       "properties": {
-        "type": {
-          "type": "integer",
-          "format": "int64"
-        },
         "content": {
           "type": "string"
         },
@@ -533,14 +609,13 @@
           "type": "string"
         }
       },
-      "title": "CreateReq",
+      "title": "CreateContactReq",
       "required": [
-        "type",
         "content",
         "remark"
       ]
     },
-    "CreateResp": {
+    "CreateContactResp": {
       "type": "object",
       "properties": {
         "id": {
@@ -548,7 +623,7 @@
           "format": "int64"
         }
       },
-      "title": "CreateResp",
+      "title": "CreateContactResp",
       "required": [
         "id"
       ]
@@ -694,6 +769,25 @@
         "accessToken",
         "accessExpire",
         "refreshAfter"
+      ]
+    },
+    "MyContactListReq": {
+      "type": "object",
+      "title": "MyContactListReq"
+    },
+    "MyContactListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contact"
+          }
+        }
+      },
+      "title": "MyContactListResp",
+      "required": [
+        "list"
       ]
     },
     "RegisterReq": {

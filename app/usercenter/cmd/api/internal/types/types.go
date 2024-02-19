@@ -27,20 +27,28 @@ type AddressListResp struct {
 	List []UserAddress `json:"list"`
 }
 
-type ContactInfo struct {
+type Contact struct {
 	Id      int64  `json:"id"`
 	UserId  int64  `json:"userId"`
-	Type    int64  `json:"type"`
 	Content string `json:"content"`
 	Remark  string `json:"remark"`
 }
 
-type ContactInfoReq struct {
+type ContactDelReq struct {
+	Id []int64 `json:"id"`
+}
+
+type ContactDelResp struct {
+}
+
+type ContactDetailReq struct {
 	Id int64 `json:"id"`
 }
 
-type ContactInfoResp struct {
-	ContactInfo ContactInfo `json:"contactInfo"`
+type ContactDetailResp struct {
+	Id      int64  `json:"id"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
 }
 
 type ConvertAddressReq struct {
@@ -51,13 +59,12 @@ type ConvertAddressResp struct {
 	AddressInfo
 }
 
-type CreateReq struct {
-	Type    int64  `json:"type"`
+type CreateContactReq struct {
 	Content string `json:"content"`
 	Remark  string `json:"remark"`
 }
 
-type CreateResp struct {
+type CreateContactResp struct {
 	Id int64 `json:"id"`
 }
 
@@ -99,6 +106,13 @@ type LoginResp struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
 	RefreshAfter int64  `json:"refreshAfter"`
+}
+
+type MyContactListReq struct {
+}
+
+type MyContactListResp struct {
+	List []Contact `json:"list"`
 }
 
 type RegisterReq struct {

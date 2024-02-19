@@ -172,11 +172,6 @@ func (s *UsercenterServer) GetUserContactById(ctx context.Context, in *pb.GetUse
 	return l.GetUserContactById(in)
 }
 
-func (s *UsercenterServer) SearchUserContact(ctx context.Context, in *pb.SearchUserContactReq) (*pb.SearchUserContactResp, error) {
-	l := logic.NewSearchUserContactLogic(ctx, s.svcCtx)
-	return l.SearchUserContact(in)
-}
-
 // -----------------------userShop-----------------------
 func (s *UsercenterServer) AddUserShop(ctx context.Context, in *pb.AddUserShopReq) (*pb.AddUserShopResp, error) {
 	l := logic.NewAddUserShopLogic(ctx, s.svcCtx)

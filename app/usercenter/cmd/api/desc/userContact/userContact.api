@@ -1,0 +1,50 @@
+syntax = "v1"
+
+info(
+    title: "抽奖发起人联系方式"
+    desc: "抽奖发起人联系方式"
+)
+
+type Contact {
+    Id int64 `json:"id"`
+    UserId int64 `json:"userId"`
+    Content string `json:"content"`
+    Remark string `json:"remark"`
+}
+
+type (
+    CreateContactReq {
+        Content string `json:"content"`
+        Remark string `json:"remark"`
+    }
+    CreateContactResp {
+        Id int64 `json:"id"`
+    }
+)
+
+type (
+    ContactDetailReq {
+        Id int64 `json:"id"`
+    }
+    ContactDetailResp {
+        Id int64 `json:"id"`
+        Content string `json:"content"`
+        Remark string `json:"remark"`
+    }
+)
+
+type (
+    ContactDelReq {
+        Id []int64 `json:"id"`
+    }
+    ContactDelResp {
+    }
+)
+
+type (
+    MyContactListReq {
+    }
+    MyContactListResp {
+        List []Contact `json:"list"`
+    }
+)
