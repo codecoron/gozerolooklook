@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	goodsInfo "looklook/app/shop/cmd/api/desc/internal/handler/goodsInfo"
-	"looklook/app/shop/cmd/api/desc/internal/svc"
+	goodsInfo "looklook/app/shop/cmd/api/internal/handler/goodsInfo"
+	"looklook/app/shop/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -20,6 +20,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/shop/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/goodsInfo/syncPddGoods",
+				Handler: goodsInfo.SyncPddGoodsHandler(serverCtx),
+			},
+		},
 		rest.WithPrefix("/shop/v1"),
 	)
 }

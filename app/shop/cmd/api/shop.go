@@ -4,15 +4,15 @@ import (
 	"flag"
 	"fmt"
 
-	"looklook/app/shop/cmd/api/desc/internal/config"
-	"looklook/app/shop/cmd/api/desc/internal/handler"
-	"looklook/app/shop/cmd/api/desc/internal/svc"
+	"looklook/app/shop/cmd/api/internal/config"
+	"looklook/app/shop/cmd/api/internal/handler"
+	"looklook/app/shop/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )
 
-var configFile = flag.String("f", "etc/goods.yaml", "the config file")
+var configFile = flag.String("f", "etc/shop.yaml", "the config file")
 
 func main() {
 	flag.Parse()
