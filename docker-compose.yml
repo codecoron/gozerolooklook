@@ -41,7 +41,7 @@ services:
     networks:
       - looklook_net
     ports:
-      - 2005:2005
+      - 2006:2006
 
 networks:
   looklook_net:

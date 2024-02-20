@@ -298,7 +298,7 @@
     },
     "usercenter/v1/userSponsor/addSponsor": {
       "post": {
-        "summary": "抽奖发起人（赞助商）",
+        "summary": "添加 抽奖发起人（赞助商）",
         "operationId": "addSponsor",
         "responses": {
           "200": {
@@ -315,6 +315,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/CreateSponsorReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
+        ]
+      }
+    },
+    "usercenter/v1/userSponsor/sponsorDetail": {
+      "post": {
+        "summary": "抽奖发起人（赞助商）详情",
+        "operationId": "sponsorDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SponosorDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SponosorDetailReq"
             }
           }
         ],
@@ -532,10 +560,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "sponsorId": {
-          "type": "integer",
-          "format": "int64"
-        },
         "type": {
           "type": "integer",
           "format": "int64"
@@ -570,7 +594,6 @@
       "title": "CreateSponsorReq",
       "required": [
         "userId",
-        "sponsorId",
         "type",
         "appletType",
         "isShow",
@@ -728,7 +751,20 @@
       "type": "object",
       "title": "SetAdminResp"
     },
-    "Sponsor": {
+    "SponosorDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SponosorDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "SponosorDetailResp": {
       "type": "object",
       "properties": {
         "id": {
@@ -739,7 +775,60 @@
           "type": "integer",
           "format": "int64"
         },
-        "sponsorId": {
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isShow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "inputA": {
+          "type": "string"
+        },
+        "inputB": {
+          "type": "string"
+        }
+      },
+      "title": "SponosorDetailResp",
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "appletType",
+        "isShow",
+        "name",
+        "desc",
+        "avatar",
+        "qr_code",
+        "inputA",
+        "inputB"
+      ]
+    },
+    "Sponsor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
           "type": "integer",
           "format": "int64"
         },
@@ -778,7 +867,6 @@
       "required": [
         "id",
         "userId",
-        "sponsorId",
         "type",
         "appletType",
         "isShow",

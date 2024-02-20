@@ -77,6 +77,8 @@ type (
 	SearchUserSponsorResp    = pb.SearchUserSponsorResp
 	SetAdminReq              = pb.SetAdminReq
 	SetAdminResp             = pb.SetAdminResp
+	SponsorDetailReq         = pb.SponsorDetailReq
+	SponsorDetailResp        = pb.SponsorDetailResp
 	UpdateUserAddressReq     = pb.UpdateUserAddressReq
 	UpdateUserAddressResp    = pb.UpdateUserAddressResp
 	UpdateUserAuthReq        = pb.UpdateUserAuthReq
@@ -148,6 +150,7 @@ type (
 		DelUserSponsor(ctx context.Context, in *DelUserSponsorReq, opts ...grpc.CallOption) (*DelUserSponsorResp, error)
 		GetUserSponsorById(ctx context.Context, in *GetUserSponsorByIdReq, opts ...grpc.CallOption) (*GetUserSponsorByIdResp, error)
 		SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error)
+		SponsorDetail(ctx context.Context, in *SponsorDetailReq, opts ...grpc.CallOption) (*SponsorDetailResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -366,4 +369,9 @@ func (m *defaultUsercenter) GetUserSponsorById(ctx context.Context, in *GetUserS
 func (m *defaultUsercenter) SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.SearchUserSponsor(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SponsorDetail(ctx context.Context, in *SponsorDetailReq, opts ...grpc.CallOption) (*SponsorDetailResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SponsorDetail(ctx, in, opts...)
 }

@@ -33,11 +33,11 @@ func (l *AddSponsorLogic) AddSponsor(req *types.CreateSponsorReq) (resp *types.C
 		return nil, err
 	}
 	pbSponsor.UserId = ctxdata.GetUidFromCtx(l.ctx)
-	_, err = l.svcCtx.UsercenterRpc.AddUserSponsor(l.ctx, pbSponsor)
+	sponsor, err := l.svcCtx.UsercenterRpc.AddUserSponsor(l.ctx, pbSponsor)
 	if err != nil {
 		return nil, err
 	}
 	return &types.CreateSponsorResp{
-		Id: pbSponsor.GetSponsorId(),
+		Id: sponsor.Id,
 	}, nil
 }

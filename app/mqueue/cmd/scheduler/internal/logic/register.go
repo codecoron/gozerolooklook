@@ -23,4 +23,5 @@ func (l *MqueueScheduler) Register() {
 
 	// lottery
 	l.LotteryDrawScheduler()
+	l.WishCheckinScheduler()
 }
