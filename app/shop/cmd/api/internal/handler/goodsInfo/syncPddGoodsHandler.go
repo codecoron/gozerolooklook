@@ -14,6 +14,6 @@ func SyncPddGoodsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := goodsInfo.NewSyncPddGoodsLogic(r.Context(), svcCtx)
 		err := l.SyncPddGoods()
 
-		result.HttpResult(r, w, nil, err)
+		result.HttpResult(r, w, "你好", err)
 	}
 }
