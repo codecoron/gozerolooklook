@@ -24,7 +24,11 @@ func NewDelUserContactLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 }
 
 func (l *DelUserContactLogic) DelUserContact(in *pb.DelUserContactReq) (*pb.DelUserContactResp, error) {
-	// todo: add your logic here and delete this line
+	//todo 做个限制 只能删除自己的  优化代码
+	//l.svcCtx.UserContactModel.DeleteBatch(l.ctx,in.Id)
 
+	for _, id := range in.Id {
+		l.svcCtx.UserContactModel.Delete(l.ctx, id)
+	}
 	return &pb.DelUserContactResp{}, nil
 }
