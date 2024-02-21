@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/pkg/errors"
+	"looklook/common/xerr"
 
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
@@ -33,7 +35,7 @@ func (l *DetailLogic) Detail(req types.UserInfoReq) (*types.UserInfoResp, error)
 		Id: userId,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrMsg("查询用户详情失败"), "查询用户详情失败 err : %v , userId : %d  , userInfoResp : %+v", err, userId, userInfoResp)
 	}
 
 	var userInfo types.User
