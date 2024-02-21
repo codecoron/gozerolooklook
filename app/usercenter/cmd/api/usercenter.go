@@ -18,7 +18,8 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c, conf.UseEnv())
 	//设置允许跨域访问
-	server := rest.MustNewServer(c.RestConf, rest.WithCors())
+	//server := rest.MustNewServer(c.RestConf, rest.WithCors())
+	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)
