@@ -1,0 +1,35 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+//import (
+//	"goods/goods.api"
+//)
+
+//@server (
+//	prefix: shop/v1
+//	group:  goodsInfo
+//	jwt:    JwtAuth
+//)
+//service shop {
+//	@doc "查询商品信息"
+//	@handler query
+//	post /goodsInfo/query (GoodsInfoReq) returns (GoodsInfoResp)
+//}
+
+@server(
+    prefix: shop/v1
+    group: goodsInfo
+)
+service shop {
+    @doc "同步拼多多数据"
+    @handler syncPddGoods
+    post /goodsInfo/syncPddGoods
+}
+

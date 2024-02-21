@@ -1,0 +1,36 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+//商品信息结构体
+//目前与数据库的字段一致
+type GoodsInfo {
+    Id int64 `json:id`
+    CategoryId int64 `json:categoryId`
+    Precoupon_Price float64 `json:precouponPrice`
+    Aftercoupon_Price float64 `json:aftercouponPrice`
+    GoodsDesc string `json:goodsDesc`
+    WishPoints int64 `json:wishPoints`
+    CouponStartTime int64 `json:couponStartTime`
+    CouponEndTime int64 `json:couponEndTime`
+    CouponDiscount int64 `json:couponDiscount`
+    CouponRemainQuantity int64 `json:couponRemainQuantity`
+}
+//商品信息的请求
+//拿到用户id和商品id
+type GoodsInfoReq {
+    GoodsId int64 `json:goodsId` //商品id
+                                 //UserId int64 `json:userId` //用户id 通过jwt获取
+}
+//商品信息的响应
+type GoodsInfoResp {
+    GoodsInfo GoodsInfo `json:"goodsInfo"`
+}
+
+
