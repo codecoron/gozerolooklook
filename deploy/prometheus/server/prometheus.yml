@@ -7,7 +7,7 @@ scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 5s  #global catch time
     static_configs:
-      - targets: ['127.0.0.1:9090']
+      - targets: [ '127.0.0.1:9090' ]
 
   - job_name: 'order-api'
     static_configs:
@@ -60,14 +60,14 @@ scrape_configs:
           env: dev
   - job_name: 'usercenter-api'
     static_configs:
-      - targets: ['looklook:4008']
+      - targets: [ 'looklook:4008' ]
         labels:
           job: usercenter-api
           app: usercenter-api
           env: dev
   - job_name: 'usercenter-rpc'
     static_configs:
-      - targets: ['looklook:4009']
+      - targets: [ 'looklook:4009' ]
         labels:
           job: usercenter-rpc
           app: usercenter-rpc
@@ -102,14 +102,14 @@ scrape_configs:
           env: dev
   - job_name: 'upload-api'
     static_configs:
-      - targets: ['looklook:4012']
+      - targets: [ 'looklook:4012' ]
         labels:
           job: upload-api
           app: upload-api
           env: dev
   - job_name: 'upload-rpc'
     static_configs:
-      - targets: ['looklook:4013']
+      - targets: [ 'looklook:4013' ]
         labels:
           job: upload-rpc
           app: upload-rpc
@@ -142,6 +142,21 @@ scrape_configs:
         labels:
           job: vote-rpc
           app: vote-rpc
+          env: dev
+
+  - job_name: 'shop-api'
+    static_configs:
+      - targets: [ 'looklook:4019' ]
+        labels:
+          job: shop-api
+          app: shop-api
+          env: dev
+  - job_name: 'shop-rpc'
+    static_configs:
+      - targets: [ 'looklook:4020' ]
+        labels:
+          job: shop-rpc
+          app: shop-rpc
           env: dev
 
   - job_name: 'notic-api'
