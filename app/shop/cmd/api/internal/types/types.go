@@ -3,21 +3,28 @@ package types
 
 type GoodsInfo struct {
 	Id                   int64   `json:id`
-	CategoryId           int64   `json:categoryId`
-	Precoupon_Price      float64 `json:precouponPrice`
-	Aftercoupon_Price    float64 `json:aftercouponPrice`
-	GoodsDesc            string  `json:goodsDesc`
-	WishPoints           int64   `json:wishPoints`
-	CouponStartTime      int64   `json:couponStartTime`
-	CouponEndTime        int64   `json:couponEndTime`
-	CouponDiscount       int64   `json:couponDiscount`
-	CouponRemainQuantity int64   `json:couponRemainQuantity`
+	CategoryId           int64   `json:"categoryId"`
+	Precoupon_Price      float64 `json:"precouponPrice"`
+	Aftercoupon_Price    float64 `json:"aftercouponPrice"`
+	GoodsDesc            string  `json:"goodsDesc"`
+	WishPoints           int64   `json:"wishPoints"`
+	CouponStartTime      int64   `json:"couponStartTime"`
+	CouponEndTime        int64   `json:"couponEndTime"`
+	CouponDiscount       int64   `json:"couponDiscount"`
+	CouponRemainQuantity int64   `json:"couponRemainQuantity"`
 }
 
 type GoodsInfoReq struct {
-	GoodsId int64 `json:goodsId` //商品id
+	GoodsId int64 `json:"goodsId"` //商品id
 }
 
 type GoodsInfoResp struct {
 	GoodsInfo GoodsInfo `json:"goodsInfo"`
+}
+
+type GoodsListReq struct {
+}
+
+type GoodsListResp struct {
+	List []*GoodsInfo `json:"list"`
 }

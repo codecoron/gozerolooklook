@@ -16,6 +16,63 @@
     "application/json"
   ],
   "paths": {
+    "shop/v1/goodsInfo/getGoodsById": {
+      "post": {
+        "summary": "查询商品信息",
+        "operationId": "getGoodsById",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GoodsInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "商品信息的请求,拿到用户id和商品id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GoodsInfoReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "shop"
+        ]
+      }
+    },
+    "shop/v1/goodsInfo/getGoodsList": {
+      "post": {
+        "summary": "查询所有商品信息",
+        "operationId": "getGoodsList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GoodsListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GoodsListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "shop"
+        ]
+      }
+    },
     "shop/v1/goodsInfo/syncPddGoods": {
       "post": {
         "summary": "同步拼多多数据",
@@ -28,12 +85,115 @@
         },
         "requestBody": {},
         "tags": [
-          "goodsInfo"
+          "shop"
         ]
       }
     }
   },
-  "definitions": {},
+  "definitions": {
+    "GoodsInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "categoryId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "precouponPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "aftercouponPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "goodsDesc": {
+          "type": "string"
+        },
+        "wishPoints": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponStartTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponEndTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponDiscount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponRemainQuantity": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GoodsInfo",
+      "required": [
+        "id",
+        "categoryId",
+        "precouponPrice",
+        "aftercouponPrice",
+        "goodsDesc",
+        "wishPoints",
+        "couponStartTime",
+        "couponEndTime",
+        "couponDiscount",
+        "couponRemainQuantity"
+      ]
+    },
+    "GoodsInfoReq": {
+      "type": "object",
+      "properties": {
+        "goodsId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "商品id"
+        }
+      },
+      "title": "GoodsInfoReq",
+      "required": [
+        "goodsId"
+      ]
+    },
+    "GoodsInfoResp": {
+      "type": "object",
+      "properties": {
+        "goodsInfo": {
+          "$ref": "#/definitions/GoodsInfo"
+        }
+      },
+      "title": "GoodsInfoResp",
+      "required": [
+        "goodsInfo"
+      ]
+    },
+    "GoodsListReq": {
+      "type": "object",
+      "title": "GoodsListReq"
+    },
+    "GoodsListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GoodsInfo"
+          }
+        }
+      },
+      "title": "GoodsListResp",
+      "required": [
+        "list"
+      ]
+    }
+  },
   "securityDefinitions": {
     "apiKey": {
       "type": "apiKey",

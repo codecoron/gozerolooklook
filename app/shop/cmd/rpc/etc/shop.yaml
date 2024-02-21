@@ -1,0 +1,20 @@
+Name: shop.rpc
+ListenOn: 0.0.0.0:4020
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: shop.rpc
+#jwtAuth
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+  AccessExpire: 31536000
+Redis:
+  Host: redis:6379
+  Type: node
+  Pass: G62m50oigInC30sf
+  Key: shop-rpc
+DB:
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/shop?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+Cache:
+  - Host: redis:6379
+    Pass: G62m50oigInC30sf

@@ -11,7 +11,7 @@ info(
 //商品信息结构体
 //目前与数据库的字段一致
 type GoodsInfo {
-    Id int64 `json:id`
+    Id int64 `json:"id"`
     CategoryId int64 `json:"categoryId"`
     Precoupon_Price float64 `json:"precouponPrice"`
     Aftercoupon_Price float64 `json:"aftercouponPrice"`
@@ -32,4 +32,8 @@ type GoodsInfoResp {
     GoodsInfo GoodsInfo `json:"goodsInfo"`
 }
 
+type GoodsListReq {}
 
+type GoodsListResp {
+    List []*GoodsInfo `json:"list"`
+}

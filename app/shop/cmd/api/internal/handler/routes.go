@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	goodsInfo "looklook/app/shop/cmd/api/internal/handler/goodsInfo"
+	shop "looklook/app/shop/cmd/api/internal/handler/shop"
 	"looklook/app/shop/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -15,8 +15,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/goodsInfo/query",
-				Handler: goodsInfo.QueryHandler(serverCtx),
+				Path:    "/goodsInfo/getGoodsById",
+				Handler: shop.GetGoodsByIdHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/shop/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/goodsInfo/getGoodsList",
+				Handler: shop.GetGoodsListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
@@ -28,9 +40,10 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/goodsInfo/syncPddGoods",
-				Handler: goodsInfo.SyncPddGoodsHandler(serverCtx),
+				Handler: shop.SyncPddGoodsHandler(serverCtx),
 			},
 		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/shop/v1"),
 	)
 }
