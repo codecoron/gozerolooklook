@@ -1,47 +1,47 @@
 syntax = "v1"
 
-info (
-	title:   "type title here"
-	desc:    "type desc here"
-	author:  "type author here"
-	email:   "type email here"
-	version: "type version here"
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
 )
 
 import (
-	"goods/goods.api"
+    "goods/goods.api"
 )
 
-@server (
-	prefix: shop/v1
-	group:  shop
-	jwt:    JwtAuth
+@server(
+    prefix: shop/v1
+    group: shop
+    jwt: JwtAuth
 )
 service shop {
-	@doc "查询商品信息"
-	@handler getGoodsById
-	post /goodsInfo/getGoodsById (GoodsInfoReq) returns (GoodsInfoResp)
+    @doc "查询商品信息"
+    @handler getGoodsById
+    post /goodsInfo/getGoodsById (GoodsInfoReq) returns (GoodsInfoResp)
 }
 
-@server (
-	prefix: shop/v1
-	group:  shop
-	jwt:    JwtAuth
+@server(
+    prefix: shop/v1
+    group: shop
+    jwt: JwtAuth
 )
 service shop {
-	@doc "查询所有商品信息"
-	@handler getGoodsList
-	post /goodsInfo/getGoodsList (GoodsListReq) returns (GoodsListResp)
+    @doc "查询所有商品信息"
+    @handler getGoodsList
+    post /goodsInfo/getGoodsList (GoodsListReq) returns (GoodsListResp)
 }
 
-@server (
-	prefix: shop/v1
-	group:  shop
-	jwt:    JwtAuth
+@server(
+    prefix: shop/v1
+    group: shop
+    jwt: JwtAuth
 )
 service shop {
-	@doc "同步拼多多数据"
-	@handler syncPddGoods
-	post /goodsInfo/syncPddGoods
+    @doc "同步拼多多数据"
+    @handler syncPddGoods
+    post /goodsInfo/syncPddGoods
 }
 

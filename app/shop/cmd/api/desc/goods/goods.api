@@ -32,7 +32,8 @@ type GoodsInfoResp {
     GoodsInfo GoodsInfo `json:"goodsInfo"`
 }
 
-type GoodsListReq {}
+type GoodsListReq{
+}
 
 type GoodsListResp {
     List []*GoodsInfo `json:"list"`
