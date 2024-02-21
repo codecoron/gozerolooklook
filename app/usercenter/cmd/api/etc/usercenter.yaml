@@ -14,7 +14,7 @@ Prometheus:
   Path: /metrics
 
 #链路追踪
-Telemetry: 
+Telemetry:
   Name: usercenter-api
   Endpoint: http://jaeger:14268/api/traces
   Sampler: 1.0
@@ -22,7 +22,9 @@ Telemetry:
 
 Log:
   ServiceName: usercenter-api
+  Mode: console
   Level: error
+  Encoding: plain
 
 #WxMiniConf
 WxMiniConf:
