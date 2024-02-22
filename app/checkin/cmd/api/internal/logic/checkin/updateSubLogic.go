@@ -2,7 +2,6 @@ package checkin
 
 import (
 	"context"
-	"github.com/pkg/errors"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
 
@@ -33,7 +32,7 @@ func (l *UpdateSubLogic) UpdateSub(req *types.UpdateSubReq) (resp *types.UpdateS
 		State:  req.State,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "req: %+v", req)
+		return nil, err
 	}
 	return
 }

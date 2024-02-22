@@ -263,13 +263,19 @@
           "type": "integer",
           "format": "int64",
           "description": "心愿值"
+        },
+        "subStatus": {
+          "type": "integer",
+          "format": "int64",
+          "description": "订阅状态"
         }
       },
       "title": "GetCheckinResp",
       "required": [
         "continuousCheckinDays",
         "state",
-        "integral"
+        "integral",
+        "subStatus"
       ]
     },
     "GetTasksReq": {

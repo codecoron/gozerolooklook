@@ -3,7 +3,6 @@ package checkin
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/pkg/errors"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
 
@@ -34,14 +33,14 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "req: %+v", req)
+		return nil, err
 	}
 	// 查询用户完成的任务
 	tasks, err := l.svcCtx.CheckinRpc.GetTaskRecordByUserId(l.ctx, &checkin.GetTaskRecordByUserIdReq{
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "req: %+v", req)
+		return nil, err
 	}
 	//logx.Error("api,tasks:", tasks.TaskList)
 	var taskList []*types.Tasks

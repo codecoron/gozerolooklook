@@ -2,13 +2,10 @@ package checkin
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"looklook/app/checkin/cmd/rpc/checkin"
-	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
 	"looklook/app/checkin/cmd/api/internal/svc"
 	"looklook/app/checkin/cmd/api/internal/types"
+	"looklook/app/checkin/cmd/rpc/checkin"
+	"looklook/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -35,7 +32,7 @@ func (l *ClaimRewardLogic) ClaimReward(req *types.ClaimRewardReq) (resp *types.C
 	})
 
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("claim reward fail"), "claim reward rpc ClaimReward fail req: %+v , err : %v ", req, err)
+		return nil, err
 	}
 
 	return

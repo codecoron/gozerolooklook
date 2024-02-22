@@ -2,14 +2,11 @@ package checkin
 
 import (
 	"context"
-	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/checkin/cmd/api/internal/svc"
 	"looklook/app/checkin/cmd/api/internal/types"
 	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/common/ctxdata"
-	"looklook/common/xerr"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type GetCheckinLogic struct {
@@ -32,12 +29,13 @@ func (l *GetCheckinLogic) GetCheckin(req *types.GetCheckinReq) (resp *types.GetC
 		UserId: userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("get checkin fail"), "get checkin rpc GetCheckin fail req: %+v , err : %v ", req, err)
+		return nil, err
 	}
 
 	return &types.GetCheckinResp{
 		ContinuousCheckinDays: record.ContinuousCheckinDays,
 		State:                 record.State,
 		Integral:              record.Integral,
+		SubStatus:             record.SubStatus,
 	}, nil
 }

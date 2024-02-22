@@ -25,12 +25,22 @@ type (
 		TransUpdateByUserId(ctx context.Context, session sqlx.Session, data *TaskProgress) error
 		UpdateByUserId(ctx context.Context, data *TaskProgress) error
 		FindAllSubId(ctx context.Context) ([]int64, error)
+		TransInsertByUserId(ctx context.Context, session sqlx.Session, data *TaskProgress) (sql.Result, error)
 	}
 
 	customTaskProgressModel struct {
 		*defaultTaskProgressModel
 	}
 )
+
+func (m *defaultTaskProgressModel) TransInsertByUserId(ctx context.Context, session sqlx.Session, data *TaskProgress) (sql.Result, error) {
+	checkinTaskProgressUserIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskProgressUserIdPrefix, data.UserId)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, taskProgressRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.UserId, data.IsParticipatedLottery, data.IsInitiatedLottery, data.IsSubCheckin)
+	}, checkinTaskProgressUserIdKey)
+	return ret, err
+}
 
 func (m *defaultTaskProgressModel) FindOneByUserId(ctx context.Context, userId int64) (*TaskProgress, error) {
 	checkinTaskProgressUserIdKey := fmt.Sprintf("%s%v", cacheCheckinTaskProgressUserIdPrefix, userId)

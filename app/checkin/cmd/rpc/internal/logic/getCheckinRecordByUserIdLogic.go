@@ -32,6 +32,7 @@ func NewGetCheckinRecordByUserIdLogic(ctx context.Context, svcCtx *svc.ServiceCo
 func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheckinRecordByUserIdReq) (*pb.GetCheckinRecordByUserIdResp, error) {
 	checkinRecord := new(model.CheckinRecord)
 	integarl := new(model.Integral)
+	progress := new(model.TaskProgress)
 
 	err := l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		// 根据user_id查询用户的签到记录，如果没有就创建
@@ -49,18 +50,25 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert integarl data : %+v , err: %v", insert, err)
 			}
-			// todo:新增用户任务进度记录
+			// 新增任务进度记录
+			progress.UserId = in.UserId
+			insert, err = l.svcCtx.TaskProgressModel.TransInsertByUserId(l.ctx, session, progress)
+			if err != nil {
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert taskProgress data : %+v , err: %v", insert, err)
+			}
 			return nil
 		} else if err != nil {
 			// 其他错误
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find check-in data : %+v , err: %v", getCheckinRecord, err)
 		}
 
-		// 查询积分，任务列表
+		// 查询积分，订阅状态
 		getIntegral, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
+		getTaskProgress, err := l.svcCtx.TaskProgressModel.FindOneByUserId(l.ctx, in.UserId)
 		// 将getCheckinRecord 复制到 checkinRecord
 		_ = copier.Copy(checkinRecord, getCheckinRecord)
 		_ = copier.Copy(integarl, getIntegral)
+		_ = copier.Copy(progress, getTaskProgress)
 
 		// 将现在的时间转换为UTC时间，然后截断为当天的起始时间，只需要知道日期就行
 		today := time.Now().UTC().Truncate(24 * time.Hour)
@@ -108,5 +116,6 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
 		State:                 checkinRecord.State,
 		Integral:              integarl.Integral,
+		SubStatus:             progress.IsSubCheckin,
 	}, nil
 }

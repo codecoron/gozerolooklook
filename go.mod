@@ -18,7 +18,8 @@ require (
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
-	github.com/go-playground/validator/v10 v10.17.0
+	github.com/go-playground/validator/v10 v10.18.0
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-module/carbon/v2 v2.0.1
 	github.com/jinzhu/now v1.1.5
 	github.com/liunian1004/pdd v0.0.0-20210413025727-4741a52b9422
