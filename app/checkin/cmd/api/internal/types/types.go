@@ -32,6 +32,7 @@ type GetCheckinResp struct {
 	ContinuousCheckinDays int64 `json:"continuousCheckinDays"` //用户连续签到的天数
 	State                 int64 `json:"state"`                 //当天用户是否签到，0为未签，1为已签
 	Integral              int64 `json:"integral"`              //心愿值
+	SubStatus             int64 `json:"subStatus"`             //订阅状态
 }
 
 type GetTasksReq struct {

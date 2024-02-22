@@ -51,6 +51,7 @@ message GetCheckinRecordByUserIdResp {
   int64 continuousCheckinDays = 1; // 用户连续签到天数
   int64 state = 2; // 当天是否签到，1为已签，0为未签
   int64 integral = 3; // 心愿值
+  int64 subStatus = 4; // 订阅状态
 }
 
 
