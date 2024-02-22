@@ -33,9 +33,13 @@ func (l *AddUserSponsorLogic) AddUserSponsor(in *pb.AddUserSponsorReq) (*pb.AddU
 		//todo 错误处理
 		return nil, err
 	}
-	_, err = l.svcCtx.UserSponsorModel.Insert(l.ctx, userSponsor)
+	insert, err := l.svcCtx.UserSponsorModel.Insert(l.ctx, userSponsor)
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AddUserSponsorResp{}, nil
+	id, err := insert.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.AddUserSponsorResp{Id: id}, nil
 }

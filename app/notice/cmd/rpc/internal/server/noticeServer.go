@@ -36,3 +36,13 @@ func (s *NoticeServer) SaveNoticeSubscribePreference(ctx context.Context, in *pb
 	l := logic.NewSaveNoticeSubscribePreferenceLogic(ctx, s.svcCtx)
 	return l.SaveNoticeSubscribePreference(in)
 }
+
+func (s *NoticeServer) NoticeLotteryStart(ctx context.Context, in *pb.NoticeLotteryStartReq) (*pb.NoticeLotteryStartResp, error) {
+	l := logic.NewNoticeLotteryStartLogic(ctx, s.svcCtx)
+	return l.NoticeLotteryStart(in)
+}
+
+func (s *NoticeServer) NoticeWishSign(ctx context.Context, in *pb.NoticeWishSignInReq) (*pb.NoticeWishSignInResp, error) {
+	l := logic.NewNoticeWishSignLogic(ctx, s.svcCtx)
+	return l.NoticeWishSign(in)
+}

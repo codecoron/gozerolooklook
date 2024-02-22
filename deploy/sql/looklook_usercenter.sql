@@ -68,27 +68,28 @@ CREATE TABLE `user_auth`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户授权表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for user_contact
+-- Table structure for user_sponsor
 -- ----------------------------
 DROP TABLE IF EXISTS `user_sponsor`;
 CREATE TABLE `user_sponsor`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `sponsor_id` int(0) NOT NULL DEFAULT 1,
-  `user_id` int(0) NOT NULL DEFAULT 0,
-  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1微信号 2公众号 3小程序 4微信群 5视频号',
-  `applet_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转',
-  `name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `desc` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '描述',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '头像',
-  `is_show` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1显示 2不显示',
-  `qr_code` varchar(255) NOT NULL DEFAULT '' COMMENT '二维码图片地址, type=1 2 3&applet_type=3 4的时候启用',
-  `input_a` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'type=5 applet_type=2 or applet_type=1 输入框A',
-  `input_b` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'type=5 applet_type=2输入框B',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
-  `delete_time` datetime(0) DEFAULT NULL,
-   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式' ROW_FORMAT = Dynamic;
+ `id` int(0) NOT NULL AUTO_INCREMENT,
+ `user_id` int(0) NOT NULL DEFAULT 0,
+ `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1微信号 2公众号 3小程序 4微信群 5视频号',
+ `applet_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转',
+ `name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '名称',
+ `desc` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '描述',
+ `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '头像',
+ `is_show` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1显示 2不显示',
+ `qr_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '二维码图片地址, type=1 2 3&applet_type=3 4的时候启用',
+ `input_a` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'type=5 applet_type=2 or applet_type=1 输入框A',
+ `input_b` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'type=5 applet_type=2输入框B',
+ `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+ `delete_time` datetime(0) DEFAULT NULL,
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式（抽奖赞助商）' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for user_shop
@@ -128,3 +129,18 @@ CREATE TABLE `user_address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='用户收货地址表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- ----------------------------
+-- Table structure for user_contact
+-- ----------------------------
+DROP TABLE IF EXISTS `user_contact`;
+CREATE TABLE `user_contact`  (
+                                 `id` int(0) NOT NULL AUTO_INCREMENT,
+                                 `user_id` int(0) NOT NULL DEFAULT 0,
+                                 `content` json NOT NULL COMMENT 'content',
+                                 `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT 'remark',
+                                 `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                 `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;

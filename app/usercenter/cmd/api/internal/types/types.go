@@ -27,20 +27,37 @@ type AddressListResp struct {
 	List []UserAddress `json:"list"`
 }
 
-type ContactInfo struct {
+type Contact struct {
 	Id      int64  `json:"id"`
 	UserId  int64  `json:"userId"`
-	Type    int64  `json:"type"`
 	Content string `json:"content"`
 	Remark  string `json:"remark"`
 }
 
-type ContactInfoReq struct {
+type ContactDelReq struct {
+	Id []int64 `json:"id"`
+}
+
+type ContactDelResp struct {
+}
+
+type ContactDetailReq struct {
 	Id int64 `json:"id"`
 }
 
-type ContactInfoResp struct {
-	ContactInfo ContactInfo `json:"contactInfo"`
+type ContactDetailResp struct {
+	Id      int64  `json:"id"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
+}
+
+type ContactListReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type ContactListResp struct {
+	List []Contact `json:"list"`
 }
 
 type ConvertAddressReq struct {
@@ -51,19 +68,17 @@ type ConvertAddressResp struct {
 	AddressInfo
 }
 
-type CreateReq struct {
-	Type    int64  `json:"type"`
+type CreateContactReq struct {
 	Content string `json:"content"`
 	Remark  string `json:"remark"`
 }
 
-type CreateResp struct {
+type CreateContactResp struct {
 	Id int64 `json:"id"`
 }
 
 type CreateSponsorReq struct {
 	UserId     int64  `json:"userId"`
-	SponsorId  int64  `json:"sponsorId"`
 	Type       int64  `json:"type"`
 	AppletType int64  `json:"appletType"`
 	IsShow     int64  `json:"isShow"`
@@ -120,10 +135,27 @@ type SetAdminReq struct {
 type SetAdminResp struct {
 }
 
+type SponosorDetailReq struct {
+	Id int64 `json:"id"`
+}
+
+type SponosorDetailResp struct {
+	Id         int64  `json:"id"`
+	UserId     int64  `json:"userId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"appletType"`
+	IsShow     int64  `json:"isShow"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"inputA"`
+	InputB     string `json:"inputB"`
+}
+
 type Sponsor struct {
 	Id         int64  `json:"id"`
 	UserId     int64  `json:"userId"`
-	SponsorId  int64  `json:"sponsorId"`
 	Type       int64  `json:"type"`
 	AppletType int64  `json:"appletType"`
 	IsShow     int64  `json:"isShow"`

@@ -6,8 +6,7 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
-
+	Config    config.Config
 	Scheduler *asynq.Scheduler
 }
 

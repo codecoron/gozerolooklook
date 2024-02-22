@@ -44,12 +44,12 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 	})
 	authResult, err := miniprogram.GetAuth().Code2Session(req.Code)
 	if err != nil || authResult.ErrCode != 0 || authResult.OpenID == "" {
-		return nil, errors.Wrapf(ErrWxMiniAuthFailError, "发起授权请求失败 err : %v , code : %s  , authResult : %+v", err, req.Code, authResult)
+		return nil, errors.Wrapf(xerr.NewErrMsg("发起授权请求失败"), "发起授权请求失败 err : %v , code : %s  , authResult : %+v", err, req.Code, authResult)
 	}
 	//2、Parsing WeChat-Mini return data
 	userData, err := miniprogram.GetEncryptor().Decrypt(authResult.SessionKey, req.EncryptedData, req.IV)
 	if err != nil {
-		return nil, errors.Wrapf(ErrWxMiniAuthFailError, "解析数据失败 req : %+v , err: %v , authResult:%+v ", req, err, authResult)
+		return nil, errors.Wrapf(xerr.NewErrMsg("解析数据失败"), "解析数据失败 req : %+v , err: %v , authResult:%+v ", req, err, authResult)
 	}
 
 	//3、bind user or login.
@@ -59,7 +59,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 		AuthKey:  authResult.OpenID,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(ErrWxMiniAuthFailError, "rpc call userAuthByAuthKey err : %v , authResult : %+v", err, authResult)
+		return nil, errors.Wrapf(xerr.NewErrMsg("rpc call userAuthByAuthKey err"), "rpc call userAuthByAuthKey err : %v , authResult : %+v", err, authResult)
 	}
 	if rpcRsp.UserAuth == nil || rpcRsp.UserAuth.Id == 0 {
 		//bind user.
@@ -84,7 +84,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 			Avatar:   req.Avatar,
 		})
 		if err != nil {
-			return nil, errors.Wrapf(ErrWxMiniAuthFailError, "UsercenterRpc.Register err :%v, authResult : %+v", err, authResult)
+			return nil, errors.Wrapf(xerr.NewErrMsg("UsercenterRpc.Register err"), "UsercenterRpc.Register err :%v, authResult : %+v", err, authResult)
 		}
 
 		return &types.WXMiniAuthResp{
@@ -99,7 +99,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 			UserId: userId,
 		})
 		if err != nil {
-			return nil, errors.Wrapf(ErrWxMiniAuthFailError, "usercenterRpc.GenerateToken err :%v, userId : %d", err, userId)
+			return nil, errors.Wrapf(xerr.NewErrMsg("usercenterRpc.GenerateToken err"), "usercenterRpc.GenerateToken err :%v, userId : %d", err, userId)
 		}
 		return &types.WXMiniAuthResp{
 			AccessToken:  tokenResp.AccessToken,

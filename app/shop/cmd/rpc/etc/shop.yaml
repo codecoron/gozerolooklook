@@ -1,0 +1,36 @@
+Name: shop-rpc
+ListenOn: 0.0.0.0:2014
+Mode: dev
+
+#jwtAuth
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+  AccessExpire: 31536000
+
+#Monitoring
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4020
+  Path: /metrics
+
+#Link Tracking
+Telemetry:
+  Name: shop-rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log:
+  ServiceName: shop-rpc
+  Level: error
+
+Redis:
+  Host: redis:6379
+  Type: node
+  Pass: G62m50oigInC30sf
+  Key: shop-rpc
+DB:
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/shop?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+Cache:
+  - Host: redis:6379
+    Pass: G62m50oigInC30sf

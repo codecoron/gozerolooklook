@@ -228,3 +228,8 @@ func (s *UsercenterServer) SearchUserSponsor(ctx context.Context, in *pb.SearchU
 	l := logic.NewSearchUserSponsorLogic(ctx, s.svcCtx)
 	return l.SearchUserSponsor(in)
 }
+
+func (s *UsercenterServer) SponsorDetail(ctx context.Context, in *pb.SponsorDetailReq) (*pb.SponsorDetailResp, error) {
+	l := logic.NewSponsorDetailLogic(ctx, s.svcCtx)
+	return l.SponsorDetail(in)
+}

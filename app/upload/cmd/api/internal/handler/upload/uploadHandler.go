@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"github.com/pkg/errors"
 	uuid "github.com/satori/go.uuid"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"io/ioutil"
@@ -25,6 +26,12 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 		//todo 添加文件大小限制
+		//当文件大于10M
+		if header.Size >= (10 << 20) {
+			result.ParamErrorResult(r, w, errors.New("上传文件大小超出限制，请上传小于10M的文件"))
+			return
+		}
+		//todo 压缩文件
 
 		//获取文件类型
 		ext := filepath.Ext(header.Filename)
