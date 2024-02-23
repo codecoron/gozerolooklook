@@ -157,9 +157,13 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 		// 根据随机数确定中奖用户
 		probabilitySum := 0.0
 		for idx := range participantor {
+			// 逐个累加中奖概率，直到大于随机数
 			probabilitySum += FinalRatios[idx]
+			// 如果随机数小于等于累加的概率，说明中奖
 			if randomProbability <= probabilitySum {
+				// 中奖者的uid
 				winnerUserId = participantor[idx]
+				// 中奖者的索引
 				randomWinnerIndex = idx
 				break
 			}
