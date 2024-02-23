@@ -31,6 +31,7 @@ type (
 	CheckUserCreatedLotteryAndTodayResp    = pb.CheckUserCreatedLotteryAndTodayResp
 	CheckUserCreatedLotteryReq             = pb.CheckUserCreatedLotteryReq
 	CheckUserCreatedLotteryResp            = pb.CheckUserCreatedLotteryResp
+	ClockTask                              = pb.ClockTask
 	DelLotteryReq                          = pb.DelLotteryReq
 	DelLotteryResp                         = pb.DelLotteryResp
 	DelPrizeReq                            = pb.DelPrizeReq

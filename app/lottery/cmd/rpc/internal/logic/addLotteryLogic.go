@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -45,6 +46,8 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.IsSelected = 0
 		lottery.IsAnnounced = 0
 		lottery.SponsorId = in.SponsorId
+		lottery.IsClocked = in.IsClocked
+
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
@@ -64,6 +67,43 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTPRIZE_ERROR), "Lottery Database Exception prize : %+v , err: %v", prize, err)
 			}
 		}
+
+		// 创建打卡任务
+		if in.ClockTask != nil {
+			clockTask := new(model.ClockTask)
+			clockTask.LotteryId = lotteryId
+			clockTask.Seconds = in.ClockTask.Seconds
+			clockTask.Type = in.ClockTask.Type
+			clockTask.AppletType = in.ClockTask.AppletType
+			clockTask.PageLink = in.ClockTask.PageLink
+			clockTask.AppId = in.ClockTask.AppId
+			clockTask.PagePath = in.ClockTask.PagePath
+			clockTask.Image = in.ClockTask.Image
+			clockTask.VideoAccountId = in.ClockTask.VideoAccountId
+			clockTask.VideoId = in.ClockTask.VideoId
+			clockTask.ArticleLink = in.ClockTask.ArticleLink
+			clockTask.Copywriting = in.ClockTask.Copywriting
+			clockTask.ChanceType = in.ClockTask.ChanceType
+			clockTask.IncreaseMultiple = in.ClockTask.IncreaseMultiple
+
+			fmt.Println("clockTask-------", clockTask)
+			insert, err = l.svcCtx.ClockTaskModel.TransInsert(l.ctx, session, clockTask)
+			if err != nil {
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTLOTTERY_ERROR), "Lottery Database Exception clockTask : %+v , err: %v", clockTask, err)
+			}
+			clockTaskId, _ := insert.LastInsertId()
+
+			// 更新lottery表的
+			lottery := new(model.Lottery)
+			lottery.Id = lotteryId
+			lottery.ClockTaskId = clockTaskId
+			_, err = l.svcCtx.LotteryModel.TransUpdateClockTaskId(l.ctx, session, lottery)
+			if err != nil {
+				logx.Error("更新打卡任务ID失败:%v", err)
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Lottery Database Exception lottery : %+v , err: %v", lottery, err)
+			}
+		}
+
 		return nil
 	})
 	if err != nil {

@@ -326,6 +326,84 @@
         "isParticipated"
       ]
     },
+    "CreateClockTask": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频"
+        },
+        "seconds": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 任务秒数"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64",
+          "description": " type=1时该字段才有意义 小程序跳转类型，1小程序链接 2小程序路径"
+        },
+        "pageLink": {
+          "type": "string",
+          "description": " type=1 并且 applet_type=1时 该字段才有意义 配置要跳转小程序的页面链接 （如 #小程序:抽奖/oM....）"
+        },
+        "appId": {
+          "type": "string",
+          "description": " type=1 并且 applet_type=2时 该字段才有意义 配置要跳转的小程序AppID"
+        },
+        "pagePath": {
+          "type": "string",
+          "description": " type=1 并且 applet_type=2时 该字段才有意义 配置要跳转的小程序路径（如：/pages/index）"
+        },
+        "image": {
+          "type": "string",
+          "description": " type=3时 该字段才有意义 添加要查看的图片"
+        },
+        "videoAccountId": {
+          "type": "string",
+          "description": " type=4时 该字段才有意义 视频号ID"
+        },
+        "videoId": {
+          "type": "string",
+          "description": " type=4时 该字段才有意义 视频ID"
+        },
+        "articleLink": {
+          "type": "string",
+          "description": " type=2时 该字段才有意义 公众号文章链接"
+        },
+        "copywriting": {
+          "type": "string",
+          "description": " 引导参与者完成打卡任务的文案"
+        },
+        "chanceType": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 概率类型 1: 随机 2: 指定"
+        },
+        "increaseMultiple": {
+          "type": "integer",
+          "format": "int64",
+          "description": " ChanceType=2时 该字段才有意义，概率增加倍数"
+        }
+      },
+      "title": "CreateClockTask",
+      "required": [
+        "type",
+        "seconds",
+        "appletType",
+        "pageLink",
+        "appId",
+        "pagePath",
+        "image",
+        "videoAccountId",
+        "videoId",
+        "articleLink",
+        "copywriting",
+        "chanceType",
+        "increaseMultiple"
+      ]
+    },
     "CreateLotteryReq": {
       "type": "object",
       "properties": {
@@ -372,6 +450,15 @@
             "$ref": "#/definitions/CreatePrize"
           },
           "description": "奖品 支持多个"
+        },
+        "isClocked": {
+          "type": "integer",
+          "format": "int64",
+          "description": "是否开启打卡任务 0未开启；1已开启"
+        },
+        "clockTask": {
+          "$ref": "#/definitions/CreateClockTask",
+          "description": "打卡任务 支持一个"
         }
       },
       "title": "CreateLotteryReq",
@@ -384,7 +471,9 @@
         "introduce",
         "awardDeadline",
         "sponsorId",
-        "prizes"
+        "prizes",
+        "isClocked",
+        "clockTask"
       ]
     },
     "CreateLotteryResp": {
@@ -590,6 +679,11 @@
           "format": "int64",
           "description": " 是否已经开奖：0未开奖 1已开奖"
         },
+        "sponsorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 赞助商Id"
+        },
         "prizes": {
           "type": "array",
           "items": {
@@ -616,6 +710,7 @@
         "announceType",
         "announceTime",
         "isAnnounced",
+        "sponsorId",
         "prizes",
         "sponsor"
       ]
