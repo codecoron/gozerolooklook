@@ -74,10 +74,17 @@ type SetLotteryIsSelectedResp struct {
 }
 
 type LotterySponsor struct {
-	Id       int64  `json:"id"`       // 赞助商Id
-	NickName string `json:"nickName"` // 赞助商昵称
-	Avatar   string `json:"avatar"`   // 赞助商头像
-	Info     string `json:"info"`     // 赞助商信息
+	Id         int64  `json:"id"`         //id
+	UserId     int64  `json:"userId"`     //userId
+	Type       int64  `json:"type"`       //1微信号 2公众号 3小程序 4微信群 5视频号
+	AppletType int64  `json:"appletType"` //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+	Name       string `json:"name"`       //名称
+	Desc       string `json:"desc"`       //描述
+	Avatar     string `json:"avatar"`     //avatar
+	IsShow     int64  `json:"isShow"`     //1显示 2不显示
+	QrCode     string `json:"qrCode"`     //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+	InputA     string `json:"inputA"`     //type=5 applet_type=2 or applet_type=1 输入框A
+	InputB     string `json:"inputB"`     //type=5 applet_type=2输入框B
 }
 
 type LotteryDetailReq struct {
