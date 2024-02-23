@@ -40,6 +40,16 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		}
 		pbPrizes = append(pbPrizes, pbPrize)
 	}
+	pbClockTask := new(pb.ClockTask)
+	if req.IsClocked == 1 && req.ClockTask != nil {
+		err = copier.Copy(&pbClockTask, req.ClockTask)
+		if err != nil {
+			return nil, errors.Wrapf(xerr.NewErrMsg("Copy pbClockTask Error"), "Copy pbClockTask Error req: %+v , err : %v ", pbClockTask, err)
+		}
+	} else {
+		pbClockTask = nil
+	}
+
 	addLottery, err := l.svcCtx.LotteryRpc.AddLottery(l.ctx, &lottery.AddLotteryReq{
 		UserId:        userId,
 		Name:          req.Name,
@@ -51,6 +61,8 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		AwardDeadline: req.AwardDeadline,
 		Prizes:        pbPrizes,
 		SponsorId:     req.SponsorId,
+		IsClocked:     req.IsClocked,
+		ClockTask:     pbClockTask,
 	})
 	if err != nil {
 		return nil, err

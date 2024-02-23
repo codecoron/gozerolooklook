@@ -35,7 +35,7 @@ service lottery {
 	@doc "发起抽奖"
 	@handler createLottery
 	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
-	
+
 	@doc "发布抽奖"
 	@handler updateLottery
 	post /lottery/updateLottery (UpdateLotteryReq) returns (UpdateLotteryResp)
@@ -78,15 +78,14 @@ service lottery {
 
 //no need login
 //@server (
-//	prefix: lottery/v1
-//	group:  lottery
+// prefix: lottery/v1
+// group:  lottery
 //)
 //service lottery {
-//	@doc "lottery sponsor"
-//	@handler lotterySponsor
-//	post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
+// @doc "lottery sponsor"
+// @handler lotterySponsor
+// post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
 //}
-
 @server (
 	prefix: lottery/v1
 	group:  lottery
@@ -117,3 +116,4 @@ service lottery {
 	@handler TestValidator
 	post /lottery/TestValidator (TestReq) returns (TestResp)
 }
+

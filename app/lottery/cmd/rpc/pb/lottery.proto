@@ -38,6 +38,8 @@ message AddLotteryReq {
   repeated Prize prizes = 9; //奖品 支持多个
   int64 announceTime = 10;
   int64 SponsorId = 11;
+  int64 isClocked = 12; // 是否开启打卡任务
+  ClockTask clockTask = 13; // 打卡任务 最多支持一个
 }
 
 message AddLotteryResp {
@@ -306,6 +308,24 @@ message CheckSelectedLotteryParticipatedReq{
 
 message CheckSelectedLotteryParticipatedResp{
   int64 participated = 1;
+}
+
+//--------------------------------打卡任务表--------------------------------
+message ClockTask {
+  int64 Type = 1;
+  int64 Seconds = 2;
+  int64 AppletType = 3;
+  string PageLink = 4;
+  string AppId = 5;
+  string PagePath = 6;
+  string Image = 7;
+  string VideoAccountId = 8;
+  string VideoId = 9;
+  string ArticleLink = 10;
+  string Copywriting = 11;
+  int64 ChanceType = 12;
+  int64 IncreaseMultiple = 13;
+
 }
 
 // ------------------------------------
