@@ -1,0 +1,25 @@
+syntax = "v1"
+
+info (
+	title:   "晒单服务"
+	desc:    "晒单服务"
+	author:  "黎俊威"
+	email:   "lovevivi121@qq.com"
+	version: "v1"
+)
+
+import (
+	"comment/comment.api"
+)
+
+//=====================================> comment-comment v1 <=================================
+
+@server (
+	prefix: comment/v1
+	group:  comment
+)
+service comment {
+	@doc "测试Api"
+	@handler Test
+	post /comment/Test (TestReq) returns (TestResp)
+}

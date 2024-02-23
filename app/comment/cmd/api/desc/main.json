@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "晒单服务",
+    "description": "晒单服务",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "comment/v1/comment/Test": {
+      "post": {
+        "summary": "测试Api",
+        "operationId": "Test",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TestResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TestReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "TestReq": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "re_password": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "title": "TestReq",
+      "required": [
+        "age",
+        "gte=1",
+        "name",
+        "email",
+        "required",
+        "password",
+        "re_password",
+        "date"
+      ]
+    },
+    "TestResp": {
+      "type": "object",
+      "title": "TestResp"
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}
