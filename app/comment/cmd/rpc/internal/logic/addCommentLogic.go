@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"looklook/app/comment/model"
+	"time"
 
 	"looklook/app/comment/cmd/rpc/internal/svc"
 	"looklook/app/comment/cmd/rpc/pb"
@@ -25,7 +27,19 @@ func NewAddCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCom
 
 // -----------------------comment-----------------------
 func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
-	// todo: add your logic here and delete this line
+	_, err := l.svcCtx.CommentModel.Insert(l.ctx, &model.Comment{
+		UserId:      in.UserId,
+		LotteryId:   in.LotteryId,
+		PrizeName:   in.PrizeName,
+		Content:     in.Content,
+		Pics:        in.Pics,
+		PraiseCount: in.PraiseCount,
+		CreateTime:  time.Now(),
+		UpdateTime:  time.Now(),
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return &pb.AddCommentResp{}, nil
 }

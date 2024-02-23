@@ -23,3 +23,35 @@ service comment {
 	@handler Test
 	post /comment/Test (TestReq) returns (TestResp)
 }
+
+//need login
+@server (
+	prefix: comment/v1
+	group:  comment
+	jwt:    JwtAuth
+)
+service comment {
+	@doc "增加评论"
+	@handler addComment
+	post /comment/addComment (CommentAddReq) returns (CommentAddResp)
+	
+	@doc "删除评论"
+	@handler deleteComment
+	post /comment/deleteComment (CommentDelReq) returns (CommentDelResp)
+	
+	@doc "更新评论"
+	@handler updateComment
+	post /comment/updateComment (CommentUpdateReq) returns (CommentUpdateResp)
+	
+}
+
+//no need login
+@server (
+	prefix: comment/v1
+	group:  comment
+)
+service comment {
+	@doc "获取评论列表"
+	@handler getCommentList
+	post /comment/getCommentList (CommentListReq) returns (CommentListResp)
+}

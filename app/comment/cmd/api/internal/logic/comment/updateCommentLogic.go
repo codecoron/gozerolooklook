@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type TestValidatorLogic struct {
+type UpdateCommentLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewTestValidatorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *TestValidatorLogic {
-	return &TestValidatorLogic{
+func NewUpdateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateCommentLogic {
+	return &UpdateCommentLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *TestValidatorLogic) TestValidator(req *types.TestReq) (resp *types.TestResp, err error) {
+func (l *UpdateCommentLogic) UpdateComment(req *types.CommentUpdateReq) (resp *types.CommentUpdateResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return

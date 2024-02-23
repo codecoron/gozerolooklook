@@ -12,9 +12,9 @@ import (
 	"looklook/app/comment/cmd/api/internal/types"
 )
 
-func TestValidatorHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func AddCommentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.TestReq
+		var req types.CommentAddReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
@@ -26,8 +26,8 @@ func TestValidatorHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := comment.NewTestValidatorLogic(r.Context(), svcCtx)
-		resp, err := l.TestValidator(&req)
+		l := comment.NewAddCommentLogic(r.Context(), svcCtx)
+		resp, err := l.AddComment(&req)
 
 		result.HttpResult(r, w, resp, err)
 	}
