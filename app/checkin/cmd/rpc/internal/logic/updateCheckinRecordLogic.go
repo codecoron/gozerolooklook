@@ -28,7 +28,7 @@ func NewUpdateCheckinRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext
 	}
 }
 
-func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecordReq) (*pb.UpdateCheckinRecordResp, error) {
+func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecordReq) (resp *pb.UpdateCheckinRecordResp, err error) {
 	checkinRecord, err := l.svcCtx.CheckinRecordModel.FindOneByUserId(l.ctx, in.UserId)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "checkinRecord : %+v , err: %v", checkinRecord, err)
@@ -45,7 +45,7 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 	}
 	err = l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		if checkinRecord.State == 1 {
-			return errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_REPEAT), "err : %v", err)
+			return errors.Wrapf(xerr.NewErrCodeMsg(xerr.CHECKIN_REPEAT, "不可重复签到"), "err : %v", err)
 		}
 		var i int64
 		switch checkinRecord.ContinuousCheckinDays {
@@ -94,9 +94,8 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UpdateCheckinRecordResp{
-		State:                 checkinRecord.State,
-		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
-		Integral:              integarl.Integral,
-	}, nil
+	resp.State = checkinRecord.State
+	resp.ContinuousCheckinDays = checkinRecord.ContinuousCheckinDays
+	resp.Integral = integarl.Integral
+	return resp, nil
 }
