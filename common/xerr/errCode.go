@@ -77,3 +77,8 @@ const (
 	CHECKIN_TASK_NOT_FOUND        uint32 = 700003
 	CHECKIN_TASK_REWARD_COLLECTED uint32 = 700004
 )
+
+// 晒单模块
+const (
+	ErrUserNotWon uint32 = 800001 + iota
+)
