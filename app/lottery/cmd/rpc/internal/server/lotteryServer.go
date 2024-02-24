@@ -144,3 +144,8 @@ func (s *LotteryServer) CheckSelectedLotteryParticipated(ctx context.Context, in
 	l := logic.NewCheckSelectedLotteryParticipatedLogic(ctx, s.svcCtx)
 	return l.CheckSelectedLotteryParticipated(in)
 }
+
+func (s *LotteryServer) CheckUserIsWon(ctx context.Context, in *pb.CheckUserIsWonReq) (*pb.CheckUserIsWonResp, error) {
+	l := logic.NewCheckUserIsWonLogic(ctx, s.svcCtx)
+	return l.CheckUserIsWon(in)
+}

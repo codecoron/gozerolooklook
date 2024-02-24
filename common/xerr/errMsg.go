@@ -51,6 +51,8 @@ func init() {
 	message[DB_GET_LOTTERY_BYLOTTERYID_ERROR] = "根据抽奖id查询抽奖失败"
 	message[DB_UPDATE_LOTTERY_ERROR] = "更新抽奖信息失败"
 	message[DB_NO_SET_LOTTERY_ISSELECT_PERMISSION_ERROR] = "没有修改抽奖是否精选的权限"
+	// 参与抽奖
+	message[CHECK_ISWON_BYUSERID_ANDLOTTERYID_ERROR] = "检查当前用户是否中奖失败"
 }
 
 func MapErrMsg(errcode uint32) string {
