@@ -2,11 +2,9 @@ package shop
 
 import (
 	"context"
-
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/shop/cmd/api/internal/svc"
 	"looklook/app/shop/cmd/api/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type GetGoodsListLogic struct {
@@ -25,6 +23,5 @@ func NewGetGoodsListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 
 func (l *GetGoodsListLogic) GetGoodsList(req *types.GoodsListReq) (resp *types.GoodsListResp, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }
