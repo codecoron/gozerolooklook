@@ -25,7 +25,6 @@ func NewUpdatePraiseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 }
 
 func (l *UpdatePraiseLogic) UpdatePraise(in *pb.UpdatePraiseReq) (*pb.UpdatePraiseResp, error) {
-	// todo: add your logic here and delete this line
 	praise := new(model.Praise)
 	praise.Id = in.Id
 	praise.CommentId = in.CommentId

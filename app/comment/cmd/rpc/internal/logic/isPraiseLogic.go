@@ -24,7 +24,6 @@ func NewIsPraiseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *IsPraise
 
 func (l *IsPraiseLogic) IsPraise(in *pb.IsPraiseReq) (*pb.IsPraiseResp, error) {
 	PraiseId, err := l.svcCtx.PraiseModel.IsPraise(l.ctx, in.CommentId, in.UserId)
-	// todo 封装统一错误后怎么根据错误码进行处理
 	if err != nil {
 		return nil, err
 	}
