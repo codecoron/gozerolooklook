@@ -368,13 +368,18 @@
         "pageSize": {
           "type": "integer",
           "format": "int64"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "CommentListReq",
       "required": [
         "lastId",
         "page",
-        "pageSize"
+        "pageSize",
+        "sort"
       ]
     },
     "CommentListResp": {

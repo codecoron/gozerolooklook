@@ -29,6 +29,7 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 		LastId: req.LastId,
 		Page:   req.Page,
 		Limit:  req.PageSize,
+		Sort:   req.Sort,
 	})
 	if err != nil {
 		return nil, err

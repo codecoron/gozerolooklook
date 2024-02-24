@@ -17,7 +17,7 @@ type (
 	// and implement the added methods in customCommentModel.
 	CommentModel interface {
 		commentModel
-		CommentList(ctx context.Context, page, limit, lastId int64) ([]*Comment, error)
+		CommentList(ctx context.Context, page, limit, lastId, sort int64) ([]*Comment, error)
 		UpdatePraiseNum(ctx context.Context, id, num int64) (int64, error)
 	}
 
@@ -33,11 +33,15 @@ func NewCommentModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 	}
 }
 
-func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastId int64) ([]*Comment, error) {
+func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastId, sort int64) ([]*Comment, error) {
 	var query string
-	//query = fmt.Sprintf("select %s from %s where id > ? limit ?,?", commentRows, c.table)
-	// 按照id倒序排序
-	query = fmt.Sprintf("select %s from %s where id < ? order by id desc limit ?,?", commentRows, c.table)
+	if sort == 1 {
+		// 按照点赞数倒序排序
+		query = fmt.Sprintf("select %s from %s where id < ? order by praise_count desc limit ?,?", commentRows, c.table)
+	} else {
+		// 按照id倒序排序
+		query = fmt.Sprintf("select %s from %s where id < ? order by id desc limit ?,?", commentRows, c.table)
+	}
 	var resp []*Comment
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)

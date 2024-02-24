@@ -101,6 +101,8 @@ type (
 		LastId int64 `json:"lastId"`
 		Page int64 `json:"page"`
 		PageSize int64 `json:"pageSize"`
+		// 排序方式 0: 默认排序，1: 点赞数排序
+		Sort int64 `json:"sort"`
 	}
 	CommentListResp {
 		List []Comments `json:"list"`

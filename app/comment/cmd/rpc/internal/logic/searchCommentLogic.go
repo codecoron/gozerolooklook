@@ -24,7 +24,7 @@ func NewSearchCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sea
 }
 
 func (l *SearchCommentLogic) SearchComment(in *pb.SearchCommentReq) (*pb.SearchCommentResp, error) {
-	list, err := l.svcCtx.CommentModel.CommentList(l.ctx, in.Page, in.Limit, in.LastId)
+	list, err := l.svcCtx.CommentModel.CommentList(l.ctx, in.Page, in.Limit, in.LastId, in.Sort)
 	if err != nil {
 		return nil, err
 	}

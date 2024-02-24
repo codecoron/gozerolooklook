@@ -74,6 +74,7 @@ message SearchCommentReq {
   int64 createTime = 10; //创建时间
   int64 updateTime = 11; //更新时间
   int64 lastId = 12; //lastId
+  int64 sort = 13; //排序方式：0-时间倒序，1-点赞数倒序
 }
 
 message SearchCommentResp {
