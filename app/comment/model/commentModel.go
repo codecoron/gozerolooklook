@@ -35,7 +35,9 @@ func NewCommentModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 
 func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastId int64) ([]*Comment, error) {
 	var query string
-	query = fmt.Sprintf("select %s from %s where id > ? limit ?,?", commentRows, c.table)
+	//query = fmt.Sprintf("select %s from %s where id > ? limit ?,?", commentRows, c.table)
+	// 按照id倒序排序
+	query = fmt.Sprintf("select %s from %s where id < ? order by id desc limit ?,?", commentRows, c.table)
 	var resp []*Comment
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
