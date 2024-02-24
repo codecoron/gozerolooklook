@@ -2,6 +2,7 @@ package comment
 
 import (
 	"context"
+	"looklook/app/comment/cmd/rpc/comment"
 
 	"looklook/app/comment/cmd/api/internal/svc"
 	"looklook/app/comment/cmd/api/internal/types"
@@ -23,8 +24,30 @@ func NewGetCommentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 	}
 }
 
-func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (resp *types.CommentListResp, err error) {
-	// todo: add your logic here and delete this line
+func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.CommentListResp, error) {
+	resp, err := l.svcCtx.CommentRpc.SearchComment(l.ctx, &comment.SearchCommentReq{
+		LastId: req.LastId,
+		Page:   req.Page,
+		Limit:  req.PageSize,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	var CommentList []types.Comment
+	if len(resp.Comment) > 0 {
+		for _, item := range resp.Comment {
+			var t types.Comment
+			t.Id = item.Id
+			t.UserId = item.UserId
+			t.LotteryId = item.LotteryId
+			t.PrizeName = item.PrizeName
+			t.Content = item.Content
+			t.Pics = item.Pics
+			t.PraiseCount = item.PraiseCount
+			CommentList = append(CommentList, t)
+		}
+	}
+
+	return &types.CommentListResp{List: CommentList}, nil
 }

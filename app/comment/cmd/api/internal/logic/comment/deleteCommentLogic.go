@@ -2,6 +2,7 @@ package comment
 
 import (
 	"context"
+	"looklook/app/comment/cmd/rpc/comment"
 
 	"looklook/app/comment/cmd/api/internal/svc"
 	"looklook/app/comment/cmd/api/internal/types"
@@ -24,7 +25,12 @@ func NewDeleteCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Del
 }
 
 func (l *DeleteCommentLogic) DeleteComment(req *types.CommentDelReq) (resp *types.CommentDelResp, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.CommentRpc.DelComment(l.ctx, &comment.DelCommentReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return
 }
