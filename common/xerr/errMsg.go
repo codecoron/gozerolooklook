@@ -55,6 +55,9 @@ func init() {
 	message[CHECK_ISWON_BYUSERID_ANDLOTTERYID_ERROR] = "检查当前用户是否中奖失败"
 	// 晒单模块
 	message[ErrUserNotWon] = "用户没有中奖"
+	message[DB_INSERTCOMMENT_ERROR] = "插入评论失败"
+	message[DB_INSERTPRAISE_ERROR] = "插入点赞失败"
+	message[DB_DELETECOMMENT_ERROR] = "删除评论失败"
 }
 
 func MapErrMsg(errcode uint32) string {

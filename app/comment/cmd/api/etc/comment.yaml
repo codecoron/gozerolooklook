@@ -42,7 +42,7 @@ Cache:
 #rpc
 UsercenterRpcConf:
   Endpoints:
-    - 12.0.0.1:2004
+    - 127.0.0.1:2004
   NonBlock: true
 
 CommentRpcConf:
@@ -52,5 +52,5 @@ CommentRpcConf:
 
 LotteryRpcConf:
   Endpoints:
-    - 12.0.0.1:2005
+    - 127.0.0.1:2005
   NonBlock: true

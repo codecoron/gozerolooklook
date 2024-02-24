@@ -2,10 +2,12 @@ package logic
 
 import (
 	"context"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/comment/cmd/rpc/internal/svc"
 	"looklook/app/comment/cmd/rpc/pb"
 	"looklook/app/comment/model"
+	"looklook/common/xerr"
 )
 
 type AddCommentLogic struct {
@@ -36,7 +38,7 @@ func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, 
 
 	_, err := l.svcCtx.CommentModel.Insert(l.ctx, comment)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTCOMMENT_ERROR), "comment Database Exception comment : %+v , err: %v", comment, err)
 	}
 
 	return &pb.AddCommentResp{}, nil

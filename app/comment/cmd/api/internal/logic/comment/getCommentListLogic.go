@@ -45,6 +45,8 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 			t.Content = item.Content
 			t.Pics = item.Pics
 			t.PraiseCount = item.PraiseCount
+			t.CreateTime = item.CreateTime
+			t.UpdateTime = item.UpdateTime
 			CommentList = append(CommentList, t)
 		}
 	}

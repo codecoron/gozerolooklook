@@ -35,6 +35,8 @@ func (l *SearchPraiseLogic) SearchPraise(in *pb.SearchPraiseReq) (*pb.SearchPrai
 			pbPraise.Id = praise.Id
 			pbPraise.UserId = praise.UserId
 			pbPraise.CommentId = praise.CommentId
+			pbPraise.CreateTime = praise.CreateTime.Unix()
+			pbPraise.UpdateTime = praise.UpdateTime.Unix()
 			resp = append(resp, &pbPraise)
 		}
 	}

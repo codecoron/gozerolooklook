@@ -25,7 +25,6 @@ func NewGetPraiseByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Get
 }
 
 func (l *GetPraiseByIdLogic) GetPraiseById(in *pb.GetPraiseByIdReq) (*pb.GetPraiseByIdResp, error) {
-	// todo: add your logic here and delete this line
 	praise, err := l.svcCtx.PraiseModel.FindOne(l.ctx, in.Id)
 	if err != nil {
 		return nil, err
@@ -37,6 +36,8 @@ func (l *GetPraiseByIdLogic) GetPraiseById(in *pb.GetPraiseByIdReq) (*pb.GetPrai
 	if err != nil {
 		return nil, err
 	}
+	pbPraise.CreateTime = praise.CreateTime.Unix()
+	pbPraise.UpdateTime = praise.UpdateTime.Unix()
 
 	return &pb.GetPraiseByIdResp{
 		Praise: pbPraise,

@@ -40,6 +40,8 @@ func (l *SearchCommentLogic) SearchComment(in *pb.SearchCommentReq) (*pb.SearchC
 			pbComment.Content = comment.Content
 			pbComment.Pics = comment.Pics
 			pbComment.PraiseCount = comment.PraiseCount
+			pbComment.CreateTime = comment.CreateTime.Unix()
+			pbComment.UpdateTime = comment.UpdateTime.Unix()
 			resp = append(resp, &pbComment)
 		}
 	}

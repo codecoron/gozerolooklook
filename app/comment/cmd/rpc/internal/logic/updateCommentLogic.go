@@ -25,7 +25,6 @@ func NewUpdateCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upd
 }
 
 func (l *UpdateCommentLogic) UpdateComment(in *pb.UpdateCommentReq) (*pb.UpdateCommentResp, error) {
-	// todo: add your logic here and delete this line
 	comment := new(model.Comment)
 	comment.Id = in.Id
 	comment.UserId = in.UserId
@@ -34,6 +33,7 @@ func (l *UpdateCommentLogic) UpdateComment(in *pb.UpdateCommentReq) (*pb.UpdateC
 	comment.UserId = in.UserId
 	comment.PraiseCount = in.PraiseCount
 	comment.Pics = in.Pics
+	comment.LotteryId = in.LotteryId
 
 	err := l.svcCtx.CommentModel.Update(l.ctx, comment)
 	if err != nil {

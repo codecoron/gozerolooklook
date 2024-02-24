@@ -24,7 +24,6 @@ func NewDelPraiseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelPrai
 }
 
 func (l *DelPraiseLogic) DelPraise(in *pb.DelPraiseReq) (*pb.DelPraiseResp, error) {
-	// todo: add your logic here and delete this line
 	err := l.svcCtx.PraiseModel.Delete(l.ctx, in.Id)
 	if err != nil {
 		return nil, err

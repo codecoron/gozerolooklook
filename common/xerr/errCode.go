@@ -81,4 +81,7 @@ const (
 // 晒单模块
 const (
 	ErrUserNotWon uint32 = 800001 + iota
+	DB_INSERTCOMMENT_ERROR
+	DB_INSERTPRAISE_ERROR
+	DB_DELETECOMMENT_ERROR
 )

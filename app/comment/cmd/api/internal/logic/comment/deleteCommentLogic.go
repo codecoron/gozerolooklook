@@ -32,5 +32,5 @@ func (l *DeleteCommentLogic) DeleteComment(req *types.CommentDelReq) (resp *type
 		return nil, err
 	}
 
-	return
+	return &types.CommentDelResp{}, nil
 }

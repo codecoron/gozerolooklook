@@ -25,7 +25,6 @@ func NewGetCommentByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 }
 
 func (l *GetCommentByIdLogic) GetCommentById(in *pb.GetCommentByIdReq) (*pb.GetCommentByIdResp, error) {
-	// todo: add your logic here and delete this line
 	comment, err := l.svcCtx.CommentModel.FindOne(l.ctx, in.Id)
 	if err != nil {
 		return nil, err
@@ -34,6 +33,8 @@ func (l *GetCommentByIdLogic) GetCommentById(in *pb.GetCommentByIdReq) (*pb.GetC
 	pbComment := new(pb.Comment)
 
 	err = copier.Copy(&pbComment, &comment)
+	pbComment.CreateTime = comment.CreateTime.Unix()
+	pbComment.UpdateTime = comment.UpdateTime.Unix()
 	if err != nil {
 		return nil, err
 	}
