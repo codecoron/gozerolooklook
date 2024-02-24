@@ -17,6 +17,7 @@ type (
 	PraiseModel interface {
 		praiseModel
 		PraiseList(ctx context.Context, page, limit, lastId int64) ([]*Praise, error)
+		IsPraise(ctx context.Context, commentId, userId int64) (int64, error)
 	}
 
 	customPraiseModel struct {
@@ -35,10 +36,20 @@ func (c *customPraiseModel) PraiseList(ctx context.Context, page, limit, lastId 
 	var query string
 	query = fmt.Sprintf("select %s from %s where id > ? limit ?,?", praiseRows, c.table)
 	var resp []*Praise
-	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
 	}
 	return resp, nil
+}
+
+func (c *customPraiseModel) IsPraise(ctx context.Context, commentId, userId int64) (int64, error) {
+	// 查询是否有点赞记录，有则返回点赞id，否则返回0
+	var id int64
+	query := fmt.Sprintf("select id from %s where comment_id = ? and user_id = ? limit 1", c.table)
+	err := c.QueryRowNoCacheCtx(ctx, &id, query, commentId, userId)
+	if err != nil && err != sqlx.ErrNotFound {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &id:%v, query:%v, commentId:%v, userId:%v, error: %v", &id, query, commentId, userId, err)
+	}
+	return id, nil
 }

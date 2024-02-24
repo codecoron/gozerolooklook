@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -17,6 +18,7 @@ type (
 	CommentModel interface {
 		commentModel
 		CommentList(ctx context.Context, page, limit, lastId int64) ([]*Comment, error)
+		UpdatePraiseNum(ctx context.Context, id, num int64) (int64, error)
 	}
 
 	customCommentModel struct {
@@ -41,4 +43,15 @@ func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastI
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
 	}
 	return resp, nil
+}
+
+func (c *customCommentModel) UpdatePraiseNum(ctx context.Context, id, num int64) (int64, error) {
+	query := fmt.Sprintf("update %s set praise_count = praise_count + ? where id = ?", c.table)
+	res, err := c.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
+		return conn.ExecCtx(ctx, query, num, id)
+	})
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "ExecCtx, query:%v, num:%v, id:%v, error: %v", query, num, id, err)
+	}
+	return res.RowsAffected()
 }

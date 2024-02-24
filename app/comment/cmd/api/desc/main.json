@@ -72,6 +72,34 @@
         ]
       }
     },
+    "comment/v1/comment/commentPraise": {
+      "post": {
+        "summary": "评论点赞/取消点赞",
+        "operationId": "commentPraise",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommentPraiseResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CommentPraiseReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    },
     "comment/v1/comment/deleteComment": {
       "post": {
         "summary": "删除评论",

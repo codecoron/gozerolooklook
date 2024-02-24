@@ -43,6 +43,9 @@ service comment {
 	@handler updateComment
 	post /comment/updateComment (CommentUpdateReq) returns (CommentUpdateResp)
 	
+	@doc "评论点赞/取消点赞"
+	@handler commentPraise
+	post /comment/commentPraise (CommentPraiseReq) returns (CommentPraiseResp)
 }
 
 //no need login

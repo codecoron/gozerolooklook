@@ -26,7 +26,11 @@ type (
 	GetCommentByIdResp = pb.GetCommentByIdResp
 	GetPraiseByIdReq   = pb.GetPraiseByIdReq
 	GetPraiseByIdResp  = pb.GetPraiseByIdResp
+	IsPraiseReq        = pb.IsPraiseReq
+	IsPraiseResp       = pb.IsPraiseResp
 	Praise             = pb.Praise
+	PraiseCommentReq   = pb.PraiseCommentReq
+	PraiseCommentResp  = pb.PraiseCommentResp
 	SearchCommentReq   = pb.SearchCommentReq
 	SearchCommentResp  = pb.SearchCommentResp
 	SearchPraiseReq    = pb.SearchPraiseReq
@@ -43,6 +47,8 @@ type (
 		DelComment(ctx context.Context, in *DelCommentReq, opts ...grpc.CallOption) (*DelCommentResp, error)
 		GetCommentById(ctx context.Context, in *GetCommentByIdReq, opts ...grpc.CallOption) (*GetCommentByIdResp, error)
 		SearchComment(ctx context.Context, in *SearchCommentReq, opts ...grpc.CallOption) (*SearchCommentResp, error)
+		IsPraise(ctx context.Context, in *IsPraiseReq, opts ...grpc.CallOption) (*IsPraiseResp, error)
+		PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error)
 		// -----------------------praise-----------------------
 		AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error)
 		UpdatePraise(ctx context.Context, in *UpdatePraiseReq, opts ...grpc.CallOption) (*UpdatePraiseResp, error)
@@ -86,6 +92,16 @@ func (m *defaultCommentZrpcClient) GetCommentById(ctx context.Context, in *GetCo
 func (m *defaultCommentZrpcClient) SearchComment(ctx context.Context, in *SearchCommentReq, opts ...grpc.CallOption) (*SearchCommentResp, error) {
 	client := pb.NewCommentClient(m.cli.Conn())
 	return client.SearchComment(ctx, in, opts...)
+}
+
+func (m *defaultCommentZrpcClient) IsPraise(ctx context.Context, in *IsPraiseReq, opts ...grpc.CallOption) (*IsPraiseResp, error) {
+	client := pb.NewCommentClient(m.cli.Conn())
+	return client.IsPraise(ctx, in, opts...)
+}
+
+func (m *defaultCommentZrpcClient) PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error) {
+	client := pb.NewCommentClient(m.cli.Conn())
+	return client.PraiseComment(ctx, in, opts...)
 }
 
 // -----------------------praise-----------------------

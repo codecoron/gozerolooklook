@@ -39,6 +39,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/comment/updateComment",
 				Handler: comment.UpdateCommentHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/comment/commentPraise",
+				Handler: comment.CommentPraiseHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/comment/v1"),

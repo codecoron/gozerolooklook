@@ -751,6 +751,204 @@ func (x *SearchCommentResp) GetComment() []*Comment {
 	return nil
 }
 
+// 判断当前用户当前评论是否点赞
+type IsPraiseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId    int64 `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`       //用户id
+	CommentId int64 `protobuf:"varint,2,opt,name=commentId,proto3" json:"commentId,omitempty"` //评论id
+}
+
+func (x *IsPraiseReq) Reset() {
+	*x = IsPraiseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsPraiseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsPraiseReq) ProtoMessage() {}
+
+func (x *IsPraiseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsPraiseReq.ProtoReflect.Descriptor instead.
+func (*IsPraiseReq) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *IsPraiseReq) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *IsPraiseReq) GetCommentId() int64 {
+	if x != nil {
+		return x.CommentId
+	}
+	return 0
+}
+
+type IsPraiseResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// 返回点赞id
+	PraiseId int64 `protobuf:"varint,1,opt,name=praiseId,proto3" json:"praiseId,omitempty"` //点赞id
+}
+
+func (x *IsPraiseResp) Reset() {
+	*x = IsPraiseResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsPraiseResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsPraiseResp) ProtoMessage() {}
+
+func (x *IsPraiseResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsPraiseResp.ProtoReflect.Descriptor instead.
+func (*IsPraiseResp) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *IsPraiseResp) GetPraiseId() int64 {
+	if x != nil {
+		return x.PraiseId
+	}
+	return 0
+}
+
+// 评论点赞/取消点赞
+type PraiseCommentReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId    int64 `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`       //用户id
+	CommentId int64 `protobuf:"varint,2,opt,name=commentId,proto3" json:"commentId,omitempty"` //评论id
+}
+
+func (x *PraiseCommentReq) Reset() {
+	*x = PraiseCommentReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PraiseCommentReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PraiseCommentReq) ProtoMessage() {}
+
+func (x *PraiseCommentReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PraiseCommentReq.ProtoReflect.Descriptor instead.
+func (*PraiseCommentReq) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *PraiseCommentReq) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *PraiseCommentReq) GetCommentId() int64 {
+	if x != nil {
+		return x.CommentId
+	}
+	return 0
+}
+
+type PraiseCommentResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *PraiseCommentResp) Reset() {
+	*x = PraiseCommentResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PraiseCommentResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PraiseCommentResp) ProtoMessage() {}
+
+func (x *PraiseCommentResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PraiseCommentResp.ProtoReflect.Descriptor instead.
+func (*PraiseCommentResp) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{14}
+}
+
 // --------------------------------praise--------------------------------
 type Praise struct {
 	state         protoimpl.MessageState
@@ -767,7 +965,7 @@ type Praise struct {
 func (x *Praise) Reset() {
 	*x = Praise{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[11]
+		mi := &file_comment_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -780,7 +978,7 @@ func (x *Praise) String() string {
 func (*Praise) ProtoMessage() {}
 
 func (x *Praise) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[11]
+	mi := &file_comment_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -793,7 +991,7 @@ func (x *Praise) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Praise.ProtoReflect.Descriptor instead.
 func (*Praise) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{11}
+	return file_comment_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Praise) GetId() int64 {
@@ -843,7 +1041,7 @@ type AddPraiseReq struct {
 func (x *AddPraiseReq) Reset() {
 	*x = AddPraiseReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[12]
+		mi := &file_comment_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -856,7 +1054,7 @@ func (x *AddPraiseReq) String() string {
 func (*AddPraiseReq) ProtoMessage() {}
 
 func (x *AddPraiseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[12]
+	mi := &file_comment_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -869,7 +1067,7 @@ func (x *AddPraiseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddPraiseReq.ProtoReflect.Descriptor instead.
 func (*AddPraiseReq) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{12}
+	return file_comment_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AddPraiseReq) GetUserId() int64 {
@@ -895,7 +1093,7 @@ type AddPraiseResp struct {
 func (x *AddPraiseResp) Reset() {
 	*x = AddPraiseResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[13]
+		mi := &file_comment_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -908,7 +1106,7 @@ func (x *AddPraiseResp) String() string {
 func (*AddPraiseResp) ProtoMessage() {}
 
 func (x *AddPraiseResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[13]
+	mi := &file_comment_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -921,7 +1119,7 @@ func (x *AddPraiseResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddPraiseResp.ProtoReflect.Descriptor instead.
 func (*AddPraiseResp) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{13}
+	return file_comment_proto_rawDescGZIP(), []int{17}
 }
 
 type UpdatePraiseReq struct {
@@ -937,7 +1135,7 @@ type UpdatePraiseReq struct {
 func (x *UpdatePraiseReq) Reset() {
 	*x = UpdatePraiseReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[14]
+		mi := &file_comment_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -950,7 +1148,7 @@ func (x *UpdatePraiseReq) String() string {
 func (*UpdatePraiseReq) ProtoMessage() {}
 
 func (x *UpdatePraiseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[14]
+	mi := &file_comment_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,7 +1161,7 @@ func (x *UpdatePraiseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePraiseReq.ProtoReflect.Descriptor instead.
 func (*UpdatePraiseReq) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{14}
+	return file_comment_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UpdatePraiseReq) GetId() int64 {
@@ -996,7 +1194,7 @@ type UpdatePraiseResp struct {
 func (x *UpdatePraiseResp) Reset() {
 	*x = UpdatePraiseResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[15]
+		mi := &file_comment_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1009,7 +1207,7 @@ func (x *UpdatePraiseResp) String() string {
 func (*UpdatePraiseResp) ProtoMessage() {}
 
 func (x *UpdatePraiseResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[15]
+	mi := &file_comment_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1022,7 +1220,7 @@ func (x *UpdatePraiseResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePraiseResp.ProtoReflect.Descriptor instead.
 func (*UpdatePraiseResp) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{15}
+	return file_comment_proto_rawDescGZIP(), []int{19}
 }
 
 type DelPraiseReq struct {
@@ -1036,7 +1234,7 @@ type DelPraiseReq struct {
 func (x *DelPraiseReq) Reset() {
 	*x = DelPraiseReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[16]
+		mi := &file_comment_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1049,7 +1247,7 @@ func (x *DelPraiseReq) String() string {
 func (*DelPraiseReq) ProtoMessage() {}
 
 func (x *DelPraiseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[16]
+	mi := &file_comment_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1062,7 +1260,7 @@ func (x *DelPraiseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelPraiseReq.ProtoReflect.Descriptor instead.
 func (*DelPraiseReq) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{16}
+	return file_comment_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DelPraiseReq) GetId() int64 {
@@ -1081,7 +1279,7 @@ type DelPraiseResp struct {
 func (x *DelPraiseResp) Reset() {
 	*x = DelPraiseResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[17]
+		mi := &file_comment_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1094,7 +1292,7 @@ func (x *DelPraiseResp) String() string {
 func (*DelPraiseResp) ProtoMessage() {}
 
 func (x *DelPraiseResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[17]
+	mi := &file_comment_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1107,7 +1305,7 @@ func (x *DelPraiseResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelPraiseResp.ProtoReflect.Descriptor instead.
 func (*DelPraiseResp) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{17}
+	return file_comment_proto_rawDescGZIP(), []int{21}
 }
 
 type GetPraiseByIdReq struct {
@@ -1121,7 +1319,7 @@ type GetPraiseByIdReq struct {
 func (x *GetPraiseByIdReq) Reset() {
 	*x = GetPraiseByIdReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[18]
+		mi := &file_comment_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1134,7 +1332,7 @@ func (x *GetPraiseByIdReq) String() string {
 func (*GetPraiseByIdReq) ProtoMessage() {}
 
 func (x *GetPraiseByIdReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[18]
+	mi := &file_comment_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1147,7 +1345,7 @@ func (x *GetPraiseByIdReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPraiseByIdReq.ProtoReflect.Descriptor instead.
 func (*GetPraiseByIdReq) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{18}
+	return file_comment_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetPraiseByIdReq) GetId() int64 {
@@ -1168,7 +1366,7 @@ type GetPraiseByIdResp struct {
 func (x *GetPraiseByIdResp) Reset() {
 	*x = GetPraiseByIdResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[19]
+		mi := &file_comment_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1181,7 +1379,7 @@ func (x *GetPraiseByIdResp) String() string {
 func (*GetPraiseByIdResp) ProtoMessage() {}
 
 func (x *GetPraiseByIdResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[19]
+	mi := &file_comment_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1194,7 +1392,7 @@ func (x *GetPraiseByIdResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPraiseByIdResp.ProtoReflect.Descriptor instead.
 func (*GetPraiseByIdResp) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{19}
+	return file_comment_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetPraiseByIdResp) GetPraise() *Praise {
@@ -1222,7 +1420,7 @@ type SearchPraiseReq struct {
 func (x *SearchPraiseReq) Reset() {
 	*x = SearchPraiseReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[20]
+		mi := &file_comment_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1235,7 +1433,7 @@ func (x *SearchPraiseReq) String() string {
 func (*SearchPraiseReq) ProtoMessage() {}
 
 func (x *SearchPraiseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[20]
+	mi := &file_comment_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1248,7 +1446,7 @@ func (x *SearchPraiseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchPraiseReq.ProtoReflect.Descriptor instead.
 func (*SearchPraiseReq) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{20}
+	return file_comment_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *SearchPraiseReq) GetPage() int64 {
@@ -1318,7 +1516,7 @@ type SearchPraiseResp struct {
 func (x *SearchPraiseResp) Reset() {
 	*x = SearchPraiseResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_proto_msgTypes[21]
+		mi := &file_comment_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1331,7 +1529,7 @@ func (x *SearchPraiseResp) String() string {
 func (*SearchPraiseResp) ProtoMessage() {}
 
 func (x *SearchPraiseResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_proto_msgTypes[21]
+	mi := &file_comment_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1344,7 +1542,7 @@ func (x *SearchPraiseResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchPraiseResp.ProtoReflect.Descriptor instead.
 func (*SearchPraiseResp) Descriptor() ([]byte, []int) {
-	return file_comment_proto_rawDescGZIP(), []int{21}
+	return file_comment_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *SearchPraiseResp) GetPraise() []*Praise {
@@ -1434,7 +1632,20 @@ var file_comment_proto_rawDesc = []byte{
 	0x72, 0x63, 0x68, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x25,
 	0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
 	0x0b, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x63, 0x6f,
-	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x8e, 0x01, 0x0a, 0x06, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65,
+	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x43, 0x0a, 0x0b, 0x49, 0x73, 0x50, 0x72, 0x61, 0x69, 0x73,
+	0x65, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09,
+	0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x2a, 0x0a, 0x0c, 0x49, 0x73,
+	0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72,
+	0x61, 0x69, 0x73, 0x65, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x70, 0x72,
+	0x61, 0x69, 0x73, 0x65, 0x49, 0x64, 0x22, 0x48, 0x0a, 0x10, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65,
+	0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64,
+	0x22, 0x13, 0x0a, 0x11, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e,
+	0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x8e, 0x01, 0x0a, 0x06, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65,
 	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64,
 	0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
 	0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x6d,
@@ -1481,7 +1692,7 @@ var file_comment_proto_rawDesc = []byte{
 	0x73, 0x74, 0x49, 0x64, 0x22, 0x36, 0x0a, 0x10, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72,
 	0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x22, 0x0a, 0x06, 0x70, 0x72, 0x61, 0x69,
 	0x73, 0x65, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x50, 0x72,
-	0x61, 0x69, 0x73, 0x65, 0x52, 0x06, 0x70, 0x72, 0x61, 0x69, 0x73, 0x65, 0x32, 0xc8, 0x04, 0x0a,
+	0x61, 0x69, 0x73, 0x65, 0x52, 0x06, 0x70, 0x72, 0x61, 0x69, 0x73, 0x65, 0x32, 0xb5, 0x05, 0x0a,
 	0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x33, 0x0a, 0x0a, 0x41, 0x64, 0x64, 0x43,
 	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x11, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x43,
 	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x41,
@@ -1501,25 +1712,32 @@ var file_comment_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6f,
 	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65,
 	0x61, 0x72, 0x63, 0x68, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12,
-	0x30, 0x0a, 0x09, 0x41, 0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x10, 0x2e, 0x70,
-	0x62, 0x2e, 0x41, 0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x11,
-	0x2e, 0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73,
-	0x70, 0x12, 0x39, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x61, 0x69, 0x73,
-	0x65, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x61,
-	0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x30, 0x0a, 0x09,
-	0x44, 0x65, 0x6c, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e, 0x44,
-	0x65, 0x6c, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x11, 0x2e, 0x70, 0x62,
-	0x2e, 0x44, 0x65, 0x6c, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3c,
-	0x0a, 0x0d, 0x47, 0x65, 0x74, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x42, 0x79, 0x49, 0x64, 0x12,
-	0x14, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x42, 0x79,
-	0x49, 0x64, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72,
-	0x61, 0x69, 0x73, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x39, 0x0a, 0x0c,
-	0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x13, 0x2e, 0x70,
-	0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65,
-	0x71, 0x1a, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x61,
-	0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2d, 0x0a, 0x08, 0x49, 0x73, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x0f, 0x2e, 0x70, 0x62,
+	0x2e, 0x49, 0x73, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x10, 0x2e, 0x70,
+	0x62, 0x2e, 0x49, 0x73, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3c,
+	0x0a, 0x0d, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12,
+	0x14, 0x2e, 0x70, 0x62, 0x2e, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65,
+	0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x50, 0x72, 0x61, 0x69, 0x73,
+	0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x30, 0x0a, 0x09,
+	0x41, 0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e, 0x41,
+	0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x11, 0x2e, 0x70, 0x62,
+	0x2e, 0x41, 0x64, 0x64, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x39,
+	0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x13,
+	0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65,
+	0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50,
+	0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x30, 0x0a, 0x09, 0x44, 0x65, 0x6c,
+	0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e, 0x44, 0x65, 0x6c, 0x50,
+	0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x11, 0x2e, 0x70, 0x62, 0x2e, 0x44, 0x65,
+	0x6c, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3c, 0x0a, 0x0d, 0x47,
+	0x65, 0x74, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x42, 0x79, 0x49, 0x64, 0x12, 0x14, 0x2e, 0x70,
+	0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52,
+	0x65, 0x71, 0x1a, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x61, 0x69, 0x73,
+	0x65, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x12, 0x39, 0x0a, 0x0c, 0x53, 0x65, 0x61,
+	0x72, 0x63, 0x68, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53,
+	0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x14,
+	0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x50, 0x72, 0x61, 0x69, 0x73, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1534,7 +1752,7 @@ func file_comment_proto_rawDescGZIP() []byte {
 	return file_comment_proto_rawDescData
 }
 
-var file_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_comment_proto_goTypes = []interface{}{
 	(*Comment)(nil),            // 0: pb.Comment
 	(*AddCommentReq)(nil),      // 1: pb.AddCommentReq
@@ -1547,45 +1765,53 @@ var file_comment_proto_goTypes = []interface{}{
 	(*GetCommentByIdResp)(nil), // 8: pb.GetCommentByIdResp
 	(*SearchCommentReq)(nil),   // 9: pb.SearchCommentReq
 	(*SearchCommentResp)(nil),  // 10: pb.SearchCommentResp
-	(*Praise)(nil),             // 11: pb.Praise
-	(*AddPraiseReq)(nil),       // 12: pb.AddPraiseReq
-	(*AddPraiseResp)(nil),      // 13: pb.AddPraiseResp
-	(*UpdatePraiseReq)(nil),    // 14: pb.UpdatePraiseReq
-	(*UpdatePraiseResp)(nil),   // 15: pb.UpdatePraiseResp
-	(*DelPraiseReq)(nil),       // 16: pb.DelPraiseReq
-	(*DelPraiseResp)(nil),      // 17: pb.DelPraiseResp
-	(*GetPraiseByIdReq)(nil),   // 18: pb.GetPraiseByIdReq
-	(*GetPraiseByIdResp)(nil),  // 19: pb.GetPraiseByIdResp
-	(*SearchPraiseReq)(nil),    // 20: pb.SearchPraiseReq
-	(*SearchPraiseResp)(nil),   // 21: pb.SearchPraiseResp
+	(*IsPraiseReq)(nil),        // 11: pb.IsPraiseReq
+	(*IsPraiseResp)(nil),       // 12: pb.IsPraiseResp
+	(*PraiseCommentReq)(nil),   // 13: pb.PraiseCommentReq
+	(*PraiseCommentResp)(nil),  // 14: pb.PraiseCommentResp
+	(*Praise)(nil),             // 15: pb.Praise
+	(*AddPraiseReq)(nil),       // 16: pb.AddPraiseReq
+	(*AddPraiseResp)(nil),      // 17: pb.AddPraiseResp
+	(*UpdatePraiseReq)(nil),    // 18: pb.UpdatePraiseReq
+	(*UpdatePraiseResp)(nil),   // 19: pb.UpdatePraiseResp
+	(*DelPraiseReq)(nil),       // 20: pb.DelPraiseReq
+	(*DelPraiseResp)(nil),      // 21: pb.DelPraiseResp
+	(*GetPraiseByIdReq)(nil),   // 22: pb.GetPraiseByIdReq
+	(*GetPraiseByIdResp)(nil),  // 23: pb.GetPraiseByIdResp
+	(*SearchPraiseReq)(nil),    // 24: pb.SearchPraiseReq
+	(*SearchPraiseResp)(nil),   // 25: pb.SearchPraiseResp
 }
 var file_comment_proto_depIdxs = []int32{
 	0,  // 0: pb.GetCommentByIdResp.comment:type_name -> pb.Comment
 	0,  // 1: pb.SearchCommentResp.comment:type_name -> pb.Comment
-	11, // 2: pb.GetPraiseByIdResp.praise:type_name -> pb.Praise
-	11, // 3: pb.SearchPraiseResp.praise:type_name -> pb.Praise
+	15, // 2: pb.GetPraiseByIdResp.praise:type_name -> pb.Praise
+	15, // 3: pb.SearchPraiseResp.praise:type_name -> pb.Praise
 	1,  // 4: pb.comment.AddComment:input_type -> pb.AddCommentReq
 	3,  // 5: pb.comment.UpdateComment:input_type -> pb.UpdateCommentReq
 	5,  // 6: pb.comment.DelComment:input_type -> pb.DelCommentReq
 	7,  // 7: pb.comment.GetCommentById:input_type -> pb.GetCommentByIdReq
 	9,  // 8: pb.comment.SearchComment:input_type -> pb.SearchCommentReq
-	12, // 9: pb.comment.AddPraise:input_type -> pb.AddPraiseReq
-	14, // 10: pb.comment.UpdatePraise:input_type -> pb.UpdatePraiseReq
-	16, // 11: pb.comment.DelPraise:input_type -> pb.DelPraiseReq
-	18, // 12: pb.comment.GetPraiseById:input_type -> pb.GetPraiseByIdReq
-	20, // 13: pb.comment.SearchPraise:input_type -> pb.SearchPraiseReq
-	2,  // 14: pb.comment.AddComment:output_type -> pb.AddCommentResp
-	4,  // 15: pb.comment.UpdateComment:output_type -> pb.UpdateCommentResp
-	6,  // 16: pb.comment.DelComment:output_type -> pb.DelCommentResp
-	8,  // 17: pb.comment.GetCommentById:output_type -> pb.GetCommentByIdResp
-	10, // 18: pb.comment.SearchComment:output_type -> pb.SearchCommentResp
-	13, // 19: pb.comment.AddPraise:output_type -> pb.AddPraiseResp
-	15, // 20: pb.comment.UpdatePraise:output_type -> pb.UpdatePraiseResp
-	17, // 21: pb.comment.DelPraise:output_type -> pb.DelPraiseResp
-	19, // 22: pb.comment.GetPraiseById:output_type -> pb.GetPraiseByIdResp
-	21, // 23: pb.comment.SearchPraise:output_type -> pb.SearchPraiseResp
-	14, // [14:24] is the sub-list for method output_type
-	4,  // [4:14] is the sub-list for method input_type
+	11, // 9: pb.comment.IsPraise:input_type -> pb.IsPraiseReq
+	13, // 10: pb.comment.PraiseComment:input_type -> pb.PraiseCommentReq
+	16, // 11: pb.comment.AddPraise:input_type -> pb.AddPraiseReq
+	18, // 12: pb.comment.UpdatePraise:input_type -> pb.UpdatePraiseReq
+	20, // 13: pb.comment.DelPraise:input_type -> pb.DelPraiseReq
+	22, // 14: pb.comment.GetPraiseById:input_type -> pb.GetPraiseByIdReq
+	24, // 15: pb.comment.SearchPraise:input_type -> pb.SearchPraiseReq
+	2,  // 16: pb.comment.AddComment:output_type -> pb.AddCommentResp
+	4,  // 17: pb.comment.UpdateComment:output_type -> pb.UpdateCommentResp
+	6,  // 18: pb.comment.DelComment:output_type -> pb.DelCommentResp
+	8,  // 19: pb.comment.GetCommentById:output_type -> pb.GetCommentByIdResp
+	10, // 20: pb.comment.SearchComment:output_type -> pb.SearchCommentResp
+	12, // 21: pb.comment.IsPraise:output_type -> pb.IsPraiseResp
+	14, // 22: pb.comment.PraiseComment:output_type -> pb.PraiseCommentResp
+	17, // 23: pb.comment.AddPraise:output_type -> pb.AddPraiseResp
+	19, // 24: pb.comment.UpdatePraise:output_type -> pb.UpdatePraiseResp
+	21, // 25: pb.comment.DelPraise:output_type -> pb.DelPraiseResp
+	23, // 26: pb.comment.GetPraiseById:output_type -> pb.GetPraiseByIdResp
+	25, // 27: pb.comment.SearchPraise:output_type -> pb.SearchPraiseResp
+	16, // [16:28] is the sub-list for method output_type
+	4,  // [4:16] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -1730,7 +1956,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Praise); i {
+			switch v := v.(*IsPraiseReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1742,7 +1968,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddPraiseReq); i {
+			switch v := v.(*IsPraiseResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1754,7 +1980,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddPraiseResp); i {
+			switch v := v.(*PraiseCommentReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1766,7 +1992,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdatePraiseReq); i {
+			switch v := v.(*PraiseCommentResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1778,7 +2004,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdatePraiseResp); i {
+			switch v := v.(*Praise); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1790,7 +2016,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DelPraiseReq); i {
+			switch v := v.(*AddPraiseReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1802,7 +2028,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DelPraiseResp); i {
+			switch v := v.(*AddPraiseResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1814,7 +2040,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPraiseByIdReq); i {
+			switch v := v.(*UpdatePraiseReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1826,7 +2052,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPraiseByIdResp); i {
+			switch v := v.(*UpdatePraiseResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1838,7 +2064,7 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchPraiseReq); i {
+			switch v := v.(*DelPraiseReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1850,6 +2076,54 @@ func file_comment_proto_init() {
 			}
 		}
 		file_comment_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DelPraiseResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_comment_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPraiseByIdReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_comment_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPraiseByIdResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_comment_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SearchPraiseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_comment_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SearchPraiseResp); i {
 			case 0:
 				return &v.state
@@ -1868,7 +2142,7 @@ func file_comment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_comment_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

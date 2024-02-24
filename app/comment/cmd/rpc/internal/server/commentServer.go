@@ -48,6 +48,16 @@ func (s *CommentServer) SearchComment(ctx context.Context, in *pb.SearchCommentR
 	return l.SearchComment(in)
 }
 
+func (s *CommentServer) IsPraise(ctx context.Context, in *pb.IsPraiseReq) (*pb.IsPraiseResp, error) {
+	l := logic.NewIsPraiseLogic(ctx, s.svcCtx)
+	return l.IsPraise(in)
+}
+
+func (s *CommentServer) PraiseComment(ctx context.Context, in *pb.PraiseCommentReq) (*pb.PraiseCommentResp, error) {
+	l := logic.NewPraiseCommentLogic(ctx, s.svcCtx)
+	return l.PraiseComment(in)
+}
+
 // -----------------------praise-----------------------
 func (s *CommentServer) AddPraise(ctx context.Context, in *pb.AddPraiseReq) (*pb.AddPraiseResp, error) {
 	l := logic.NewAddPraiseLogic(ctx, s.svcCtx)

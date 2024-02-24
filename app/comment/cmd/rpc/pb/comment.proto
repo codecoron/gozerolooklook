@@ -80,6 +80,26 @@ message SearchCommentResp {
   repeated Comment comment = 1; //comment
 }
 
+// 判断当前用户当前评论是否点赞
+message IsPraiseReq {
+  int64 userId = 1; //用户id
+  int64 commentId = 2; //评论id
+}
+
+message IsPraiseResp {
+  // 返回点赞id
+  int64 praiseId = 1; //点赞id
+}
+
+// 评论点赞/取消点赞
+message PraiseCommentReq {
+  int64 userId = 1; //用户id
+  int64 commentId = 2; //评论id
+}
+
+message PraiseCommentResp {}
+
+
 //--------------------------------praise--------------------------------
 message Praise {
   int64 id = 1; //id
@@ -142,14 +162,15 @@ message SearchPraiseResp {
 // Rpc Func
 // ------------------------------------ 
 
-service comment{ 
-
+service comment{
 	 //-----------------------comment----------------------- 
 	 rpc AddComment(AddCommentReq) returns (AddCommentResp); 
 	 rpc UpdateComment(UpdateCommentReq) returns (UpdateCommentResp); 
 	 rpc DelComment(DelCommentReq) returns (DelCommentResp); 
 	 rpc GetCommentById(GetCommentByIdReq) returns (GetCommentByIdResp); 
-	 rpc SearchComment(SearchCommentReq) returns (SearchCommentResp); 
+	 rpc SearchComment(SearchCommentReq) returns (SearchCommentResp);
+   rpc IsPraise(IsPraiseReq) returns (IsPraiseResp);
+   rpc PraiseComment(PraiseCommentReq) returns (PraiseCommentResp);
 	 //-----------------------praise----------------------- 
 	 rpc AddPraise(AddPraiseReq) returns (AddPraiseResp); 
 	 rpc UpdatePraise(UpdatePraiseReq) returns (UpdatePraiseResp); 
