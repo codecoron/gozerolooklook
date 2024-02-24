@@ -72,3 +72,11 @@ type CommentPraiseReq struct {
 
 type CommentPraiseResp struct {
 }
+
+type CommentDetailReq struct {
+	Id int64 `json:"id" validate:"required"`
+}
+
+type CommentDetailResp struct {
+	Comment Comment `json:"comment"`
+}

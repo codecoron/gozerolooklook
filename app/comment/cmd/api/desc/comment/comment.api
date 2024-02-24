@@ -90,3 +90,12 @@ type (
 	}
 )
 
+type (
+	CommentDetailReq {
+		Id int64 `json:"id" validate:"required"`
+	}
+	CommentDetailResp {
+		Comment Comment `json:"comment"`
+	}
+)
+

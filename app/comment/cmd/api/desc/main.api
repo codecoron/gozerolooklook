@@ -57,4 +57,8 @@ service comment {
 	@doc "获取评论列表"
 	@handler getCommentList
 	post /comment/getCommentList (CommentListReq) returns (CommentListResp)
+	
+	@doc "获取评论详情"
+	@handler getCommentDetail
+	post /comment/getCommentDetail (CommentDetailReq) returns (CommentDetailResp)
 }

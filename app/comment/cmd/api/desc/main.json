@@ -128,6 +128,34 @@
         ]
       }
     },
+    "comment/v1/comment/getCommentDetail": {
+      "post": {
+        "summary": "获取评论详情",
+        "operationId": "getCommentDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommentDetailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CommentDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    },
     "comment/v1/comment/getCommentList": {
       "post": {
         "summary": "获取评论列表",
@@ -300,6 +328,31 @@
     "CommentDelResp": {
       "type": "object",
       "title": "CommentDelResp"
+    },
+    "CommentDetailReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CommentDetailReq",
+      "required": [
+        "id"
+      ]
+    },
+    "CommentDetailResp": {
+      "type": "object",
+      "properties": {
+        "comment": {
+          "$ref": "#/definitions/Comment"
+        }
+      },
+      "title": "CommentDetailResp",
+      "required": [
+        "comment"
+      ]
     },
     "CommentListReq": {
       "type": "object",

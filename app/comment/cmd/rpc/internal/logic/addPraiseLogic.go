@@ -28,7 +28,6 @@ func NewAddPraiseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddPrai
 
 // AddPraise -----------------------praise-----------------------
 func (l *AddPraiseLogic) AddPraise(in *pb.AddPraiseReq) (*pb.AddPraiseResp, error) {
-	// todo: add your logic here and delete this line
 	praise := new(model.Praise)
 	praise.CommentId = in.CommentId
 	praise.UserId = in.UserId
