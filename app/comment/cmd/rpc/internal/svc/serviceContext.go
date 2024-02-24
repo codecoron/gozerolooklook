@@ -8,6 +8,7 @@ import (
 type ServiceContext struct {
 	Config       config.Config
 	CommentModel model.CommentModel
+	PraiseModel  model.PraiseModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {

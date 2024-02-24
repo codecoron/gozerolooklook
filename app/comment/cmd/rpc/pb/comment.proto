@@ -73,6 +73,7 @@ message SearchCommentReq {
   int64 praiseCount = 9; //点赞数量
   int64 createTime = 10; //创建时间
   int64 updateTime = 11; //更新时间
+  int64 lastId = 12; //lastId
 }
 
 message SearchCommentResp {
@@ -128,6 +129,7 @@ message SearchPraiseReq {
   int64 commentId = 5; //评论id
   int64 createTime = 6; //createTime
   int64 updateTime = 7; //updateTime
+  int64 lastId = 8; //lastId
 }
 
 message SearchPraiseResp {
