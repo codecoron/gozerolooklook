@@ -40,8 +40,6 @@ type GetTasksReq struct {
 
 type GetTasksResp struct {
 	TasksList []*Tasks `json:"tasksList"`
-	DayCount  int64    `json:"dayCount"`
-	WeekCount int64    `json:"weekCount"`
 }
 
 type IntegralRecord struct {
@@ -71,6 +69,9 @@ type Tasks struct {
 	Content    string `json:"content"`
 	Integral   int64  `json:"integral"`
 	IsFinished int64  `json:"isFinished"`
+	Path       string `json:"path"`
+	Count      int64  `json:"count"`
+	NeedCount  int64  `json:"needCount"`
 }
 
 type UpdateSubReq struct {

@@ -45,7 +45,7 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 	}
 	err = l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		if checkinRecord.State == 1 {
-			return errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_REPEAT), "err : %v", err)
+			return errors.Wrapf(xerr.NewErrCodeMsg(xerr.CHECKIN_REPEAT, "不可重复签到"), "err : %v", err)
 		}
 		var i int64
 		switch checkinRecord.ContinuousCheckinDays {

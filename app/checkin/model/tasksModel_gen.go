@@ -53,11 +53,12 @@ type (
 	}
 
 	Tasks struct {
-		Id       int64  `db:"id"`
-		Type     int64  `db:"type"` // 1 for novice, 2 for daily, 3 for weekly
-		Content  string `db:"content"`
-		Integral int64  `db:"integral"` // Increased wish value after completion
-		DelState int64  `db:"del_state"`
+		Id       int64          `db:"id"`
+		Type     int64          `db:"type"` // 1 for novice, 2 for daily, 3 for weekly
+		Content  string         `db:"content"`
+		Integral int64          `db:"integral"` // Increased wish value after completion
+		DelState int64          `db:"del_state"`
+		Path     sql.NullString `db:"path"`
 	}
 )
 
@@ -97,8 +98,8 @@ func (m *defaultTasksModel) FindOne(ctx context.Context, id int64) (*Tasks, erro
 func (m *defaultTasksModel) Insert(ctx context.Context, data *Tasks) (sql.Result, error) {
 	checkinTasksIdKey := fmt.Sprintf("%s%v", cacheCheckinTasksIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, tasksRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, tasksRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Path)
 	}, checkinTasksIdKey)
 	return ret, err
 }
@@ -106,8 +107,8 @@ func (m *defaultTasksModel) Insert(ctx context.Context, data *Tasks) (sql.Result
 func (m *defaultTasksModel) TransInsert(ctx context.Context, session sqlx.Session, data *Tasks) (sql.Result, error) {
 	checkinTasksIdKey := fmt.Sprintf("%s%v", cacheCheckinTasksIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, tasksRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, tasksRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Path)
 	}, checkinTasksIdKey)
 	return ret, err
 }
@@ -115,7 +116,7 @@ func (m *defaultTasksModel) Update(ctx context.Context, data *Tasks) error {
 	checkinTasksIdKey := fmt.Sprintf("%s%v", cacheCheckinTasksIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, tasksRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Id)
+		return conn.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Path, data.Id)
 	}, checkinTasksIdKey)
 	return err
 }
@@ -124,7 +125,7 @@ func (m *defaultTasksModel) TransUpdate(ctx context.Context, session sqlx.Sessio
 	checkinTasksIdKey := fmt.Sprintf("%s%v", cacheCheckinTasksIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, tasksRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Id)
+		return session.ExecCtx(ctx, query, data.Type, data.Content, data.Integral, data.DelState, data.Path, data.Id)
 	}, checkinTasksIdKey)
 	return err
 }

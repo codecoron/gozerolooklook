@@ -42,14 +42,14 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 	if err != nil {
 		return nil, err
 	}
-	//logx.Error("api,tasks:", tasks.TaskList)
 	var taskList []*types.Tasks
 	_ = copier.Copy(&taskList, tasks.TaskList)
-	//logx.Error("api,taskList:", taskList)
+	taskList[3].Count = count.DayCount
+	taskList[3].NeedCount = 3
+	taskList[6].Count = count.WeekCount
+	taskList[6].NeedCount = 30
 	// 返回任务进度具体数量
 	return &types.GetTasksResp{
 		TasksList: taskList,
-		DayCount:  count.DayCount,
-		WeekCount: count.WeekCount,
 	}, nil
 }

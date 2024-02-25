@@ -41,6 +41,9 @@ type Tasks {
     Content    string `json:"content"`
     Integral   int64  `json:"integral"`
     isFinished int64  `json:"isFinished"`
+    Path       string `json:"path"`
+    Count      int64  `json:"count"`
+    NeedCount  int64  `json:"needCount"`
 }
 
 //===========================TaskProgress===========================
@@ -83,8 +86,6 @@ type (
     }
     GetTasksResp {
         TasksList             []*Tasks `json:"tasksList"`
-        DayCount              int64 `json:"dayCount"`
-        WeekCount             int64 `json:"weekCount"`
     }
 )
 

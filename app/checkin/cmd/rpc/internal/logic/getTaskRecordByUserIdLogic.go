@@ -31,15 +31,11 @@ func (l *GetTaskRecordByUserIdLogic) GetTaskRecordByUserId(in *pb.GetTaskRecordB
 	if err != nil {
 		return nil, err
 	}
-	//logx.Error("rpc,tasks:", tasks)
 	var taskList []*pb.Tasks
 	_ = copier.Copy(&taskList, tasks)
-	//logx.Error("rpc,taskList:", taskList)
 
-	// todo:查询该用户完成任务情况（新手任务，每日任务，每周任务）
 	query = squirrel.Select().From("task_record")
 	finishTasks, err := l.svcCtx.TaskRecordModel.FindByUserId(l.ctx, in.UserId, query, "id ASC")
-	//logx.Error("finishTashs", finishTasks)
 
 	// 赋值任务的完成情况
 	fMap := make(map[int64]int64)
@@ -50,6 +46,8 @@ func (l *GetTaskRecordByUserIdLogic) GetTaskRecordByUserId(in *pb.GetTaskRecordB
 		if isFinished, ok := fMap[taskList[i].Id]; ok {
 			taskList[i].IsFinished = isFinished
 		}
+		taskList[i].Count = -1
+		taskList[i].NeedCount = -1
 	}
 	return &pb.GetTaskRecordByUserIdResp{
 		TaskList: taskList,
