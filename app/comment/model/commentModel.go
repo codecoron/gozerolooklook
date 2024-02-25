@@ -41,13 +41,13 @@ func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastI
 	var query string
 	if sort == 1 {
 		// 按照点赞数倒序排序
-		query = fmt.Sprintf("select %s from %s where id < ? order by praise_count desc limit ?,?", commentRows, c.table)
+		query = fmt.Sprintf("select %s from %s where del_state = ? AND id < ? order by praise_count desc limit ?,?", commentRows, c.table)
 	} else {
 		// 按照id倒序排序
-		query = fmt.Sprintf("select %s from %s where id < ? order by id desc limit ?,?", commentRows, c.table)
+		query = fmt.Sprintf("select %s from %s where del_state = ? AND id < ? order by id desc limit ?,?", commentRows, c.table)
 	}
 	var resp []*Comment
-	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
+	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, globalkey.DelStateNo, lastId, (page-1)*limit, limit)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
 	}
@@ -77,8 +77,8 @@ func (m *defaultCommentModel) DeleteSoft(ctx context.Context, data *Comment) err
 
 func (c *customCommentModel) GetCommentLastId() (int64, error) {
 	var id int64
-	query := fmt.Sprintf("select id from %s order by id desc limit 1", c.table)
-	err := c.QueryRowNoCache(&id, query)
+	query := fmt.Sprintf("select id from %s where del_state = ? order by id desc limit 1", c.table)
+	err := c.QueryRowNoCache(&id, query, globalkey.DelStateNo)
 	if err != nil {
 		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowNoCache, id:%v, query:%v, error: %v", id, query, err)
 	}
