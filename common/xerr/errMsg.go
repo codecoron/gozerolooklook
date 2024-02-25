@@ -58,6 +58,7 @@ func init() {
 	message[DB_INSERTCOMMENT_ERROR] = "插入评论失败"
 	message[DB_INSERTPRAISE_ERROR] = "插入点赞失败"
 	message[DB_DELETECOMMENT_ERROR] = "删除评论失败"
+	message[DB_FINDCOMMENT_ERROR] = "查询评论失败"
 }
 
 func MapErrMsg(errcode uint32) string {

@@ -13,32 +13,34 @@ import (
 )
 
 type (
-	AddCommentReq      = pb.AddCommentReq
-	AddCommentResp     = pb.AddCommentResp
-	AddPraiseReq       = pb.AddPraiseReq
-	AddPraiseResp      = pb.AddPraiseResp
-	Comment            = pb.Comment
-	DelCommentReq      = pb.DelCommentReq
-	DelCommentResp     = pb.DelCommentResp
-	DelPraiseReq       = pb.DelPraiseReq
-	DelPraiseResp      = pb.DelPraiseResp
-	GetCommentByIdReq  = pb.GetCommentByIdReq
-	GetCommentByIdResp = pb.GetCommentByIdResp
-	GetPraiseByIdReq   = pb.GetPraiseByIdReq
-	GetPraiseByIdResp  = pb.GetPraiseByIdResp
-	IsPraiseReq        = pb.IsPraiseReq
-	IsPraiseResp       = pb.IsPraiseResp
-	Praise             = pb.Praise
-	PraiseCommentReq   = pb.PraiseCommentReq
-	PraiseCommentResp  = pb.PraiseCommentResp
-	SearchCommentReq   = pb.SearchCommentReq
-	SearchCommentResp  = pb.SearchCommentResp
-	SearchPraiseReq    = pb.SearchPraiseReq
-	SearchPraiseResp   = pb.SearchPraiseResp
-	UpdateCommentReq   = pb.UpdateCommentReq
-	UpdateCommentResp  = pb.UpdateCommentResp
-	UpdatePraiseReq    = pb.UpdatePraiseReq
-	UpdatePraiseResp   = pb.UpdatePraiseResp
+	AddCommentReq        = pb.AddCommentReq
+	AddCommentResp       = pb.AddCommentResp
+	AddPraiseReq         = pb.AddPraiseReq
+	AddPraiseResp        = pb.AddPraiseResp
+	Comment              = pb.Comment
+	DelCommentReq        = pb.DelCommentReq
+	DelCommentResp       = pb.DelCommentResp
+	DelPraiseReq         = pb.DelPraiseReq
+	DelPraiseResp        = pb.DelPraiseResp
+	GetCommentByIdReq    = pb.GetCommentByIdReq
+	GetCommentByIdResp   = pb.GetCommentByIdResp
+	GetCommentLastIdReq  = pb.GetCommentLastIdReq
+	GetCommentLastIdResp = pb.GetCommentLastIdResp
+	GetPraiseByIdReq     = pb.GetPraiseByIdReq
+	GetPraiseByIdResp    = pb.GetPraiseByIdResp
+	IsPraiseReq          = pb.IsPraiseReq
+	IsPraiseResp         = pb.IsPraiseResp
+	Praise               = pb.Praise
+	PraiseCommentReq     = pb.PraiseCommentReq
+	PraiseCommentResp    = pb.PraiseCommentResp
+	SearchCommentReq     = pb.SearchCommentReq
+	SearchCommentResp    = pb.SearchCommentResp
+	SearchPraiseReq      = pb.SearchPraiseReq
+	SearchPraiseResp     = pb.SearchPraiseResp
+	UpdateCommentReq     = pb.UpdateCommentReq
+	UpdateCommentResp    = pb.UpdateCommentResp
+	UpdatePraiseReq      = pb.UpdatePraiseReq
+	UpdatePraiseResp     = pb.UpdatePraiseResp
 
 	CommentZrpcClient interface {
 		// -----------------------comment-----------------------
@@ -49,6 +51,7 @@ type (
 		SearchComment(ctx context.Context, in *SearchCommentReq, opts ...grpc.CallOption) (*SearchCommentResp, error)
 		IsPraise(ctx context.Context, in *IsPraiseReq, opts ...grpc.CallOption) (*IsPraiseResp, error)
 		PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error)
+		GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error)
 		// -----------------------praise-----------------------
 		AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error)
 		UpdatePraise(ctx context.Context, in *UpdatePraiseReq, opts ...grpc.CallOption) (*UpdatePraiseResp, error)
@@ -102,6 +105,11 @@ func (m *defaultCommentZrpcClient) IsPraise(ctx context.Context, in *IsPraiseReq
 func (m *defaultCommentZrpcClient) PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error) {
 	client := pb.NewCommentClient(m.cli.Conn())
 	return client.PraiseComment(ctx, in, opts...)
+}
+
+func (m *defaultCommentZrpcClient) GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error) {
+	client := pb.NewCommentClient(m.cli.Conn())
+	return client.GetCommentLastId(ctx, in, opts...)
 }
 
 // -----------------------praise-----------------------

@@ -26,9 +26,14 @@ func NewDelCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelCom
 }
 
 func (l *DelCommentLogic) DelComment(in *pb.DelCommentReq) (*pb.DelCommentResp, error) {
-	// todo: 软删除评论
+	// todo : 软删除评论
 	// 删除评论
-	err := l.svcCtx.CommentModel.Delete(l.ctx, in.Id)
+	//err := l.svcCtx.CommentModel.Delete(l.ctx, in.Id)
+	data, err := l.svcCtx.CommentModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FINDCOMMENT_ERROR), "comment Database Exception commentId : %d , err: %v", in.Id, err)
+	}
+	err = l.svcCtx.CommentModel.DeleteSoft(l.ctx, data)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_DELETECOMMENT_ERROR), "comment Database Exception commentId : %d , err: %v", in.Id, err)
 	}

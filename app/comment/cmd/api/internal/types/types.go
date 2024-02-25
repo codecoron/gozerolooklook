@@ -106,3 +106,10 @@ type CommentDetailReq struct {
 type CommentDetailResp struct {
 	Comment Comment `json:"comment"`
 }
+
+type GetCommentLastIdReq struct {
+}
+
+type GetCommentLastIdResp struct {
+	LastId int64 `json:"lastId"`
+}

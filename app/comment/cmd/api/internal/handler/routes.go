@@ -61,6 +61,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/comment/getCommentDetail",
 				Handler: comment.GetCommentDetailHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/comment/getLastId",
+				Handler: comment.GetCommentLastIdHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/comment/v1"),
 	)
