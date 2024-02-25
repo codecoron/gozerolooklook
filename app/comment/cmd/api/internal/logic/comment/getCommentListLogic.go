@@ -51,6 +51,22 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 		/// 1. 传入用户Id的切片，得到用户信息列表
 
 		//userInfo, err := l.svcCtx.UsercenterRpc.GetUserInfoList(l.ctx, &comment.GetUserInfoListReq{})
+		// 捏造用户信息
+		for idx, item := range userInfoList {
+			item.Id = userIds[idx]
+			item.Nickname = "test"
+			item.Avatar = "test"
+			userInfoList[idx] = item
+		}
+		// 名字打码，只留下字符的第一个和最后一个，中间多个字符只有两个*
+		for idx, item := range userInfoList {
+			if len(item.Nickname) > 2 {
+				item.Nickname = item.Nickname[:1] + "**" + item.Nickname[len(item.Nickname)-1:]
+			} else {
+				item.Nickname = item.Nickname[:1] + "**"
+			}
+			userInfoList[idx] = item
+		}
 		for idx, item := range resp.Comment {
 			var t types.Comments
 			t.Id = item.Id
