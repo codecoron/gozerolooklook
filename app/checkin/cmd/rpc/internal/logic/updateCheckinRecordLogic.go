@@ -28,7 +28,7 @@ func NewUpdateCheckinRecordLogic(ctx context.Context, svcCtx *svc.ServiceContext
 	}
 }
 
-func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecordReq) (resp *pb.UpdateCheckinRecordResp, err error) {
+func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecordReq) (*pb.UpdateCheckinRecordResp, error) {
 	checkinRecord, err := l.svcCtx.CheckinRecordModel.FindOneByUserId(l.ctx, in.UserId)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "checkinRecord : %+v , err: %v", checkinRecord, err)
@@ -94,8 +94,9 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 	if err != nil {
 		return nil, err
 	}
-	resp.State = checkinRecord.State
-	resp.ContinuousCheckinDays = checkinRecord.ContinuousCheckinDays
-	resp.Integral = integarl.Integral
-	return resp, nil
+	return &pb.UpdateCheckinRecordResp{
+		State:                 checkinRecord.State,
+		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
+		Integral:              integarl.Integral,
+	}, nil
 }
