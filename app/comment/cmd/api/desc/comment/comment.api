@@ -126,3 +126,12 @@ type (
 	}
 )
 
+// 获取最大的评论的Id
+type (
+	GetCommentLastIdReq {
+	}
+	GetCommentLastIdResp {
+		LastId int64 `json:"lastId"`
+	}
+)
+

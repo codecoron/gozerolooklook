@@ -184,6 +184,34 @@
         ]
       }
     },
+    "comment/v1/comment/getLastId": {
+      "post": {
+        "summary": "获取评论lastId",
+        "operationId": "getCommentLastId",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCommentLastIdResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetCommentLastIdReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    },
     "comment/v1/comment/updateComment": {
       "post": {
         "summary": "更新评论",
@@ -525,6 +553,23 @@
         "deleteTime",
         "delstate",
         "user"
+      ]
+    },
+    "GetCommentLastIdReq": {
+      "type": "object",
+      "title": "GetCommentLastIdReq"
+    },
+    "GetCommentLastIdResp": {
+      "type": "object",
+      "properties": {
+        "lastId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetCommentLastIdResp",
+      "required": [
+        "lastId"
       ]
     },
     "TestReq": {

@@ -100,6 +100,14 @@ message PraiseCommentReq {
 
 message PraiseCommentResp {}
 
+// 获取评论lastId
+message GetCommentLastIdReq {
+}
+
+message GetCommentLastIdResp {
+  int64 lastId = 1; //lastId
+}
+
 
 //--------------------------------praise--------------------------------
 message Praise {
@@ -172,6 +180,7 @@ service comment{
 	 rpc SearchComment(SearchCommentReq) returns (SearchCommentResp);
    rpc IsPraise(IsPraiseReq) returns (IsPraiseResp);
    rpc PraiseComment(PraiseCommentReq) returns (PraiseCommentResp);
+    rpc GetCommentLastId(GetCommentLastIdReq) returns (GetCommentLastIdResp);
 	 //-----------------------praise----------------------- 
 	 rpc AddPraise(AddPraiseReq) returns (AddPraiseResp); 
 	 rpc UpdatePraise(UpdatePraiseReq) returns (UpdatePraiseResp); 

@@ -61,4 +61,8 @@ service comment {
 	@doc "获取评论详情"
 	@handler getCommentDetail
 	post /comment/getCommentDetail (CommentDetailReq) returns (CommentDetailResp)
+	
+	@doc "获取评论lastId"
+	@handler getCommentLastId
+	post /comment/getLastId (GetCommentLastIdReq) returns (GetCommentLastIdResp)
 }

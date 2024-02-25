@@ -22,6 +22,7 @@ type (
 		CommentList(ctx context.Context, page, limit, lastId, sort int64) ([]*Comment, error)
 		UpdatePraiseNum(ctx context.Context, id, num int64) (int64, error)
 		DeleteSoft(ctx context.Context, data *Comment) error
+		GetCommentLastId() (int64, error)
 	}
 
 	customCommentModel struct {
@@ -72,4 +73,14 @@ func (m *defaultCommentModel) DeleteSoft(ctx context.Context, data *Comment) err
 		return errors.Wrapf(errors.New("delete soft failed "), "CommentModel delete err : %+v", err)
 	}
 	return nil
+}
+
+func (c *customCommentModel) GetCommentLastId() (int64, error) {
+	var id int64
+	query := fmt.Sprintf("select id from %s order by id desc limit 1", c.table)
+	err := c.QueryRowNoCache(&id, query)
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowNoCache, id:%v, query:%v, error: %v", id, query, err)
+	}
+	return id, nil
 }

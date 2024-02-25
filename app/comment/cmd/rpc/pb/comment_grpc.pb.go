@@ -19,18 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Comment_AddComment_FullMethodName     = "/pb.comment/AddComment"
-	Comment_UpdateComment_FullMethodName  = "/pb.comment/UpdateComment"
-	Comment_DelComment_FullMethodName     = "/pb.comment/DelComment"
-	Comment_GetCommentById_FullMethodName = "/pb.comment/GetCommentById"
-	Comment_SearchComment_FullMethodName  = "/pb.comment/SearchComment"
-	Comment_IsPraise_FullMethodName       = "/pb.comment/IsPraise"
-	Comment_PraiseComment_FullMethodName  = "/pb.comment/PraiseComment"
-	Comment_AddPraise_FullMethodName      = "/pb.comment/AddPraise"
-	Comment_UpdatePraise_FullMethodName   = "/pb.comment/UpdatePraise"
-	Comment_DelPraise_FullMethodName      = "/pb.comment/DelPraise"
-	Comment_GetPraiseById_FullMethodName  = "/pb.comment/GetPraiseById"
-	Comment_SearchPraise_FullMethodName   = "/pb.comment/SearchPraise"
+	Comment_AddComment_FullMethodName       = "/pb.comment/AddComment"
+	Comment_UpdateComment_FullMethodName    = "/pb.comment/UpdateComment"
+	Comment_DelComment_FullMethodName       = "/pb.comment/DelComment"
+	Comment_GetCommentById_FullMethodName   = "/pb.comment/GetCommentById"
+	Comment_SearchComment_FullMethodName    = "/pb.comment/SearchComment"
+	Comment_IsPraise_FullMethodName         = "/pb.comment/IsPraise"
+	Comment_PraiseComment_FullMethodName    = "/pb.comment/PraiseComment"
+	Comment_GetCommentLastId_FullMethodName = "/pb.comment/GetCommentLastId"
+	Comment_AddPraise_FullMethodName        = "/pb.comment/AddPraise"
+	Comment_UpdatePraise_FullMethodName     = "/pb.comment/UpdatePraise"
+	Comment_DelPraise_FullMethodName        = "/pb.comment/DelPraise"
+	Comment_GetPraiseById_FullMethodName    = "/pb.comment/GetPraiseById"
+	Comment_SearchPraise_FullMethodName     = "/pb.comment/SearchPraise"
 )
 
 // CommentClient is the client API for Comment service.
@@ -45,6 +46,7 @@ type CommentClient interface {
 	SearchComment(ctx context.Context, in *SearchCommentReq, opts ...grpc.CallOption) (*SearchCommentResp, error)
 	IsPraise(ctx context.Context, in *IsPraiseReq, opts ...grpc.CallOption) (*IsPraiseResp, error)
 	PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error)
+	GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error)
 	// -----------------------praise-----------------------
 	AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error)
 	UpdatePraise(ctx context.Context, in *UpdatePraiseReq, opts ...grpc.CallOption) (*UpdatePraiseResp, error)
@@ -124,6 +126,15 @@ func (c *commentClient) PraiseComment(ctx context.Context, in *PraiseCommentReq,
 	return out, nil
 }
 
+func (c *commentClient) GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error) {
+	out := new(GetCommentLastIdResp)
+	err := c.cc.Invoke(ctx, Comment_GetCommentLastId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *commentClient) AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error) {
 	out := new(AddPraiseResp)
 	err := c.cc.Invoke(ctx, Comment_AddPraise_FullMethodName, in, out, opts...)
@@ -181,6 +192,7 @@ type CommentServer interface {
 	SearchComment(context.Context, *SearchCommentReq) (*SearchCommentResp, error)
 	IsPraise(context.Context, *IsPraiseReq) (*IsPraiseResp, error)
 	PraiseComment(context.Context, *PraiseCommentReq) (*PraiseCommentResp, error)
+	GetCommentLastId(context.Context, *GetCommentLastIdReq) (*GetCommentLastIdResp, error)
 	// -----------------------praise-----------------------
 	AddPraise(context.Context, *AddPraiseReq) (*AddPraiseResp, error)
 	UpdatePraise(context.Context, *UpdatePraiseReq) (*UpdatePraiseResp, error)
@@ -214,6 +226,9 @@ func (UnimplementedCommentServer) IsPraise(context.Context, *IsPraiseReq) (*IsPr
 }
 func (UnimplementedCommentServer) PraiseComment(context.Context, *PraiseCommentReq) (*PraiseCommentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PraiseComment not implemented")
+}
+func (UnimplementedCommentServer) GetCommentLastId(context.Context, *GetCommentLastIdReq) (*GetCommentLastIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCommentLastId not implemented")
 }
 func (UnimplementedCommentServer) AddPraise(context.Context, *AddPraiseReq) (*AddPraiseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPraise not implemented")
@@ -369,6 +384,24 @@ func _Comment_PraiseComment_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Comment_GetCommentLastId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCommentLastIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommentServer).GetCommentLastId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Comment_GetCommentLastId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommentServer).GetCommentLastId(ctx, req.(*GetCommentLastIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Comment_AddPraise_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddPraiseReq)
 	if err := dec(in); err != nil {
@@ -493,6 +526,10 @@ var Comment_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PraiseComment",
 			Handler:    _Comment_PraiseComment_Handler,
+		},
+		{
+			MethodName: "GetCommentLastId",
+			Handler:    _Comment_GetCommentLastId_Handler,
 		},
 		{
 			MethodName: "AddPraise",
