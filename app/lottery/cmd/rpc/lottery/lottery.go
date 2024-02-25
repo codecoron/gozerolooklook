@@ -31,6 +31,8 @@ type (
 	CheckUserCreatedLotteryAndTodayResp    = pb.CheckUserCreatedLotteryAndTodayResp
 	CheckUserCreatedLotteryReq             = pb.CheckUserCreatedLotteryReq
 	CheckUserCreatedLotteryResp            = pb.CheckUserCreatedLotteryResp
+	CheckUserIsWonReq                      = pb.CheckUserIsWonReq
+	CheckUserIsWonResp                     = pb.CheckUserIsWonResp
 	ClockTask                              = pb.ClockTask
 	DelLotteryReq                          = pb.DelLotteryReq
 	DelLotteryResp                         = pb.DelLotteryResp
@@ -94,6 +96,7 @@ type (
 		CheckIsParticipated(ctx context.Context, in *CheckIsParticipatedReq, opts ...grpc.CallOption) (*CheckIsParticipatedResp, error)
 		GetSelectedLotteryStatistic(ctx context.Context, in *GetSelectedLotteryStatisticReq, opts ...grpc.CallOption) (*GetSelectedLotteryStatisticResp, error)
 		CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error)
+		CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -228,4 +231,9 @@ func (m *defaultLotteryZrpcClient) GetSelectedLotteryStatistic(ctx context.Conte
 func (m *defaultLotteryZrpcClient) CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.CheckSelectedLotteryParticipated(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.CheckUserIsWon(ctx, in, opts...)
 }

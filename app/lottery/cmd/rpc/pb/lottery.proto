@@ -240,6 +240,8 @@ message SearchPrizeResp {
   repeated Prize prize = 1; //prize
 }
 
+//--------------------------------参与抽奖表--------------------------------
+
 message AddLotteryParticipationReq{
   int64 userId = 1;
   int64 lotteryId = 2;
@@ -310,6 +312,15 @@ message CheckSelectedLotteryParticipatedResp{
   int64 participated = 1;
 }
 
+message CheckUserIsWonReq{
+  int64 userId = 1;
+  int64 lotteryId = 2;
+}
+
+message CheckUserIsWonResp{
+  int64 isWon = 1;
+}
+
 //--------------------------------打卡任务表--------------------------------
 message ClockTask {
   int64 Type = 1;
@@ -362,4 +373,5 @@ service lottery{
   rpc CheckIsParticipated(CheckIsParticipatedReq) returns (CheckIsParticipatedResp);
   rpc GetSelectedLotteryStatistic(GetSelectedLotteryStatisticReq) returns (GetSelectedLotteryStatisticResp);
   rpc CheckSelectedLotteryParticipated(CheckSelectedLotteryParticipatedReq) returns (CheckSelectedLotteryParticipatedResp);
+  rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
 }
