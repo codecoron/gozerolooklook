@@ -48,6 +48,8 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 		var userInfoList []types.User
 		userInfoList = make([]types.User, len(userIds))
 		// todo 获取用户信息s
+		/// 1. 传入用户Id的切片，得到用户信息列表
+
 		//userInfo, err := l.svcCtx.UsercenterRpc.GetUserInfoList(l.ctx, &comment.GetUserInfoListReq{})
 		for idx, item := range resp.Comment {
 			var t types.Comments

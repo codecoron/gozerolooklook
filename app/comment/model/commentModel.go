@@ -7,7 +7,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/globalkey"
 	"looklook/common/xerr"
+	"time"
 )
 
 var _ CommentModel = (*customCommentModel)(nil)
@@ -19,6 +21,7 @@ type (
 		commentModel
 		CommentList(ctx context.Context, page, limit, lastId, sort int64) ([]*Comment, error)
 		UpdatePraiseNum(ctx context.Context, id, num int64) (int64, error)
+		DeleteSoft(ctx context.Context, data *Comment) error
 	}
 
 	customCommentModel struct {
@@ -43,7 +46,6 @@ func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastI
 		query = fmt.Sprintf("select %s from %s where id < ? order by id desc limit ?,?", commentRows, c.table)
 	}
 	var resp []*Comment
-	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, (page-1)*limit, limit)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, (page-1)*limit:%v, limit:%v, error: %v", &resp, query, lastId, (page-1)*limit, limit, err)
@@ -60,4 +62,14 @@ func (c *customCommentModel) UpdatePraiseNum(ctx context.Context, id, num int64)
 		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "ExecCtx, query:%v, num:%v, id:%v, error: %v", query, num, id, err)
 	}
 	return res.RowsAffected()
+}
+
+func (m *defaultCommentModel) DeleteSoft(ctx context.Context, data *Comment) error {
+	data.DelState = globalkey.DelStateYes
+	data.DeleteTime.Time = time.Now()
+	data.DeleteTime.Valid = true
+	if err := m.Update(ctx, data); err != nil {
+		return errors.Wrapf(errors.New("delete soft failed "), "CommentModel delete err : %+v", err)
+	}
+	return nil
 }
