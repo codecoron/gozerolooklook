@@ -2,7 +2,6 @@ package shop
 
 import (
 	"context"
-
 	"looklook/app/shop/cmd/api/internal/svc"
 	"looklook/app/shop/cmd/api/internal/types"
 
@@ -24,7 +23,8 @@ func NewGetGoodsListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 }
 
 func (l *GetGoodsListLogic) GetGoodsList(req *types.GoodsListReq) (resp *types.GoodsListResp, err error) {
-	// todo: add your logic here and delete this line
+
+	resp = new(types.GoodsListResp)
 
 	return
 }
