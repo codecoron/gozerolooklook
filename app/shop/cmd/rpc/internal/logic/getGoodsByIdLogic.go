@@ -35,6 +35,6 @@ func (l *GetGoodsByIdLogic) GetGoodsById(in *pb.GoodsReq) (*pb.GoodsResp, error)
 	fmt.Println("商品信息为: ", goods)
 	pbGoods := new(pb.Goods)
 	_ = copier.Copy(pbGoods, goods)
-
-	return &pb.GoodsResp{Goods: pbGoods}, nil
+	fmt.Println("pbGoods:", pbGoods)
+	return (*pb.GoodsResp)(pbGoods), nil
 }

@@ -25,7 +25,7 @@ func NewGetGoodsByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 
 func (l *GetGoodsByIdLogic) GetGoodsById(req *types.GoodsInfoReq) (resp *types.GoodsInfoResp, err error) {
 	res, err := l.svcCtx.ShopRpc.GetGoodsById(l.ctx, &shop.GoodsReq{
-		Id: req.GoodsId,
+		Id: req.Id,
 	})
 
 	logx.Info(res)
@@ -34,8 +34,6 @@ func (l *GetGoodsByIdLogic) GetGoodsById(req *types.GoodsInfoReq) (resp *types.G
 	}
 
 	resp = new(types.GoodsInfoResp)
-	_ = copier.Copy(resp.GoodsInfo, res.Goods)
-	//_ = copier.Copy(resp, res)
-
+	_ = copier.Copy(resp, res)
 	return resp, nil
 }

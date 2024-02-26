@@ -16,11 +16,21 @@ type GoodsInfo struct {
 }
 
 type GoodsInfoReq struct {
-	GoodsId int64 `json:"goodsId"` //商品id
+	Id int64 `json:"id"` //商品id
 }
 
 type GoodsInfoResp struct {
-	GoodsInfo GoodsInfo `json:"goodsInfo"`
+	Id                   int64   `json:"id"`
+	CategoryId           int64   `json:"categoryId"`
+	GoodsId              string  `json:"goodsId"`
+	Precoupon_Price      float64 `json:"precouponPrice"`
+	Aftercoupon_Price    float64 `json:"aftercouponPrice"`
+	GoodsDesc            string  `json:"goodsDesc"`
+	WishPoints           int64   `json:"wishPoints"`
+	CouponStartTime      int64   `json:"couponStartTime"`
+	CouponEndTime        int64   `json:"couponEndTime"`
+	CouponDiscount       int64   `json:"couponDiscount"`
+	CouponRemainQuantity int64   `json:"couponRemainQuantity"`
 }
 
 type GoodsListReq struct {
