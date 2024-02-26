@@ -22,7 +22,7 @@ func NewShopServer(svcCtx *svc.ServiceContext) *ShopServer {
 	}
 }
 
-func (s *ShopServer) Greet(ctx context.Context, in *pb.GoodsReq) (*pb.GoodsResp, error) {
-	l := logic.NewGreetLogic(ctx, s.svcCtx)
-	return l.Greet(in)
+func (s *ShopServer) GetGoodsById(ctx context.Context, in *pb.GoodsReq) (*pb.GoodsResp, error) {
+	l := logic.NewGetGoodsByIdLogic(ctx, s.svcCtx)
+	return l.GetGoodsById(in)
 }
