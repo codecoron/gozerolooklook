@@ -1,0 +1,137 @@
+syntax = "v1"
+
+info (
+	title:   "晒单服务"
+	desc:    "晒单服务"
+	author:  "黎俊威"
+	email:   "lovevivi121@qq.com"
+	version: "v1"
+)
+
+//============================> comment v1 <============================
+type Comment {
+	Id          int64        `json:"id"`
+	UserId      int64        `json:"userId"`      // 用户id
+	LotteryId   int64        `json:"lotteryId"`   // 抽奖id
+	PrizeName   string       `json:"prizeName"`   // 奖品名称
+	Content     string       `json:"content"`      // 晒单评论内容
+	Pics        string       `json:"pics"`         // 晒单评论图片
+	PraiseCount int64        `json:"praiseCount"` // 点赞数量
+	CreateTime  int64    	 `json:"createTime"`  // 创建时间
+	UpdateTime  int64        `json:"updateTime"`  // 更新时间
+	DeleteTime  int64        `json:"deleteTime"`  // 删除时间
+	DelState    int64        `json:"delstate"`
+}
+
+type User {
+	Id       int64  `json:"id"`
+	Mobile   string `json:"mobile"`
+	Nickname string `json:"nickname"`
+	Sex      int64  `json:"sex"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
+	IsAdmin  int64  `json:"isAdmin"`
+}
+
+type Comments {
+	Id          int64        `json:"id"`
+	UserId      int64        `json:"userId"`      // 用户id
+	LotteryId   int64        `json:"lotteryId"`   // 抽奖id
+	PrizeName   string       `json:"prizeName"`   // 奖品名称
+	Content     string       `json:"content"`      // 晒单评论内容
+	Pics        string       `json:"pics"`         // 晒单评论图片
+	PraiseCount int64        `json:"praiseCount"` // 点赞数量
+	CreateTime  int64    	 `json:"createTime"`  // 创建时间
+	UpdateTime  int64        `json:"updateTime"`  // 更新时间
+	DeleteTime  int64        `json:"deleteTime"`  // 删除时间
+	DelState    int64        `json:"delstate"`
+	User		User         `json:"user"`        // 用户信息
+}
+
+
+type (
+	TestReq {
+		Age        int64  `json:"age" validate:"gte=1,lte=130"`
+		Name       string `json:"name" validate:"required"`
+		Email      string `json:"email" validate:"required,email"`
+		Password   string `json:"password" validate:"required"`
+		RePassword string `json:"repassword" validate:"required"`
+		// 需要使用自定义校验方法checkDate做参数校验的字段Date
+		Date       string `json:"date" validate:"required,datetime=2006-01-02"`
+	}
+	TestResp {
+	}
+)
+
+type (
+	CommentAddReq {
+		LotteryId int64  `json:"lotteryId" validate:"required"`
+		PrizeName string `json:"prizeName" validate:"required"`
+		Content   string `json:"content" validate:"required"`
+		Pics      string `json:"pics" validate:"required"`
+	}
+	CommentAddResp {
+	}
+)
+
+type (
+	CommentDelReq {
+		Id int64 `json:"id" validate:"required"`
+	}
+	CommentDelResp {
+	}
+)
+
+// update
+type (
+	CommentUpdateReq {
+		Id        int64  `json:"id" validate:"required"`
+		UserId    int64  `json:"userId" validate:"required"`
+		LotteryId int64  `json:"lotteryId" validate:"required"`
+		PrizeName string `json:"prizeName" validate:"required"`
+		Content   string `json:"content" validate:"required"`
+		Pics      string `json:"pics" validate:"required"`
+	}
+	CommentUpdateResp {
+	}
+)
+
+type (
+	CommentListReq {
+		LastId int64 `json:"lastId"`
+		Page int64 `json:"page"`
+		PageSize int64 `json:"pageSize"`
+		// 排序方式 0: 默认排序，1: 点赞数排序
+		Sort int64 `json:"sort"`
+	}
+	CommentListResp {
+		List []Comments `json:"list"`
+	}
+)
+
+type (
+	CommentPraiseReq {
+		Id int64 `json:"id" validate:"required"`
+	}
+	CommentPraiseResp {
+	}
+)
+
+type (
+	CommentDetailReq {
+		Id int64 `json:"id" validate:"required"`
+	}
+	CommentDetailResp {
+		Comment Comment `json:"comment"`
+	}
+)
+
+// 获取最大的评论的Id
+type (
+	GetCommentLastIdReq {
+	}
+	GetCommentLastIdResp {
+		LastId int64 `json:"lastId"`
+	}
+)
+

@@ -250,6 +250,9 @@ message Tasks {
   string content = 3; //任务内容
   int64 integral = 4; //完成后增加的心愿值
   int64 isFinished = 5; //0为未完成，1为已完成，2为已领取
+  string path = 6;
+  int64 count = 7;
+  int64 needCount = 8;
 }
 message AddTasksReq {
   int64 type = 1; //1为新手，2为每日，3为每周

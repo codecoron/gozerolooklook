@@ -28,6 +28,7 @@ func (l *CheckinLogic) Checkin(req *types.CheckinReq) (resp *types.CheckinResp, 
 	record, err := l.svcCtx.CheckinRpc.UpdateCheckinRecord(l.ctx, &checkin.UpdateCheckinRecordReq{
 		UserId: userId,
 	})
+	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}

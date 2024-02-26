@@ -41,6 +41,9 @@ type Tasks {
     Content    string `json:"content"`
     Integral   int64  `json:"integral"`
     isFinished int64  `json:"isFinished"`
+    Path       string `json:"path"`
+    Count      int64  `json:"count"`
+    NeedCount  int64  `json:"needCount"`
 }
 
 //===========================TaskProgress===========================
@@ -83,15 +86,13 @@ type (
     }
     GetTasksResp {
         TasksList             []*Tasks `json:"tasksList"`
-        DayCount              int64 `json:"dayCount"`
-        WeekCount             int64 `json:"weekCount"`
     }
 )
 
 
 type (
     ClaimRewardReq {
-        TaskId                int64 `json:"taskId"`
+        TaskId                int64 `json:"taskId" validate:"oneof=1 2 3 4 5 6 7 8 9"`
     }
     ClaimRewardResp {
     }
@@ -100,7 +101,7 @@ type (
 
 type (
     UpdateSubReq {
-        State                 int64 `json:"state"`
+        State                 int64 `json:"state" validate:"oneof=0 1"` //订阅状态
     }
     UpdateSubResp {
     }

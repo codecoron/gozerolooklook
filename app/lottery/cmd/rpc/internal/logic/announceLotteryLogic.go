@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
@@ -109,18 +110,69 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 	winners := make([]Winner, 0)
 
+	// todo 每个参与者有不同的中奖概率，重新制定中奖规则
+
+	// 假定的每个用户的中奖倍率
+	testRatios := make([]int64, len(participantor))
+	for i := range testRatios {
+		testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
+	}
+
+	// todo 得到每个参与者的中奖倍率。这里已经得到了参与者的Id，在这里获取就行。
+	Ratios := make([]int64, len(participantor))
+	Ratios = testRatios
+
+	fmt.Println("Ratios:", Ratios)
+	// 计算总的中奖概率
+	totalRatio := int64(0)
+	for _, ratio := range Ratios {
+		totalRatio += ratio
+	}
+	// 计算每个用户的最终中奖概率
+	FinalRatios := make([]float64, len(participantor))
+	for idx := range Ratios {
+		FinalRatios[idx] = float64(Ratios[idx]) / float64(totalRatio)
+	}
+	fmt.Println("FinalRatios:", FinalRatios)
+
+	// 根据中奖总数量进行开奖
 	for i := 0; i < int(WinnersNum); i++ { // 中奖人数
 		//fmt.Println("WinnersNum", i)
 		var randomWinnerIndex int
 		var winnerUserId int64
 
-		// 如果参与者少于预计中奖人数，就结束开奖。(参与人数 < 中奖人数)
+		//如果参与者少于预计中奖人数，就结束开奖。(参与人数 < 中奖人数)
 		if len(participantor) == 0 {
 			break
-		} else {
-			// 随机选择一个参与者,得到中奖者的uid
-			randomWinnerIndex = rand.Intn(len(participantor))
-			winnerUserId = participantor[randomWinnerIndex]
+		}
+		//else {
+		//	// 随机选择一个参与者,得到中奖者的uid
+		//	randomWinnerIndex = rand.Intn(len(participantor))
+		//	winnerUserId = participantor[randomWinnerIndex]
+		//}
+
+		//生成一个0到1之间的随机数
+		randomProbability := rand.Float64()
+
+		// 根据随机数确定中奖用户
+		probabilitySum := 0.0
+		for idx := range participantor {
+			// 逐个累加中奖概率，直到大于随机数
+			probabilitySum += FinalRatios[idx]
+			// 如果随机数小于等于累加的概率，说明中奖
+			if randomProbability <= probabilitySum {
+				// 中奖者的uid
+				winnerUserId = participantor[idx]
+				// 中奖者的索引
+				randomWinnerIndex = idx
+				break
+			}
+		}
+		//fmt.Println("winnerUserId:", winnerUserId)
+		//如果没有中奖用户，则第一个参与者中奖
+		if winnerUserId == 0 {
+			winnerUserId = participantor[0]
+			//fmt.Println("没有中奖用户,默认第一个参与者中奖", winnerUserId)
 		}
 
 		// 对所有prizes按照type排序 // todo 获取的时候能保证type有序吗？有序则可以不用排序了
@@ -144,8 +196,9 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 		winners = append(winners, winner)
 
-		// 从参与者列表中移除已中奖的用户
+		// 从参与者列表中移除已中奖的用户以及对应的中奖概率
 		participantor = append(participantor[:randomWinnerIndex], participantor[randomWinnerIndex+1:]...)
+		FinalRatios = append(FinalRatios[:randomWinnerIndex], FinalRatios[randomWinnerIndex+1:]...)
 	}
 
 	return winners, nil
@@ -235,7 +288,7 @@ func (s *TimeLotteryStrategy) Run() error {
 		}
 
 		// 执行开奖结果通知任务
-		err := s.NotifyParticipators(participators, lotteryId)
+		//err := s.NotifyParticipators(participators, lotteryId)
 		if err != nil {
 			return err
 		}

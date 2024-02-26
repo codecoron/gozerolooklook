@@ -26,5 +26,5 @@ message GoodsResp {
 }
 
 service Shop {
-  rpc greet(GoodsReq) returns (GoodsResp);
+  rpc getGoodsById(GoodsReq) returns (GoodsResp);
 }

@@ -45,27 +45,16 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 	}
 	err = l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		if checkinRecord.State == 1 {
-			return errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_REPEAT), "err : %v", err)
+			return errors.Wrapf(xerr.NewErrCodeMsg(xerr.CHECKIN_REPEAT, "不可重复签到"), "err : %v", err)
 		}
-		var i int64
-		switch checkinRecord.ContinuousCheckinDays {
-		case 0, 1:
-			i = 5
-		case 2:
-			i = 10
-		case 3:
-			i = 15
-		case 4:
-			i = 20
-		case 5:
-			i = 30
-		case 6:
-			i = 40
-		default:
-			// 如果 `checkinRecord.ContinuousCheckinDays` 的值不在上述范围内，则设置默认值
-			i = 0
+		// 更新积分值
+		integrals := calculateCheckinIntegral(checkinRecord.ContinuousCheckinDays)
+		integarl.Integral += integrals
+		err = l.svcCtx.IntegralModel.TransUpdateByUserId(l.ctx, session, integarl)
+		if err != nil {
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update integral data : %+v , err: %v", integarl, err)
 		}
-		integarl.Integral += i
+		// 更新签到状态
 		checkinRecord.ContinuousCheckinDays += 1
 		checkinRecord.LastCheckinDate.Time = time.Now()
 		checkinRecord.LastCheckinDate.Valid = true
@@ -74,29 +63,47 @@ func (l *UpdateCheckinRecordLogic) UpdateCheckinRecord(in *pb.UpdateCheckinRecor
 		if err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update check-in data : %+v , err: %v", checkinRecord, err)
 		}
-		err = l.svcCtx.IntegralModel.TransUpdateByUserId(l.ctx, session, integarl)
-		if err != nil {
-			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update integral data : %+v , err: %v", integarl, err)
-		}
-
-		// 增加心愿值增加记录
+		// 添加心愿值增减记录
 		integralRecord := new(model.IntegralRecord)
-		integralRecord.Integral = i
+		integralRecord.Integral = integrals
 		integralRecord.Content = "签到"
 		integralRecord.UserId = in.UserId
 		_, err = l.svcCtx.IntegralRecordModel.TransInsert(l.ctx, session, integralRecord)
 		if err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert integralRecord data : %+v , err: %v", integralRecord, err)
 		}
+
 		return nil
 	})
 
 	if err != nil {
 		return nil, err
 	}
+
 	return &pb.UpdateCheckinRecordResp{
 		State:                 checkinRecord.State,
 		ContinuousCheckinDays: checkinRecord.ContinuousCheckinDays,
 		Integral:              integarl.Integral,
 	}, nil
+}
+
+func calculateCheckinIntegral(continuousCheckinDays int64) int64 {
+	var integral int64
+	switch continuousCheckinDays {
+	case 0, 1:
+		integral = 5
+	case 2:
+		integral = 10
+	case 3:
+		integral = 15
+	case 4:
+		integral = 20
+	case 5:
+		integral = 30
+	case 6:
+		integral = 40
+	default:
+		integral = 0
+	}
+	return integral
 }

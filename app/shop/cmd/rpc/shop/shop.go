@@ -18,7 +18,7 @@ type (
 	GoodsResp = pb.GoodsResp
 
 	Shop interface {
-		Greet(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error)
+		GetGoodsById(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error)
 	}
 
 	defaultShop struct {
@@ -32,7 +32,7 @@ func NewShop(cli zrpc.Client) Shop {
 	}
 }
 
-func (m *defaultShop) Greet(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error) {
+func (m *defaultShop) GetGoodsById(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error) {
 	client := pb.NewShopClient(m.cli.Conn())
-	return client.Greet(ctx, in, opts...)
+	return client.GetGoodsById(ctx, in, opts...)
 }

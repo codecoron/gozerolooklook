@@ -36,7 +36,9 @@ func (l *UpdateSubLogic) UpdateSub(in *pb.UpdateSubReq) (*pb.UpdateSubResp, erro
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to update taskProgress data : %+v , err: %v", getProgress, err)
 	}
+	// 完成任务2
 	if in.State == 1 {
+		// 查询任务记录，如果有说明已完成，没有就添加记录
 		_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, 2)
 		if err == sqlc.ErrNotFound {
 			addTaskRecord := &pb.AddTaskRecordReq{

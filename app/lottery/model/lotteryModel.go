@@ -20,6 +20,7 @@ type (
 	LotteryModel interface {
 		lotteryModel
 		// 自定义方法
+		TransUpdateClockTaskId(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error)
 		UpdatePublishTime(ctx context.Context, data *Lottery) error
 		LotteryList(ctx context.Context, page, limit, selected, lastId int64) ([]*Lottery, error)
 		FindUserIdByLotteryId(ctx context.Context, lotteryId int64) (*int64, error)
@@ -35,6 +36,15 @@ type (
 		*defaultLotteryModel
 	}
 )
+
+func (m *defaultLotteryModel) TransUpdateClockTaskId(ctx context.Context, session sqlx.Session, data *Lottery) (sql.Result, error) {
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set clock_task_id = ? where `id` = ?", m.table)
+		return session.ExecCtx(ctx, query, data.ClockTaskId, data.Id)
+	}, lotteryLotteryIdKey)
+	return ret, err
+}
 
 func (m *defaultLotteryModel) UpdatePublishTime(ctx context.Context, data *Lottery) error {
 	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, data.Id)

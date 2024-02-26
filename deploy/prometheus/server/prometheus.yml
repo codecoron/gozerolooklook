@@ -174,4 +174,19 @@ scrape_configs:
           app: notic-rpc
           env: dev
 
+  - job_name: 'comment-api'
+    static_configs:
+      - targets: [ 'looklook:4031' ]
+        labels:
+          job: comment-api
+          app: comment-api
+          env: dev
+  - job_name: 'comment-rpc'
+    static_configs:
+      - targets: [ 'looklook:4032' ]
+        labels:
+          job: comment-rpc
+          app: comment-rpc
+          env: dev
+
 

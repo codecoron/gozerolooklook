@@ -19,7 +19,7 @@ type CheckinResp struct {
 }
 
 type ClaimRewardReq struct {
-	TaskId int64 `json:"taskId"`
+	TaskId int64 `json:"taskId" validate:"oneof=1 2 3 4 5 6 7 8 9"`
 }
 
 type ClaimRewardResp struct {
@@ -40,8 +40,6 @@ type GetTasksReq struct {
 
 type GetTasksResp struct {
 	TasksList []*Tasks `json:"tasksList"`
-	DayCount  int64    `json:"dayCount"`
-	WeekCount int64    `json:"weekCount"`
 }
 
 type IntegralRecord struct {
@@ -71,10 +69,13 @@ type Tasks struct {
 	Content    string `json:"content"`
 	Integral   int64  `json:"integral"`
 	IsFinished int64  `json:"isFinished"`
+	Path       string `json:"path"`
+	Count      int64  `json:"count"`
+	NeedCount  int64  `json:"needCount"`
 }
 
 type UpdateSubReq struct {
-	State int64 `json:"state"`
+	State int64 `json:"state" validate:"oneof=0 1"` //订阅状态
 }
 
 type UpdateSubResp struct {
