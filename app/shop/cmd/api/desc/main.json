@@ -102,6 +102,9 @@
           "type": "integer",
           "format": "int64"
         },
+        "goodsId": {
+          "type": "string"
+        },
         "precouponPrice": {
           "type": "number",
           "format": "double"
@@ -138,6 +141,7 @@
       "required": [
         "id",
         "categoryId",
+        "goodsId",
         "precouponPrice",
         "aftercouponPrice",
         "goodsDesc",
@@ -151,7 +155,7 @@
     "GoodsInfoReq": {
       "type": "object",
       "properties": {
-        "goodsId": {
+        "id": {
           "type": "integer",
           "format": "int64",
           "description": "商品id"
@@ -159,19 +163,68 @@
       },
       "title": "GoodsInfoReq",
       "required": [
-        "goodsId"
+        "id"
       ]
     },
     "GoodsInfoResp": {
       "type": "object",
       "properties": {
-        "goodsInfo": {
-          "$ref": "#/definitions/GoodsInfo"
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "categoryId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "goodsId": {
+          "type": "string"
+        },
+        "precouponPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "aftercouponPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "goodsDesc": {
+          "type": "string"
+        },
+        "wishPoints": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponStartTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponEndTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponDiscount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "couponRemainQuantity": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "GoodsInfoResp",
       "required": [
-        "goodsInfo"
+        "id",
+        "categoryId",
+        "goodsId",
+        "precouponPrice",
+        "aftercouponPrice",
+        "goodsDesc",
+        "wishPoints",
+        "couponStartTime",
+        "couponEndTime",
+        "couponDiscount",
+        "couponRemainQuantity"
       ]
     },
     "GoodsListReq": {
