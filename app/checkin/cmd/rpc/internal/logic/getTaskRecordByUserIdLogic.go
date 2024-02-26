@@ -46,8 +46,6 @@ func (l *GetTaskRecordByUserIdLogic) GetTaskRecordByUserId(in *pb.GetTaskRecordB
 		if isFinished, ok := fMap[taskList[i].Id]; ok {
 			taskList[i].IsFinished = isFinished
 		}
-		taskList[i].Count = -1
-		taskList[i].NeedCount = -1
 	}
 	return &pb.GetTaskRecordByUserIdResp{
 		TaskList: taskList,

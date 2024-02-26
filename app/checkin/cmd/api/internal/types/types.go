@@ -19,7 +19,7 @@ type CheckinResp struct {
 }
 
 type ClaimRewardReq struct {
-	TaskId int64 `json:"taskId"`
+	TaskId int64 `json:"taskId" validate:"oneof=1 2 3 4 5 6 7 8 9"`
 }
 
 type ClaimRewardResp struct {
@@ -75,7 +75,7 @@ type Tasks struct {
 }
 
 type UpdateSubReq struct {
-	State int64 `json:"state"`
+	State int64 `json:"state" validate:"oneof=0 1"` //订阅状态
 }
 
 type UpdateSubResp struct {
