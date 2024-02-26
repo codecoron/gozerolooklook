@@ -72,6 +72,34 @@
         ]
       }
     },
+    "lottery/v1/lottery/clockTaskTypeList": {
+      "post": {
+        "summary": "打卡任务类型",
+        "operationId": "clockTaskTypeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ClockTaskTypeListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClockTaskTypeListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/createLottery": {
       "post": {
         "summary": "发起抽奖",
@@ -324,6 +352,47 @@
       "title": "CheckIsParticipatedResp",
       "required": [
         "isParticipated"
+      ]
+    },
+    "ClockTaskTypeListReq": {
+      "type": "object",
+      "title": "ClockTaskTypeListReq"
+    },
+    "ClockTaskTypeListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CockTaskType"
+          }
+        }
+      },
+      "title": "ClockTaskTypeListResp",
+      "required": [
+        "list"
+      ]
+    },
+    "CockTaskType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "text": {
+          "type": "string"
+        },
+        "seconds": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CockTaskType",
+      "required": [
+        "type",
+        "text",
+        "seconds"
       ]
     },
     "CreateClockTask": {
@@ -764,27 +833,66 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "description": " 赞助商Id"
+          "description": "id"
         },
-        "nickName": {
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "userId"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": "1微信号 2公众号 3小程序 4微信群 5视频号"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64",
+          "description": "type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转"
+        },
+        "name": {
           "type": "string",
-          "description": " 赞助商昵称"
+          "description": "名称"
+        },
+        "desc": {
+          "type": "string",
+          "description": "描述"
         },
         "avatar": {
           "type": "string",
-          "description": " 赞助商头像"
+          "description": "avatar"
         },
-        "info": {
+        "isShow": {
+          "type": "integer",
+          "format": "int64",
+          "description": "1显示 2不显示"
+        },
+        "qrCode": {
           "type": "string",
-          "description": " 赞助商信息"
+          "description": "二维码图片地址, type=1 2 3\u0026applet_type=3 4的时候启用"
+        },
+        "inputA": {
+          "type": "string",
+          "description": "type=5 applet_type=2 or applet_type=1 输入框A"
+        },
+        "inputB": {
+          "type": "string",
+          "description": "type=5 applet_type=2输入框B"
         }
       },
       "title": "LotterySponsor",
       "required": [
         "id",
-        "nickName",
+        "userId",
+        "type",
+        "appletType",
+        "name",
+        "desc",
         "avatar",
-        "info"
+        "isShow",
+        "qrCode",
+        "inputA",
+        "inputB"
       ]
     },
     "Prize": {
