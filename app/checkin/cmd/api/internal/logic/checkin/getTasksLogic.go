@@ -32,6 +32,7 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 	count, err := l.svcCtx.CheckinRpc.GetTaskProgress(l.ctx, &checkin.GetTaskProgressReq{
 		UserId: userId,
 	})
+	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}
@@ -44,10 +45,20 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 	}
 	var taskList []*types.Tasks
 	_ = copier.Copy(&taskList, tasks.TaskList)
-	taskList[3].Count = count.DayCount
-	taskList[3].NeedCount = 3
-	taskList[6].Count = count.WeekCount
-	taskList[6].NeedCount = 30
+	for i, task := range taskList {
+		switch task.Id {
+		case 4:
+			task.Count = count.DayCount
+			task.NeedCount = 3
+		case 7:
+			task.Count = count.WeekCount
+			task.NeedCount = 30
+		default:
+			task.Count = -1
+			task.NeedCount = -1
+		}
+		taskList[i] = task
+	}
 	// 返回任务进度具体数量
 	return &types.GetTasksResp{
 		TasksList: taskList,
