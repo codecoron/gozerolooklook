@@ -37,7 +37,7 @@ func (l *UpdateTaskRecordLogic) UpdateTaskRecord(in *pb.UpdateTaskRecordReq) (*p
 
 	taskRecord, err := l.svcCtx.TaskRecordModel.FindByUserIdAndTaskId(l.ctx, in.UserId, in.TaskId)
 	if err == sqlc.ErrNotFound {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_TASK_NOT_FOUND), "任务记录不存在，taskRecord : %v", taskRecord)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.CHECKIN_TASK_NOT_FINISHED), "任务未完成，taskRecord : %v", taskRecord)
 	} else if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "查询任务记录失败，taskRecord : %v", taskRecord)
 	}
