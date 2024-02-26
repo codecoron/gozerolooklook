@@ -15,6 +15,7 @@ type ServiceContext struct {
 	RedisClient               *redis.Redis
 	LotteryModel              model.LotteryModel
 	PrizeModel                model.PrizeModel
+	ClockTaskModel            model.ClockTaskModel
 	UserCenterRpc             usercenter.Usercenter
 	NoticeRpc                 notice.Notice
 	LotteryParticipationModel model.LotteryParticipationModel
@@ -28,5 +29,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserCenterRpc:             usercenter.NewUsercenter(zrpc.MustNewClient(c.UserCenterRpcConf)),
 		NoticeRpc:                 notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
 		LotteryParticipationModel: model.NewLotteryParticipationModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		ClockTaskModel:            model.NewClockTaskModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
 	}
 }

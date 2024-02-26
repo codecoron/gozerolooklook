@@ -44,7 +44,6 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 			logx.Field("err", err))
 		return nil
 	}
-
 	data := new(power.HashMap)
 
 	switch p.MsgType {
@@ -128,9 +127,10 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 		)
 		return nil
 	}
+
 	if preference.AcceptCount == 0 {
 		// 不可重试的错误
-		logx.WithContext(ctx).Errorw("NoticeLotteryDrawLogic user reject to receive msg",
+		logx.WithContext(ctx).Errorw("WxMiniProgramNotifyUser user reject to receive msg",
 			logx.Field("openid", p.OpenId),
 			logx.Field("templateId", templateId),
 		)
@@ -145,7 +145,6 @@ func (l *WxMiniProgramNotifyUserHandler) ProcessTask(ctx context.Context, t *asy
 		Lang:             "zh_CN",
 		Data:             data,
 	}
-
 	// 发送消息
 	resp, err := l.svcCtx.WxMiniProgram.SubscribeMessage.Send(ctx, reqData)
 

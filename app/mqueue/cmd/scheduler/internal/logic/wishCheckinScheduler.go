@@ -11,7 +11,7 @@ func (l *MqueueScheduler) WishCheckinScheduler() {
 
 	task := asynq.NewTask(jobtype.ScheduleWishCheckin, nil)
 	// every one minute exec
-	entryID, err := l.svcCtx.Scheduler.Register("0 0 10 * * *", task)
+	entryID, err := l.svcCtx.Scheduler.Register("0 10 * * *", task)
 	if err != nil {
 		logx.WithContext(l.ctx).Errorf("!!!MqueueSchedulerErr!!! ====> 【wishCheckinScheduler】 registered  err:%+v , task:%+v", err, task)
 	}

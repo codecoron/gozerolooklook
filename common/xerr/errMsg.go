@@ -23,6 +23,7 @@ func init() {
 	message[CHECKIN_REPEAT] = "今日已签到"
 	message[CHECKIN_TASK_NOT_FOUND] = "任务不存在"
 	message[CHECKIN_TASK_REWARD_COLLECTED] = "不可重复领取奖励"
+	message[CHECKIN_TASK_NOT_FINISHED] = "任务未完成"
 	// 抽奖模块
 	// 开奖
 	message[DB_FIND_PARTICIPATOR_ERROR] = "获取当前用户参与抽奖信息失败"
@@ -51,6 +52,14 @@ func init() {
 	message[DB_GET_LOTTERY_BYLOTTERYID_ERROR] = "根据抽奖id查询抽奖失败"
 	message[DB_UPDATE_LOTTERY_ERROR] = "更新抽奖信息失败"
 	message[DB_NO_SET_LOTTERY_ISSELECT_PERMISSION_ERROR] = "没有修改抽奖是否精选的权限"
+	// 参与抽奖
+	message[CHECK_ISWON_BYUSERID_ANDLOTTERYID_ERROR] = "检查当前用户是否中奖失败"
+	// 晒单模块
+	message[ErrUserNotWon] = "用户没有中奖"
+	message[DB_INSERTCOMMENT_ERROR] = "插入评论失败"
+	message[DB_INSERTPRAISE_ERROR] = "插入点赞失败"
+	message[DB_DELETECOMMENT_ERROR] = "删除评论失败"
+	message[DB_FINDCOMMENT_ERROR] = "查询评论失败"
 }
 
 func MapErrMsg(errcode uint32) string {

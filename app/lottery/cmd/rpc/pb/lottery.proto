@@ -38,6 +38,8 @@ message AddLotteryReq {
   repeated Prize prizes = 9; //奖品 支持多个
   int64 announceTime = 10;
   int64 SponsorId = 11;
+  int64 isClocked = 12; // 是否开启打卡任务
+  ClockTask clockTask = 13; // 打卡任务 最多支持一个
 }
 
 message AddLotteryResp {
@@ -123,15 +125,21 @@ message LotteryDetailResp {
 }
 
 message LotterySponsorReq {
-  int64 Id = 1; // 抽奖id
-  int64 SponsorId = 2; // 赞助商id
+  int64 SponsorId = 1; // 赞助商id
 }
 
 message LotterySponsorResp {
-  int64 Id = 1;
-  string NickName = 2;
-  string Avatar = 3;
-  string Info = 4;
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1微信号 2公众号 3小程序 4微信群 5视频号
+  int64 appletType = 4; //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+  string name = 5; //名称
+  string desc = 6; //描述
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1显示 2不显示
+  string qrCode = 9; //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+  string inputA = 10; //type=5 applet_type=2 or applet_type=1 输入框A
+  string inputB = 11; //type=5 applet_type=2输入框B
 }
 
 message AnnounceLotteryReq {
@@ -232,6 +240,8 @@ message SearchPrizeResp {
   repeated Prize prize = 1; //prize
 }
 
+//--------------------------------参与抽奖表--------------------------------
+
 message AddLotteryParticipationReq{
   int64 userId = 1;
   int64 lotteryId = 2;
@@ -302,6 +312,33 @@ message CheckSelectedLotteryParticipatedResp{
   int64 participated = 1;
 }
 
+message CheckUserIsWonReq{
+  int64 userId = 1;
+  int64 lotteryId = 2;
+}
+
+message CheckUserIsWonResp{
+  int64 isWon = 1;
+}
+
+//--------------------------------打卡任务表--------------------------------
+message ClockTask {
+  int64 Type = 1;
+  int64 Seconds = 2;
+  int64 AppletType = 3;
+  string PageLink = 4;
+  string AppId = 5;
+  string PagePath = 6;
+  string Image = 7;
+  string VideoAccountId = 8;
+  string VideoId = 9;
+  string ArticleLink = 10;
+  string Copywriting = 11;
+  int64 ChanceType = 12;
+  int64 IncreaseMultiple = 13;
+
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -336,4 +373,5 @@ service lottery{
   rpc CheckIsParticipated(CheckIsParticipatedReq) returns (CheckIsParticipatedResp);
   rpc GetSelectedLotteryStatistic(GetSelectedLotteryStatisticReq) returns (GetSelectedLotteryStatisticResp);
   rpc CheckSelectedLotteryParticipated(CheckSelectedLotteryParticipatedReq) returns (CheckSelectedLotteryParticipatedResp);
+  rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
 }

@@ -32,13 +32,15 @@ CREATE TABLE `lottery`  (
   `award_deadline` datetime NOT NULL COMMENT '领奖截止时间',
   `is_selected` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否精选 1是 0否',
   `announce_type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '开奖设置：1按时间开奖 2按人数开奖 3即抽即中',
-  `announce_time` datetime NULL DEFAULT NULL COMMENT '开奖时间',
+  `announce_time` datetime NOT NULL DEFAULT NULL COMMENT '开奖时间',
   `del_state` tinyint NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_time` timestamp NULL DEFAULT NULL COMMENT '删除时间',
   `is_announced` tinyint(1) NULL DEFAULT 0 COMMENT '是否开奖：0未开奖；1已经开奖',
   `sponsor_id` int NOT NULL DEFAULT 0 COMMENT '发起抽奖赞助商ID',
+  `is_clocked` tinyint(1) NULL DEFAULT 0 COMMENT '是否开启打卡任务：0未开启；1已开启',
+  `clock_task_id` int NOT NULL DEFAULT 0 COMMENT '打卡任务任务ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖表' ROW_FORMAT = DYNAMIC;
 
