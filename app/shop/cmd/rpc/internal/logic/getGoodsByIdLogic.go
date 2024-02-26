@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"looklook/app/shop/cmd/rpc/internal/svc"
@@ -31,7 +32,7 @@ func (l *GetGoodsByIdLogic) GetGoodsById(in *pb.GoodsReq) (*pb.GoodsResp, error)
 	if err != nil && !errors.Is(err, model.ErrNotFound) {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "lottery_id:%d,err:%v", in.Id, err)
 	}
-
+	fmt.Println("商品信息为: ", goods)
 	pbGoods := new(pb.Goods)
 	_ = copier.Copy(pbGoods, goods)
 

@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"looklook/app/shop/cmd/internal/config"
-	"looklook/app/shop/cmd/internal/server"
-	"looklook/app/shop/cmd/internal/svc"
-	"looklook/app/shop/cmd/pb"
+	"looklook/app/shop/cmd/rpc/internal/config"
+	"looklook/app/shop/cmd/rpc/internal/server"
+	"looklook/app/shop/cmd/rpc/internal/svc"
+	"looklook/app/shop/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

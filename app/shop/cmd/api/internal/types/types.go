@@ -2,8 +2,9 @@
 package types
 
 type GoodsInfo struct {
-	Id                   int64   `json:id`
+	Id                   int64   `json:"id"`
 	CategoryId           int64   `json:"categoryId"`
+	GoodsId              string  `json:"goodsId"`
 	Precoupon_Price      float64 `json:"precouponPrice"`
 	Aftercoupon_Price    float64 `json:"aftercouponPrice"`
 	GoodsDesc            string  `json:"goodsDesc"`

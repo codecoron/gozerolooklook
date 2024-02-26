@@ -19,7 +19,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: shop.GetGoodsByIdHandler(serverCtx),
 			},
 		},
-		//rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/shop/v1"),
 	)
 
@@ -31,7 +31,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: shop.GetGoodsListHandler(serverCtx),
 			},
 		},
-		//rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/shop/v1"),
 	)
 
@@ -43,7 +43,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: shop.SyncPddGoodsHandler(serverCtx),
 			},
 		},
-		//rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/shop/v1"),
 	)
 }
