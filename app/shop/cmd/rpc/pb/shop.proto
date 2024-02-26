@@ -6,15 +6,16 @@ option go_package = "./pb";
 
 message Goods {
   int64 id = 1;
-  int64 category_id = 2;
-  double price = 3;
-  double discount_price = 4;
-  string goods_desc = 5;
-  int64 wish_points = 6;
-  int64 coupon_start_time = 7;
-  int64 coupon_end_time = 8;
-  int64 coupon_discount = 9;
-  int64 coupon_remain_quantity = 10;
+  string goods_id = 2;
+  int64 category_id = 3;
+  double precoupon_price = 4;
+  double aftercoupon_price = 5;
+  string goods_desc = 6;
+  int64 wish_points = 7;
+  int64 coupon_start_time = 8;
+  int64 coupon_end_time = 9;
+  int64 coupon_discount = 10;
+  int64 coupon_remain_quantity = 11;
 }
 
 message GoodsReq {
@@ -22,7 +23,17 @@ message GoodsReq {
 }
 
 message GoodsResp {
-  Goods goods = 1;
+  int64 id = 1;
+  string goods_id = 2;
+  int64 category_id = 3;
+  double precoupon_price = 4;
+  double aftercoupon_price = 5;
+  string goods_desc = 6;
+  int64 wish_points = 7;
+  int64 coupon_start_time = 8;
+  int64 coupon_end_time = 9;
+  int64 coupon_discount = 10;
+  int64 coupon_remain_quantity = 11;
 }
 
 service Shop {

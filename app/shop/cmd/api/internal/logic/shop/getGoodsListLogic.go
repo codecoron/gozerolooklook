@@ -2,10 +2,11 @@ package shop
 
 import (
 	"context"
-	"looklook/app/shop/cmd/api/internal/svc"
-	"looklook/app/shop/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
+
+	"looklook/app/shop/cmd/api/internal/svc"
+	"looklook/app/shop/cmd/api/internal/types"
 )
 
 type GetGoodsListLogic struct {

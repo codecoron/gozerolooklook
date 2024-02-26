@@ -3,11 +3,10 @@ package shop
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/shop/cmd/api/internal/svc"
 	"looklook/app/shop/cmd/api/internal/types"
 	"looklook/app/shop/cmd/rpc/shop"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type GetGoodsByIdLogic struct {
@@ -26,14 +25,15 @@ func NewGetGoodsByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 
 func (l *GetGoodsByIdLogic) GetGoodsById(req *types.GoodsInfoReq) (resp *types.GoodsInfoResp, err error) {
 	res, err := l.svcCtx.ShopRpc.GetGoodsById(l.ctx, &shop.GoodsReq{
-		Id: req.GoodsId,
+		Id: req.Id,
 	})
+
+	logx.Info(res)
 	if err != nil {
 		return nil, err
 	}
 
 	resp = new(types.GoodsInfoResp)
-	_ = copier.Copy(resp.GoodsInfo, res.Goods)
-
+	_ = copier.Copy(resp, res)
 	return resp, nil
 }

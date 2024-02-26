@@ -9,15 +9,17 @@ import (
 )
 
 type ServiceContext struct {
-	Config     config.Config
-	GoodsModel model.GoodsModel
-	ShopRpc    shop.Shop
+	Config             config.Config
+	GoodsModel         model.GoodsModel
+	GoodsCategoryModel model.GoodsCategoryModel
+	ShopRpc            shop.Shop
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:     c,
-		GoodsModel: model.NewGoodsModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
-		ShopRpc:    shop.NewShop(zrpc.MustNewClient(c.ShopRpcConf)),
+		Config:             c,
+		GoodsModel:         model.NewGoodsModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		GoodsCategoryModel: model.NewGoodsCategoryModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		ShopRpc:            shop.NewShop(zrpc.MustNewClient(c.ShopRpcConf)),
 	}
 }
