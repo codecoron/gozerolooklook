@@ -163,3 +163,16 @@ type (
     TestResp {
     }
 )
+
+type CockTaskType {
+    Type int64 `json:"type"`
+    Text string `json:"text"`
+    Seconds int64 `json:"seconds"`
+}
+
+type (
+    ClockTaskTypeListReq{}
+    ClockTaskTypeListResp{
+        List []CockTaskType `json:"list"`
+    }
+)

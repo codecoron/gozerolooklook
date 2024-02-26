@@ -16,6 +16,19 @@ type CheckIsParticipatedResp struct {
 	IsParticipated int64 `json:"isParticipated"` // 当前用户是否参与了当前抽奖： 0未参与 1已参与
 }
 
+type ClockTaskTypeListReq struct {
+}
+
+type ClockTaskTypeListResp struct {
+	List []CockTaskType `json:"list"`
+}
+
+type CockTaskType struct {
+	Type    int64  `json:"type"`
+	Text    string `json:"text"`
+	Seconds int64  `json:"seconds"`
+}
+
 type CreateClockTask struct {
 	Type             int64  `json:"type"`                       // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
 	Seconds          int64  `json:"seconds"`                    // 任务秒数
