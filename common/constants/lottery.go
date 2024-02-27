@@ -37,8 +37,21 @@ const (
 
 // 任务类型文案
 const (
-	ExperienceMiniProgramsText        = "体验小程序%d秒"
-	BrowseOfficialAccountArticlesText = "浏览指定公众号文章%d秒"
-	BrowseImageText                   = "浏览图片%d秒"
-	BrowseVideoText                   = "浏览视频号视频%d秒"
+	ExperienceMiniProgramsText        = "体验小程序 %d 秒"
+	BrowseOfficialAccountArticlesText = "浏览指定公众号文章 %d 秒"
+	BrowseImageText                   = "浏览图片 %d 秒"
+	BrowseVideoText                   = "浏览视频号视频 %d 秒"
+)
+
+// 增加概率类型
+const (
+	_       = iota
+	Random  // 随机增加1～10倍概率
+	Appoint // 指定增加1/2/3/4/5/6/7/8/9/10倍概率
+)
+
+// 增加概率文案
+const (
+	RandomText  = "随机增加 1~10 倍"
+	AppointText = "增加 %d 倍"
 )

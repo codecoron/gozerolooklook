@@ -111,9 +111,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/lottery/clockTaskTypeList",
 				Handler: lottery.ClockTaskTypeListHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/lottery/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/chanceTypeList",
+				Handler: lottery.ChanceTypeListHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/lottery/v1"),
