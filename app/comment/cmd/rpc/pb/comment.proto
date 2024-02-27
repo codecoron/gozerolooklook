@@ -165,8 +165,14 @@ message SearchPraiseResp {
   repeated Praise praise = 1; //praise
 }
 
-
-
+//--------------------------------others--------------------------------
+// 检查用户今日是否给评论点赞
+message CheckUserPraiseReq {
+  int64 userId = 1; //用户id
+}
+message CheckUserPraiseResp {
+  int64 isPraise = 1; //是否点赞
+}
 // ------------------------------------ 
 // Rpc Func
 // ------------------------------------ 
@@ -186,6 +192,7 @@ service comment{
 	 rpc UpdatePraise(UpdatePraiseReq) returns (UpdatePraiseResp); 
 	 rpc DelPraise(DelPraiseReq) returns (DelPraiseResp); 
 	 rpc GetPraiseById(GetPraiseByIdReq) returns (GetPraiseByIdResp); 
-	 rpc SearchPraise(SearchPraiseReq) returns (SearchPraiseResp); 
-
+	 rpc SearchPraise(SearchPraiseReq) returns (SearchPraiseResp);
+  //-----------------------others-----------------------
+  rpc CheckUserPraise(CheckUserPraiseReq) returns (CheckUserPraiseResp);
 }

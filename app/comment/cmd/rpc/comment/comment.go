@@ -17,6 +17,8 @@ type (
 	AddCommentResp       = pb.AddCommentResp
 	AddPraiseReq         = pb.AddPraiseReq
 	AddPraiseResp        = pb.AddPraiseResp
+	CheckUserPraiseReq   = pb.CheckUserPraiseReq
+	CheckUserPraiseResp  = pb.CheckUserPraiseResp
 	Comment              = pb.Comment
 	DelCommentReq        = pb.DelCommentReq
 	DelCommentResp       = pb.DelCommentResp
@@ -58,6 +60,8 @@ type (
 		DelPraise(ctx context.Context, in *DelPraiseReq, opts ...grpc.CallOption) (*DelPraiseResp, error)
 		GetPraiseById(ctx context.Context, in *GetPraiseByIdReq, opts ...grpc.CallOption) (*GetPraiseByIdResp, error)
 		SearchPraise(ctx context.Context, in *SearchPraiseReq, opts ...grpc.CallOption) (*SearchPraiseResp, error)
+		// -----------------------others-----------------------
+		CheckUserPraise(ctx context.Context, in *CheckUserPraiseReq, opts ...grpc.CallOption) (*CheckUserPraiseResp, error)
 	}
 
 	defaultCommentZrpcClient struct {
@@ -136,4 +140,10 @@ func (m *defaultCommentZrpcClient) GetPraiseById(ctx context.Context, in *GetPra
 func (m *defaultCommentZrpcClient) SearchPraise(ctx context.Context, in *SearchPraiseReq, opts ...grpc.CallOption) (*SearchPraiseResp, error) {
 	client := pb.NewCommentClient(m.cli.Conn())
 	return client.SearchPraise(ctx, in, opts...)
+}
+
+// -----------------------others-----------------------
+func (m *defaultCommentZrpcClient) CheckUserPraise(ctx context.Context, in *CheckUserPraiseReq, opts ...grpc.CallOption) (*CheckUserPraiseResp, error) {
+	client := pb.NewCommentClient(m.cli.Conn())
+	return client.CheckUserPraise(ctx, in, opts...)
 }

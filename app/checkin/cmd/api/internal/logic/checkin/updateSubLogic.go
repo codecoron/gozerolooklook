@@ -31,7 +31,6 @@ func (l *UpdateSubLogic) UpdateSub(req *types.UpdateSubReq) (resp *types.UpdateS
 		UserId: userId,
 		State:  req.State,
 	})
-	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}

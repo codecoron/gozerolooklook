@@ -28,7 +28,6 @@ func (l *GetCheckinLogic) GetCheckin(req *types.GetCheckinReq) (resp *types.GetC
 	record, err := l.svcCtx.CheckinRpc.GetCheckinRecordByUserId(l.ctx, &checkin.GetCheckinRecordByUserIdReq{
 		UserId: userId,
 	})
-	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}

@@ -32,7 +32,6 @@ func (l *GetTasksLogic) GetTasks(req *types.GetTasksReq) (resp *types.GetTasksRe
 	count, err := l.svcCtx.CheckinRpc.GetTaskProgress(l.ctx, &checkin.GetTaskProgressReq{
 		UserId: userId,
 	})
-	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}

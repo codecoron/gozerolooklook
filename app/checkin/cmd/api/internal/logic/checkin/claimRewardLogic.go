@@ -30,7 +30,6 @@ func (l *ClaimRewardLogic) ClaimReward(req *types.ClaimRewardReq) (resp *types.C
 		UserId: userId,
 		TaskId: req.TaskId,
 	})
-	// todo: 错误处理
 	if err != nil {
 		return nil, err
 	}
