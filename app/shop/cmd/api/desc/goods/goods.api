@@ -33,8 +33,8 @@ type GoodsInfoResp {
     Id int64 `json:"id"`
     CategoryId int64 `json:"categoryId"`
     GoodsId string `json:"goodsId"`
-    Precoupon_Price float64 `json:"precouponPrice"`
-    Aftercoupon_Price float64 `json:"aftercouponPrice"`
+    PrecouponPrice float64 `json:"precouponPrice"`
+    AftercouponPrice float64 `json:"aftercouponPrice"`
     GoodsDesc string `json:"goodsDesc"`
     WishPoints int64 `json:"wishPoints"`
     CouponStartTime int64 `json:"couponStartTime"`
@@ -43,9 +43,11 @@ type GoodsInfoResp {
     CouponRemainQuantity int64 `json:"couponRemainQuantity"`
 }
 
+//商品列表的请求 传入页号
 type GoodsListReq {
+    pageSize int64 `json:"pageSize"`
 }
-
+//商品列表的响应 返回商品列表
 type GoodsListResp {
-    List []*GoodsInfo `json:"list"`
+    List []GoodsInfo `json:"list"`
 }

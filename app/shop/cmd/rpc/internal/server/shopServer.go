@@ -26,3 +26,8 @@ func (s *ShopServer) GetGoodsById(ctx context.Context, in *pb.GoodsReq) (*pb.Goo
 	l := logic.NewGetGoodsByIdLogic(ctx, s.svcCtx)
 	return l.GetGoodsById(in)
 }
+
+func (s *ShopServer) GetGoodsList(ctx context.Context, in *pb.GoodsListReq) (*pb.GoodsListResp, error) {
+	l := logic.NewGetGoodsListLogic(ctx, s.svcCtx)
+	return l.GetGoodsList(in)
+}

@@ -23,8 +23,8 @@ type GoodsInfoResp struct {
 	Id                   int64   `json:"id"`
 	CategoryId           int64   `json:"categoryId"`
 	GoodsId              string  `json:"goodsId"`
-	Precoupon_Price      float64 `json:"precouponPrice"`
-	Aftercoupon_Price    float64 `json:"aftercouponPrice"`
+	PrecouponPrice       float64 `json:"precouponPrice"`
+	AftercouponPrice     float64 `json:"aftercouponPrice"`
 	GoodsDesc            string  `json:"goodsDesc"`
 	WishPoints           int64   `json:"wishPoints"`
 	CouponStartTime      int64   `json:"couponStartTime"`
@@ -34,8 +34,9 @@ type GoodsInfoResp struct {
 }
 
 type GoodsListReq struct {
+	PageSize int64 `json:"pageSize"`
 }
 
 type GoodsListResp struct {
-	List []*GoodsInfo `json:"list"`
+	List []GoodsInfo `json:"list"`
 }

@@ -21,7 +21,9 @@ message Goods {
 message GoodsReq {
   int64 id = 1;
 }
-
+message GoodsListReq{
+  int64 pageSize = 1;//分页查询
+}
 message GoodsResp {
   int64 id = 1;
   string goods_id = 2;
@@ -35,7 +37,10 @@ message GoodsResp {
   int64 coupon_discount = 10;
   int64 coupon_remain_quantity = 11;
 }
-
+message GoodsListResp{
+  repeated Goods goods = 1; // 商品信息列表
+}
 service Shop {
   rpc getGoodsById(GoodsReq) returns (GoodsResp);
+  rpc getGoodsList(GoodsListReq) returns(GoodsListResp); //传入页号
 }

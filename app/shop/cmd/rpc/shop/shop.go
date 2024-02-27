@@ -13,12 +13,15 @@ import (
 )
 
 type (
-	Goods     = pb.Goods
-	GoodsReq  = pb.GoodsReq
-	GoodsResp = pb.GoodsResp
+	Goods         = pb.Goods
+	GoodsListReq  = pb.GoodsListReq
+	GoodsListResp = pb.GoodsListResp
+	GoodsReq      = pb.GoodsReq
+	GoodsResp     = pb.GoodsResp
 
 	Shop interface {
 		GetGoodsById(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error)
+		GetGoodsList(ctx context.Context, in *GoodsListReq, opts ...grpc.CallOption) (*GoodsListResp, error)
 	}
 
 	defaultShop struct {
@@ -35,4 +38,9 @@ func NewShop(cli zrpc.Client) Shop {
 func (m *defaultShop) GetGoodsById(ctx context.Context, in *GoodsReq, opts ...grpc.CallOption) (*GoodsResp, error) {
 	client := pb.NewShopClient(m.cli.Conn())
 	return client.GetGoodsById(ctx, in, opts...)
+}
+
+func (m *defaultShop) GetGoodsList(ctx context.Context, in *GoodsListReq, opts ...grpc.CallOption) (*GoodsListResp, error) {
+	client := pb.NewShopClient(m.cli.Conn())
+	return client.GetGoodsList(ctx, in, opts...)
 }
