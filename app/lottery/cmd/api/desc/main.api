@@ -117,3 +117,13 @@ service lottery {
 	post /lottery/TestValidator (TestReq) returns (TestResp)
 }
 
+@server (
+	prefix: lottery/v1
+	group:  lottery
+)
+service lottery {
+	@doc "打卡任务类型"
+	@handler clockTaskTypeList
+	post /lottery/clockTaskTypeList (ClockTaskTypeListReq) returns (ClockTaskTypeListResp)
+}
+
