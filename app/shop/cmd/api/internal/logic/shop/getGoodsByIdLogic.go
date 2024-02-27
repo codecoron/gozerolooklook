@@ -2,6 +2,7 @@ package shop
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/shop/cmd/api/internal/svc"
@@ -27,7 +28,7 @@ func (l *GetGoodsByIdLogic) GetGoodsById(req *types.GoodsInfoReq) (resp *types.G
 	res, err := l.svcCtx.ShopRpc.GetGoodsById(l.ctx, &shop.GoodsReq{
 		Id: req.Id,
 	})
-
+	fmt.Println(res)
 	logx.Info(res)
 	if err != nil {
 		return nil, err

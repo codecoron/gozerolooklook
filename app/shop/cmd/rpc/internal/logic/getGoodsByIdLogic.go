@@ -28,9 +28,10 @@ func NewGetGoodsByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 }
 
 func (l *GetGoodsByIdLogic) GetGoodsById(in *pb.GoodsReq) (*pb.GoodsResp, error) {
+
 	goods, err := l.svcCtx.GoodsModel.FindOne(l.ctx, in.Id)
 	if err != nil && !errors.Is(err, model.ErrNotFound) {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "lottery_id:%d,err:%v", in.Id, err)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "id:%d,err:%v", in.Id, err)
 	}
 	fmt.Println("商品信息为: ", goods)
 	pbGoods := new(pb.Goods)

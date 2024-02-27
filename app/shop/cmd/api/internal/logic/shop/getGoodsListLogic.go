@@ -2,6 +2,8 @@ package shop
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"looklook/app/shop/cmd/rpc/shop"
 
 	"github.com/zeromicro/go-zero/core/logx"
 
@@ -25,7 +27,17 @@ func NewGetGoodsListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetG
 
 func (l *GetGoodsListLogic) GetGoodsList(req *types.GoodsListReq) (resp *types.GoodsListResp, err error) {
 
-	resp = new(types.GoodsListResp)
-
-	return
+	list, err := l.svcCtx.ShopRpc.GetGoodsList(l.ctx, &shop.GoodsListReq{
+		PageSize: req.PageSize,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var goodsList []types.GoodsInfo
+	for _, item := range list.Goods {
+		var temp types.GoodsInfo
+		_ = copier.Copy(&temp, item)
+		goodsList = append(goodsList, temp)
+	}
+	return &types.GoodsListResp{List: goodsList}, nil
 }

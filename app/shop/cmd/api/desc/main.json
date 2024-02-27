@@ -60,6 +60,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "商品列表的请求 传入页号",
             "in": "body",
             "required": true,
             "schema": {
@@ -229,7 +230,16 @@
     },
     "GoodsListReq": {
       "type": "object",
-      "title": "GoodsListReq"
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GoodsListReq",
+      "required": [
+        "pageSize"
+      ]
     },
     "GoodsListResp": {
       "type": "object",
