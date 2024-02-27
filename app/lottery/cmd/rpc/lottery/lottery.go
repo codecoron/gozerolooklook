@@ -48,6 +48,8 @@ type (
 	GetPrizeListByLotteryIdResp            = pb.GetPrizeListByLotteryIdResp
 	GetSelectedLotteryStatisticReq         = pb.GetSelectedLotteryStatisticReq
 	GetSelectedLotteryStatisticResp        = pb.GetSelectedLotteryStatisticResp
+	GetWonListReq                          = pb.GetWonListReq
+	GetWonListResp                         = pb.GetWonListResp
 	Lottery                                = pb.Lottery
 	LotteryDetailReq                       = pb.LotteryDetailReq
 	LotteryDetailResp                      = pb.LotteryDetailResp
@@ -67,6 +69,7 @@ type (
 	UpdateLotteryResp                      = pb.UpdateLotteryResp
 	UpdatePrizeReq                         = pb.UpdatePrizeReq
 	UpdatePrizeResp                        = pb.UpdatePrizeResp
+	WonList                                = pb.WonList
 
 	LotteryZrpcClient interface {
 		// -----------------------抽奖表-----------------------
@@ -97,6 +100,7 @@ type (
 		GetSelectedLotteryStatistic(ctx context.Context, in *GetSelectedLotteryStatisticReq, opts ...grpc.CallOption) (*GetSelectedLotteryStatisticResp, error)
 		CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error)
 		CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
+		GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -236,4 +240,9 @@ func (m *defaultLotteryZrpcClient) CheckSelectedLotteryParticipated(ctx context.
 func (m *defaultLotteryZrpcClient) CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.CheckUserIsWon(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetWonList(ctx, in, opts...)
 }

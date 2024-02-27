@@ -321,6 +321,27 @@ message CheckUserIsWonResp{
   int64 isWon = 1;
 }
 
+// 获取当前用户中奖列表
+message GetWonListReq{
+  int64 userId = 1;
+  int64 lastId = 2;
+  int64 page = 3;
+  int64 size = 4;
+}
+
+message WonList{
+  int64 id = 1;
+  int64 lotteryId = 2;
+  int64 userId = 3;
+  bool isWon = 4;
+  Prize prize = 5;
+}
+
+message GetWonListResp{
+  repeated WonList list = 1;
+
+}
+
 //--------------------------------打卡任务表--------------------------------
 message ClockTask {
   int64 Type = 1;
@@ -374,4 +395,5 @@ service lottery{
   rpc GetSelectedLotteryStatistic(GetSelectedLotteryStatisticReq) returns (GetSelectedLotteryStatisticResp);
   rpc CheckSelectedLotteryParticipated(CheckSelectedLotteryParticipatedReq) returns (CheckSelectedLotteryParticipatedResp);
   rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
+  rpc GetWonList(GetWonListReq) returns (GetWonListResp);
 }

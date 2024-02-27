@@ -149,3 +149,8 @@ func (s *LotteryServer) CheckUserIsWon(ctx context.Context, in *pb.CheckUserIsWo
 	l := logic.NewCheckUserIsWonLogic(ctx, s.svcCtx)
 	return l.CheckUserIsWon(in)
 }
+
+func (s *LotteryServer) GetWonList(ctx context.Context, in *pb.GetWonListReq) (*pb.GetWonListResp, error) {
+	l := logic.NewGetWonListLogic(ctx, s.svcCtx)
+	return l.GetWonList(in)
+}
