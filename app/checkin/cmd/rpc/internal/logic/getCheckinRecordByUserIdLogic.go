@@ -34,7 +34,23 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 	integarl := new(model.Integral)
 	progress := new(model.TaskProgress)
 
-	err := l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
+	// 获取任务进度
+	getProgress, err := l.svcCtx.TaskProgressModel.FindOneByUserId(l.ctx, in.UserId)
+	if err == sqlc.ErrNotFound {
+		// 没查询到，新增数据
+		progress.UserId = in.UserId
+		insert, err := l.svcCtx.TaskProgressModel.InsertByUserId(l.ctx, progress)
+		if err != nil {
+			return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert taskProgress data : %+v , err: %v", progress, err)
+		}
+		progress.Id, _ = insert.LastInsertId()
+	} else if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskProgress data : %+v , err: %v", progress, err)
+	} else {
+		_ = copier.Copy(progress, getProgress)
+	}
+
+	err = l.svcCtx.CheckinRecordModel.Trans(l.ctx, func(context context.Context, session sqlx.Session) error {
 		// 根据user_id查询用户的签到记录，如果没有就创建
 		getCheckinRecord, err := l.svcCtx.CheckinRecordModel.FindOneByUserId(l.ctx, in.UserId)
 		if err == sqlc.ErrNotFound { // 没查询到用户的数据，说明用户从来没有签到过，新增记录
@@ -50,18 +66,11 @@ func (l *GetCheckinRecordByUserIdLogic) GetCheckinRecordByUserId(in *pb.GetCheck
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert integarl data : %+v , err: %v", insert, err)
 			}
-			// 新增任务进度记录
-			progress.UserId = in.UserId
-			insert, err = l.svcCtx.TaskProgressModel.TransInsertByUserId(l.ctx, session, progress)
-			if err != nil {
-				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to insert taskProgress data : %+v , err: %v", insert, err)
-			}
 			return nil
 		} else if err != nil {
 			// 其他错误
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find check-in data : %+v , err: %v", getCheckinRecord, err)
 		}
-
 		// 查询积分，订阅状态
 		getIntegral, err := l.svcCtx.IntegralModel.FindOneByUserId(l.ctx, in.UserId)
 		getTaskProgress, err := l.svcCtx.TaskProgressModel.FindOneByUserId(l.ctx, in.UserId)
