@@ -6,6 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/zrpc"
 	"looklook/app/checkin/cmd/rpc/internal/config"
 	"looklook/app/checkin/model"
+	"looklook/app/comment/cmd/rpc/comment"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 )
@@ -22,6 +23,7 @@ type ServiceContext struct {
 
 	UserCenterRpc usercenter.Usercenter
 	LotteryRpc    lottery.LotteryZrpcClient
+	CommentRpc    comment.CommentZrpcClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -36,5 +38,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 		UserCenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UserCenterRpcConf)),
 		LotteryRpc:    lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
+		CommentRpc:    comment.NewCommentZrpcClient(zrpc.MustNewClient(c.CommentRpcConf)),
 	}
 }

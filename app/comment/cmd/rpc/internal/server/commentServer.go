@@ -88,3 +88,9 @@ func (s *CommentServer) SearchPraise(ctx context.Context, in *pb.SearchPraiseReq
 	l := logic.NewSearchPraiseLogic(ctx, s.svcCtx)
 	return l.SearchPraise(in)
 }
+
+// -----------------------others-----------------------
+func (s *CommentServer) CheckUserPraise(ctx context.Context, in *pb.CheckUserPraiseReq) (*pb.CheckUserPraiseResp, error) {
+	l := logic.NewCheckUserPraiseLogic(ctx, s.svcCtx)
+	return l.CheckUserPraise(in)
+}

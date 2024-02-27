@@ -10,6 +10,7 @@ import (
 	"looklook/app/checkin/cmd/rpc/internal/svc"
 	"looklook/app/checkin/cmd/rpc/pb"
 	"looklook/app/checkin/model"
+	"looklook/app/comment/cmd/rpc/comment"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/common/xerr"
 )
@@ -182,7 +183,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 		// 任务七：参与首页抽奖30次以上
 		_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskIdByWeek(l.ctx, in.UserId, 7)
 		if err == sqlc.ErrNotFound {
-			// 没查询到任何一条数据，判断用户今天是否完成
+			// 没查询到任何一条数据，判断用户本周是否完成
 			check, err := l.svcCtx.LotteryRpc.GetSelectedLotteryStatistic(l.ctx, &lottery.GetSelectedLotteryStatisticReq{
 				UserId: in.UserId,
 			})
@@ -213,7 +214,7 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 		// 任务八：发起抽奖并超过10人参与
 		_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskIdByWeek(l.ctx, in.UserId, 8)
 		if err == sqlc.ErrNotFound {
-			// 没查询到任何一条数据，判断用户今天是否完成
+			// 没查询到任何一条数据，判断用户本周是否完成
 			check, err := l.svcCtx.LotteryRpc.CheckUserCreatedLotteryAndThisWeek(l.ctx, &lottery.CheckUserCreatedLotteryAndThisWeekReq{
 				UserId: in.UserId,
 			})
@@ -234,7 +235,30 @@ func (l *GetTaskProgressLogic) GetTaskProgress(in *pb.GetTaskProgressReq) (*pb.G
 			// 其他错误
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 8, err: %v", err)
 		}
-		// todo 任务九：给晒单的锦鲤点个赞
+		// 任务九：给晒单的锦鲤点个赞
+		_, err = l.svcCtx.TaskRecordModel.FindByUserIdAndTaskIdByWeek(l.ctx, in.UserId, 9)
+		if err == sqlc.ErrNotFound {
+			// 没查询到任何一条数据，判断用户本周是否完成
+			check, err := l.svcCtx.CommentRpc.CheckUserPraise(l.ctx, &comment.CheckUserPraiseReq{
+				UserId: in.UserId,
+			})
+			if err != nil {
+				return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to CheckUserPraise, err: %v", err)
+			}
+			if check.IsPraise == 1 {
+				addTaskRecord := &pb.AddTaskRecordReq{
+					UserId: in.UserId,
+					TaskId: 9,
+				}
+				_, err := logic.AddTaskRecord(addTaskRecord)
+				if err != nil {
+					return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to AddTaskRecord 9, err: %v", err)
+				}
+			}
+		} else if err != nil {
+			// 其他错误
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to find taskRecord 9, err: %v", err)
+		}
 		return nil
 	})
 

@@ -18,6 +18,7 @@ type (
 		praiseModel
 		PraiseList(ctx context.Context, page, limit, lastId int64) ([]*Praise, error)
 		IsPraise(ctx context.Context, commentId, userId int64) (int64, error)
+		IsPraiseThisWeek(ctx context.Context, userId int64) (bool, error)
 	}
 
 	customPraiseModel struct {
@@ -52,4 +53,15 @@ func (c *customPraiseModel) IsPraise(ctx context.Context, commentId, userId int6
 		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &id:%v, query:%v, commentId:%v, userId:%v, error: %v", &id, query, commentId, userId, err)
 	}
 	return id, nil
+}
+
+func (c *customPraiseModel) IsPraiseThisWeek(ctx context.Context, userId int64) (bool, error) {
+	// 查询是否有最新的点赞记录，有则返回 true，否则返回 false
+	query := fmt.Sprintf("SELECT EXISTS(SELECT 1 FROM %s WHERE user_id = ? AND YEARWEEK(create_time) = YEARWEEK(CURDATE()) ORDER BY create_time DESC LIMIT 1)", c.table)
+	var exists bool
+	err := c.QueryRowNoCacheCtx(ctx, &exists, query, userId)
+	if err != nil && err != sqlx.ErrNotFound {
+		return false, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowNoCacheCtx, exists:%v, query:%v, userId:%v, error: %v", exists, query, userId, err)
+	}
+	return exists, nil
 }

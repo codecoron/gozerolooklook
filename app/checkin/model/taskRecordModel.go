@@ -86,7 +86,7 @@ func (m *defaultTaskRecordModel) FindByUserIdAndTaskIdByDay(ctx context.Context,
 
 func (m *defaultTaskRecordModel) FindByUserIdAndTaskIdByWeek(ctx context.Context, userId int64, taskId int64) (*TaskRecord, error) {
 	var resp TaskRecord
-	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? AND WEEK(create_time) = WEEK(CURDATE()) ORDER BY id DESC LIMIT 1", taskRecordRows, m.table)
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE user_id = ? AND task_id = ? AND YEARWEEK(create_time) = YEARWEEK(CURDATE()) ORDER BY id DESC LIMIT 1", taskRecordRows, m.table)
 	err := m.QueryRowNoCacheCtx(ctx, &resp, query, userId, taskId)
 	switch err {
 	case nil:
