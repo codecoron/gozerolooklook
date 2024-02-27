@@ -342,6 +342,15 @@ message GetWonListResp{
 
 }
 
+// 获取中奖记录总数
+message GetWonListCountReq{
+  int64 userId = 1;
+}
+
+message GetWonListCountResp{
+  int64 count = 1;
+}
+
 //--------------------------------打卡任务表--------------------------------
 message ClockTask {
   int64 Type = 1;
@@ -396,4 +405,5 @@ service lottery{
   rpc CheckSelectedLotteryParticipated(CheckSelectedLotteryParticipatedReq) returns (CheckSelectedLotteryParticipatedResp);
   rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
   rpc GetWonList(GetWonListReq) returns (GetWonListResp);
+  rpc GetWonListCount(GetWonListCountReq) returns (GetWonListCountResp);
 }

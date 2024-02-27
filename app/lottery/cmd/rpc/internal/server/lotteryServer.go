@@ -154,3 +154,8 @@ func (s *LotteryServer) GetWonList(ctx context.Context, in *pb.GetWonListReq) (*
 	l := logic.NewGetWonListLogic(ctx, s.svcCtx)
 	return l.GetWonList(in)
 }
+
+func (s *LotteryServer) GetWonListCount(ctx context.Context, in *pb.GetWonListCountReq) (*pb.GetWonListCountResp, error) {
+	l := logic.NewGetWonListCountLogic(ctx, s.svcCtx)
+	return l.GetWonListCount(in)
+}

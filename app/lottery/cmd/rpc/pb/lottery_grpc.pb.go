@@ -45,6 +45,7 @@ const (
 	Lottery_CheckSelectedLotteryParticipated_FullMethodName   = "/pb.lottery/CheckSelectedLotteryParticipated"
 	Lottery_CheckUserIsWon_FullMethodName                     = "/pb.lottery/CheckUserIsWon"
 	Lottery_GetWonList_FullMethodName                         = "/pb.lottery/GetWonList"
+	Lottery_GetWonListCount_FullMethodName                    = "/pb.lottery/GetWonListCount"
 )
 
 // LotteryClient is the client API for Lottery service.
@@ -80,6 +81,7 @@ type LotteryClient interface {
 	CheckSelectedLotteryParticipated(ctx context.Context, in *CheckSelectedLotteryParticipatedReq, opts ...grpc.CallOption) (*CheckSelectedLotteryParticipatedResp, error)
 	CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 	GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
+	GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error)
 }
 
 type lotteryClient struct {
@@ -324,6 +326,15 @@ func (c *lotteryClient) GetWonList(ctx context.Context, in *GetWonListReq, opts 
 	return out, nil
 }
 
+func (c *lotteryClient) GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error) {
+	out := new(GetWonListCountResp)
+	err := c.cc.Invoke(ctx, Lottery_GetWonListCount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LotteryServer is the server API for Lottery service.
 // All implementations must embed UnimplementedLotteryServer
 // for forward compatibility
@@ -357,6 +368,7 @@ type LotteryServer interface {
 	CheckSelectedLotteryParticipated(context.Context, *CheckSelectedLotteryParticipatedReq) (*CheckSelectedLotteryParticipatedResp, error)
 	CheckUserIsWon(context.Context, *CheckUserIsWonReq) (*CheckUserIsWonResp, error)
 	GetWonList(context.Context, *GetWonListReq) (*GetWonListResp, error)
+	GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error)
 	mustEmbedUnimplementedLotteryServer()
 }
 
@@ -441,6 +453,9 @@ func (UnimplementedLotteryServer) CheckUserIsWon(context.Context, *CheckUserIsWo
 }
 func (UnimplementedLotteryServer) GetWonList(context.Context, *GetWonListReq) (*GetWonListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWonList not implemented")
+}
+func (UnimplementedLotteryServer) GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWonListCount not implemented")
 }
 func (UnimplementedLotteryServer) mustEmbedUnimplementedLotteryServer() {}
 
@@ -923,6 +938,24 @@ func _Lottery_GetWonList_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_GetWonListCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWonListCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetWonListCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetWonListCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetWonListCount(ctx, req.(*GetWonListCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Lottery_ServiceDesc is the grpc.ServiceDesc for Lottery service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1033,6 +1066,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWonList",
 			Handler:    _Lottery_GetWonList_Handler,
+		},
+		{
+			MethodName: "GetWonListCount",
+			Handler:    _Lottery_GetWonListCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
