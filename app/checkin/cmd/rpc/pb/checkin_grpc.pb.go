@@ -43,6 +43,7 @@ const (
 	Checkin_GetTaskProgress_FullMethodName           = "/pb.checkin/GetTaskProgress"
 	Checkin_UpdateSub_FullMethodName                 = "/pb.checkin/UpdateSub"
 	Checkin_NoticeWishCheckin_FullMethodName         = "/pb.checkin/NoticeWishCheckin"
+	Checkin_GetIntegralByUserId_FullMethodName       = "/pb.checkin/GetIntegralByUserId"
 )
 
 // CheckinClient is the client API for Checkin service.
@@ -79,6 +80,7 @@ type CheckinClient interface {
 	UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error)
 	// -----------------------others----------------------
 	NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error)
+	GetIntegralByUserId(ctx context.Context, in *GetIntegralByUserIdReq, opts ...grpc.CallOption) (*GetIntegralByUserIdResp, error)
 }
 
 type checkinClient struct {
@@ -305,6 +307,15 @@ func (c *checkinClient) NoticeWishCheckin(ctx context.Context, in *NoticeWishChe
 	return out, nil
 }
 
+func (c *checkinClient) GetIntegralByUserId(ctx context.Context, in *GetIntegralByUserIdReq, opts ...grpc.CallOption) (*GetIntegralByUserIdResp, error) {
+	out := new(GetIntegralByUserIdResp)
+	err := c.cc.Invoke(ctx, Checkin_GetIntegralByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CheckinServer is the server API for Checkin service.
 // All implementations must embed UnimplementedCheckinServer
 // for forward compatibility
@@ -339,6 +350,7 @@ type CheckinServer interface {
 	UpdateSub(context.Context, *UpdateSubReq) (*UpdateSubResp, error)
 	// -----------------------others----------------------
 	NoticeWishCheckin(context.Context, *NoticeWishCheckinReq) (*NoticeWishCheckinResp, error)
+	GetIntegralByUserId(context.Context, *GetIntegralByUserIdReq) (*GetIntegralByUserIdResp, error)
 	mustEmbedUnimplementedCheckinServer()
 }
 
@@ -417,6 +429,9 @@ func (UnimplementedCheckinServer) UpdateSub(context.Context, *UpdateSubReq) (*Up
 }
 func (UnimplementedCheckinServer) NoticeWishCheckin(context.Context, *NoticeWishCheckinReq) (*NoticeWishCheckinResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NoticeWishCheckin not implemented")
+}
+func (UnimplementedCheckinServer) GetIntegralByUserId(context.Context, *GetIntegralByUserIdReq) (*GetIntegralByUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIntegralByUserId not implemented")
 }
 func (UnimplementedCheckinServer) mustEmbedUnimplementedCheckinServer() {}
 
@@ -863,6 +878,24 @@ func _Checkin_NoticeWishCheckin_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Checkin_GetIntegralByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIntegralByUserIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CheckinServer).GetIntegralByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Checkin_GetIntegralByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CheckinServer).GetIntegralByUserId(ctx, req.(*GetIntegralByUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Checkin_ServiceDesc is the grpc.ServiceDesc for Checkin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -965,6 +998,10 @@ var Checkin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NoticeWishCheckin",
 			Handler:    _Checkin_NoticeWishCheckin_Handler,
+		},
+		{
+			MethodName: "GetIntegralByUserId",
+			Handler:    _Checkin_GetIntegralByUserId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
