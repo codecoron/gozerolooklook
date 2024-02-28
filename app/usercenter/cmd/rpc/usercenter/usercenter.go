@@ -39,6 +39,8 @@ type (
 	DelUserShopResp          = pb.DelUserShopResp
 	DelUserSponsorReq        = pb.DelUserSponsorReq
 	DelUserSponsorResp       = pb.DelUserSponsorResp
+	EditUserContactReq       = pb.EditUserContactReq
+	EditUserContactResp      = pb.EditUserContactResp
 	GenerateTokenReq         = pb.GenerateTokenReq
 	GenerateTokenResp        = pb.GenerateTokenResp
 	GetUserAddressByIdReq    = pb.GetUserAddressByIdReq
@@ -134,6 +136,7 @@ type (
 		SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error)
 		// -----------------------抽奖发起人联系方式-----------------------
 		AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
+		EditUserContact(ctx context.Context, in *EditUserContactReq, opts ...grpc.CallOption) (*EditUserContactResp, error)
 		UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
 		DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
 		GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
@@ -297,6 +300,11 @@ func (m *defaultUsercenter) SearchUserAuth(ctx context.Context, in *SearchUserAu
 func (m *defaultUsercenter) AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.AddUserContact(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) EditUserContact(ctx context.Context, in *EditUserContactReq, opts ...grpc.CallOption) (*EditUserContactResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.EditUserContact(ctx, in, opts...)
 }
 
 func (m *defaultUsercenter) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {

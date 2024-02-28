@@ -116,5 +116,9 @@ service usercenter {
 	@doc "批量删除联系方式"
 	@handler ContactDel
 	post /userContact/ContactDel (ContactDelReq) returns (ContactDelResp)
+
+	@doc "修改抽奖发起人联系方式"
+	@handler upDateContact
+	post /userContact/upDateContact (UpDateContactReq) returns (UpDateContactResp)
 }
 
