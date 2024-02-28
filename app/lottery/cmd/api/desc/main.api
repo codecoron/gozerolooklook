@@ -124,6 +124,16 @@ service lottery {
 service lottery {
 	@doc "打卡任务类型"
 	@handler clockTaskTypeList
-	post /lottery/clockTaskTypeList (ClockTaskTypeListReq) returns (ClockTaskTypeListResp)
+	get /lottery/clockTaskTypeList (ClockTaskTypeListReq) returns (ClockTaskTypeListResp)
+}
+
+@server (
+	prefix: lottery/v1
+	group:  lottery
+)
+service lottery {
+	@doc "增加概率类型"
+	@handler chanceTypeList
+	get /lottery/chanceTypeList (ChanceTypeListReq) returns (ChanceTypeListResp)
 }
 

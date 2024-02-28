@@ -176,3 +176,15 @@ type (
         List []CockTaskType `json:"list"`
     }
 )
+
+type ChanceType {
+    Type int64 `json:"type"`
+    Text string `json:"text"`
+}
+
+type (
+    ChanceTypeListReq{}
+    ChanceTypeListResp{
+        List []ChanceType `json:"list"`
+    }
+)
