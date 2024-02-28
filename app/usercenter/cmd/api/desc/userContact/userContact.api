@@ -23,6 +23,17 @@ type (
 )
 
 type (
+    UpDateContactReq {
+        Id int64 `json:"id"`
+        Content string `json:"content"`
+        Remark string `json:"remark"`
+    }
+    UpDateContactResp {
+        Id int64 `json:"id"`
+    }
+)
+
+type (
     ContactDetailReq {
         Id int64 `json:"id"`
     }

@@ -4,8 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"looklook/common/xerr"
 	"strconv"
 	"strings"
 )
@@ -19,6 +22,7 @@ type (
 		userContactModel
 		FindPageByUserId(ctx context.Context, userId int64, offset int64, limit int64) ([]*UserContact, error)
 		DeleteBatch(ctx context.Context, id []int64) error
+		UpDateUserContactById(ctx context.Context, Id int64, content string, remark string) (int64, error)
 	}
 
 	customUserContactModel struct {
@@ -41,6 +45,22 @@ func (m *defaultUserContactModel) FindPageByUserId(ctx context.Context, userId i
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (m *defaultUserContactModel) UpDateUserContactById(ctx context.Context, Id int64, content string, remark string) (int64, error) {
+
+	//query := fmt.Sprintf("SELECT * FROM %s WHERE id = ? ", m.table)
+
+	query := fmt.Sprintf("update %s set content =? ,remark=? where id = ?", m.table)
+	logx.Debug("联系方式语句修改", query)
+	res, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
+		return conn.ExecCtx(ctx, query, content, remark, Id)
+	})
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "ExecCtx, query:%v,  id:%v, content:%v, remark:%v, error: %v", query, Id, content, remark, err)
+	}
+
+	return res.LastInsertId()
 }
 
 func (m *defaultUserContactModel) DeleteBatch(ctx context.Context, ids []int64) error {
