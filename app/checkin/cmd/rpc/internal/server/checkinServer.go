@@ -147,3 +147,8 @@ func (s *CheckinServer) NoticeWishCheckin(ctx context.Context, in *pb.NoticeWish
 	l := logic.NewNoticeWishCheckinLogic(ctx, s.svcCtx)
 	return l.NoticeWishCheckin(in)
 }
+
+func (s *CheckinServer) GetIntegralByUserId(ctx context.Context, in *pb.GetIntegralByUserIdReq) (*pb.GetIntegralByUserIdResp, error) {
+	l := logic.NewGetIntegralByUserIdLogic(ctx, s.svcCtx)
+	return l.GetIntegralByUserId(in)
+}

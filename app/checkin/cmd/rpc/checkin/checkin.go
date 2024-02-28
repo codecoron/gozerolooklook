@@ -104,6 +104,7 @@ type (
 		UpdateSub(ctx context.Context, in *UpdateSubReq, opts ...grpc.CallOption) (*UpdateSubResp, error)
 		// -----------------------others----------------------
 		NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error)
+		GetIntegralByUserId(ctx context.Context, in *GetIntegralByUserIdReq, opts ...grpc.CallOption) (*GetIntegralByUserIdResp, error)
 	}
 
 	defaultCheckin struct {
@@ -241,4 +242,9 @@ func (m *defaultCheckin) UpdateSub(ctx context.Context, in *UpdateSubReq, opts .
 func (m *defaultCheckin) NoticeWishCheckin(ctx context.Context, in *NoticeWishCheckinReq, opts ...grpc.CallOption) (*NoticeWishCheckinResp, error) {
 	client := pb.NewCheckinClient(m.cli.Conn())
 	return client.NoticeWishCheckin(ctx, in, opts...)
+}
+
+func (m *defaultCheckin) GetIntegralByUserId(ctx context.Context, in *GetIntegralByUserIdReq, opts ...grpc.CallOption) (*GetIntegralByUserIdResp, error) {
+	client := pb.NewCheckinClient(m.cli.Conn())
+	return client.GetIntegralByUserId(ctx, in, opts...)
 }

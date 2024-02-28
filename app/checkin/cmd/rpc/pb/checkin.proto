@@ -86,7 +86,7 @@ message GetIntegralByUserIdReq {
 }
 
 message GetIntegralByUserIdResp {
-  Integral integral = 1; //Integral
+  int64 integral = 1; //Integral
 }
 
 //--------------------------------integralRecord--------------------------------
@@ -354,5 +354,6 @@ service checkin{
   rpc UpdateSub(UpdateSubReq) returns (UpdateSubResp);
   //-----------------------others----------------------
   rpc NoticeWishCheckin(NoticeWishCheckinReq) returns (NoticeWishCheckinResp);
+  rpc GetIntegralByUserId(GetIntegralByUserIdReq) returns (GetIntegralByUserIdResp);
 }
 
