@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
@@ -37,13 +38,15 @@ func (l *GetWonListLogic) GetWonList(in *pb.GetWonListReq) (*pb.GetWonListResp, 
 		pbWonList.UserId = item.UserId
 		pbWonList.IsWon = true
 		prize, err := l.svcCtx.PrizeModel.FindOne(l.ctx, item.PrizeId)
-		if err != nil {
+		if err != nil && err != sqlx.ErrNotFound {
 			return nil, err
 		}
 		pbWonList.Prize = new(pb.Prize)
-		err = copier.Copy(pbWonList.Prize, prize)
-		if err != nil {
-			return nil, err
+		if err != sqlx.ErrNotFound {
+			err = copier.Copy(pbWonList.Prize, prize)
+			if err != nil {
+				return nil, err
+			}
 		}
 		list = append(list, pbWonList)
 	}
