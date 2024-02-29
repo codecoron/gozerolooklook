@@ -19,6 +19,7 @@ type (
 		PraiseList(ctx context.Context, page, limit, lastId int64) ([]*Praise, error)
 		IsPraise(ctx context.Context, commentId, userId int64) (int64, error)
 		IsPraiseThisWeek(ctx context.Context, userId int64) (bool, error)
+		IsPraiseList(ctx context.Context, commentIds []int64, userId int64) ([]int64, error)
 	}
 
 	customPraiseModel struct {
@@ -64,4 +65,15 @@ func (c *customPraiseModel) IsPraiseThisWeek(ctx context.Context, userId int64) 
 		return false, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowNoCacheCtx, exists:%v, query:%v, userId:%v, error: %v", exists, query, userId, err)
 	}
 	return exists, nil
+}
+
+func (c *customPraiseModel) IsPraiseList(ctx context.Context, commentIds []int64, userId int64) ([]int64, error) {
+	// 查询是否有点赞记录，有则返回点赞id，否则返回0
+	var ids []int64
+	query := fmt.Sprintf("select comment_id from %s where comment_id in (?) and user_id = ?", c.table)
+	err := c.QueryRowsNoCacheCtx(ctx, &ids, query, commentIds, userId)
+	if err != nil && err != sqlx.ErrNotFound {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &ids:%v, query:%v, commentIds:%v, userId:%v, error: %v", &ids, query, commentIds, userId, err)
+	}
+	return ids, nil
 }

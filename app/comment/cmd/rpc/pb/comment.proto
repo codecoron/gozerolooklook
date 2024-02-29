@@ -92,6 +92,16 @@ message IsPraiseResp {
   int64 praiseId = 1; //点赞id
 }
 
+// 判断当前用户给的评论id列表是否点赞，返回一个列表
+message IsPraiseListReq {
+  int64 userId = 1; //用户id
+  repeated int64 commentId = 2; //评论id
+}
+
+message IsPraiseListResp {
+  repeated int64 praiseId = 1; //点赞id
+}
+
 // 评论点赞/取消点赞
 message PraiseCommentReq {
   int64 userId = 1; //用户id
@@ -186,7 +196,8 @@ service comment{
 	 rpc SearchComment(SearchCommentReq) returns (SearchCommentResp);
    rpc IsPraise(IsPraiseReq) returns (IsPraiseResp);
    rpc PraiseComment(PraiseCommentReq) returns (PraiseCommentResp);
-    rpc GetCommentLastId(GetCommentLastIdReq) returns (GetCommentLastIdResp);
+   rpc GetCommentLastId(GetCommentLastIdReq) returns (GetCommentLastIdResp);
+   rpc IsPraiseList(IsPraiseListReq) returns (IsPraiseListResp);
 	 //-----------------------praise----------------------- 
 	 rpc AddPraise(AddPraiseReq) returns (AddPraiseResp); 
 	 rpc UpdatePraise(UpdatePraiseReq) returns (UpdatePraiseResp); 

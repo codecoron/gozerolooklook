@@ -55,7 +55,7 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 		for idx, item := range userInfoList {
 			item.Id = userIds[idx]
 			item.Nickname = "test"
-			item.Avatar = "test"
+			item.Avatar = "https://jhonronxton-lottery.oss-cn-beijing.aliyuncs.com/d08dd5ea-b660-4020-b7bc-82e219a314b4.jpg"
 			userInfoList[idx] = item
 		}
 		// 名字打码，只留下字符的第一个和最后一个，中间多个字符只有两个*
