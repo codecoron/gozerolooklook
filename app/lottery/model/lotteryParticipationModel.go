@@ -90,9 +90,11 @@ func (m *defaultLotteryParticipationModel) GetWonListByUserId(ctx context.Contex
 	var resp []*LotteryParticipation
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, UserId, LastId, (Page-1)*Size, Size)
 	if err == sqlx.ErrNotFound {
-		return nil, nil
+		fmt.Println("sqlx.ErrNotFoundfff", err)
+		return resp, nil
 	}
 	if err != nil {
+		fmt.Println("asdfasdf", err)
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_WONLIST_BYUSERID_ERROR), "GetWonListByUserId, UserId:%v, Page:%v, Size:%v, error: %v", UserId, Page, Size, err)
 	}
 	return resp, nil
