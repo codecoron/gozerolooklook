@@ -570,6 +570,9 @@ message SponsorDetailResp {
   string inputB = 11; //type=5 applet_type=2输入框B
 }
 
+
+
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------

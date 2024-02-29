@@ -1012,6 +1012,17 @@
         "isAdmin": {
           "type": "integer",
           "format": "int64"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "double"
         }
       },
       "title": "User",
@@ -1022,7 +1033,10 @@
         "sex",
         "avatar",
         "info",
-        "isAdmin"
+        "isAdmin",
+        "signature",
+        "longitude",
+        "latitude"
       ]
     },
     "UserAddress": {

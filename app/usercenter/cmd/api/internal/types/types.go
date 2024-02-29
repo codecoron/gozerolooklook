@@ -168,13 +168,16 @@ type Sponsor struct {
 }
 
 type User struct {
-	Id       int64  `json:"id"`
-	Mobile   string `json:"mobile"`
-	Nickname string `json:"nickname"`
-	Sex      int64  `json:"sex"`
-	Avatar   string `json:"avatar"`
-	Info     string `json:"info"`
-	IsAdmin  int64  `json:"isAdmin"`
+	Id        int64   `json:"id"`
+	Mobile    string  `json:"mobile"`
+	Nickname  string  `json:"nickname"`
+	Sex       int64   `json:"sex"`
+	Avatar    string  `json:"avatar"`
+	Info      string  `json:"info"`
+	IsAdmin   int64   `json:"isAdmin"`
+	Signature string  `json:"signature"`
+	Longitude float64 `json:"longitude"`
+	Latitude  float64 `json:"latitude"`
 }
 
 type UserAddress struct {
