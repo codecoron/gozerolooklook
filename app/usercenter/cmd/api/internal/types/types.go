@@ -167,14 +167,27 @@ type Sponsor struct {
 	InputB     string `json:"inputB"`
 }
 
+type UpDateContactReq struct {
+	Id      int64  `json:"id"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
+}
+
+type UpDateContactResp struct {
+	Id int64 `json:"id"`
+}
+
 type User struct {
-	Id       int64  `json:"id"`
-	Mobile   string `json:"mobile"`
-	Nickname string `json:"nickname"`
-	Sex      int64  `json:"sex"`
-	Avatar   string `json:"avatar"`
-	Info     string `json:"info"`
-	IsAdmin  int64  `json:"isAdmin"`
+	Id        int64   `json:"id"`
+	Mobile    string  `json:"mobile"`
+	Nickname  string  `json:"nickname"`
+	Sex       int64   `json:"sex"`
+	Avatar    string  `json:"avatar"`
+	Info      string  `json:"info"`
+	IsAdmin   int64   `json:"isAdmin"`
+	Signature string  `json:"signature"`
+	Longitude float64 `json:"longitude"`
+	Latitude  float64 `json:"latitude"`
 }
 
 type UserAddress struct {

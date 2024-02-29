@@ -1,6 +1,8 @@
 package svc
 
 import (
+	"github.com/zeromicro/go-zero/zrpc"
+	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/app/usercenter/cmd/rpc/internal/config"
 	"looklook/app/usercenter/model"
 
@@ -17,6 +19,7 @@ type ServiceContext struct {
 	UserAddressModel model.UserAddressModel
 	UserSponsorModel model.UserSponsorModel
 	UserContactModel model.UserContactModel
+	CheckinRpc       checkin.Checkin
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -35,5 +38,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserAddressModel: model.NewUserAddressModel(sqlConn, c.Cache),
 		UserSponsorModel: model.NewUserSponsorModel(sqlConn, c.Cache),
 		UserContactModel: model.NewUserContactModel(sqlConn, c.Cache),
+		CheckinRpc:       checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
 	}
 }

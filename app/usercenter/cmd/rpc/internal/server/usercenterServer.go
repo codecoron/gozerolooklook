@@ -157,6 +157,11 @@ func (s *UsercenterServer) AddUserContact(ctx context.Context, in *pb.AddUserCon
 	return l.AddUserContact(in)
 }
 
+func (s *UsercenterServer) EditUserContact(ctx context.Context, in *pb.EditUserContactReq) (*pb.EditUserContactResp, error) {
+	l := logic.NewEditUserContactLogic(ctx, s.svcCtx)
+	return l.EditUserContact(in)
+}
+
 func (s *UsercenterServer) UpdateUserContact(ctx context.Context, in *pb.UpdateUserContactReq) (*pb.UpdateUserContactResp, error) {
 	l := logic.NewUpdateUserContactLogic(ctx, s.svcCtx)
 	return l.UpdateUserContact(in)

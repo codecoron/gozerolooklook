@@ -72,8 +72,26 @@
         ]
       }
     },
+    "lottery/v1/lottery/chanceTypeList": {
+      "get": {
+        "summary": "增加概率类型",
+        "operationId": "chanceTypeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ChanceTypeListResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/clockTaskTypeList": {
-      "post": {
+      "get": {
         "summary": "打卡任务类型",
         "operationId": "clockTaskTypeList",
         "responses": {
@@ -84,16 +102,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ClockTaskTypeListReq"
-            }
-          }
-        ],
         "requestBody": {},
         "tags": [
           "lottery"
@@ -354,6 +362,42 @@
     "AddLotteryParticipationResp": {
       "type": "object",
       "title": "AddLotteryParticipationResp"
+    },
+    "ChanceType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "title": "ChanceType",
+      "required": [
+        "type",
+        "text"
+      ]
+    },
+    "ChanceTypeListReq": {
+      "type": "object",
+      "title": "ChanceTypeListReq"
+    },
+    "ChanceTypeListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChanceType"
+          }
+        }
+      },
+      "title": "ChanceTypeListResp",
+      "required": [
+        "list"
+      ]
     },
     "CheckIsParticipatedReq": {
       "type": "object",

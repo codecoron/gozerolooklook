@@ -9,21 +9,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUserByIdLogic struct {
+type EditUserContactLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewGetUserByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserByIdLogic {
-	return &GetUserByIdLogic{
+func NewEditUserContactLogic(ctx context.Context, svcCtx *svc.ServiceContext) *EditUserContactLogic {
+	return &EditUserContactLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *GetUserByIdLogic) GetUserById(in *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
+func (l *EditUserContactLogic) EditUserContact(in *pb.EditUserContactReq) (*pb.EditUserContactResp, error) {
 	// todo: add your logic here and delete this line
-	return &pb.GetUserByIdResp{}, nil
+
+	return &pb.EditUserContactResp{}, nil
 }

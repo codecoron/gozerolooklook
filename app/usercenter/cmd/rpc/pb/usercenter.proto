@@ -274,14 +274,26 @@ message AddUserContactResp {
   int64 id = 1; //id
 }
 
-message UpdateUserContactReq {
-  int64 id = 1; //id
-  int64 userId = 2; //userId
+message EditUserContactReq {
+  int64 Id = 1; //Id
   string content = 3; //content
   string remark = 4; //remark
 }
 
+message EditUserContactResp {
+  int64 id = 1; //id
+}
+
+message UpdateUserContactReq {
+  int64 id = 1; //id
+
+  string content = 3; //content
+  string remark = 4; //remark
+
+}
+
 message UpdateUserContactResp {
+  int64 id = 1; //id
 }
 
 message DelUserContactReq {
@@ -570,6 +582,9 @@ message SponsorDetailResp {
   string inputB = 11; //type=5 applet_type=2输入框B
 }
 
+
+
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------
@@ -605,6 +620,7 @@ service usercenter{
   rpc SearchUserAuth(SearchUserAuthReq) returns (SearchUserAuthResp);
   //-----------------------抽奖发起人联系方式-----------------------
   rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp);
+  rpc EditUserContact(EditUserContactReq) returns (EditUserContactResp);
   rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp);
   rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp);
   rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp);
