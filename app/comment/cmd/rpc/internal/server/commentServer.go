@@ -63,6 +63,11 @@ func (s *CommentServer) GetCommentLastId(ctx context.Context, in *pb.GetCommentL
 	return l.GetCommentLastId(in)
 }
 
+func (s *CommentServer) IsPraiseList(ctx context.Context, in *pb.IsPraiseListReq) (*pb.IsPraiseListResp, error) {
+	l := logic.NewIsPraiseListLogic(ctx, s.svcCtx)
+	return l.IsPraiseList(in)
+}
+
 // -----------------------praise-----------------------
 func (s *CommentServer) AddPraise(ctx context.Context, in *pb.AddPraiseReq) (*pb.AddPraiseResp, error) {
 	l := logic.NewAddPraiseLogic(ctx, s.svcCtx)

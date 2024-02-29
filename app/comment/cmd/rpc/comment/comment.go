@@ -30,6 +30,8 @@ type (
 	GetCommentLastIdResp = pb.GetCommentLastIdResp
 	GetPraiseByIdReq     = pb.GetPraiseByIdReq
 	GetPraiseByIdResp    = pb.GetPraiseByIdResp
+	IsPraiseListReq      = pb.IsPraiseListReq
+	IsPraiseListResp     = pb.IsPraiseListResp
 	IsPraiseReq          = pb.IsPraiseReq
 	IsPraiseResp         = pb.IsPraiseResp
 	Praise               = pb.Praise
@@ -54,6 +56,7 @@ type (
 		IsPraise(ctx context.Context, in *IsPraiseReq, opts ...grpc.CallOption) (*IsPraiseResp, error)
 		PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error)
 		GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error)
+		IsPraiseList(ctx context.Context, in *IsPraiseListReq, opts ...grpc.CallOption) (*IsPraiseListResp, error)
 		// -----------------------praise-----------------------
 		AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error)
 		UpdatePraise(ctx context.Context, in *UpdatePraiseReq, opts ...grpc.CallOption) (*UpdatePraiseResp, error)
@@ -114,6 +117,11 @@ func (m *defaultCommentZrpcClient) PraiseComment(ctx context.Context, in *Praise
 func (m *defaultCommentZrpcClient) GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error) {
 	client := pb.NewCommentClient(m.cli.Conn())
 	return client.GetCommentLastId(ctx, in, opts...)
+}
+
+func (m *defaultCommentZrpcClient) IsPraiseList(ctx context.Context, in *IsPraiseListReq, opts ...grpc.CallOption) (*IsPraiseListResp, error) {
+	client := pb.NewCommentClient(m.cli.Conn())
+	return client.IsPraiseList(ctx, in, opts...)
 }
 
 // -----------------------praise-----------------------
