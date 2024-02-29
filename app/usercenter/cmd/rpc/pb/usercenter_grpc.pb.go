@@ -45,6 +45,7 @@ const (
 	Usercenter_GetUserAuthById_FullMethodName      = "/pb.usercenter/GetUserAuthById"
 	Usercenter_SearchUserAuth_FullMethodName       = "/pb.usercenter/SearchUserAuth"
 	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
+	Usercenter_EditUserContact_FullMethodName      = "/pb.usercenter/EditUserContact"
 	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
 	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
 	Usercenter_GetUserContactById_FullMethodName   = "/pb.usercenter/GetUserContactById"
@@ -97,6 +98,7 @@ type UsercenterClient interface {
 	SearchUserAuth(ctx context.Context, in *SearchUserAuthReq, opts ...grpc.CallOption) (*SearchUserAuthResp, error)
 	// -----------------------抽奖发起人联系方式-----------------------
 	AddUserContact(ctx context.Context, in *AddUserContactReq, opts ...grpc.CallOption) (*AddUserContactResp, error)
+	EditUserContact(ctx context.Context, in *EditUserContactReq, opts ...grpc.CallOption) (*EditUserContactResp, error)
 	UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error)
 	DelUserContact(ctx context.Context, in *DelUserContactReq, opts ...grpc.CallOption) (*DelUserContactResp, error)
 	GetUserContactById(ctx context.Context, in *GetUserContactByIdReq, opts ...grpc.CallOption) (*GetUserContactByIdResp, error)
@@ -358,6 +360,15 @@ func (c *usercenterClient) AddUserContact(ctx context.Context, in *AddUserContac
 	return out, nil
 }
 
+func (c *usercenterClient) EditUserContact(ctx context.Context, in *EditUserContactReq, opts ...grpc.CallOption) (*EditUserContactResp, error) {
+	out := new(EditUserContactResp)
+	err := c.cc.Invoke(ctx, Usercenter_EditUserContact_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *usercenterClient) UpdateUserContact(ctx context.Context, in *UpdateUserContactReq, opts ...grpc.CallOption) (*UpdateUserContactResp, error) {
 	out := new(UpdateUserContactResp)
 	err := c.cc.Invoke(ctx, Usercenter_UpdateUserContact_FullMethodName, in, out, opts...)
@@ -528,6 +539,7 @@ type UsercenterServer interface {
 	SearchUserAuth(context.Context, *SearchUserAuthReq) (*SearchUserAuthResp, error)
 	// -----------------------抽奖发起人联系方式-----------------------
 	AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error)
+	EditUserContact(context.Context, *EditUserContactReq) (*EditUserContactResp, error)
 	UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error)
 	DelUserContact(context.Context, *DelUserContactReq) (*DelUserContactResp, error)
 	GetUserContactById(context.Context, *GetUserContactByIdReq) (*GetUserContactByIdResp, error)
@@ -629,6 +641,9 @@ func (UnimplementedUsercenterServer) SearchUserAuth(context.Context, *SearchUser
 }
 func (UnimplementedUsercenterServer) AddUserContact(context.Context, *AddUserContactReq) (*AddUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserContact not implemented")
+}
+func (UnimplementedUsercenterServer) EditUserContact(context.Context, *EditUserContactReq) (*EditUserContactResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditUserContact not implemented")
 }
 func (UnimplementedUsercenterServer) UpdateUserContact(context.Context, *UpdateUserContactReq) (*UpdateUserContactResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserContact not implemented")
@@ -1156,6 +1171,24 @@ func _Usercenter_AddUserContact_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_EditUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditUserContactReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).EditUserContact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_EditUserContact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).EditUserContact(ctx, req.(*EditUserContactReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Usercenter_UpdateUserContact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserContactReq)
 	if err := dec(in); err != nil {
@@ -1536,6 +1569,10 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddUserContact",
 			Handler:    _Usercenter_AddUserContact_Handler,
+		},
+		{
+			MethodName: "EditUserContact",
+			Handler:    _Usercenter_EditUserContact_Handler,
 		},
 		{
 			MethodName: "UpdateUserContact",

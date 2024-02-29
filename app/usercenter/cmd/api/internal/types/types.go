@@ -167,6 +167,16 @@ type Sponsor struct {
 	InputB     string `json:"inputB"`
 }
 
+type UpDateContactReq struct {
+	Id      int64  `json:"id"`
+	Content string `json:"content"`
+	Remark  string `json:"remark"`
+}
+
+type UpDateContactResp struct {
+	Id int64 `json:"id"`
+}
+
 type User struct {
 	Id        int64   `json:"id"`
 	Mobile    string  `json:"mobile"`

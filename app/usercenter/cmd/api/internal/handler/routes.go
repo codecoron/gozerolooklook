@@ -96,6 +96,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/userContact/contactList",
 				Handler: userContact.ContactListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userContact/upDateContact",
+				Handler: userContact.UpDateContactHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/usercenter/v1"),

@@ -8,6 +8,18 @@ type AddLotteryParticipationReq struct {
 type AddLotteryParticipationResp struct {
 }
 
+type ChanceType struct {
+	Type int64  `json:"type"`
+	Text string `json:"text"`
+}
+
+type ChanceTypeListReq struct {
+}
+
+type ChanceTypeListResp struct {
+	List []ChanceType `json:"list"`
+}
+
 type CheckIsParticipatedReq struct {
 	LotteryId int64 `json:"lotteryId"` // 当前抽奖Id
 }

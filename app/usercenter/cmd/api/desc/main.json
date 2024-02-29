@@ -352,6 +352,34 @@
         ]
       }
     },
+    "usercenter/v1/userContact/upDateContact": {
+      "post": {
+        "summary": "修改抽奖发起人联系方式",
+        "operationId": "upDateContact",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpDateContactResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpDateContactReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userContact"
+        ]
+      }
+    },
     "usercenter/v1/userSponsor/addSponsor": {
       "post": {
         "summary": "添加 抽奖发起人（赞助商）",
@@ -984,6 +1012,40 @@
         "qr_code",
         "inputA",
         "inputB"
+      ]
+    },
+    "UpDateContactReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "UpDateContactReq",
+      "required": [
+        "id",
+        "content",
+        "remark"
+      ]
+    },
+    "UpDateContactResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UpDateContactResp",
+      "required": [
+        "id"
       ]
     },
     "User": {
