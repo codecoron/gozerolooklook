@@ -21,6 +21,8 @@ type (
 		UpdateWinners(ctx context.Context, LotteryId, UserId, PrizeId int64) error
 		GetParticipatorsCountByLotteryId(ctx context.Context, LotteryId int64) (int64, error)
 		CheckIsWonByUserIdAndLotteryId(ctx context.Context, LotteryId, UserId int64) (int64, error)
+		GetWonListByUserId(ctx context.Context, UserId, Page, Size, LastId int64) ([]*LotteryParticipation, error)
+		GetWonListCountByUserId(ctx context.Context, UserId int64) (int64, error)
 	}
 
 	customLotteryParticipationModel struct {
@@ -79,6 +81,26 @@ func (m *defaultLotteryParticipationModel) CheckIsWonByUserIdAndLotteryId(ctx co
 			return 0, nil
 		}
 		return 0, errors.Wrapf(xerr.NewErrCode(xerr.CHECK_ISWON_BYUSERID_ANDLOTTERYID_ERROR), "CheckIsWonByUserIdAndLotteryId, LotteryId:%v, UserId:%v, error: %v", LotteryId, UserId, err)
+	}
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) GetWonListByUserId(ctx context.Context, UserId, Page, Size, LastId int64) ([]*LotteryParticipation, error) {
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ? AND is_won = 1 AND id > ? LIMIT ?, ?", m.table)
+	var resp []*LotteryParticipation
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, UserId, LastId, (Page-1)*Size, Size)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_WONLIST_BYUSERID_ERROR), "GetWonListByUserId, UserId:%v, Page:%v, Size:%v, error: %v", UserId, Page, Size, err)
+	}
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) GetWonListCountByUserId(ctx context.Context, UserId int64) (int64, error) {
+	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE user_id = ? AND is_won = 1", m.table)
+	var resp int64
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, UserId)
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.GET_WONLISTCOUNT_BYUSERID_ERROR), "GetWonListCountByUserId, UserId:%v, error: %v", UserId, err)
 	}
 	return resp, nil
 }

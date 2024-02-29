@@ -35,10 +35,14 @@ service lottery {
 	@doc "发起抽奖"
 	@handler createLottery
 	post /lottery/createLottery (CreateLotteryReq) returns (CreateLotteryResp)
-
+	
 	@doc "发布抽奖"
 	@handler updateLottery
 	post /lottery/updateLottery (UpdateLotteryReq) returns (UpdateLotteryResp)
+	
+	@doc "获取当前用户中奖列表"
+	@handler getLotteryWinList
+	post /lottery/getLotteryWinList (GetLotteryWinListReq) returns (GetLotteryWinListResp)
 }
 
 //need login and need admin
@@ -136,4 +140,3 @@ service lottery {
 	@handler chanceTypeList
 	get /lottery/chanceTypeList (ChanceTypeListReq) returns (ChanceTypeListResp)
 }
-
