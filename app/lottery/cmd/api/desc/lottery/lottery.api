@@ -137,6 +137,7 @@ type (
         SponsorId int64 `json:"sponsorId"` // 赞助商Id
         Prizes []*CreatePrize `json:"prizes"`                          //奖品信息
         Sponsor *LotterySponsor `json:"sponsor"` // 抽奖赞助商信息
+        IsParticipated int64 `json:"isParticipated"` // 当前用户是否参与了当前抽奖： 0未参与 1已参与
     }
 )
 

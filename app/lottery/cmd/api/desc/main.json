@@ -874,6 +874,11 @@
         "sponsor": {
           "$ref": "#/definitions/LotterySponsor",
           "description": " 抽奖赞助商信息"
+        },
+        "isParticipated": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 当前用户是否参与了当前抽奖： 0未参与 1已参与"
         }
       },
       "title": "LotteryDetailResp",
@@ -892,7 +897,8 @@
         "isAnnounced",
         "sponsorId",
         "prizes",
-        "sponsor"
+        "sponsor",
+        "isParticipated"
       ]
     },
     "LotteryListReq": {

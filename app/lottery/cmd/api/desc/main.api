@@ -20,9 +20,25 @@ import (
 	group:  lottery
 )
 service lottery {
+	@doc "测试Validator"
+	@handler TestValidator
+	post /lottery/TestValidator (TestReq) returns (TestResp)
+	
 	@doc "lottery list"
 	@handler lotteryList
 	post /lottery/lotteryList (LotteryListReq) returns (LotteryListResp)
+	
+	@doc "抽奖人"
+	@handler searchParticipation
+	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
+	
+	@doc "打卡任务类型"
+	@handler clockTaskTypeList
+	get /lottery/clockTaskTypeList (ClockTaskTypeListReq) returns (ClockTaskTypeListResp)
+	
+	@doc "增加概率类型"
+	@handler chanceTypeList
+	get /lottery/chanceTypeList (ChanceTypeListReq) returns (ChanceTypeListResp)
 }
 
 //need login
@@ -43,41 +59,23 @@ service lottery {
 	@doc "获取当前用户中奖列表"
 	@handler getLotteryWinList
 	post /lottery/getLotteryWinList (GetLotteryWinListReq) returns (GetLotteryWinListResp)
-}
-
-//need login and need admin
-@server (
-	prefix: lottery/v1
-	group:  lottery
-	jwt:    JwtAuth
-)
-service lottery {
-	@doc "lottery setIsSelected"
-	@handler setLotteryIsSelected
-	post /lottery/setLotteryIsSelected (SetLotteryIsSelectedReq) returns (SetLotteryIsSelectedResp)
-}
-
-//no need login
-@server (
-	prefix: lottery/v1
-	group:  lottery
-)
-service lottery {
+	
 	@doc "lottery detail"
 	@handler lotteryDetail
 	post /lottery/lotteryDetail (LotteryDetailReq) returns (LotteryDetailResp)
-}
-
-//need login
-@server (
-	prefix: lottery/v1
-	group:  lottery
-	jwt:    JwtAuth
-)
-service lottery {
+	
 	@doc "CheckIsParticipated"
 	@handler CheckIsParticipated
 	post /lottery/CheckIsParticipated (CheckIsParticipatedReq) returns (CheckIsParticipatedResp)
+	
+	@doc "参与抽奖"
+	@handler addLotteryParticipation
+	post /lottery/participation (AddLotteryParticipationReq) returns (AddLotteryParticipationResp)
+	
+	@doc "lottery setIsSelected"
+	@handler setLotteryIsSelected
+	post /lottery/setLotteryIsSelected (SetLotteryIsSelectedReq) returns (SetLotteryIsSelectedResp)
+	
 }
 
 //no need login
@@ -90,53 +88,3 @@ service lottery {
 // @handler lotterySponsor
 // post /lottery/lotterySponsor (LotterySponsorReq) returns (LotterySponsorResp)
 //}
-@server (
-	prefix: lottery/v1
-	group:  lottery
-	jwt:    JwtAuth
-)
-service lottery {
-	@doc "参与抽奖"
-	@handler addLotteryParticipation
-	post /lottery/participation (AddLotteryParticipationReq) returns (AddLotteryParticipationResp)
-}
-
-@server (
-	prefix: lottery/v1
-	group:  lottery
-)
-service lottery {
-	@doc "抽奖人"
-	@handler searchParticipation
-	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
-}
-
-@server (
-	prefix: lottery/v1
-	group:  lottery
-)
-service lottery {
-	@doc "测试Validator"
-	@handler TestValidator
-	post /lottery/TestValidator (TestReq) returns (TestResp)
-}
-
-@server (
-	prefix: lottery/v1
-	group:  lottery
-)
-service lottery {
-	@doc "打卡任务类型"
-	@handler clockTaskTypeList
-	get /lottery/clockTaskTypeList (ClockTaskTypeListReq) returns (ClockTaskTypeListResp)
-}
-
-@server (
-	prefix: lottery/v1
-	group:  lottery
-)
-service lottery {
-	@doc "增加概率类型"
-	@handler chanceTypeList
-	get /lottery/chanceTypeList (ChanceTypeListReq) returns (ChanceTypeListResp)
-}
