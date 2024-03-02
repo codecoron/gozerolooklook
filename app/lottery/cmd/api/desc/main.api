@@ -76,6 +76,9 @@ service lottery {
 	@handler setLotteryIsSelected
 	post /lottery/setLotteryIsSelected (SetLotteryIsSelectedReq) returns (SetLotteryIsSelectedResp)
 	
+	@doc "登录后获取抽奖列表"
+	@handler lotteryListAfterLogin
+	post /lottery/lotteryListAfterLogin (LotteryListReq) returns (LotteryListResp)
 }
 
 //no need login

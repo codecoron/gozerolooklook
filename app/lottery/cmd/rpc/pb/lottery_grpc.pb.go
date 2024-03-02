@@ -31,6 +31,7 @@ const (
 	Lottery_CheckUserCreatedLottery_FullMethodName            = "/pb.lottery/CheckUserCreatedLottery"
 	Lottery_CheckUserCreatedLotteryAndToday_FullMethodName    = "/pb.lottery/CheckUserCreatedLotteryAndToday"
 	Lottery_CheckUserCreatedLotteryAndThisWeek_FullMethodName = "/pb.lottery/CheckUserCreatedLotteryAndThisWeek"
+	Lottery_GetLotteryListAfterLogin_FullMethodName           = "/pb.lottery/GetLotteryListAfterLogin"
 	Lottery_AddPrize_FullMethodName                           = "/pb.lottery/AddPrize"
 	Lottery_UpdatePrize_FullMethodName                        = "/pb.lottery/UpdatePrize"
 	Lottery_DelPrize_FullMethodName                           = "/pb.lottery/DelPrize"
@@ -65,6 +66,7 @@ type LotteryClient interface {
 	CheckUserCreatedLottery(ctx context.Context, in *CheckUserCreatedLotteryReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryResp, error)
 	CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error)
 	CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
+	GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -194,6 +196,15 @@ func (c *lotteryClient) CheckUserCreatedLotteryAndToday(ctx context.Context, in 
 func (c *lotteryClient) CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error) {
 	out := new(CheckUserCreatedLotteryAndThisWeekResp)
 	err := c.cc.Invoke(ctx, Lottery_CheckUserCreatedLotteryAndThisWeek_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lotteryClient) GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error) {
+	out := new(GetLotteryListAfterLoginResp)
+	err := c.cc.Invoke(ctx, Lottery_GetLotteryListAfterLogin_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -352,6 +363,7 @@ type LotteryServer interface {
 	CheckUserCreatedLottery(context.Context, *CheckUserCreatedLotteryReq) (*CheckUserCreatedLotteryResp, error)
 	CheckUserCreatedLotteryAndToday(context.Context, *CheckUserCreatedLotteryAndTodayReq) (*CheckUserCreatedLotteryAndTodayResp, error)
 	CheckUserCreatedLotteryAndThisWeek(context.Context, *CheckUserCreatedLotteryAndThisWeekReq) (*CheckUserCreatedLotteryAndThisWeekResp, error)
+	GetLotteryListAfterLogin(context.Context, *GetLotteryListAfterLoginReq) (*GetLotteryListAfterLoginResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
@@ -411,6 +423,9 @@ func (UnimplementedLotteryServer) CheckUserCreatedLotteryAndToday(context.Contex
 }
 func (UnimplementedLotteryServer) CheckUserCreatedLotteryAndThisWeek(context.Context, *CheckUserCreatedLotteryAndThisWeekReq) (*CheckUserCreatedLotteryAndThisWeekResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckUserCreatedLotteryAndThisWeek not implemented")
+}
+func (UnimplementedLotteryServer) GetLotteryListAfterLogin(context.Context, *GetLotteryListAfterLoginReq) (*GetLotteryListAfterLoginResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLotteryListAfterLogin not implemented")
 }
 func (UnimplementedLotteryServer) AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrize not implemented")
@@ -682,6 +697,24 @@ func _Lottery_CheckUserCreatedLotteryAndThisWeek_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LotteryServer).CheckUserCreatedLotteryAndThisWeek(ctx, req.(*CheckUserCreatedLotteryAndThisWeekReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Lottery_GetLotteryListAfterLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLotteryListAfterLoginReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetLotteryListAfterLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetLotteryListAfterLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetLotteryListAfterLogin(ctx, req.(*GetLotteryListAfterLoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1010,6 +1043,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckUserCreatedLotteryAndThisWeek",
 			Handler:    _Lottery_CheckUserCreatedLotteryAndThisWeek_Handler,
+		},
+		{
+			MethodName: "GetLotteryListAfterLogin",
+			Handler:    _Lottery_GetLotteryListAfterLogin_Handler,
 		},
 		{
 			MethodName: "AddPrize",
