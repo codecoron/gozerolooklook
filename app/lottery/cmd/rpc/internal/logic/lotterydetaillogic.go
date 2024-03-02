@@ -41,11 +41,20 @@ func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (resp *pb.Lo
 	resp.Lottery.AnnounceTime = lottery.AnnounceTime.Unix()
 	resp.Lottery.PublishTime = lottery.PublishTime.Time.Unix()
 	resp.Lottery.AwardDeadline = lottery.AwardDeadline.Unix()
+	resp.Lottery.CreateTime = lottery.CreateTime.Unix()
+	resp.Lottery.UpdateTime = lottery.UpdateTime.Unix()
 
 	for _, p := range res {
 		prize := new(pb.Prize)
 		_ = copier.Copy(prize, p)
 		resp.Prizes = append(resp.Prizes, prize)
 	}
+
+	// 获取当前用户是否参与当前lottery
+	count, err := l.svcCtx.LotteryParticipationModel.CheckIsParticipatedByUserIdAndLotteryId(l.ctx, in.UserId, lotteryId)
+	if err != nil {
+		return nil, err
+	}
+	resp.IsParticipated = count
 	return resp, nil
 }

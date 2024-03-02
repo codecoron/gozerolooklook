@@ -39,11 +39,14 @@ func (l *LotteryDetailLogic) LotteryDetail(req *types.LotteryDetailReq) (resp *t
 	// todo 返回成功，但是json反序列化提示error
 	_ = copier.Copy(resp, res)
 	_ = copier.Copy(resp, res.Lottery)
+	//resp.IsParticipated = res.IsParticipated
 
 	// 根据获取到的lottery信息中的sponsorId获取赞助商信息
 	res2, err := l.svcCtx.LotteryRpc.LotterySponsor(l.ctx, &lottery.LotterySponsorReq{
 		SponsorId: res.Lottery.SponsorId,
 	})
+
+	//
 
 	if err != nil {
 		return nil, err

@@ -122,6 +122,7 @@ message LotteryDetailReq {
 message LotteryDetailResp {
   Lottery lottery = 1; // 抽奖信息
   repeated Prize prizes = 2; // 奖品列表
+  int64 isParticipated = 3; // 当前用户是否已经参与当前抽奖, 0否; 1是
 }
 
 message LotterySponsorReq {

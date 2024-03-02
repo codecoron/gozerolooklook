@@ -15,8 +15,28 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/lottery/TestValidator",
+				Handler: lottery.TestValidatorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/lottery/lotteryList",
 				Handler: lottery.LotteryListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/participation",
+				Handler: lottery.SearchParticipationHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/clockTaskTypeList",
+				Handler: lottery.ClockTaskTypeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/chanceTypeList",
+				Handler: lottery.ChanceTypeListHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/lottery/v1"),
@@ -39,13 +59,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/getLotteryWinList",
 				Handler: lottery.GetLotteryWinListHandler(serverCtx),
 			},
-		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/lotteryDetail",
+				Handler: lottery.LotteryDetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/CheckIsParticipated",
+				Handler: lottery.CheckIsParticipatedHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/participation",
+				Handler: lottery.AddLotteryParticipationHandler(serverCtx),
+			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/lottery/setLotteryIsSelected",
@@ -53,85 +81,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/lotteryDetail",
-				Handler: lottery.LotteryDetailHandler(serverCtx),
-			},
-		},
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/CheckIsParticipated",
-				Handler: lottery.CheckIsParticipatedHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/participation",
-				Handler: lottery.AddLotteryParticipationHandler(serverCtx),
-			},
-		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/participation",
-				Handler: lottery.SearchParticipationHandler(serverCtx),
-			},
-		},
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/TestValidator",
-				Handler: lottery.TestValidatorHandler(serverCtx),
-			},
-		},
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/clockTaskTypeList",
-				Handler: lottery.ClockTaskTypeListHandler(serverCtx),
-			},
-		},
-		rest.WithPrefix("/lottery/v1"),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/chanceTypeList",
-				Handler: lottery.ChanceTypeListHandler(serverCtx),
-			},
-		},
 		rest.WithPrefix("/lottery/v1"),
 	)
 }
