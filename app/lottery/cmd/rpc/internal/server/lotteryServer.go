@@ -83,6 +83,11 @@ func (s *LotteryServer) CheckUserCreatedLotteryAndThisWeek(ctx context.Context, 
 	return l.CheckUserCreatedLotteryAndThisWeek(in)
 }
 
+func (s *LotteryServer) GetLotteryListAfterLogin(ctx context.Context, in *pb.GetLotteryListAfterLoginReq) (*pb.GetLotteryListAfterLoginResp, error) {
+	l := logic.NewGetLotteryListAfterLoginLogic(ctx, s.svcCtx)
+	return l.GetLotteryListAfterLogin(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)

@@ -57,6 +57,7 @@ func init() {
 	message[GET_WONLIST_BYUSERID_ERROR] = "获取当前用户中奖列表失败"
 	message[GET_WONLISTCOUNT_BYUSERID_ERROR] = "获取当前用户中奖总数失败"
 	message[CHECK_ISPARTICIPATED_BYUSERID_ANDLOTTERYID_ERROR] = "检查当前用户是否参与抽奖失败"
+	message[GET_PARTICIPATED_LOTTERYIDS_BYUSERID_ERROR] = "获取当前用户参与抽奖ids失败"
 	// 晒单模块
 	message[ErrUserNotWon] = "用户没有中奖"
 	message[DB_INSERTCOMMENT_ERROR] = "插入评论失败"
