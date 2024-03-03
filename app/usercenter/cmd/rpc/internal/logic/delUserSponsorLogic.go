@@ -25,6 +25,7 @@ func NewDelUserSponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 
 func (l *DelUserSponsorLogic) DelUserSponsor(in *pb.DelUserSponsorReq) (*pb.DelUserSponsorResp, error) {
 	// todo: add your logic here and delete this line
+	l.svcCtx.UserSponsorModel.Delete(l.ctx, in.Id)
 
 	return &pb.DelUserSponsorResp{}, nil
 }

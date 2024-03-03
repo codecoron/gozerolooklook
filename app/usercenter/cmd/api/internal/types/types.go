@@ -167,6 +167,15 @@ type Sponsor struct {
 	InputB     string `json:"inputB"`
 }
 
+type SponsorListReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type SponsorListResp struct {
+	List []Sponsor `json:"list"`
+}
+
 type UpDateContactReq struct {
 	Id      int64  `json:"id"`
 	Content string `json:"content"`
@@ -174,6 +183,24 @@ type UpDateContactReq struct {
 }
 
 type UpDateContactResp struct {
+	Id int64 `json:"id"`
+}
+
+type UpdateSponsorReq struct {
+	Id         int64  `json:"id"`
+	UserId     int64  `json:"userId"`
+	Type       int64  `json:"type"`
+	AppletType int64  `json:"appletType"`
+	IsShow     int64  `json:"isShow"`
+	Name       string `json:"name"`
+	Desc       string `json:"desc"`
+	Avatar     string `json:"avatar"`
+	QrCode     string `json:"qr_code"`
+	InputA     string `json:"inputA"`
+	InputB     string `json:"inputB"`
+}
+
+type UpdateSponsorResp struct {
 	Id int64 `json:"id"`
 }
 
@@ -228,4 +255,11 @@ type WXMiniAuthResp struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
 	RefreshAfter int64  `json:"refreshAfter"`
+}
+
+type SponsorDelReq struct {
+	Id int64 `json:"id" validate:"required"`
+}
+
+type SponsorDelResp struct {
 }
