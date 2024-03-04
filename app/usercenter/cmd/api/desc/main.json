@@ -352,6 +352,34 @@
         ]
       }
     },
+    "usercenter/v1/userContact/sponsorDel": {
+      "post": {
+        "summary": "删除（赞助商）",
+        "operationId": "sponsorDel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/sponsorDelResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sponsorDelReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
+        ]
+      }
+    },
     "usercenter/v1/userContact/upDateContact": {
       "post": {
         "summary": "修改抽奖发起人联系方式",
@@ -377,6 +405,34 @@
         "requestBody": {},
         "tags": [
           "userContact"
+        ]
+      }
+    },
+    "usercenter/v1/userContact/upDateSponsor": {
+      "post": {
+        "summary": "修改抽奖发起人（赞助商）",
+        "operationId": "upDateSponsor",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateSponsorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateSponsorReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
         ]
       }
     },
@@ -427,6 +483,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/SponosorDetailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userSponsor"
+        ]
+      }
+    },
+    "usercenter/v1/userSponsor/sponsorList": {
+      "post": {
+        "summary": "我的赞助商列表（赞助商）",
+        "operationId": "sponsorList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SponsorListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SponsorListReq"
             }
           }
         ],
@@ -1014,6 +1098,39 @@
         "inputB"
       ]
     },
+    "SponsorListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SponsorListReq",
+      "required": [
+        "page",
+        "pageSize"
+      ]
+    },
+    "SponsorListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sponsor"
+          }
+        }
+      },
+      "title": "SponsorListResp",
+      "required": [
+        "list"
+      ]
+    },
     "UpDateContactReq": {
       "type": "object",
       "properties": {
@@ -1044,6 +1161,76 @@
         }
       },
       "title": "UpDateContactResp",
+      "required": [
+        "id"
+      ]
+    },
+    "UpdateSponsorReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appletType": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isShow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "inputA": {
+          "type": "string"
+        },
+        "inputB": {
+          "type": "string"
+        }
+      },
+      "title": "UpdateSponsorReq",
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "appletType",
+        "isShow",
+        "name",
+        "desc",
+        "avatar",
+        "qr_code",
+        "inputA",
+        "inputB"
+      ]
+    },
+    "UpdateSponsorResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UpdateSponsorResp",
       "required": [
         "id"
       ]
@@ -1230,6 +1417,23 @@
         "accessExpire",
         "refreshAfter"
       ]
+    },
+    "sponsorDelReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "sponsorDelReq",
+      "required": [
+        "id"
+      ]
+    },
+    "sponsorDelResp": {
+      "type": "object",
+      "title": "sponsorDelResp"
     }
   },
   "securityDefinitions": {
