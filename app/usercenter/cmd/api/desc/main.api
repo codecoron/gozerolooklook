@@ -90,11 +90,11 @@ service usercenter {
 	@handler sponsorList
 	post /userSponsor/sponsorList (SponsorListReq) returns (SponsorListResp)
 
-	@doc "修改抽奖发起人联系方式"
+	@doc "修改抽奖发起人（赞助商）"
 	@handler upDateSponsor
 	post /userContact/upDateSponsor (UpdateSponsorReq) returns (UpdateSponsorResp)
 
-	@doc "删除联系方式"
+	@doc "删除（赞助商）"
 	@handler sponsorDel
 	post /userContact/sponsorDel (sponsorDelReq) returns (sponsorDelResp)
 }
