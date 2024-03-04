@@ -19,6 +19,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: lottery.TestValidatorHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/chanceTypeList",
+				Handler: lottery.ChanceTypeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/lottery/clockTaskTypeList",
+				Handler: lottery.ClockTaskTypeListHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/lottery/lotteryList",
 				Handler: lottery.LotteryListHandler(serverCtx),
@@ -28,16 +38,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/participation",
 				Handler: lottery.SearchParticipationHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/clockTaskTypeList",
-				Handler: lottery.ClockTaskTypeListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/chanceTypeList",
-				Handler: lottery.ChanceTypeListHandler(serverCtx),
-			},
 		},
 		rest.WithPrefix("/lottery/v1"),
 	)
@@ -46,13 +46,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/createLottery",
-				Handler: lottery.CreateLotteryHandler(serverCtx),
+				Path:    "/lottery/CheckIsParticipated",
+				Handler: lottery.CheckIsParticipatedHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/updateLottery",
-				Handler: lottery.UpdateLotteryHandler(serverCtx),
+				Path:    "/lottery/createClockTaskRecord",
+				Handler: lottery.CreateClockTaskRecordHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/createLottery",
+				Handler: lottery.CreateLotteryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -66,8 +71,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/CheckIsParticipated",
-				Handler: lottery.CheckIsParticipatedHandler(serverCtx),
+				Path:    "/lottery/lotteryListAfterLogin",
+				Handler: lottery.LotteryListAfterLoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -81,8 +86,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/lotteryListAfterLogin",
-				Handler: lottery.LotteryListAfterLoginHandler(serverCtx),
+				Path:    "/lottery/updateLottery",
+				Handler: lottery.UpdateLotteryHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

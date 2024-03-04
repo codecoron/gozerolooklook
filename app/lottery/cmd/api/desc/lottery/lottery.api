@@ -189,3 +189,13 @@ type (
         List []ChanceType `json:"list"`
     }
 )
+
+type (
+    CreateClockTaskRecordReq{
+        LotteryId int64 `json:"lotteryId"`
+        ClockTaskId int64 `json:"clockTaskId"`
+    }
+    CreateClockTaskRecordResp{
+        Id int64 `json:"id"`
+    }
+)
