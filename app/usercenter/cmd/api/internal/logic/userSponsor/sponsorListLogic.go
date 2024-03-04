@@ -37,7 +37,7 @@ func (l *SponsorListLogic) SponsorList(req *types.SponsorListReq) (resp *types.S
 	})
 	if err != nil {
 		//todo 要使用这种写法管理错误，否则Kibana无法收集到错误日志的详情
-		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get SearchLottery"), "Failed to get SearchLottery err : %v ,req:%+v", err, req)
+		return nil, errors.Wrapf(xerr.NewErrMsg("Failed to get SearchSponsors"), "Failed to get SearchSponsors err : %v ,req:%+v", err, req)
 	}
 
 	var SponsorList []types.Sponsor

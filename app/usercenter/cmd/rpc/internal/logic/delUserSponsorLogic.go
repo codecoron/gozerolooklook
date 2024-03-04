@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/pkg/errors"
 
 	"looklook/app/usercenter/cmd/rpc/internal/svc"
 	"looklook/app/usercenter/cmd/rpc/pb"
@@ -25,7 +26,9 @@ func NewDelUserSponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 
 func (l *DelUserSponsorLogic) DelUserSponsor(in *pb.DelUserSponsorReq) (*pb.DelUserSponsorResp, error) {
 	// todo: add your logic here and delete this line
-	l.svcCtx.UserSponsorModel.Delete(l.ctx, in.Id)
-
+	err := l.svcCtx.UserSponsorModel.Delete(l.ctx, in.Id)
+	if err != nil {
+		return nil, errors.Wrapf(err, "rpc: %+v")
+	}
 	return &pb.DelUserSponsorResp{}, nil
 }

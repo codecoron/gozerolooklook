@@ -1,6 +1,7 @@
 package userSponsor
 
 import (
+	"looklook/app/usercenter/cmd/api/internal/handler/translator"
 	"net/http"
 
 	"looklook/common/result"
