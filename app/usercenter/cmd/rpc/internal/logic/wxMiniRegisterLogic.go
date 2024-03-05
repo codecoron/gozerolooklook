@@ -50,6 +50,16 @@ func (l *WxMiniRegisterLogic) WxMiniRegister(in *usercenter.WXMiniRegisterReq) (
 		if _, err := l.svcCtx.UserAuthModel.Insert(ctx, session, userAuth); err != nil {
 			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Register db user_auth Insert err:%v,userAuth:%v", err, userAuth)
 		}
+
+		userSponsor := new(model.UserSponsor)
+		userSponsor.UserId = lastId
+		userSponsor.Avatar = in.Avatar
+		userSponsor.IsShow = 1
+		userSponsor.Name = in.Nickname
+		if _, err := l.svcCtx.UserSponsorModel.Insert(ctx, userSponsor); err != nil {
+			return errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Register db user_sponsor Insert err:%v,userSponsor:%v", err, userSponsor)
+		}
+
 		return nil
 	}); err != nil {
 		logx.Error("Register:", err)
