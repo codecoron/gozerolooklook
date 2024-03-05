@@ -37,7 +37,8 @@ type Comments struct {
 	UpdateTime  int64  `json:"updateTime"`  // 更新时间
 	DeleteTime  int64  `json:"deleteTime"`  // 删除时间
 	DelState    int64  `json:"delstate"`
-	User        User   `json:"user"` // 用户信息
+	User        User   `json:"user"`     // 用户信息
+	IsPraise    int64  `json:"isPraise"` // 是否点赞
 }
 
 type TestReq struct {

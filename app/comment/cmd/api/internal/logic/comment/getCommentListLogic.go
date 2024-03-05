@@ -3,6 +3,7 @@ package comment
 import (
 	"context"
 	"looklook/app/comment/cmd/rpc/comment"
+	"looklook/common/ctxdata"
 
 	"looklook/app/comment/cmd/api/internal/svc"
 	"looklook/app/comment/cmd/api/internal/types"
@@ -80,6 +81,32 @@ func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.
 			t.UpdateTime = item.UpdateTime
 			t.User = userInfoList[idx]
 			CommentList = append(CommentList, t)
+		}
+
+		// 得到CommentIds，根据CommentIds获取点赞信息
+		CommentIds := make([]int64, 0)
+		for _, item := range resp.Comment {
+			CommentIds = append(CommentIds, item.Id)
+		}
+		userId := ctxdata.GetUidFromCtx(l.ctx)
+		list, err := l.svcCtx.CommentRpc.IsPraiseList(l.ctx, &comment.IsPraiseListReq{
+			CommentId: CommentIds,
+			UserId:    userId,
+		})
+		if err != nil {
+			return nil, err
+		}
+		// 将list.PraiseId转换为map
+		praiseMap := make(map[int64]int)
+		for _, v := range list.PraiseId {
+			praiseMap[v] = 1
+		}
+		for idx, item := range CommentList {
+			item.IsPraise = 0
+			if _, ok := praiseMap[item.Id]; ok {
+				item.IsPraise = 1
+			}
+			CommentList[idx] = item
 		}
 	}
 
