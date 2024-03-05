@@ -3,10 +3,9 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/lottery/cmd/rpc/internal/svc"
 	"looklook/app/lottery/cmd/rpc/pb"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type SearchLotteryParticipationLogic struct {
@@ -26,7 +25,6 @@ func NewSearchLotteryParticipationLogic(ctx context.Context, svcCtx *svc.Service
 func (l *SearchLotteryParticipationLogic) SearchLotteryParticipation(in *pb.SearchLotteryParticipationReq) (*pb.SearchLotteryParticipationResp, error) {
 	offset := (in.PageIndex - 1) * in.PageSize
 	limit := in.PageSize
-	// todo 有sql语法错误
 	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ?", in.LotteryId).Limit(uint64(limit)).Offset(uint64(offset))
 
 	list, err := l.svcCtx.LotteryParticipationModel.FindAll(l.ctx, builder, "")
@@ -42,6 +40,23 @@ func (l *SearchLotteryParticipationLogic) SearchLotteryParticipation(in *pb.Sear
 	if err = copier.Copy(&resp.List, list); err != nil {
 		return nil, err
 	}
+
+	//var userIds []int64
+	//
+	//for i := range resp.List {
+	//	userIds = append(userIds, resp.List[i].UserId)
+	//}
+	//fmt.Println("userIds:", userIds)
+	//
+	//////////////////////////////////////////
+	//userInfos, err := l.svcCtx.UserCenterRpc.GetUserInfoByUserIds(l.ctx, &usercenter.GetUserInfoByUserIdsReq{
+	//	UserIds: userIds,
+	//})
+	//if err != nil {
+	//	return nil, err
+	//}
+	//fmt.Println("infos:", userInfos.UserInfo)
+	//err = copier.Copy(&resp.List, userInfos.UserInfo)
 
 	return resp, nil
 }
