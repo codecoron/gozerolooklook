@@ -41,22 +41,5 @@ func (l *SearchLotteryParticipationLogic) SearchLotteryParticipation(in *pb.Sear
 		return nil, err
 	}
 
-	//var userIds []int64
-	//
-	//for i := range resp.List {
-	//	userIds = append(userIds, resp.List[i].UserId)
-	//}
-	//fmt.Println("userIds:", userIds)
-	//
-	//////////////////////////////////////////
-	//userInfos, err := l.svcCtx.UserCenterRpc.GetUserInfoByUserIds(l.ctx, &usercenter.GetUserInfoByUserIdsReq{
-	//	UserIds: userIds,
-	//})
-	//if err != nil {
-	//	return nil, err
-	//}
-	//fmt.Println("infos:", userInfos.UserInfo)
-	//err = copier.Copy(&resp.List, userInfos.UserInfo)
-
 	return resp, nil
 }
