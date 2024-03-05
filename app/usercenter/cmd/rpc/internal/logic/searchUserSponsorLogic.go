@@ -27,7 +27,7 @@ func NewSearchUserSponsorLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *SearchUserSponsorLogic) SearchUserSponsor(in *pb.SearchUserSponsorReq) (*pb.SearchUserSponsorResp, error) {
-	// todo: add your logic here and delete this line
+
 	list, err := l.svcCtx.UserSponsorModel.FindPageByUserId(l.ctx, in.UserId, in.Page, in.Limit)
 	//return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "参数检查 : %v , in :%+v", err, in)
 
