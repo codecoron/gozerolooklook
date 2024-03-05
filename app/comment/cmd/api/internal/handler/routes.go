@@ -44,6 +44,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/comment/commentPraise",
 				Handler: comment.CommentPraiseHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/comment/getCommentList",
+				Handler: comment.GetCommentListHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/comment/v1"),
@@ -51,11 +56,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/comment/getCommentList",
-				Handler: comment.GetCommentListHandler(serverCtx),
-			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/comment/getCommentDetail",
