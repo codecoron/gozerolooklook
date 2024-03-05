@@ -74,3 +74,12 @@ type GetLotteryWinListReq {
 type GetLotteryWinListResp {
 	list []*WonList `json:"list"`
 }
+
+// 获取当前用户当前抽奖是否中奖
+type CheckIsWinReq {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type CheckIsWinResp {
+	IsWon int64 `json:"isWon"`
+}

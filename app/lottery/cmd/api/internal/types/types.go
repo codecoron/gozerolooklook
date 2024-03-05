@@ -237,3 +237,11 @@ type GetLotteryWinListReq struct {
 type GetLotteryWinListResp struct {
 	List []*WonList `json:"list"`
 }
+
+type CheckIsWinReq struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type CheckIsWinResp struct {
+	IsWon int64 `json:"isWon"`
+}
