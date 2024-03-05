@@ -79,6 +79,10 @@ service lottery {
 	@doc "登录后获取抽奖列表"
 	@handler lotteryListAfterLogin
 	post /lottery/lotteryListAfterLogin (LotteryListReq) returns (LotteryListResp)
+	
+	@doc "判断当前用户当前抽奖是否中奖"
+	@handler checkIsWin
+	post /lottery/checkIsWin (CheckIsWinReq) returns (CheckIsWinResp)
 }
 
 //no need login

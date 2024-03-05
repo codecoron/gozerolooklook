@@ -84,6 +84,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/lotteryListAfterLogin",
 				Handler: lottery.LotteryListAfterLoginHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/checkIsWin",
+				Handler: lottery.CheckIsWinHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/lottery/v1"),
