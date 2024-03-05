@@ -70,10 +70,21 @@ func (c *customPraiseModel) IsPraiseThisWeek(ctx context.Context, userId int64) 
 func (c *customPraiseModel) IsPraiseList(ctx context.Context, commentIds []int64, userId int64) ([]int64, error) {
 	// 查询是否有点赞记录，有则返回点赞id，否则返回0
 	var ids []int64
-	query := fmt.Sprintf("select comment_id from %s where comment_id in (?) and user_id = ?", c.table)
-	err := c.QueryRowsNoCacheCtx(ctx, &ids, query, commentIds, userId)
+	// 这里传int64类型的切片，需要将切片转换成字符串，然后在sql语句中使用in关键字
+	commentIdsStr := ""
+	for i, v := range commentIds {
+		if i == 0 {
+			commentIdsStr = fmt.Sprintf("%d", v)
+		} else {
+			commentIdsStr = fmt.Sprintf("%s,%d", commentIdsStr, v)
+		}
+	}
+	query := fmt.Sprintf("select comment_id from %s where comment_id in (%s) and user_id = ?", c.table, commentIdsStr)
+
+	err := c.QueryRowsNoCacheCtx(ctx, &ids, query, userId)
 	if err != nil && err != sqlx.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &ids:%v, query:%v, commentIds:%v, userId:%v, error: %v", &ids, query, commentIds, userId, err)
 	}
+
 	return ids, nil
 }
