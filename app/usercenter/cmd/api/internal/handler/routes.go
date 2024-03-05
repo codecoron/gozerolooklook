@@ -110,8 +110,23 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/userContact/sponsorDel",
+				Handler: userSponsor.SponsorDelHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userContact/upDateSponsor",
+				Handler: userSponsor.UpDateSponsorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/userSponsor/addSponsor",
 				Handler: userSponsor.AddSponsorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userSponsor/sponsorList",
+				Handler: userSponsor.SponsorListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
