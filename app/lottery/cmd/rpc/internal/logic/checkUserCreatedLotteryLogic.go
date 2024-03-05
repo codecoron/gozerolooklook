@@ -26,7 +26,6 @@ func (l *CheckUserCreatedLotteryLogic) CheckUserCreatedLottery(in *pb.CheckUserC
 	if err != nil {
 		return nil, err
 	}
-	// todo 有两种错误，一种是没找到的错误，一种是其他错误，假如有其他错误返回其他错误，假如是没找到的错误，就返回0，正常返回1
 	if id == nil {
 		return &pb.CheckUserCreatedLotteryResp{IsCreated: 0}, nil
 	}

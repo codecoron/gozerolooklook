@@ -110,15 +110,13 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 	winners := make([]Winner, 0)
 
-	// todo 每个参与者有不同的中奖概率，重新制定中奖规则
-
 	// 假定的每个用户的中奖倍率
 	testRatios := make([]int64, len(participantor))
 	for i := range testRatios {
 		testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
 	}
 
-	// todo 得到每个参与者的中奖倍率。这里已经得到了参与者的Id，在这里获取就行。
+	// todo 传入lotteryId以及userIds，得到每个参与者的中奖倍率。这里已经得到了参与者的Ids，在这里获取就行。
 	Ratios := make([]int64, len(participantor))
 	Ratios = testRatios
 
