@@ -51,6 +51,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/lottery/checkIsWin",
+				Handler: lottery.CheckIsWinHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/lottery/createClockTaskRecord",
 				Handler: lottery.CreateClockTaskRecordHandler(serverCtx),
 			},
@@ -88,11 +93,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/lottery/updateLottery",
 				Handler: lottery.UpdateLotteryHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/checkIsWin",
-				Handler: lottery.CheckIsWinHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
