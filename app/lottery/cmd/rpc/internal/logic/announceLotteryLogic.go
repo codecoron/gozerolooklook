@@ -117,6 +117,15 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 	}
 
 	// todo 传入lotteryId以及userIds，得到每个参与者的中奖倍率。这里已经得到了参与者的Ids，在这里获取就行。
+
+	// 通过lotteryId  userId 查询 clock_task_record表 表里有个字段increase_multiple
+	// 查出来可能有多条记录 每条记录就是完成的一次任务 increase_multiple就是那一次任务所增加的概率
+	//builder := l.svcCtx.ClockTaskRecordModel.SelectBuilder().
+	//	Where(" lottery_id AND user_id = ?", lotteryId, userId)
+	//records, err := l.svcCtx.ClockTaskRecordModel.FindAll(l.ctx, builder, "")
+	//if err != nil {
+	//	return nil, err
+	//}
 	Ratios := make([]int64, len(participantor))
 	Ratios = testRatios
 
