@@ -90,6 +90,35 @@
         ]
       }
     },
+    "lottery/v1/lottery/checkIsWin": {
+      "post": {
+        "summary": "判断当前用户当前抽奖是否中奖",
+        "operationId": "checkIsWin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CheckIsWinResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 获取当前用户当前抽奖是否中奖",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckIsWinReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/clockTaskTypeList": {
       "get": {
         "summary": "打卡任务类型",
@@ -278,45 +307,6 @@
       }
     },
     "lottery/v1/lottery/participation": {
-      "get": {
-        "summary": "抽奖人",
-        "operationId": "searchParticipation",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/SearchLotteryParticipationResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "lotteryId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "pageIndex",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      },
       "post": {
         "summary": "参与抽奖",
         "operationId": "addLotteryParticipation",
@@ -335,6 +325,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/AddLotteryParticipationReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/participations": {
+      "post": {
+        "summary": "抽奖人",
+        "operationId": "searchParticipation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchLotteryParticipationResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchLotteryParticipationReq"
             }
           }
         ],
@@ -481,6 +499,32 @@
       "title": "CheckIsParticipatedResp",
       "required": [
         "isParticipated"
+      ]
+    },
+    "CheckIsWinReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CheckIsWinReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "CheckIsWinResp": {
+      "type": "object",
+      "properties": {
+        "isWon": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CheckIsWinResp",
+      "required": [
+        "isWon"
       ]
     },
     "ClockTaskTypeListReq": {
@@ -695,6 +739,7 @@
         "name",
         "thumb",
         "announceType",
+        "oneof=1 2",
         "announceTime",
         "joinNumber",
         "introduce",

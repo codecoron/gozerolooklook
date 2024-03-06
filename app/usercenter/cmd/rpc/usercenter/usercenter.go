@@ -55,6 +55,8 @@ type (
 	GetUserByIdResp          = pb.GetUserByIdResp
 	GetUserContactByIdReq    = pb.GetUserContactByIdReq
 	GetUserContactByIdResp   = pb.GetUserContactByIdResp
+	GetUserInfoByUserIdsReq  = pb.GetUserInfoByUserIdsReq
+	GetUserInfoByUserIdsResp = pb.GetUserInfoByUserIdsResp
 	GetUserInfoReq           = pb.GetUserInfoReq
 	GetUserInfoResp          = pb.GetUserInfoResp
 	GetUserShopByIdReq       = pb.GetUserShopByIdReq
@@ -99,6 +101,7 @@ type (
 	UserAddress              = pb.UserAddress
 	UserAuth                 = pb.UserAuth
 	UserContact              = pb.UserContact
+	UserInfoForComment       = pb.UserInfoForComment
 	UserShop                 = pb.UserShop
 	UserSponsor              = pb.UserSponsor
 	WXMiniRegisterReq        = pb.WXMiniRegisterReq
@@ -115,6 +118,7 @@ type (
 		UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
 		SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error)
 		// -----------------------用户表-----------------------
+		GetUserInfoByUserIds(ctx context.Context, in *GetUserInfoByUserIdsReq, opts ...grpc.CallOption) (*GetUserInfoByUserIdsResp, error)
 		AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error)
 		UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 		DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error)
@@ -147,7 +151,6 @@ type (
 		DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error)
 		GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error)
 		SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error)
-		// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
 		AddUserSponsor(ctx context.Context, in *AddUserSponsorReq, opts ...grpc.CallOption) (*AddUserSponsorResp, error)
 		UpdateUserSponsor(ctx context.Context, in *UpdateUserSponsorReq, opts ...grpc.CallOption) (*UpdateUserSponsorResp, error)
 		DelUserSponsor(ctx context.Context, in *DelUserSponsorReq, opts ...grpc.CallOption) (*DelUserSponsorResp, error)
@@ -209,6 +212,11 @@ func (m *defaultUsercenter) SetAdmin(ctx context.Context, in *SetAdminReq, opts 
 }
 
 // -----------------------用户表-----------------------
+func (m *defaultUsercenter) GetUserInfoByUserIds(ctx context.Context, in *GetUserInfoByUserIdsReq, opts ...grpc.CallOption) (*GetUserInfoByUserIdsResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserInfoByUserIds(ctx, in, opts...)
+}
+
 func (m *defaultUsercenter) AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.AddUser(ctx, in, opts...)
@@ -353,7 +361,6 @@ func (m *defaultUsercenter) SearchUserShop(ctx context.Context, in *SearchUserSh
 	return client.SearchUserShop(ctx, in, opts...)
 }
 
-// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
 func (m *defaultUsercenter) AddUserSponsor(ctx context.Context, in *AddUserSponsorReq, opts ...grpc.CallOption) (*AddUserSponsorResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.AddUserSponsor(ctx, in, opts...)

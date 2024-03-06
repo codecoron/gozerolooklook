@@ -537,6 +537,11 @@
         "user": {
           "$ref": "#/definitions/User",
           "description": " 用户信息"
+        },
+        "isPraise": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否点赞"
         }
       },
       "title": "Comments",
@@ -552,7 +557,8 @@
         "updateTime",
         "deleteTime",
         "delstate",
-        "user"
+        "user",
+        "isPraise"
       ]
     },
     "GetCommentLastIdReq": {

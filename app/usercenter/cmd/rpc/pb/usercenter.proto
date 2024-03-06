@@ -253,6 +253,18 @@ message SearchUserAuthReq {
 message SearchUserAuthResp {
   repeated UserAuth userAuth = 1; //userAuth
 }
+message UserInfoForComment{
+  int64 id = 2; //userId
+  string nickname = 3; //userName
+  string avatar = 4; //avatar
+}
+message  GetUserInfoByUserIdsReq{
+  repeated int64 userIds = 1; //userIds
+}
+
+message  GetUserInfoByUserIdsResp{
+  repeated UserInfoForComment userInfo = 1;
+}
 
 //--------------------------------抽奖发起人联系方式--------------------------------
 message UserContact {
@@ -599,6 +611,8 @@ service usercenter{
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   rpc setAdmin(SetAdminReq) returns(SetAdminResp);
   //-----------------------用户表-----------------------
+  //根据发过来的用户切片获取用户信息
+  rpc getUserInfoByUserIds(GetUserInfoByUserIdsReq) returns(GetUserInfoByUserIdsResp);
   rpc AddUser(AddUserReq) returns (AddUserResp);
   rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp);
   rpc DelUser(DelUserReq) returns (DelUserResp);
@@ -632,6 +646,7 @@ service usercenter{
   rpc GetUserShopById(GetUserShopByIdReq) returns (GetUserShopByIdResp);
   rpc SearchUserShop(SearchUserShopReq) returns (SearchUserShopResp);
   //-----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+
   rpc AddUserSponsor(AddUserSponsorReq) returns (AddUserSponsorResp);
   rpc UpdateUserSponsor(UpdateUserSponsorReq) returns (UpdateUserSponsorResp);
   rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp);

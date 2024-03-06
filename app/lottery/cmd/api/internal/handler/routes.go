@@ -34,8 +34,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: lottery.LotteryListHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/participation",
+				Method:  http.MethodPost,
+				Path:    "/lottery/participations",
 				Handler: lottery.SearchParticipationHandler(serverCtx),
 			},
 		},
@@ -88,6 +88,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/lottery/updateLottery",
 				Handler: lottery.UpdateLotteryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/checkIsWin",
+				Handler: lottery.CheckIsWinHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
