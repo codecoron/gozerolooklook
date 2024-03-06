@@ -3718,7 +3718,7 @@ func (x *GetWonListResp) GetList() []*WonList {
 	return nil
 }
 
-// 获取中奖记录总数
+// 获取中奖记录总数/获取当前用户累计奖品数量
 type GetWonListCountReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

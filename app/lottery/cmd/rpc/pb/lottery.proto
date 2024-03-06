@@ -366,7 +366,7 @@ message GetWonListResp{
 
 }
 
-// 获取中奖记录总数
+// 获取中奖记录总数/获取当前用户累计奖品数量
 message GetWonListCountReq{
   int64 userId = 1;
 }
