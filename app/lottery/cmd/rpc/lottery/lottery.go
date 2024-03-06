@@ -44,6 +44,8 @@ type (
 	GetLotteryByIdResp                     = pb.GetLotteryByIdResp
 	GetLotteryListAfterLoginReq            = pb.GetLotteryListAfterLoginReq
 	GetLotteryListAfterLoginResp           = pb.GetLotteryListAfterLoginResp
+	GetLotteryStatisticReq                 = pb.GetLotteryStatisticReq
+	GetLotteryStatisticResp                = pb.GetLotteryStatisticResp
 	GetParticipationUserIdsByLotteryIdReq  = pb.GetParticipationUserIdsByLotteryIdReq
 	GetParticipationUserIdsByLotteryIdResp = pb.GetParticipationUserIdsByLotteryIdResp
 	GetPrizeByIdReq                        = pb.GetPrizeByIdReq
@@ -92,6 +94,7 @@ type (
 		CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error)
 		CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 		GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
+		GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -188,6 +191,11 @@ func (m *defaultLotteryZrpcClient) CheckUserCreatedLotteryAndThisWeek(ctx contex
 func (m *defaultLotteryZrpcClient) GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.GetLotteryListAfterLogin(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetLotteryStatistic(ctx, in, opts...)
 }
 
 // -----------------------奖品表-----------------------

@@ -186,6 +186,17 @@ message GetLotteryListAfterLoginResp {
   repeated Lottery list = 1; // 抽奖列表
 }
 
+// 获取当前用户参与抽奖总数、发起抽奖总数、中奖记录总数
+message GetLotteryStatisticReq {
+  int64 UserId = 1; // 用户id
+}
+
+message GetLotteryStatisticResp {
+  int64 ParticipationCount = 1; // 参与抽奖总数
+  int64 CreatedCount = 2; // 发起抽奖总数
+  int64 WonCount = 3; // 中奖记录总数
+}
+
 
 //--------------------------------奖品表--------------------------------
 message Prize {
@@ -355,7 +366,7 @@ message GetWonListResp{
 
 }
 
-// 获取中奖记录总数
+// 获取中奖记录总数/获取当前用户累计奖品数量
 message GetWonListCountReq{
   int64 userId = 1;
 }
@@ -416,6 +427,7 @@ service lottery{
   rpc CheckUserCreatedLotteryAndToday(CheckUserCreatedLotteryAndTodayReq) returns (CheckUserCreatedLotteryAndTodayResp);
   rpc CheckUserCreatedLotteryAndThisWeek(CheckUserCreatedLotteryAndThisWeekReq) returns (CheckUserCreatedLotteryAndThisWeekResp);
   rpc GetLotteryListAfterLogin(GetLotteryListAfterLoginReq) returns (GetLotteryListAfterLoginResp);
+  rpc GetLotteryStatistic(GetLotteryStatisticReq) returns (GetLotteryStatisticResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);

@@ -88,6 +88,11 @@ func (s *LotteryServer) GetLotteryListAfterLogin(ctx context.Context, in *pb.Get
 	return l.GetLotteryListAfterLogin(in)
 }
 
+func (s *LotteryServer) GetLotteryStatistic(ctx context.Context, in *pb.GetLotteryStatisticReq) (*pb.GetLotteryStatisticResp, error) {
+	l := logic.NewGetLotteryStatisticLogic(ctx, s.svcCtx)
+	return l.GetLotteryStatistic(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)

@@ -20,6 +20,7 @@ type (
 		IsPraise(ctx context.Context, commentId, userId int64) (int64, error)
 		IsPraiseThisWeek(ctx context.Context, userId int64) (bool, error)
 		IsPraiseList(ctx context.Context, commentIds []int64, userId int64) ([]int64, error)
+		GetLikeCountByCommentIds(ctx context.Context, commentIds []int64) (map[int64]int64, error)
 	}
 
 	customPraiseModel struct {
@@ -87,4 +88,34 @@ func (c *customPraiseModel) IsPraiseList(ctx context.Context, commentIds []int64
 	}
 
 	return ids, nil
+}
+
+// PraiseCount 新建一个结构体，接收查询结果
+type PraiseCount struct {
+	CommentId int64
+	Count     int64
+}
+
+func (c *customPraiseModel) GetLikeCountByCommentIds(ctx context.Context, commentIds []int64) (map[int64]int64, error) {
+	// 查询评论的点赞数
+	likeCount := make(map[int64]int64)
+	// 这里传int64类型的切片，需要将切片转换成字符串，然后在sql语句中使用in关键字
+	commentIdsStr := ""
+	for i, v := range commentIds {
+		if i == 0 {
+			commentIdsStr = fmt.Sprintf("%d", v)
+		} else {
+			commentIdsStr = fmt.Sprintf("%s,%d", commentIdsStr, v)
+		}
+	}
+	query := fmt.Sprintf("SELECT comment_id, count(*) as count FROM %s WHERE comment_id in (%s) GROUP BY comment_id", c.table, commentIdsStr)
+	var list []*PraiseCount
+	err := c.QueryRowsNoCacheCtx(ctx, &list, query)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "QueryRowsNoCacheCtx, &list:%v, query:%v, error: %v", &list, query, err)
+	}
+	for _, v := range list {
+		likeCount[v.CommentId] = v.Count
+	}
+	return likeCount, nil
 }

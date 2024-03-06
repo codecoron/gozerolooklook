@@ -28,6 +28,7 @@ const (
 	Comment_PraiseComment_FullMethodName    = "/pb.comment/PraiseComment"
 	Comment_GetCommentLastId_FullMethodName = "/pb.comment/GetCommentLastId"
 	Comment_IsPraiseList_FullMethodName     = "/pb.comment/IsPraiseList"
+	Comment_GetUserComment_FullMethodName   = "/pb.comment/GetUserComment"
 	Comment_AddPraise_FullMethodName        = "/pb.comment/AddPraise"
 	Comment_UpdatePraise_FullMethodName     = "/pb.comment/UpdatePraise"
 	Comment_DelPraise_FullMethodName        = "/pb.comment/DelPraise"
@@ -50,6 +51,7 @@ type CommentClient interface {
 	PraiseComment(ctx context.Context, in *PraiseCommentReq, opts ...grpc.CallOption) (*PraiseCommentResp, error)
 	GetCommentLastId(ctx context.Context, in *GetCommentLastIdReq, opts ...grpc.CallOption) (*GetCommentLastIdResp, error)
 	IsPraiseList(ctx context.Context, in *IsPraiseListReq, opts ...grpc.CallOption) (*IsPraiseListResp, error)
+	GetUserComment(ctx context.Context, in *GetUserCommentReq, opts ...grpc.CallOption) (*GetUserCommentResp, error)
 	// -----------------------praise-----------------------
 	AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error)
 	UpdatePraise(ctx context.Context, in *UpdatePraiseReq, opts ...grpc.CallOption) (*UpdatePraiseResp, error)
@@ -149,6 +151,15 @@ func (c *commentClient) IsPraiseList(ctx context.Context, in *IsPraiseListReq, o
 	return out, nil
 }
 
+func (c *commentClient) GetUserComment(ctx context.Context, in *GetUserCommentReq, opts ...grpc.CallOption) (*GetUserCommentResp, error) {
+	out := new(GetUserCommentResp)
+	err := c.cc.Invoke(ctx, Comment_GetUserComment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *commentClient) AddPraise(ctx context.Context, in *AddPraiseReq, opts ...grpc.CallOption) (*AddPraiseResp, error) {
 	out := new(AddPraiseResp)
 	err := c.cc.Invoke(ctx, Comment_AddPraise_FullMethodName, in, out, opts...)
@@ -217,6 +228,7 @@ type CommentServer interface {
 	PraiseComment(context.Context, *PraiseCommentReq) (*PraiseCommentResp, error)
 	GetCommentLastId(context.Context, *GetCommentLastIdReq) (*GetCommentLastIdResp, error)
 	IsPraiseList(context.Context, *IsPraiseListReq) (*IsPraiseListResp, error)
+	GetUserComment(context.Context, *GetUserCommentReq) (*GetUserCommentResp, error)
 	// -----------------------praise-----------------------
 	AddPraise(context.Context, *AddPraiseReq) (*AddPraiseResp, error)
 	UpdatePraise(context.Context, *UpdatePraiseReq) (*UpdatePraiseResp, error)
@@ -258,6 +270,9 @@ func (UnimplementedCommentServer) GetCommentLastId(context.Context, *GetCommentL
 }
 func (UnimplementedCommentServer) IsPraiseList(context.Context, *IsPraiseListReq) (*IsPraiseListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsPraiseList not implemented")
+}
+func (UnimplementedCommentServer) GetUserComment(context.Context, *GetUserCommentReq) (*GetUserCommentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserComment not implemented")
 }
 func (UnimplementedCommentServer) AddPraise(context.Context, *AddPraiseReq) (*AddPraiseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPraise not implemented")
@@ -452,6 +467,24 @@ func _Comment_IsPraiseList_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Comment_GetUserComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserCommentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommentServer).GetUserComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Comment_GetUserComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommentServer).GetUserComment(ctx, req.(*GetUserCommentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Comment_AddPraise_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddPraiseReq)
 	if err := dec(in); err != nil {
@@ -602,6 +635,10 @@ var Comment_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsPraiseList",
 			Handler:    _Comment_IsPraiseList_Handler,
+		},
+		{
+			MethodName: "GetUserComment",
+			Handler:    _Comment_GetUserComment_Handler,
 		},
 		{
 			MethodName: "AddPraise",
