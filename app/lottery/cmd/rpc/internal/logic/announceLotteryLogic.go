@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
@@ -111,25 +110,38 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 	winners := make([]Winner, 0)
 
 	// 假定的每个用户的中奖倍率
-	testRatios := make([]int64, len(participantor))
-	for i := range testRatios {
-		testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
+	//testRatios := make([]int64, len(participantor))
+	//for i := range testRatios {
+	//	testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
+	//}
+
+	records, err := l.svcCtx.ClockTaskRecordModel.GetClockTaskRecordByLotteryIdAndUserIds(lotteryId, participantor)
+	if err != nil {
+		return nil, err
 	}
 
-	// todo 传入lotteryId以及userIds，得到每个参与者的中奖倍率。这里已经得到了参与者的Ids，在这里获取就行。
+	//fmt.Println("records:", records)
 
-	// 通过lotteryId  userId 查询 clock_task_record表 表里有个字段increase_multiple
-	// 查出来可能有多条记录 每条记录就是完成的一次任务 increase_multiple就是那一次任务所增加的概率
-	//builder := l.svcCtx.ClockTaskRecordModel.SelectBuilder().
-	//	Where(" lottery_id AND user_id = ?", lotteryId, userId)
-	//records, err := l.svcCtx.ClockTaskRecordModel.FindAll(l.ctx, builder, "")
-	//if err != nil {
-	//	return nil, err
-	//}
+	// 查出来可能有多条记录 每条记录就是完成的一次任务 increase_multiple就是那一次任务所增加的概率,一个用户可能有多条记录，我这边在业务里面再进行统计一次
+	// 所以用一个map来存储每个用户的中奖倍率
+	RationsMap := make(map[int64]int64)
+	for _, participant := range participantor {
+		RationsMap[participant] = 1
+	}
+
+	for _, record := range records {
+		RationsMap[record.UserId] += record.IncreaseMultiple
+	}
+
 	Ratios := make([]int64, len(participantor))
-	Ratios = testRatios
 
-	fmt.Println("Ratios:", Ratios)
+	for i, participant := range participantor {
+		Ratios[i] = RationsMap[participant]
+	}
+
+	//Ratios = testRatios
+
+	//fmt.Println("Ratios:", Ratios)
 	// 计算总的中奖概率
 	totalRatio := int64(0)
 	for _, ratio := range Ratios {
@@ -140,7 +152,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 	for idx := range Ratios {
 		FinalRatios[idx] = float64(Ratios[idx]) / float64(totalRatio)
 	}
-	fmt.Println("FinalRatios:", FinalRatios)
+	//fmt.Println("FinalRatios:", FinalRatios)
 
 	// 根据中奖总数量进行开奖
 	for i := 0; i < int(WinnersNum); i++ { // 中奖人数
