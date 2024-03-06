@@ -40,11 +40,14 @@ func (l *SearchParticipationLogic) SearchParticipation(req *types.SearchLotteryP
 		userIds = append(userIds, r.List[i].UserId)
 	}
 
-	userInfos, err := l.svcCtx.UsercenterRpc.GetUserInfoByUserIds(l.ctx, &usercenter.GetUserInfoByUserIdsReq{
-		UserIds: userIds,
-	})
-	if err != nil {
-		return nil, err
+	userInfos := new(usercenter.GetUserInfoByUserIdsResp)
+	if len(userIds) > 0 {
+		userInfos, err = l.svcCtx.UsercenterRpc.GetUserInfoByUserIds(l.ctx, &usercenter.GetUserInfoByUserIdsReq{
+			UserIds: userIds,
+		})
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	resp = new(types.SearchLotteryParticipationResp)
