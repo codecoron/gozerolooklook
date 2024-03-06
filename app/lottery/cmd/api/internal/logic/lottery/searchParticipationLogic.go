@@ -50,7 +50,22 @@ func (l *SearchParticipationLogic) SearchParticipation(req *types.SearchLotteryP
 		}
 	}
 
+	// 名字打码，只留下字符的第一个和最后一个，中间多个字符只有两个*
+	for idx, item := range userInfos.UserInfo {
+		if len(item.Nickname) > 2 {
+			item.Nickname = item.Nickname[:1] + "**" + item.Nickname[len(item.Nickname)-1:]
+		} else {
+			item.Nickname = item.Nickname[:] + "**"
+		}
+		userInfos.UserInfo[idx] = item
+	}
+
 	resp = new(types.SearchLotteryParticipationResp)
 	err = copier.Copy(&resp.List, userInfos.UserInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	resp.Count = r.Count
 	return
 }
