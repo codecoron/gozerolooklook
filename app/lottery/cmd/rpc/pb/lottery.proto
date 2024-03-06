@@ -384,6 +384,18 @@ message ClockTask {
 
 }
 
+//--------------------------------打卡任务记录表--------------------------------
+message AddClockTaskRecordReq {
+  int64 LotteryId = 1;
+  int64 UserId = 2;
+  int64 ClockTaskId = 3;
+  int64 IncreaseMultiple = 4;
+}
+
+message AddClockTaskRecordResp {
+  int64 id = 1; //id
+}
+
 // ------------------------------------
 // Rpc Func
 // ------------------------------------ 
@@ -422,4 +434,7 @@ service lottery{
   rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
   rpc GetWonList(GetWonListReq) returns (GetWonListResp);
   rpc GetWonListCount(GetWonListCountReq) returns (GetWonListCountResp);
+
+  //-----------------------完成打卡任务-----------------------
+  rpc AddClockTaskRecord(AddClockTaskRecordReq) returns (AddClockTaskRecordResp);
 }

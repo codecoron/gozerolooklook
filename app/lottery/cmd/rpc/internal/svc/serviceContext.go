@@ -16,6 +16,7 @@ type ServiceContext struct {
 	LotteryModel              model.LotteryModel
 	PrizeModel                model.PrizeModel
 	ClockTaskModel            model.ClockTaskModel
+	ClockTaskRecordModel      model.ClockTaskRecordModel
 	UserCenterRpc             usercenter.Usercenter
 	NoticeRpc                 notice.Notice
 	LotteryParticipationModel model.LotteryParticipationModel
@@ -30,5 +31,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		NoticeRpc:                 notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
 		LotteryParticipationModel: model.NewLotteryParticipationModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
 		ClockTaskModel:            model.NewClockTaskModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
+		ClockTaskRecordModel:      model.NewClockTaskRecordModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
 	}
 }

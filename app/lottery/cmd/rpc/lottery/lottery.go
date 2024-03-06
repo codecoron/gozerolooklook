@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	AddClockTaskRecordReq                  = pb.AddClockTaskRecordReq
+	AddClockTaskRecordResp                 = pb.AddClockTaskRecordResp
 	AddLotteryParticipationReq             = pb.AddLotteryParticipationReq
 	AddLotteryParticipationResp            = pb.AddLotteryParticipationResp
 	AddLotteryReq                          = pb.AddLotteryReq
@@ -107,6 +109,8 @@ type (
 		CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 		GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
 		GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error)
+		// -----------------------完成打卡任务-----------------------
+		AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -261,4 +265,10 @@ func (m *defaultLotteryZrpcClient) GetWonList(ctx context.Context, in *GetWonLis
 func (m *defaultLotteryZrpcClient) GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.GetWonListCount(ctx, in, opts...)
+}
+
+// -----------------------完成打卡任务-----------------------
+func (m *defaultLotteryZrpcClient) AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.AddClockTaskRecord(ctx, in, opts...)
 }

@@ -164,3 +164,9 @@ func (s *LotteryServer) GetWonListCount(ctx context.Context, in *pb.GetWonListCo
 	l := logic.NewGetWonListCountLogic(ctx, s.svcCtx)
 	return l.GetWonListCount(in)
 }
+
+// -----------------------完成打卡任务-----------------------
+func (s *LotteryServer) AddClockTaskRecord(ctx context.Context, in *pb.AddClockTaskRecordReq) (*pb.AddClockTaskRecordResp, error) {
+	l := logic.NewAddClockTaskRecordLogic(ctx, s.svcCtx)
+	return l.AddClockTaskRecord(in)
+}
