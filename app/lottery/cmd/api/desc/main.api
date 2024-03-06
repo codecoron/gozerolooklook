@@ -30,7 +30,7 @@ service lottery {
 	
 	@doc "抽奖人"
 	@handler searchParticipation
-	get /lottery/participation (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
+	post /lottery/participations (SearchLotteryParticipationReq) returns (SearchLotteryParticipationResp)
 	
 	@doc "打卡任务类型"
 	@handler clockTaskTypeList
