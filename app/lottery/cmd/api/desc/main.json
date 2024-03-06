@@ -680,6 +680,7 @@
         "name",
         "thumb",
         "announceType",
+        "oneof=1 2",
         "announceTime",
         "joinNumber",
         "introduce",
