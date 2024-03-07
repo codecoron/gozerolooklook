@@ -11,9 +11,11 @@ const (
 	NotSelectedLottery = 0
 )
 
+// 参与抽奖表
 const (
 	LotteryTodayParticipantsCount    = 5
 	LotteryThisWeekParticipantsCount = 10
+	IsWon                            = 1
 )
 
 // ------ 抽奖 打卡任务 --------

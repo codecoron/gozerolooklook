@@ -32,6 +32,7 @@ const (
 	Lottery_CheckUserCreatedLotteryAndToday_FullMethodName    = "/pb.lottery/CheckUserCreatedLotteryAndToday"
 	Lottery_CheckUserCreatedLotteryAndThisWeek_FullMethodName = "/pb.lottery/CheckUserCreatedLotteryAndThisWeek"
 	Lottery_GetLotteryListAfterLogin_FullMethodName           = "/pb.lottery/GetLotteryListAfterLogin"
+	Lottery_GetLotteryStatistic_FullMethodName                = "/pb.lottery/GetLotteryStatistic"
 	Lottery_AddPrize_FullMethodName                           = "/pb.lottery/AddPrize"
 	Lottery_UpdatePrize_FullMethodName                        = "/pb.lottery/UpdatePrize"
 	Lottery_DelPrize_FullMethodName                           = "/pb.lottery/DelPrize"
@@ -47,6 +48,8 @@ const (
 	Lottery_CheckUserIsWon_FullMethodName                     = "/pb.lottery/CheckUserIsWon"
 	Lottery_GetWonList_FullMethodName                         = "/pb.lottery/GetWonList"
 	Lottery_GetWonListCount_FullMethodName                    = "/pb.lottery/GetWonListCount"
+	Lottery_GetWonListByLotteryId_FullMethodName              = "/pb.lottery/GetWonListByLotteryId"
+	Lottery_AddClockTaskRecord_FullMethodName                 = "/pb.lottery/AddClockTaskRecord"
 )
 
 // LotteryClient is the client API for Lottery service.
@@ -67,6 +70,7 @@ type LotteryClient interface {
 	CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error)
 	CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 	GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
+	GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -84,6 +88,9 @@ type LotteryClient interface {
 	CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 	GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
 	GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error)
+	GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error)
+	// -----------------------完成打卡任务-----------------------
+	AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error)
 }
 
 type lotteryClient struct {
@@ -205,6 +212,15 @@ func (c *lotteryClient) CheckUserCreatedLotteryAndThisWeek(ctx context.Context, 
 func (c *lotteryClient) GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error) {
 	out := new(GetLotteryListAfterLoginResp)
 	err := c.cc.Invoke(ctx, Lottery_GetLotteryListAfterLogin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lotteryClient) GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error) {
+	out := new(GetLotteryStatisticResp)
+	err := c.cc.Invoke(ctx, Lottery_GetLotteryStatistic_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +362,24 @@ func (c *lotteryClient) GetWonListCount(ctx context.Context, in *GetWonListCount
 	return out, nil
 }
 
+func (c *lotteryClient) GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error) {
+	out := new(GetWonListByLotteryIdResp)
+	err := c.cc.Invoke(ctx, Lottery_GetWonListByLotteryId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lotteryClient) AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error) {
+	out := new(AddClockTaskRecordResp)
+	err := c.cc.Invoke(ctx, Lottery_AddClockTaskRecord_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LotteryServer is the server API for Lottery service.
 // All implementations must embed UnimplementedLotteryServer
 // for forward compatibility
@@ -364,6 +398,7 @@ type LotteryServer interface {
 	CheckUserCreatedLotteryAndToday(context.Context, *CheckUserCreatedLotteryAndTodayReq) (*CheckUserCreatedLotteryAndTodayResp, error)
 	CheckUserCreatedLotteryAndThisWeek(context.Context, *CheckUserCreatedLotteryAndThisWeekReq) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 	GetLotteryListAfterLogin(context.Context, *GetLotteryListAfterLoginReq) (*GetLotteryListAfterLoginResp, error)
+	GetLotteryStatistic(context.Context, *GetLotteryStatisticReq) (*GetLotteryStatisticResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
@@ -381,6 +416,9 @@ type LotteryServer interface {
 	CheckUserIsWon(context.Context, *CheckUserIsWonReq) (*CheckUserIsWonResp, error)
 	GetWonList(context.Context, *GetWonListReq) (*GetWonListResp, error)
 	GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error)
+	GetWonListByLotteryId(context.Context, *GetWonListByLotteryIdReq) (*GetWonListByLotteryIdResp, error)
+	// -----------------------完成打卡任务-----------------------
+	AddClockTaskRecord(context.Context, *AddClockTaskRecordReq) (*AddClockTaskRecordResp, error)
 	mustEmbedUnimplementedLotteryServer()
 }
 
@@ -427,6 +465,9 @@ func (UnimplementedLotteryServer) CheckUserCreatedLotteryAndThisWeek(context.Con
 func (UnimplementedLotteryServer) GetLotteryListAfterLogin(context.Context, *GetLotteryListAfterLoginReq) (*GetLotteryListAfterLoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLotteryListAfterLogin not implemented")
 }
+func (UnimplementedLotteryServer) GetLotteryStatistic(context.Context, *GetLotteryStatisticReq) (*GetLotteryStatisticResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLotteryStatistic not implemented")
+}
 func (UnimplementedLotteryServer) AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrize not implemented")
 }
@@ -471,6 +512,12 @@ func (UnimplementedLotteryServer) GetWonList(context.Context, *GetWonListReq) (*
 }
 func (UnimplementedLotteryServer) GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWonListCount not implemented")
+}
+func (UnimplementedLotteryServer) GetWonListByLotteryId(context.Context, *GetWonListByLotteryIdReq) (*GetWonListByLotteryIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWonListByLotteryId not implemented")
+}
+func (UnimplementedLotteryServer) AddClockTaskRecord(context.Context, *AddClockTaskRecordReq) (*AddClockTaskRecordResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddClockTaskRecord not implemented")
 }
 func (UnimplementedLotteryServer) mustEmbedUnimplementedLotteryServer() {}
 
@@ -715,6 +762,24 @@ func _Lottery_GetLotteryListAfterLogin_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LotteryServer).GetLotteryListAfterLogin(ctx, req.(*GetLotteryListAfterLoginReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Lottery_GetLotteryStatistic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLotteryStatisticReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetLotteryStatistic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetLotteryStatistic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetLotteryStatistic(ctx, req.(*GetLotteryStatisticReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -989,6 +1054,42 @@ func _Lottery_GetWonListCount_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_GetWonListByLotteryId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWonListByLotteryIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetWonListByLotteryId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetWonListByLotteryId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetWonListByLotteryId(ctx, req.(*GetWonListByLotteryIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Lottery_AddClockTaskRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddClockTaskRecordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).AddClockTaskRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_AddClockTaskRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).AddClockTaskRecord(ctx, req.(*AddClockTaskRecordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Lottery_ServiceDesc is the grpc.ServiceDesc for Lottery service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1049,6 +1150,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Lottery_GetLotteryListAfterLogin_Handler,
 		},
 		{
+			MethodName: "GetLotteryStatistic",
+			Handler:    _Lottery_GetLotteryStatistic_Handler,
+		},
+		{
 			MethodName: "AddPrize",
 			Handler:    _Lottery_AddPrize_Handler,
 		},
@@ -1107,6 +1212,14 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWonListCount",
 			Handler:    _Lottery_GetWonListCount_Handler,
+		},
+		{
+			MethodName: "GetWonListByLotteryId",
+			Handler:    _Lottery_GetWonListByLotteryId_Handler,
+		},
+		{
+			MethodName: "AddClockTaskRecord",
+			Handler:    _Lottery_AddClockTaskRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

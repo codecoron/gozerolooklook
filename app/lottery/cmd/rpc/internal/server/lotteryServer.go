@@ -88,6 +88,11 @@ func (s *LotteryServer) GetLotteryListAfterLogin(ctx context.Context, in *pb.Get
 	return l.GetLotteryListAfterLogin(in)
 }
 
+func (s *LotteryServer) GetLotteryStatistic(ctx context.Context, in *pb.GetLotteryStatisticReq) (*pb.GetLotteryStatisticResp, error) {
+	l := logic.NewGetLotteryStatisticLogic(ctx, s.svcCtx)
+	return l.GetLotteryStatistic(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
@@ -163,4 +168,15 @@ func (s *LotteryServer) GetWonList(ctx context.Context, in *pb.GetWonListReq) (*
 func (s *LotteryServer) GetWonListCount(ctx context.Context, in *pb.GetWonListCountReq) (*pb.GetWonListCountResp, error) {
 	l := logic.NewGetWonListCountLogic(ctx, s.svcCtx)
 	return l.GetWonListCount(in)
+}
+
+func (s *LotteryServer) GetWonListByLotteryId(ctx context.Context, in *pb.GetWonListByLotteryIdReq) (*pb.GetWonListByLotteryIdResp, error) {
+	l := logic.NewGetWonListByLotteryIdLogic(ctx, s.svcCtx)
+	return l.GetWonListByLotteryId(in)
+}
+
+// -----------------------完成打卡任务-----------------------
+func (s *LotteryServer) AddClockTaskRecord(ctx context.Context, in *pb.AddClockTaskRecordReq) (*pb.AddClockTaskRecordResp, error) {
+	l := logic.NewAddClockTaskRecordLogic(ctx, s.svcCtx)
+	return l.AddClockTaskRecord(in)
 }

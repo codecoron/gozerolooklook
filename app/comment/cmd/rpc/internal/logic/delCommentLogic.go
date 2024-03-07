@@ -26,7 +26,6 @@ func NewDelCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DelCom
 }
 
 func (l *DelCommentLogic) DelComment(in *pb.DelCommentReq) (*pb.DelCommentResp, error) {
-	// todo : 软删除评论
 	// 删除评论
 	//err := l.svcCtx.CommentModel.Delete(l.ctx, in.Id)
 	data, err := l.svcCtx.CommentModel.FindOne(l.ctx, in.Id)

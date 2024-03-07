@@ -74,3 +74,28 @@ type GetLotteryWinListReq {
 type GetLotteryWinListResp {
 	list []*WonList `json:"list"`
 }
+
+// 获取当前用户当前抽奖是否中奖
+type CheckIsWinReq {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type CheckIsWinResp {
+	IsWon int64 `json:"isWon"`
+}
+
+// 得到当前抽奖中奖者名单列表
+type GetLotteryWinList2Req {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+// 重新构建一个中奖者名单的返回
+type WonList2 {
+	Prize *Prizes `json:"prize"`
+	WinnerCount int64 `json:"winnerCount"`
+	Users []*UserInfo `json:"users"`
+}
+
+type GetLotteryWinList2Resp {
+	list []*WonList2 `json:"list"`
+}

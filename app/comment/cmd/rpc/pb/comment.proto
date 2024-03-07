@@ -19,6 +19,7 @@ message Comment {
   int64 praiseCount = 7; //点赞数量
   int64 createTime = 8; //创建时间
   int64 updateTime = 9; //更新时间
+  int64 isPraise = 10; //当前用户是否点赞
 }
 
 message AddCommentReq {
@@ -118,6 +119,16 @@ message GetCommentLastIdResp {
   int64 lastId = 1; //lastId
 }
 
+// 获取当前用户评论列表，以及评论的点赞数，当前用户是否点赞
+message GetUserCommentReq {
+  int64 userId = 1; //用户id
+}
+
+message GetUserCommentResp {
+  repeated Comment comment = 1; //comment
+}
+
+
 
 //--------------------------------praise--------------------------------
 message Praise {
@@ -198,6 +209,7 @@ service comment{
    rpc PraiseComment(PraiseCommentReq) returns (PraiseCommentResp);
    rpc GetCommentLastId(GetCommentLastIdReq) returns (GetCommentLastIdResp);
    rpc IsPraiseList(IsPraiseListReq) returns (IsPraiseListResp);
+    rpc GetUserComment(GetUserCommentReq) returns (GetUserCommentResp);
 	 //-----------------------praise----------------------- 
 	 rpc AddPraise(AddPraiseReq) returns (AddPraiseResp); 
 	 rpc UpdatePraise(UpdatePraiseReq) returns (UpdatePraiseResp); 

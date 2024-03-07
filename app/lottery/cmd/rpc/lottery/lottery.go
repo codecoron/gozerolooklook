@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	AddClockTaskRecordReq                  = pb.AddClockTaskRecordReq
+	AddClockTaskRecordResp                 = pb.AddClockTaskRecordResp
 	AddLotteryParticipationReq             = pb.AddLotteryParticipationReq
 	AddLotteryParticipationResp            = pb.AddLotteryParticipationResp
 	AddLotteryReq                          = pb.AddLotteryReq
@@ -42,6 +44,8 @@ type (
 	GetLotteryByIdResp                     = pb.GetLotteryByIdResp
 	GetLotteryListAfterLoginReq            = pb.GetLotteryListAfterLoginReq
 	GetLotteryListAfterLoginResp           = pb.GetLotteryListAfterLoginResp
+	GetLotteryStatisticReq                 = pb.GetLotteryStatisticReq
+	GetLotteryStatisticResp                = pb.GetLotteryStatisticResp
 	GetParticipationUserIdsByLotteryIdReq  = pb.GetParticipationUserIdsByLotteryIdReq
 	GetParticipationUserIdsByLotteryIdResp = pb.GetParticipationUserIdsByLotteryIdResp
 	GetPrizeByIdReq                        = pb.GetPrizeByIdReq
@@ -50,6 +54,8 @@ type (
 	GetPrizeListByLotteryIdResp            = pb.GetPrizeListByLotteryIdResp
 	GetSelectedLotteryStatisticReq         = pb.GetSelectedLotteryStatisticReq
 	GetSelectedLotteryStatisticResp        = pb.GetSelectedLotteryStatisticResp
+	GetWonListByLotteryIdReq               = pb.GetWonListByLotteryIdReq
+	GetWonListByLotteryIdResp              = pb.GetWonListByLotteryIdResp
 	GetWonListCountReq                     = pb.GetWonListCountReq
 	GetWonListCountResp                    = pb.GetWonListCountResp
 	GetWonListReq                          = pb.GetWonListReq
@@ -73,7 +79,9 @@ type (
 	UpdateLotteryResp                      = pb.UpdateLotteryResp
 	UpdatePrizeReq                         = pb.UpdatePrizeReq
 	UpdatePrizeResp                        = pb.UpdatePrizeResp
+	UserInfo                               = pb.UserInfo
 	WonList                                = pb.WonList
+	WonList2                               = pb.WonList2
 
 	LotteryZrpcClient interface {
 		// -----------------------抽奖表-----------------------
@@ -90,6 +98,7 @@ type (
 		CheckUserCreatedLotteryAndToday(ctx context.Context, in *CheckUserCreatedLotteryAndTodayReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndTodayResp, error)
 		CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 		GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
+		GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -107,6 +116,9 @@ type (
 		CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 		GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
 		GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error)
+		GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error)
+		// -----------------------完成打卡任务-----------------------
+		AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error)
 	}
 
 	defaultLotteryZrpcClient struct {
@@ -186,6 +198,11 @@ func (m *defaultLotteryZrpcClient) GetLotteryListAfterLogin(ctx context.Context,
 	return client.GetLotteryListAfterLogin(ctx, in, opts...)
 }
 
+func (m *defaultLotteryZrpcClient) GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetLotteryStatistic(ctx, in, opts...)
+}
+
 // -----------------------奖品表-----------------------
 func (m *defaultLotteryZrpcClient) AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
@@ -261,4 +278,15 @@ func (m *defaultLotteryZrpcClient) GetWonList(ctx context.Context, in *GetWonLis
 func (m *defaultLotteryZrpcClient) GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.GetWonListCount(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetWonListByLotteryId(ctx, in, opts...)
+}
+
+// -----------------------完成打卡任务-----------------------
+func (m *defaultLotteryZrpcClient) AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.AddClockTaskRecord(ctx, in, opts...)
 }

@@ -26,7 +26,6 @@ func NewTestValidatorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Tes
 }
 
 func (l *TestValidatorLogic) TestValidator(req *types.TestReq) (resp *types.TestResp, err error) {
-	// todo: add your logic here and delete this line
 
 	return
 }

@@ -45,6 +45,7 @@ services:
       - 2004:2004
       - 2005:2005
       - 2009:2009
+      - 2004:2004
 
 networks:
   looklook_net:

@@ -59,17 +59,17 @@ type CreateClockTask struct {
 }
 
 type CreateLotteryReq struct {
-	Name          string           `json:"name"`                //默认一等奖名称
-	Thumb         string           `json:"thumb"`               //默认一等奖配图
-	AnnounceType  int64            `json:"announceType"`        //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	AnnounceTime  int64            `json:"announceTime"`        //开奖时间
-	JoinNumber    int64            `json:"joinNumber"`          //自动开奖人数标准
-	Introduce     string           `json:"introduce"`           //抽奖说明
-	AwardDeadline int64            `json:"awardDeadline"`       //领奖截止时间
-	SponsorId     int64            `json:"sponsorId"`           // 赞助商Id
-	Prizes        []*CreatePrize   `json:"prizes"`              //奖品 支持多个
-	IsClocked     int64            `json:"isClocked"`           //是否开启打卡任务 0未开启；1已开启
-	ClockTask     *CreateClockTask `json:"clockTask, optional"` //打卡任务 支持一个
+	Name          string           `json:"name"`                              //默认一等奖名称
+	Thumb         string           `json:"thumb"`                             //默认一等奖配图
+	AnnounceType  int64            `json:"announceType" validate:"oneof=1 2"` //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64            `json:"announceTime"`                      //开奖时间
+	JoinNumber    int64            `json:"joinNumber"`                        //自动开奖人数标准
+	Introduce     string           `json:"introduce"`                         //抽奖说明
+	AwardDeadline int64            `json:"awardDeadline"`                     //领奖截止时间
+	SponsorId     int64            `json:"sponsorId"`                         // 赞助商Id
+	Prizes        []*CreatePrize   `json:"prizes"`                            //奖品 支持多个
+	IsClocked     int64            `json:"isClocked"`                         //是否开启打卡任务 0未开启；1已开启
+	ClockTask     *CreateClockTask `json:"clockTask, optional"`               //打卡任务 支持一个
 }
 
 type CreateLotteryResp struct {
@@ -173,6 +173,15 @@ type ChanceTypeListResp struct {
 	List []ChanceType `json:"list"`
 }
 
+type CreateClockTaskRecordReq struct {
+	LotteryId   int64 `json:"lotteryId"`
+	ClockTaskId int64 `json:"clockTaskId"`
+}
+
+type CreateClockTaskRecordResp struct {
+	Id int64 `json:"id"`
+}
+
 type LotteryParticipation struct {
 	Id        int64 `json:"id"`         // 主键
 	LotteryId int64 `json:"lottery_id"` // 参与的抽奖的id
@@ -236,4 +245,26 @@ type GetLotteryWinListReq struct {
 
 type GetLotteryWinListResp struct {
 	List []*WonList `json:"list"`
+}
+
+type CheckIsWinReq struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type CheckIsWinResp struct {
+	IsWon int64 `json:"isWon"`
+}
+
+type GetLotteryWinList2Req struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type WonList2 struct {
+	Prize       *Prizes     `json:"prize"`
+	WinnerCount int64       `json:"winnerCount"`
+	Users       []*UserInfo `json:"users"`
+}
+
+type GetLotteryWinList2Resp struct {
+	List []*WonList2 `json:"list"`
 }
