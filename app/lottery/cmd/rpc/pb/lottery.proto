@@ -375,6 +375,27 @@ message GetWonListCountResp{
   int64 count = 1;
 }
 
+// 获取当前抽奖中奖者名单
+message GetWonListByLotteryIdReq{
+  int64 lotteryId = 1;
+}
+
+message UserInfo{
+  int64 id = 1;
+  string nickname = 2;
+  string avatar = 3;
+}
+
+message WonList2 {
+  Prize prize = 1;
+  int64 WinnerCount = 2;
+  repeated UserInfo users = 3;
+}
+
+message GetWonListByLotteryIdResp{
+  repeated WonList2 list = 1;
+}
+
 
 
 //--------------------------------打卡任务表--------------------------------
@@ -446,6 +467,7 @@ service lottery{
   rpc CheckUserIsWon(CheckUserIsWonReq) returns (CheckUserIsWonResp);
   rpc GetWonList(GetWonListReq) returns (GetWonListResp);
   rpc GetWonListCount(GetWonListCountReq) returns (GetWonListCountResp);
+  rpc GetWonListByLotteryId(GetWonListByLotteryIdReq) returns (GetWonListByLotteryIdResp);
 
   //-----------------------完成打卡任务-----------------------
   rpc AddClockTaskRecord(AddClockTaskRecordReq) returns (AddClockTaskRecordResp);
