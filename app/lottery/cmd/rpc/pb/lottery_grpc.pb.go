@@ -48,6 +48,7 @@ const (
 	Lottery_CheckUserIsWon_FullMethodName                     = "/pb.lottery/CheckUserIsWon"
 	Lottery_GetWonList_FullMethodName                         = "/pb.lottery/GetWonList"
 	Lottery_GetWonListCount_FullMethodName                    = "/pb.lottery/GetWonListCount"
+	Lottery_GetWonListByLotteryId_FullMethodName              = "/pb.lottery/GetWonListByLotteryId"
 	Lottery_AddClockTaskRecord_FullMethodName                 = "/pb.lottery/AddClockTaskRecord"
 )
 
@@ -87,6 +88,7 @@ type LotteryClient interface {
 	CheckUserIsWon(ctx context.Context, in *CheckUserIsWonReq, opts ...grpc.CallOption) (*CheckUserIsWonResp, error)
 	GetWonList(ctx context.Context, in *GetWonListReq, opts ...grpc.CallOption) (*GetWonListResp, error)
 	GetWonListCount(ctx context.Context, in *GetWonListCountReq, opts ...grpc.CallOption) (*GetWonListCountResp, error)
+	GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error)
 	// -----------------------完成打卡任务-----------------------
 	AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error)
 }
@@ -360,6 +362,15 @@ func (c *lotteryClient) GetWonListCount(ctx context.Context, in *GetWonListCount
 	return out, nil
 }
 
+func (c *lotteryClient) GetWonListByLotteryId(ctx context.Context, in *GetWonListByLotteryIdReq, opts ...grpc.CallOption) (*GetWonListByLotteryIdResp, error) {
+	out := new(GetWonListByLotteryIdResp)
+	err := c.cc.Invoke(ctx, Lottery_GetWonListByLotteryId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lotteryClient) AddClockTaskRecord(ctx context.Context, in *AddClockTaskRecordReq, opts ...grpc.CallOption) (*AddClockTaskRecordResp, error) {
 	out := new(AddClockTaskRecordResp)
 	err := c.cc.Invoke(ctx, Lottery_AddClockTaskRecord_FullMethodName, in, out, opts...)
@@ -405,6 +416,7 @@ type LotteryServer interface {
 	CheckUserIsWon(context.Context, *CheckUserIsWonReq) (*CheckUserIsWonResp, error)
 	GetWonList(context.Context, *GetWonListReq) (*GetWonListResp, error)
 	GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error)
+	GetWonListByLotteryId(context.Context, *GetWonListByLotteryIdReq) (*GetWonListByLotteryIdResp, error)
 	// -----------------------完成打卡任务-----------------------
 	AddClockTaskRecord(context.Context, *AddClockTaskRecordReq) (*AddClockTaskRecordResp, error)
 	mustEmbedUnimplementedLotteryServer()
@@ -500,6 +512,9 @@ func (UnimplementedLotteryServer) GetWonList(context.Context, *GetWonListReq) (*
 }
 func (UnimplementedLotteryServer) GetWonListCount(context.Context, *GetWonListCountReq) (*GetWonListCountResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWonListCount not implemented")
+}
+func (UnimplementedLotteryServer) GetWonListByLotteryId(context.Context, *GetWonListByLotteryIdReq) (*GetWonListByLotteryIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWonListByLotteryId not implemented")
 }
 func (UnimplementedLotteryServer) AddClockTaskRecord(context.Context, *AddClockTaskRecordReq) (*AddClockTaskRecordResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddClockTaskRecord not implemented")
@@ -1039,6 +1054,24 @@ func _Lottery_GetWonListCount_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Lottery_GetWonListByLotteryId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWonListByLotteryIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetWonListByLotteryId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetWonListByLotteryId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetWonListByLotteryId(ctx, req.(*GetWonListByLotteryIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Lottery_AddClockTaskRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddClockTaskRecordReq)
 	if err := dec(in); err != nil {
@@ -1179,6 +1212,10 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWonListCount",
 			Handler:    _Lottery_GetWonListCount_Handler,
+		},
+		{
+			MethodName: "GetWonListByLotteryId",
+			Handler:    _Lottery_GetWonListByLotteryId_Handler,
 		},
 		{
 			MethodName: "AddClockTaskRecord",

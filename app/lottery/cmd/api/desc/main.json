@@ -222,6 +222,35 @@
         ]
       }
     },
+    "lottery/v1/lottery/getLotteryWinnersList": {
+      "post": {
+        "summary": "获取当前抽奖中奖者名单",
+        "operationId": "getLotteryWinList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetLotteryWinList2Resp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 得到当前抽奖中奖者名单列表",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetLotteryWinList2Req"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/lotteryDetail": {
       "post": {
         "summary": "lottery detail",
@@ -797,6 +826,34 @@
         "count",
         "thumb",
         "grantType"
+      ]
+    },
+    "GetLotteryWinList2Req": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetLotteryWinList2Req",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "GetLotteryWinList2Resp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WonList2"
+          }
+        }
+      },
+      "title": "GetLotteryWinList2Resp",
+      "required": [
+        "list"
       ]
     },
     "GetLotteryWinListReq": {
@@ -1454,6 +1511,30 @@
         "user_id",
         "is_won",
         "prize"
+      ]
+    },
+    "WonList2": {
+      "type": "object",
+      "properties": {
+        "prize": {
+          "$ref": "#/definitions/Prizes"
+        },
+        "winnerCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInfo"
+          }
+        }
+      },
+      "title": "WonList2",
+      "required": [
+        "prize",
+        "winnerCount",
+        "users"
       ]
     }
   },
