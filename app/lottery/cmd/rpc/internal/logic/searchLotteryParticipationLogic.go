@@ -28,12 +28,19 @@ func (l *SearchLotteryParticipationLogic) SearchLotteryParticipation(in *pb.Sear
 	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ?", in.LotteryId).Limit(uint64(limit)).Offset(uint64(offset))
 
 	list, err := l.svcCtx.LotteryParticipationModel.FindAll(l.ctx, builder, "")
+
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取当前抽奖的参与者总数
+	count, err := l.svcCtx.LotteryParticipationModel.GetParticipatorsCountByLotteryId(l.ctx, in.LotteryId)
 	if err != nil {
 		return nil, err
 	}
 
 	resp := &pb.SearchLotteryParticipationResp{
-		Count: int64(len(list)),
+		Count: count,
 		List:  []*pb.LotteryParticipation{},
 	}
 
