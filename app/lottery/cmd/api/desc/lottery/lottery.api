@@ -111,7 +111,7 @@ type LotterySponsor {
      desc string `json:"desc"`//描述
      avatar string `json:"avatar"`//avatar
      isShow int64 `json:"isShow"`//1显示 2不显示
-     qrCode string `json:"qrCode"`//二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+     qrCode string `json:"qrCode ,optional"`//二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
      inputA string `json:"inputA"`//type=5 applet_type=2 or applet_type=1 输入框A
      inputB string `json:"inputB"`//type=5 applet_type=2输入框B
 }
