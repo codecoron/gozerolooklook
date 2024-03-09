@@ -42,8 +42,8 @@ type CreatePrize struct {
 }
 
 type CreateClockTask struct {
-	Type             int64  `json:"type"`                       // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
-	Seconds          int64  `json:"seconds"`                    // 任务秒数
+	Type             int64  `json:"type, optional"`             // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
+	Seconds          int64  `json:"seconds, optional"`          // 任务秒数
 	AppletType       int64  `json:"appletType, optional"`       // type=1时该字段才有意义 小程序跳转类型，1小程序链接 2小程序路径
 	PageLink         string `json:"pageLink, optional"`         // type=1 并且 applet_type=1时 该字段才有意义 配置要跳转小程序的页面链接 （如 #小程序://抽奖/oM....）
 	AppId            string `json:"appId, optional"`            // type=1 并且 applet_type=2时 该字段才有意义 配置要跳转的小程序AppID
@@ -91,17 +91,17 @@ type SetLotteryIsSelectedResp struct {
 }
 
 type LotterySponsor struct {
-	Id         int64  `json:"id"`         //id
-	UserId     int64  `json:"userId"`     //userId
-	Type       int64  `json:"type"`       //1微信号 2公众号 3小程序 4微信群 5视频号
-	AppletType int64  `json:"appletType"` //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
-	Name       string `json:"name"`       //名称
-	Desc       string `json:"desc"`       //描述
-	Avatar     string `json:"avatar"`     //avatar
-	IsShow     int64  `json:"isShow"`     //1显示 2不显示
-	QrCode     string `json:"qrCode"`     //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
-	InputA     string `json:"inputA"`     //type=5 applet_type=2 or applet_type=1 输入框A
-	InputB     string `json:"inputB"`     //type=5 applet_type=2输入框B
+	Id         int64  `json:"id"`               //id
+	UserId     int64  `json:"userId"`           //userId
+	Type       int64  `json:"type"`             //1微信号 2公众号 3小程序 4微信群 5视频号
+	AppletType int64  `json:"appletType"`       //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+	Name       string `json:"name"`             //名称
+	Desc       string `json:"desc"`             //描述
+	Avatar     string `json:"avatar"`           //avatar
+	IsShow     int64  `json:"isShow"`           //1显示 2不显示
+	QrCode     string `json:"qrCode ,optional"` //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+	InputA     string `json:"inputA,optional"`  //type=5 applet_type=2 or applet_type=1 输入框A
+	InputB     string `json:"inputB,optional"`  //type=5 applet_type=2输入框B
 }
 
 type LotteryDetailReq struct {
