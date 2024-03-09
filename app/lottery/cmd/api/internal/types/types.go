@@ -52,7 +52,7 @@ type CreateClockTask struct {
 	VideoAccountId   string `json:"videoAccountId, optional"`   // type=4时 该字段才有意义 视频号ID
 	VideoId          string `json:"videoId, optional"`          // type=4时 该字段才有意义 视频ID
 	ArticleLink      string `json:"articleLink, optional"`      // type=2时 该字段才有意义 公众号文章链接
-	Copywriting      string `json:"copywriting,,optional"`      // 引导参与者完成打卡任务的文案
+	Copywriting      string `json:"copywriting,optional"`       // 引导参与者完成打卡任务的文案
 	ChanceType       int64  `json:"chanceType,optional"`        // 概率类型 1: 随机 2: 指定
 	IncreaseMultiple int64  `json:"increaseMultiple, optional"` // ChanceType=2时 该字段才有意义，概率增加倍数
 }
@@ -91,17 +91,17 @@ type SetLotteryIsSelectedResp struct {
 }
 
 type LotterySponsor struct {
-	Id         int64  `json:"id"`               //id
-	UserId     int64  `json:"userId"`           //userId
-	Type       int64  `json:"type"`             //1微信号 2公众号 3小程序 4微信群 5视频号
-	AppletType int64  `json:"appletType"`       //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
-	Name       string `json:"name"`             //名称
-	Desc       string `json:"desc"`             //描述
-	Avatar     string `json:"avatar"`           //avatar
-	IsShow     int64  `json:"isShow"`           //1显示 2不显示
-	QrCode     string `json:"qrCode ,optional"` //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
-	InputA     string `json:"inputA,optional"`  //type=5 applet_type=2 or applet_type=1 输入框A
-	InputB     string `json:"inputB,optional"`  //type=5 applet_type=2输入框B
+	Id         int64  `json:"id"`              //id
+	UserId     int64  `json:"userId"`          //userId
+	Type       int64  `json:"type"`            //1微信号 2公众号 3小程序 4微信群 5视频号
+	AppletType int64  `json:"appletType"`      //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+	Name       string `json:"name"`            //名称
+	Desc       string `json:"desc"`            //描述
+	Avatar     string `json:"avatar"`          //avatar
+	IsShow     int64  `json:"isShow"`          //1显示 2不显示
+	QrCode     string `json:"qrCode,optional"` //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+	InputA     string `json:"inputA,optional"` //type=5 applet_type=2 or applet_type=1 输入框A
+	InputB     string `json:"inputB,optional"` //type=5 applet_type=2输入框B
 }
 
 type LotteryDetailReq struct {
