@@ -1206,7 +1206,7 @@
           "format": "int64",
           "description": "1显示 2不显示"
         },
-        "qrCode": {
+        "qrCode ": {
           "type": "string",
           "description": "二维码图片地址, type=1 2 3\u0026applet_type=3 4的时候启用"
         },
@@ -1228,10 +1228,7 @@
         "name",
         "desc",
         "avatar",
-        "isShow",
-        "qrCode",
-        "inputA",
-        "inputB"
+        "isShow"
       ]
     },
     "Prize": {
