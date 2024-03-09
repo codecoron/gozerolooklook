@@ -1097,10 +1097,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
         "pageSize": {
           "type": "integer",
           "format": "int64"
@@ -1113,7 +1109,6 @@
       "title": "LotteryListReq",
       "required": [
         "lastId",
-        "page",
         "pageSize",
         "isSelected"
       ]
