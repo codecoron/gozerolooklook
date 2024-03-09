@@ -55,6 +55,9 @@ func (l *GetWonListByLotteryIdLogic) GetWonListByLotteryId(in *pb.GetWonListByLo
 	}
 
 	// 查询用户信息
+	if len(userIds) == 0 {
+		return &pb.GetWonListByLotteryIdResp{}, nil
+	}
 	userInfo, err := l.svcCtx.UserCenterRpc.GetUserInfoByUserIds(l.ctx, &usercenter.GetUserInfoByUserIdsReq{UserIds: userIds})
 	if err != nil {
 		return nil, err
