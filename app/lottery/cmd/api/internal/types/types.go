@@ -19,7 +19,6 @@ type Lottery struct {
 
 type LotteryListReq struct {
 	LastId     int64 `json:"lastId"`
-	Page       int64 `json:"page"`
 	PageSize   int64 `json:"pageSize"`
 	IsSelected int64 `json:"isSelected"`
 }

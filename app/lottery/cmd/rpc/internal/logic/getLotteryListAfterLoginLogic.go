@@ -25,7 +25,7 @@ func NewGetLotteryListAfterLoginLogic(ctx context.Context, svcCtx *svc.ServiceCo
 }
 
 func (l *GetLotteryListAfterLoginLogic) GetLotteryListAfterLogin(in *pb.GetLotteryListAfterLoginReq) (*pb.GetLotteryListAfterLoginResp, error) {
-	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Page, in.Size, in.IsSelected, in.LastId)
+	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Size, in.IsSelected, in.LastId)
 	if err != nil {
 		return nil, err
 	}

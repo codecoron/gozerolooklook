@@ -30,7 +30,6 @@ func (l *LotteryListAfterLoginLogic) LotteryListAfterLogin(req *types.LotteryLis
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	res, err := l.svcCtx.LotteryRpc.GetLotteryListAfterLogin(l.ctx, &lottery.GetLotteryListAfterLoginReq{
 		LastId:     req.LastId,
-		Page:       req.Page,
 		Size:       req.PageSize,
 		IsSelected: req.IsSelected,
 		UserId:     userId,
