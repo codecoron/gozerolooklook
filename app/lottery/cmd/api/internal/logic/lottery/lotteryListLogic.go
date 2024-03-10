@@ -27,7 +27,6 @@ func NewLotteryListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Lotte
 func (l *LotteryListLogic) LotteryList(req *types.LotteryListReq) (*types.LotteryListResp, error) {
 	resp, err := l.svcCtx.LotteryRpc.SearchLottery(l.ctx, &lottery.SearchLotteryReq{
 		LastId:     req.LastId,
-		Page:       req.Page,
 		Limit:      req.PageSize,
 		IsSelected: req.IsSelected,
 	})

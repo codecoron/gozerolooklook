@@ -27,7 +27,6 @@ type Lottery {
 type (
     LotteryListReq {
         LastId int64 `json:"lastId"`
-        Page int64 `json:"page"`
         PageSize int64 `json:"pageSize"`
         IsSelected int64 `json:"isSelected"`
     }
@@ -51,8 +50,8 @@ type CreatePrize {
 }
 
 type CreateClockTask {
-    Type int64 `json:"type"`                                              // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
-    Seconds int64 `json:"seconds"`                                        // 任务秒数
+    Type int64 `json:"type, optional"`                                              // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
+    Seconds int64 `json:"seconds, optional"`                                        // 任务秒数
     AppletType  int64 `json:"appletType, optional"`                       // type=1时该字段才有意义 小程序跳转类型，1小程序链接 2小程序路径
     PageLink string `json:"pageLink, optional"`                           // type=1 并且 applet_type=1时 该字段才有意义 配置要跳转小程序的页面链接 （如 #小程序://抽奖/oM....）
     AppId   string  `json:"appId, optional"`                              // type=1 并且 applet_type=2时 该字段才有意义 配置要跳转的小程序AppID
@@ -61,8 +60,8 @@ type CreateClockTask {
     VideoAccountId   string  `json:"videoAccountId, optional"`            // type=4时 该字段才有意义 视频号ID
     VideoId   string  `json:"videoId, optional"`                          // type=4时 该字段才有意义 视频ID
     ArticleLink   string  `json:"articleLink, optional"`                    // type=2时 该字段才有意义 公众号文章链接
-    Copywriting   string  `json:"copywriting"`                            // 引导参与者完成打卡任务的文案
-    ChanceType   int64  `json:"chanceType"`                               // 概率类型 1: 随机 2: 指定
+    Copywriting   string  `json:"copywriting,optional"`                            // 引导参与者完成打卡任务的文案
+    ChanceType   int64  `json:"chanceType,optional"`                               // 概率类型 1: 随机 2: 指定
     IncreaseMultiple int64  `json:"increaseMultiple, optional"`          // ChanceType=2时 该字段才有意义，概率增加倍数
 }
 
@@ -112,9 +111,9 @@ type LotterySponsor {
      desc string `json:"desc"`//描述
      avatar string `json:"avatar"`//avatar
      isShow int64 `json:"isShow"`//1显示 2不显示
-     qrCode string `json:"qrCode"`//二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
-     inputA string `json:"inputA"`//type=5 applet_type=2 or applet_type=1 输入框A
-     inputB string `json:"inputB"`//type=5 applet_type=2输入框B
+     qrCode string `json:"qrCode,optional"`//二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+     inputA string `json:"inputA,optional"`//type=5 applet_type=2 or applet_type=1 输入框A
+     inputB string `json:"inputB,optional"`//type=5 applet_type=2输入框B
 }
 
 type (

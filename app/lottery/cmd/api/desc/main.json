@@ -670,8 +670,6 @@
         "videoAccountId",
         "videoId",
         "articleLink",
-        "copywriting",
-        "chanceType",
         "increaseMultiple"
       ]
     },
@@ -1097,10 +1095,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
         "pageSize": {
           "type": "integer",
           "format": "int64"
@@ -1113,7 +1107,6 @@
       "title": "LotteryListReq",
       "required": [
         "lastId",
-        "page",
         "pageSize",
         "isSelected"
       ]
@@ -1233,10 +1226,7 @@
         "name",
         "desc",
         "avatar",
-        "isShow",
-        "qrCode",
-        "inputA",
-        "inputB"
+        "isShow"
       ]
     },
     "Prize": {
