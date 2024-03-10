@@ -18,6 +18,11 @@ type User {
 	Signature string `json:"signature"`
 	Longitude float64 `json:"longitude"`
 	Latitude float64 `json:"latitude"`
+    ParticipationCount      int64  `json:"participation_count"`
+	CreatedCount      int64  `json:"created_count"`
+	WonCount      int64  `json:"won_count"`
+	Integral      int64  `json:"integral"`
+
 }
 
 type (
