@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info(
+    title: "用户动态"
+    desc: "用户动态"
+)
+type (
+    CreateDynamicInfo{
+        dynamicUrl string `json:"dynamicUrl"`
+        Remark string `json:"remark"`
+    }
+)
+
+//============================> usercenter 发布动态 <============================
+type (
+    CreateDynamicReq {
+        UserId int64 `json:"userId"`
+        dynamicUrl string `json:"dynamicUrl"`
+        Remark string `json:"remark"`
+    }
+    CreateDynamicResp {
+        Id int64 `json:"id"`
+    }
+)
+type (
+    DeleteDynamicReq {
+        Id int64 `json:"id"`
+        UserId int64 `json:"userId"`
+    }
+    DeleteDynamicResp {
+//        Id int64 `json:"id"`
+    }
+)

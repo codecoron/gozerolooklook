@@ -242,3 +242,33 @@ func (s *UsercenterServer) SponsorDetail(ctx context.Context, in *pb.SponsorDeta
 	l := logic.NewSponsorDetailLogic(ctx, s.svcCtx)
 	return l.SponsorDetail(in)
 }
+
+func (s *UsercenterServer) AddUserDynamic(ctx context.Context, in *pb.AddUserDynamicReq) (*pb.AddUserDynamicResp, error) {
+	l := logic.NewAddUserDynamicLogic(ctx, s.svcCtx)
+	return l.AddUserDynamic(in)
+}
+
+func (s *UsercenterServer) UpdateUserDynamic(ctx context.Context, in *pb.UpdateUserDynamicReq) (*pb.UpdateUserDynamicResp, error) {
+	l := logic.NewUpdateUserDynamicLogic(ctx, s.svcCtx)
+	return l.UpdateUserDynamic(in)
+}
+
+func (s *UsercenterServer) DelUserDynamic(ctx context.Context, in *pb.DelUserDynamicReq) (*pb.DelUserDynamicResp, error) {
+	l := logic.NewDelUserDynamicLogic(ctx, s.svcCtx)
+	return l.DelUserDynamic(in)
+}
+
+func (s *UsercenterServer) GetUserDynamicById(ctx context.Context, in *pb.GetUserDynamicByIdReq) (*pb.GetUserDynamicByIdResp, error) {
+	l := logic.NewGetUserDynamicByIdLogic(ctx, s.svcCtx)
+	return l.GetUserDynamicById(in)
+}
+
+func (s *UsercenterServer) SearchUserDynamic(ctx context.Context, in *pb.SearchUserDynamicReq) (*pb.SearchUserDynamicResp, error) {
+	l := logic.NewSearchUserDynamicLogic(ctx, s.svcCtx)
+	return l.SearchUserDynamic(in)
+}
+
+func (s *UsercenterServer) GetUserDynamicByUserId(ctx context.Context, in *pb.GetUserDynamicByUserIdReq) (*pb.GetUserDynamicByUserIdResp, error) {
+	l := logic.NewGetUserDynamicByUserIdLogic(ctx, s.svcCtx)
+	return l.GetUserDynamicByUserId(in)
+}

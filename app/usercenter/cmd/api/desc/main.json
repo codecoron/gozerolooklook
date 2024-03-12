@@ -100,6 +100,62 @@
         ]
       }
     },
+    "usercenter/v1/user/createDynamic": {
+      "post": {
+        "summary": "创建用户动态",
+        "operationId": "createDynamic",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateDynamicResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDynamicReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userDynamic"
+        ]
+      }
+    },
+    "usercenter/v1/user/deleteDynamic": {
+      "post": {
+        "summary": "删除用户动态",
+        "operationId": "deleteDynamic",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteDynamicResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteDynamicReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userDynamic"
+        ]
+      }
+    },
     "usercenter/v1/user/detail": {
       "post": {
         "summary": "获得用户数据",
@@ -237,6 +293,34 @@
         "requestBody": {},
         "tags": [
           "user"
+        ]
+      }
+    },
+    "usercenter/v1/user/userWonDynamicCommentList": {
+      "post": {
+        "summary": "累计奖品发布动态用户晒单列表",
+        "operationId": "UserWonDynamicCommentList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserWonDynamicCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserWonDynamicCommentReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "userWonDynamicComment"
         ]
       }
     },
@@ -773,6 +857,56 @@
         "id"
       ]
     },
+    "CreateDynamicInfo": {
+      "type": "object",
+      "properties": {
+        "dynamicUrl": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "CreateDynamicInfo",
+      "required": [
+        "dynamicUrl",
+        "remark"
+      ]
+    },
+    "CreateDynamicReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "dynamicUrl": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "CreateDynamicReq",
+      "required": [
+        "userId",
+        "dynamicUrl",
+        "remark"
+      ]
+    },
+    "CreateDynamicResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateDynamicResp",
+      "required": [
+        "id"
+      ]
+    },
     "CreateSponsorReq": {
       "type": "object",
       "properties": {
@@ -838,6 +972,28 @@
         "id"
       ]
     },
+    "DeleteDynamicReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "DeleteDynamicReq",
+      "required": [
+        "id",
+        "userId"
+      ]
+    },
+    "DeleteDynamicResp": {
+      "type": "object",
+      "title": "DeleteDynamicResp"
+    },
     "DistrictInfo": {
       "type": "object",
       "properties": {
@@ -876,6 +1032,32 @@
       "required": [
         "id",
         "name"
+      ]
+    },
+    "DynamicInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "dynamicUrl": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "DynamicInfo",
+      "required": [
+        "id",
+        "dynamicUrl",
+        "remark",
+        "updateTime"
       ]
     },
     "LoginReq": {
@@ -1309,6 +1491,61 @@
         "userId"
       ]
     },
+    "UserCommentInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "prizeName": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "pics": {
+          "type": "string"
+        },
+        "praiseCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isPraise": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UserCommentInfo",
+      "required": [
+        "id",
+        "userId",
+        "lotteryId",
+        "prizeName",
+        "content",
+        "pics",
+        "praiseCount",
+        "createTime",
+        "updateTime",
+        "isPraise"
+      ]
+    },
     "UserInfoReq": {
       "type": "object",
       "title": "UserInfoReq"
@@ -1367,6 +1604,46 @@
     "UserUpdateResp": {
       "type": "object",
       "title": "UserUpdateResp"
+    },
+    "UserWonDynamicCommentReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UserWonDynamicCommentReq",
+      "required": [
+        "userId"
+      ]
+    },
+    "UserWonDynamicCommentResp": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userDynamicList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DynamicInfo"
+          }
+        },
+        "userCommentList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserCommentInfo"
+          }
+        }
+      },
+      "title": "UserWonDynamicCommentResp",
+      "required": [
+        "count",
+        "userDynamicList",
+        "userCommentList"
+      ]
     },
     "WXMiniAuthReq": {
       "type": "object",

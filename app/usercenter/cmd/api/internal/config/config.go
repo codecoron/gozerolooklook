@@ -12,4 +12,6 @@ type Config struct {
 	}
 	WxMiniConf        WxMiniConf
 	UsercenterRpcConf zrpc.RpcClientConf
+	CommentRpcConf    zrpc.RpcClientConf
+	LotteryRpcConf    zrpc.RpcClientConf
 }

@@ -1,0 +1,523 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------鐢ㄦ埛琛?-------------------------------
+message User {
+  int64 id = 1; //id
+  int64 createTime = 2; //createTime
+  int64 updateTime = 3; //updateTime
+  string mobile = 4; //mobile
+  string password = 5; //password
+  string nickname = 6; //nickname
+  int64 sex = 7; //鎬у埆 0:鐢?1:濂?  string avatar = 8; //avatar
+  string info = 9; //info
+  int64 isAdmin = 10; //鏄惁绠＄悊鍛?1鏄?0鍚?  string signature = 11; //涓€х鍚?  string locationName = 12; //鍦板潃鍚嶇О
+  double longitude = 13; //缁忓害
+  double latitude = 14; //绾害
+  int64 totalPrize = 15; //绱濂栧搧
+  int64 fans = 16; //绮変笣鏁伴噺
+  int64 allLottery = 17; //鍏ㄩ儴鎶藉鍖呭惈鎴戝彂璧风殑銆佹垜涓鐨?  int64 initiationRecord = 18; //鍙戣捣鎶藉璁板綍
+  int64 winningRecord = 19; //涓璁板綍
+}
+
+message AddUserReq {
+  string mobile = 1; //mobile
+  string password = 2; //password
+  string nickname = 3; //nickname
+  int64 sex = 4; //鎬у埆 0:鐢?1:濂?  string avatar = 5; //avatar
+  string info = 6; //info
+  int64 isAdmin = 7; //鏄惁绠＄悊鍛?1鏄?0鍚?  string signature = 8; //涓€х鍚?  string locationName = 9; //鍦板潃鍚嶇О
+  double longitude = 10; //缁忓害
+  double latitude = 11; //绾害
+  int64 totalPrize = 12; //绱濂栧搧
+  int64 fans = 13; //绮変笣鏁伴噺
+  int64 allLottery = 14; //鍏ㄩ儴鎶藉鍖呭惈鎴戝彂璧风殑銆佹垜涓鐨?  int64 initiationRecord = 15; //鍙戣捣鎶藉璁板綍
+  int64 winningRecord = 16; //涓璁板綍
+}
+
+message AddUserResp {
+}
+
+message UpdateUserReq {
+  int64 id = 1; //id
+  string mobile = 2; //mobile
+  string password = 3; //password
+  string nickname = 4; //nickname
+  int64 sex = 5; //鎬у埆 0:鐢?1:濂?  string avatar = 6; //avatar
+  string info = 7; //info
+  int64 isAdmin = 8; //鏄惁绠＄悊鍛?1鏄?0鍚?  string signature = 9; //涓€х鍚?  string locationName = 10; //鍦板潃鍚嶇О
+  double longitude = 11; //缁忓害
+  double latitude = 12; //绾害
+  int64 totalPrize = 13; //绱濂栧搧
+  int64 fans = 14; //绮変笣鏁伴噺
+  int64 allLottery = 15; //鍏ㄩ儴鎶藉鍖呭惈鎴戝彂璧风殑銆佹垜涓鐨?  int64 initiationRecord = 16; //鍙戣捣鎶藉璁板綍
+  int64 winningRecord = 17; //涓璁板綍
+}
+
+message UpdateUserResp {
+}
+
+message DelUserReq {
+  int64 id = 1; //id
+}
+
+message DelUserResp {
+}
+
+message GetUserByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserByIdResp {
+  User user = 1; //user
+}
+
+message SearchUserReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+  string mobile = 6; //mobile
+  string password = 7; //password
+  string nickname = 8; //nickname
+  int64 sex = 9; //鎬у埆 0:鐢?1:濂?  string avatar = 10; //avatar
+  string info = 11; //info
+  int64 isAdmin = 12; //鏄惁绠＄悊鍛?1鏄?0鍚?  string signature = 13; //涓€х鍚?  string locationName = 14; //鍦板潃鍚嶇О
+  double longitude = 15; //缁忓害
+  double latitude = 16; //绾害
+  int64 totalPrize = 17; //绱濂栧搧
+  int64 fans = 18; //绮変笣鏁伴噺
+  int64 allLottery = 19; //鍏ㄩ儴鎶藉鍖呭惈鎴戝彂璧风殑銆佹垜涓鐨?  int64 initiationRecord = 20; //鍙戣捣鎶藉璁板綍
+  int64 winningRecord = 21; //涓璁板綍
+}
+
+message SearchUserResp {
+  repeated User user = 1; //user
+}
+
+//--------------------------------鐢ㄦ埛鏀惰揣鍦板潃琛?-------------------------------
+message UserAddress {
+  int64 id = 1; //id
+  int64 userId = 2; //鐢ㄦ埛id
+  string contactName = 3; //鑱旂郴浜哄鍚?  string contactMobile = 4; //鑱旂郴浜烘墜鏈哄彿鐮?  string district = 5; //鍦板尯淇℃伅
+  string detail = 6; //璇︾粏鍦板潃
+  string postcode = 7; //閭斂缂栫爜
+  int64 isDefault = 8; //鏄惁涓洪粯璁ゅ湴鍧€ 1鏄?0鍚?  int64 createTime = 9; //createTime
+  int64 updateTime = 10; //updateTime
+}
+
+message AddUserAddressReq {
+  int64 userId = 1; //鐢ㄦ埛id
+  string contactName = 2; //鑱旂郴浜哄鍚?  string contactMobile = 3; //鑱旂郴浜烘墜鏈哄彿鐮?  string district = 4; //鍦板尯淇℃伅
+  string detail = 5; //璇︾粏鍦板潃
+  string postcode = 6; //閭斂缂栫爜
+  int64 isDefault = 7; //鏄惁涓洪粯璁ゅ湴鍧€ 1鏄?0鍚?}
+
+message AddUserAddressResp {
+}
+
+message UpdateUserAddressReq {
+  int64 id = 1; //id
+  int64 userId = 2; //鐢ㄦ埛id
+  string contactName = 3; //鑱旂郴浜哄鍚?  string contactMobile = 4; //鑱旂郴浜烘墜鏈哄彿鐮?  string district = 5; //鍦板尯淇℃伅
+  string detail = 6; //璇︾粏鍦板潃
+  string postcode = 7; //閭斂缂栫爜
+  int64 isDefault = 8; //鏄惁涓洪粯璁ゅ湴鍧€ 1鏄?0鍚?}
+
+message UpdateUserAddressResp {
+}
+
+message DelUserAddressReq {
+  int64 id = 1; //id
+}
+
+message DelUserAddressResp {
+}
+
+message GetUserAddressByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserAddressByIdResp {
+  UserAddress userAddress = 1; //userAddress
+}
+
+message SearchUserAddressReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //鐢ㄦ埛id
+  string contactName = 5; //鑱旂郴浜哄鍚?  string contactMobile = 6; //鑱旂郴浜烘墜鏈哄彿鐮?  string district = 7; //鍦板尯淇℃伅
+  string detail = 8; //璇︾粏鍦板潃
+  string postcode = 9; //閭斂缂栫爜
+  int64 isDefault = 10; //鏄惁涓洪粯璁ゅ湴鍧€ 1鏄?0鍚?  int64 createTime = 11; //createTime
+  int64 updateTime = 12; //updateTime
+}
+
+message SearchUserAddressResp {
+  repeated UserAddress userAddress = 1; //userAddress
+}
+
+//--------------------------------鐢ㄦ埛鎺堟潈琛?-------------------------------
+message UserAuth {
+  int64 id = 1; //id
+  int64 createTime = 2; //createTime
+  int64 updateTime = 3; //updateTime
+  int64 userId = 4; //userId
+  string authKey = 5; //骞冲彴鍞竴id
+  string authType = 6; //骞冲彴绫诲瀷
+}
+
+message AddUserAuthReq {
+  int64 userId = 1; //userId
+  string authKey = 2; //骞冲彴鍞竴id
+  string authType = 3; //骞冲彴绫诲瀷
+}
+
+message AddUserAuthResp {
+}
+
+message UpdateUserAuthReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string authKey = 3; //骞冲彴鍞竴id
+  string authType = 4; //骞冲彴绫诲瀷
+}
+
+message UpdateUserAuthResp {
+}
+
+message DelUserAuthReq {
+  int64 id = 1; //id
+}
+
+message DelUserAuthResp {
+}
+
+message GetUserAuthByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserAuthByIdResp {
+  UserAuth userAuth = 1; //userAuth
+}
+
+message SearchUserAuthReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+  int64 userId = 6; //userId
+  string authKey = 7; //骞冲彴鍞竴id
+  string authType = 8; //骞冲彴绫诲瀷
+}
+
+message SearchUserAuthResp {
+  repeated UserAuth userAuth = 1; //userAuth
+}
+
+//--------------------------------鎶藉鍙戣捣浜鸿仈绯绘柟寮?-------------------------------
+message UserContact {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string content = 3; //content
+  string remark = 4; //remark
+  int64 createTime = 5; //createTime
+  int64 updateTime = 6; //updateTime
+}
+
+message AddUserContactReq {
+  int64 userId = 1; //userId
+  string content = 2; //content
+  string remark = 3; //remark
+}
+
+message AddUserContactResp {
+}
+
+message UpdateUserContactReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string content = 3; //content
+  string remark = 4; //remark
+}
+
+message UpdateUserContactResp {
+}
+
+message DelUserContactReq {
+  int64 id = 1; //id
+}
+
+message DelUserContactResp {
+}
+
+message GetUserContactByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserContactByIdResp {
+  UserContact userContact = 1; //userContact
+}
+
+message SearchUserContactReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  string content = 5; //content
+  string remark = 6; //remark
+  int64 createTime = 7; //createTime
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchUserContactResp {
+  repeated UserContact userContact = 1; //userContact
+}
+
+//--------------------------------鐢ㄦ埛鍙戝竷鍔ㄦ€佽〃--------------------------------
+message UserDynamic {
+  int64 id = 1; //id
+  int64 userId = 2; //鍙戝竷鍔ㄦ€佺敤鎴穒d
+  string dynamicUrl = 3; //鍙戝竷鍔ㄦ€佸湴鍧€
+  string remark = 4; //鍔ㄦ€佹弿杩?  int64 createTime = 5; //createTime
+  int64 updateTime = 6; //updateTime
+}
+
+message AddUserDynamicReq {
+  int64 userId = 1; //鍙戝竷鍔ㄦ€佺敤鎴穒d
+  string dynamicUrl = 2; //鍙戝竷鍔ㄦ€佸湴鍧€
+  string remark = 3; //鍔ㄦ€佹弿杩?}
+
+message AddUserDynamicResp {
+}
+
+message UpdateUserDynamicReq {
+  int64 id = 1; //id
+  int64 userId = 2; //鍙戝竷鍔ㄦ€佺敤鎴穒d
+  string dynamicUrl = 3; //鍙戝竷鍔ㄦ€佸湴鍧€
+  string remark = 4; //鍔ㄦ€佹弿杩?}
+
+message UpdateUserDynamicResp {
+}
+
+message DelUserDynamicReq {
+  int64 id = 1; //id
+}
+
+message DelUserDynamicResp {
+}
+
+message GetUserDynamicByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserDynamicByIdResp {
+  UserDynamic userDynamic = 1; //userDynamic
+}
+
+message SearchUserDynamicReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //鍙戝竷鍔ㄦ€佺敤鎴穒d
+  string dynamicUrl = 5; //鍙戝竷鍔ㄦ€佸湴鍧€
+  string remark = 6; //鍔ㄦ€佹弿杩?  int64 createTime = 7; //createTime
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchUserDynamicResp {
+  repeated UserDynamic userDynamic = 1; //userDynamic
+}
+
+//--------------------------------userShop--------------------------------
+message UserShop {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string name = 3; //name
+  double location = 4; //location
+  int64 createTime = 5; //createTime
+  int64 updateTime = 6; //updateTime
+}
+
+message AddUserShopReq {
+  int64 userId = 1; //userId
+  string name = 2; //name
+  double location = 3; //location
+}
+
+message AddUserShopResp {
+}
+
+message UpdateUserShopReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string name = 3; //name
+  double location = 4; //location
+}
+
+message UpdateUserShopResp {
+}
+
+message DelUserShopReq {
+  int64 id = 1; //id
+}
+
+message DelUserShopResp {
+}
+
+message GetUserShopByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserShopByIdResp {
+  UserShop userShop = 1; //userShop
+}
+
+message SearchUserShopReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  string name = 5; //name
+  double location = 6; //location
+  int64 createTime = 7; //createTime
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchUserShopResp {
+  repeated UserShop userShop = 1; //userShop
+}
+
+//--------------------------------鎶藉鍙戣捣浜鸿仈绯绘柟寮忥紙鎶藉璧炲姪鍟嗭級--------------------------------
+message UserSponsor {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1寰俊鍙?2鍏紬鍙?3灏忕▼搴?4寰俊缇?5瑙嗛鍙?  int64 appletType = 4; //type=3鏃惰瀛楁鎵嶆湁鎰忎箟锛?灏忕▼搴忛摼鎺?2璺緞璺宠浆 3浜岀淮鐮佽烦杞?  string name = 5; //鍚嶇О
+  string desc = 6; //鎻忚堪
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1鏄剧ず 2涓嶆樉绀?  string qrCode = 9; //浜岀淮鐮佸浘鐗囧湴鍧€, type=1 2 3&applet_type=3 4鐨勬椂鍊欏惎鐢?  string inputA = 10; //type=5 applet_type=2 or applet_type=1 杈撳叆妗咥
+  string inputB = 11; //type=5 applet_type=2杈撳叆妗咮
+  int64 createTime = 12; //createTime
+  int64 updateTime = 13; //updateTime
+}
+
+message AddUserSponsorReq {
+  int64 userId = 1; //userId
+  int64 type = 2; //1寰俊鍙?2鍏紬鍙?3灏忕▼搴?4寰俊缇?5瑙嗛鍙?  int64 appletType = 3; //type=3鏃惰瀛楁鎵嶆湁鎰忎箟锛?灏忕▼搴忛摼鎺?2璺緞璺宠浆 3浜岀淮鐮佽烦杞?  string name = 4; //鍚嶇О
+  string desc = 5; //鎻忚堪
+  string avatar = 6; //avatar
+  int64 isShow = 7; //1鏄剧ず 2涓嶆樉绀?  string qrCode = 8; //浜岀淮鐮佸浘鐗囧湴鍧€, type=1 2 3&applet_type=3 4鐨勬椂鍊欏惎鐢?  string inputA = 9; //type=5 applet_type=2 or applet_type=1 杈撳叆妗咥
+  string inputB = 10; //type=5 applet_type=2杈撳叆妗咮
+}
+
+message AddUserSponsorResp {
+}
+
+message UpdateUserSponsorReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  int64 type = 3; //1寰俊鍙?2鍏紬鍙?3灏忕▼搴?4寰俊缇?5瑙嗛鍙?  int64 appletType = 4; //type=3鏃惰瀛楁鎵嶆湁鎰忎箟锛?灏忕▼搴忛摼鎺?2璺緞璺宠浆 3浜岀淮鐮佽烦杞?  string name = 5; //鍚嶇О
+  string desc = 6; //鎻忚堪
+  string avatar = 7; //avatar
+  int64 isShow = 8; //1鏄剧ず 2涓嶆樉绀?  string qrCode = 9; //浜岀淮鐮佸浘鐗囧湴鍧€, type=1 2 3&applet_type=3 4鐨勬椂鍊欏惎鐢?  string inputA = 10; //type=5 applet_type=2 or applet_type=1 杈撳叆妗咥
+  string inputB = 11; //type=5 applet_type=2杈撳叆妗咮
+}
+
+message UpdateUserSponsorResp {
+}
+
+message DelUserSponsorReq {
+  int64 id = 1; //id
+}
+
+message DelUserSponsorResp {
+}
+
+message GetUserSponsorByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserSponsorByIdResp {
+  UserSponsor userSponsor = 1; //userSponsor
+}
+
+message SearchUserSponsorReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  int64 type = 5; //1寰俊鍙?2鍏紬鍙?3灏忕▼搴?4寰俊缇?5瑙嗛鍙?  int64 appletType = 6; //type=3鏃惰瀛楁鎵嶆湁鎰忎箟锛?灏忕▼搴忛摼鎺?2璺緞璺宠浆 3浜岀淮鐮佽烦杞?  string name = 7; //鍚嶇О
+  string desc = 8; //鎻忚堪
+  string avatar = 9; //avatar
+  int64 isShow = 10; //1鏄剧ず 2涓嶆樉绀?  string qrCode = 11; //浜岀淮鐮佸浘鐗囧湴鍧€, type=1 2 3&applet_type=3 4鐨勬椂鍊欏惎鐢?  string inputA = 12; //type=5 applet_type=2 or applet_type=1 杈撳叆妗咥
+  string inputB = 13; //type=5 applet_type=2杈撳叆妗咮
+  int64 createTime = 14; //createTime
+  int64 updateTime = 15; //updateTime
+}
+
+message SearchUserSponsorResp {
+  repeated UserSponsor userSponsor = 1; //userSponsor
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service user_dynamic{ 
+
+	 //-----------------------鐢ㄦ埛琛?---------------------- 
+	 rpc AddUser(AddUserReq) returns (AddUserResp); 
+	 rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp); 
+	 rpc DelUser(DelUserReq) returns (DelUserResp); 
+	 rpc GetUserById(GetUserByIdReq) returns (GetUserByIdResp); 
+	 rpc SearchUser(SearchUserReq) returns (SearchUserResp); 
+	 //-----------------------鐢ㄦ埛鏀惰揣鍦板潃琛?---------------------- 
+	 rpc AddUserAddress(AddUserAddressReq) returns (AddUserAddressResp); 
+	 rpc UpdateUserAddress(UpdateUserAddressReq) returns (UpdateUserAddressResp); 
+	 rpc DelUserAddress(DelUserAddressReq) returns (DelUserAddressResp); 
+	 rpc GetUserAddressById(GetUserAddressByIdReq) returns (GetUserAddressByIdResp); 
+	 rpc SearchUserAddress(SearchUserAddressReq) returns (SearchUserAddressResp); 
+	 //-----------------------鐢ㄦ埛鎺堟潈琛?---------------------- 
+	 rpc AddUserAuth(AddUserAuthReq) returns (AddUserAuthResp); 
+	 rpc UpdateUserAuth(UpdateUserAuthReq) returns (UpdateUserAuthResp); 
+	 rpc DelUserAuth(DelUserAuthReq) returns (DelUserAuthResp); 
+	 rpc GetUserAuthById(GetUserAuthByIdReq) returns (GetUserAuthByIdResp); 
+	 rpc SearchUserAuth(SearchUserAuthReq) returns (SearchUserAuthResp); 
+	 //-----------------------鎶藉鍙戣捣浜鸿仈绯绘柟寮?---------------------- 
+	 rpc AddUserContact(AddUserContactReq) returns (AddUserContactResp); 
+	 rpc UpdateUserContact(UpdateUserContactReq) returns (UpdateUserContactResp); 
+	 rpc DelUserContact(DelUserContactReq) returns (DelUserContactResp); 
+	 rpc GetUserContactById(GetUserContactByIdReq) returns (GetUserContactByIdResp); 
+	 rpc SearchUserContact(SearchUserContactReq) returns (SearchUserContactResp); 
+	 //-----------------------鐢ㄦ埛鍙戝竷鍔ㄦ€佽〃----------------------- 
+	 rpc AddUserDynamic(AddUserDynamicReq) returns (AddUserDynamicResp); 
+	 rpc UpdateUserDynamic(UpdateUserDynamicReq) returns (UpdateUserDynamicResp); 
+	 rpc DelUserDynamic(DelUserDynamicReq) returns (DelUserDynamicResp); 
+	 rpc GetUserDynamicById(GetUserDynamicByIdReq) returns (GetUserDynamicByIdResp); 
+	 rpc SearchUserDynamic(SearchUserDynamicReq) returns (SearchUserDynamicResp); 
+	 //-----------------------userShop----------------------- 
+	 rpc AddUserShop(AddUserShopReq) returns (AddUserShopResp); 
+	 rpc UpdateUserShop(UpdateUserShopReq) returns (UpdateUserShopResp); 
+	 rpc DelUserShop(DelUserShopReq) returns (DelUserShopResp); 
+	 rpc GetUserShopById(GetUserShopByIdReq) returns (GetUserShopByIdResp); 
+	 rpc SearchUserShop(SearchUserShopReq) returns (SearchUserShopResp); 
+	 //-----------------------鎶藉鍙戣捣浜鸿仈绯绘柟寮忥紙鎶藉璧炲姪鍟嗭級----------------------- 
+	 rpc AddUserSponsor(AddUserSponsorReq) returns (AddUserSponsorResp); 
+	 rpc UpdateUserSponsor(UpdateUserSponsorReq) returns (UpdateUserSponsorResp); 
+	 rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp); 
+	 rpc GetUserSponsorById(GetUserSponsorByIdReq) returns (GetUserSponsorByIdResp); 
+	 rpc SearchUserSponsor(SearchUserSponsorReq) returns (SearchUserSponsorResp); 
+
+}

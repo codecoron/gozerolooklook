@@ -27,10 +27,11 @@ func NewGetUserCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 func (l *GetUserCommentLogic) GetUserComment(in *pb.GetUserCommentReq) (*pb.GetUserCommentResp, error) {
 	// 获取当前用户评论列表，以及评论的点赞数，当前用户是否点赞
 	// 1. 获取当前用户评论列表
+	logx.Error(in)
 	builder := l.svcCtx.CommentModel.SelectBuilder().Where("user_id = ?", in.UserId)
-
+	logx.Error(&builder)
 	list, err := l.svcCtx.CommentModel.FindAll(l.ctx, builder, "")
-
+	logx.Error(&list)
 	// 得到评论的id列表
 	var commentIds []int64
 	for _, v := range list {

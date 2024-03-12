@@ -13,6 +13,8 @@ import (
 	"address/address.api"
 	"userSponsor/userSponsor.api"
 	"userContact/userContact.api"
+	"userWinDynamicComment/userWinDynamicComment.api"
+	"userDynamic/userDynamic.api"
 )
 
 //============================> usercenter v1 <============================
@@ -132,5 +134,41 @@ service usercenter {
 	@doc "修改抽奖发起人联系方式"
 	@handler upDateContact
 	post /userContact/upDateContact (UpDateContactReq) returns (UpDateContactResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userDynamic
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "创建用户动态"
+	@handler createDynamic
+	post /user/createDynamic (CreateDynamicReq) returns (CreateDynamicResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userDynamic
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "删除用户动态"
+	@handler deleteDynamic
+	post /user/deleteDynamic (DeleteDynamicReq) returns (DeleteDynamicResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  userWonDynamicComment
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "累计奖品发布动态用户晒单列表"
+	@handler UserWonDynamicCommentList
+	post /user/userWonDynamicCommentList (UserWonDynamicCommentReq) returns (UserWonDynamicCommentResp)
 }
 

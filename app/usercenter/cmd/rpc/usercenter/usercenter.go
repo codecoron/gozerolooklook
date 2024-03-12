@@ -13,99 +13,112 @@ import (
 )
 
 type (
-	AddUserAddressReq        = pb.AddUserAddressReq
-	AddUserAddressResp       = pb.AddUserAddressResp
-	AddUserAuthReq           = pb.AddUserAuthReq
-	AddUserAuthResp          = pb.AddUserAuthResp
-	AddUserContactReq        = pb.AddUserContactReq
-	AddUserContactResp       = pb.AddUserContactResp
-	AddUserReq               = pb.AddUserReq
-	AddUserResp              = pb.AddUserResp
-	AddUserShopReq           = pb.AddUserShopReq
-	AddUserShopResp          = pb.AddUserShopResp
-	AddUserSponsorReq        = pb.AddUserSponsorReq
-	AddUserSponsorResp       = pb.AddUserSponsorResp
-	CheckIsAdminReq          = pb.CheckIsAdminReq
-	CheckIsAdminResp         = pb.CheckIsAdminResp
-	DelUserAddressReq        = pb.DelUserAddressReq
-	DelUserAddressResp       = pb.DelUserAddressResp
-	DelUserAuthReq           = pb.DelUserAuthReq
-	DelUserAuthResp          = pb.DelUserAuthResp
-	DelUserContactReq        = pb.DelUserContactReq
-	DelUserContactResp       = pb.DelUserContactResp
-	DelUserReq               = pb.DelUserReq
-	DelUserResp              = pb.DelUserResp
-	DelUserShopReq           = pb.DelUserShopReq
-	DelUserShopResp          = pb.DelUserShopResp
-	DelUserSponsorReq        = pb.DelUserSponsorReq
-	DelUserSponsorResp       = pb.DelUserSponsorResp
-	EditUserContactReq       = pb.EditUserContactReq
-	EditUserContactResp      = pb.EditUserContactResp
-	GenerateTokenReq         = pb.GenerateTokenReq
-	GenerateTokenResp        = pb.GenerateTokenResp
-	GetUserAddressByIdReq    = pb.GetUserAddressByIdReq
-	GetUserAddressByIdResp   = pb.GetUserAddressByIdResp
-	GetUserAuthByAuthKeyReq  = pb.GetUserAuthByAuthKeyReq
-	GetUserAuthByAuthKeyResp = pb.GetUserAuthByAuthKeyResp
-	GetUserAuthByIdReq       = pb.GetUserAuthByIdReq
-	GetUserAuthByIdResp      = pb.GetUserAuthByIdResp
-	GetUserAuthByUserIdReq   = pb.GetUserAuthByUserIdReq
-	GetUserAuthyUserIdResp   = pb.GetUserAuthyUserIdResp
-	GetUserByIdReq           = pb.GetUserByIdReq
-	GetUserByIdResp          = pb.GetUserByIdResp
-	GetUserContactByIdReq    = pb.GetUserContactByIdReq
-	GetUserContactByIdResp   = pb.GetUserContactByIdResp
-	GetUserInfoByUserIdsReq  = pb.GetUserInfoByUserIdsReq
-	GetUserInfoByUserIdsResp = pb.GetUserInfoByUserIdsResp
-	GetUserInfoReq           = pb.GetUserInfoReq
-	GetUserInfoResp          = pb.GetUserInfoResp
-	GetUserShopByIdReq       = pb.GetUserShopByIdReq
-	GetUserShopByIdResp      = pb.GetUserShopByIdResp
-	GetUserSponsorByIdReq    = pb.GetUserSponsorByIdReq
-	GetUserSponsorByIdResp   = pb.GetUserSponsorByIdResp
-	LoginReq                 = pb.LoginReq
-	LoginResp                = pb.LoginResp
-	RegisterReq              = pb.RegisterReq
-	RegisterResp             = pb.RegisterResp
-	SearchUserAddressReq     = pb.SearchUserAddressReq
-	SearchUserAddressResp    = pb.SearchUserAddressResp
-	SearchUserAuthReq        = pb.SearchUserAuthReq
-	SearchUserAuthResp       = pb.SearchUserAuthResp
-	SearchUserContactReq     = pb.SearchUserContactReq
-	SearchUserContactResp    = pb.SearchUserContactResp
-	SearchUserReq            = pb.SearchUserReq
-	SearchUserResp           = pb.SearchUserResp
-	SearchUserShopReq        = pb.SearchUserShopReq
-	SearchUserShopResp       = pb.SearchUserShopResp
-	SearchUserSponsorReq     = pb.SearchUserSponsorReq
-	SearchUserSponsorResp    = pb.SearchUserSponsorResp
-	SetAdminReq              = pb.SetAdminReq
-	SetAdminResp             = pb.SetAdminResp
-	SponsorDetailReq         = pb.SponsorDetailReq
-	SponsorDetailResp        = pb.SponsorDetailResp
-	UpdateUserAddressReq     = pb.UpdateUserAddressReq
-	UpdateUserAddressResp    = pb.UpdateUserAddressResp
-	UpdateUserAuthReq        = pb.UpdateUserAuthReq
-	UpdateUserAuthResp       = pb.UpdateUserAuthResp
-	UpdateUserBaseInfoReq    = pb.UpdateUserBaseInfoReq
-	UpdateUserBaseInfoResp   = pb.UpdateUserBaseInfoResp
-	UpdateUserContactReq     = pb.UpdateUserContactReq
-	UpdateUserContactResp    = pb.UpdateUserContactResp
-	UpdateUserReq            = pb.UpdateUserReq
-	UpdateUserResp           = pb.UpdateUserResp
-	UpdateUserShopReq        = pb.UpdateUserShopReq
-	UpdateUserShopResp       = pb.UpdateUserShopResp
-	UpdateUserSponsorReq     = pb.UpdateUserSponsorReq
-	UpdateUserSponsorResp    = pb.UpdateUserSponsorResp
-	User                     = pb.User
-	UserAddress              = pb.UserAddress
-	UserAuth                 = pb.UserAuth
-	UserContact              = pb.UserContact
-	UserInfoForComment       = pb.UserInfoForComment
-	UserShop                 = pb.UserShop
-	UserSponsor              = pb.UserSponsor
-	WXMiniRegisterReq        = pb.WXMiniRegisterReq
-	WXMiniRegisterResp       = pb.WXMiniRegisterResp
+	AddUserAddressReq          = pb.AddUserAddressReq
+	AddUserAddressResp         = pb.AddUserAddressResp
+	AddUserAuthReq             = pb.AddUserAuthReq
+	AddUserAuthResp            = pb.AddUserAuthResp
+	AddUserContactReq          = pb.AddUserContactReq
+	AddUserContactResp         = pb.AddUserContactResp
+	AddUserDynamicReq          = pb.AddUserDynamicReq
+	AddUserDynamicResp         = pb.AddUserDynamicResp
+	AddUserReq                 = pb.AddUserReq
+	AddUserResp                = pb.AddUserResp
+	AddUserShopReq             = pb.AddUserShopReq
+	AddUserShopResp            = pb.AddUserShopResp
+	AddUserSponsorReq          = pb.AddUserSponsorReq
+	AddUserSponsorResp         = pb.AddUserSponsorResp
+	CheckIsAdminReq            = pb.CheckIsAdminReq
+	CheckIsAdminResp           = pb.CheckIsAdminResp
+	DelUserAddressReq          = pb.DelUserAddressReq
+	DelUserAddressResp         = pb.DelUserAddressResp
+	DelUserAuthReq             = pb.DelUserAuthReq
+	DelUserAuthResp            = pb.DelUserAuthResp
+	DelUserContactReq          = pb.DelUserContactReq
+	DelUserContactResp         = pb.DelUserContactResp
+	DelUserDynamicReq          = pb.DelUserDynamicReq
+	DelUserDynamicResp         = pb.DelUserDynamicResp
+	DelUserReq                 = pb.DelUserReq
+	DelUserResp                = pb.DelUserResp
+	DelUserShopReq             = pb.DelUserShopReq
+	DelUserShopResp            = pb.DelUserShopResp
+	DelUserSponsorReq          = pb.DelUserSponsorReq
+	DelUserSponsorResp         = pb.DelUserSponsorResp
+	EditUserContactReq         = pb.EditUserContactReq
+	EditUserContactResp        = pb.EditUserContactResp
+	GenerateTokenReq           = pb.GenerateTokenReq
+	GenerateTokenResp          = pb.GenerateTokenResp
+	GetUserAddressByIdReq      = pb.GetUserAddressByIdReq
+	GetUserAddressByIdResp     = pb.GetUserAddressByIdResp
+	GetUserAuthByAuthKeyReq    = pb.GetUserAuthByAuthKeyReq
+	GetUserAuthByAuthKeyResp   = pb.GetUserAuthByAuthKeyResp
+	GetUserAuthByIdReq         = pb.GetUserAuthByIdReq
+	GetUserAuthByIdResp        = pb.GetUserAuthByIdResp
+	GetUserAuthByUserIdReq     = pb.GetUserAuthByUserIdReq
+	GetUserAuthyUserIdResp     = pb.GetUserAuthyUserIdResp
+	GetUserByIdReq             = pb.GetUserByIdReq
+	GetUserByIdResp            = pb.GetUserByIdResp
+	GetUserContactByIdReq      = pb.GetUserContactByIdReq
+	GetUserContactByIdResp     = pb.GetUserContactByIdResp
+	GetUserDynamicByIdReq      = pb.GetUserDynamicByIdReq
+	GetUserDynamicByIdResp     = pb.GetUserDynamicByIdResp
+	GetUserDynamicByUserIdReq  = pb.GetUserDynamicByUserIdReq
+	GetUserDynamicByUserIdResp = pb.GetUserDynamicByUserIdResp
+	GetUserInfoByUserIdsReq    = pb.GetUserInfoByUserIdsReq
+	GetUserInfoByUserIdsResp   = pb.GetUserInfoByUserIdsResp
+	GetUserInfoReq             = pb.GetUserInfoReq
+	GetUserInfoResp            = pb.GetUserInfoResp
+	GetUserShopByIdReq         = pb.GetUserShopByIdReq
+	GetUserShopByIdResp        = pb.GetUserShopByIdResp
+	GetUserSponsorByIdReq      = pb.GetUserSponsorByIdReq
+	GetUserSponsorByIdResp     = pb.GetUserSponsorByIdResp
+	LoginReq                   = pb.LoginReq
+	LoginResp                  = pb.LoginResp
+	RegisterReq                = pb.RegisterReq
+	RegisterResp               = pb.RegisterResp
+	SearchUserAddressReq       = pb.SearchUserAddressReq
+	SearchUserAddressResp      = pb.SearchUserAddressResp
+	SearchUserAuthReq          = pb.SearchUserAuthReq
+	SearchUserAuthResp         = pb.SearchUserAuthResp
+	SearchUserContactReq       = pb.SearchUserContactReq
+	SearchUserContactResp      = pb.SearchUserContactResp
+	SearchUserDynamicReq       = pb.SearchUserDynamicReq
+	SearchUserDynamicResp      = pb.SearchUserDynamicResp
+	SearchUserReq              = pb.SearchUserReq
+	SearchUserResp             = pb.SearchUserResp
+	SearchUserShopReq          = pb.SearchUserShopReq
+	SearchUserShopResp         = pb.SearchUserShopResp
+	SearchUserSponsorReq       = pb.SearchUserSponsorReq
+	SearchUserSponsorResp      = pb.SearchUserSponsorResp
+	SetAdminReq                = pb.SetAdminReq
+	SetAdminResp               = pb.SetAdminResp
+	SponsorDetailReq           = pb.SponsorDetailReq
+	SponsorDetailResp          = pb.SponsorDetailResp
+	UpdateUserAddressReq       = pb.UpdateUserAddressReq
+	UpdateUserAddressResp      = pb.UpdateUserAddressResp
+	UpdateUserAuthReq          = pb.UpdateUserAuthReq
+	UpdateUserAuthResp         = pb.UpdateUserAuthResp
+	UpdateUserBaseInfoReq      = pb.UpdateUserBaseInfoReq
+	UpdateUserBaseInfoResp     = pb.UpdateUserBaseInfoResp
+	UpdateUserContactReq       = pb.UpdateUserContactReq
+	UpdateUserContactResp      = pb.UpdateUserContactResp
+	UpdateUserDynamicReq       = pb.UpdateUserDynamicReq
+	UpdateUserDynamicResp      = pb.UpdateUserDynamicResp
+	UpdateUserReq              = pb.UpdateUserReq
+	UpdateUserResp             = pb.UpdateUserResp
+	UpdateUserShopReq          = pb.UpdateUserShopReq
+	UpdateUserShopResp         = pb.UpdateUserShopResp
+	UpdateUserSponsorReq       = pb.UpdateUserSponsorReq
+	UpdateUserSponsorResp      = pb.UpdateUserSponsorResp
+	User                       = pb.User
+	UserAddress                = pb.UserAddress
+	UserAuth                   = pb.UserAuth
+	UserContact                = pb.UserContact
+	UserDynamic                = pb.UserDynamic
+	UserInfoForComment         = pb.UserInfoForComment
+	UserShop                   = pb.UserShop
+	UserSponsor                = pb.UserSponsor
+	WXMiniRegisterReq          = pb.WXMiniRegisterReq
+	WXMiniRegisterResp         = pb.WXMiniRegisterResp
 
 	Usercenter interface {
 		// 自定义的服务
@@ -157,6 +170,12 @@ type (
 		GetUserSponsorById(ctx context.Context, in *GetUserSponsorByIdReq, opts ...grpc.CallOption) (*GetUserSponsorByIdResp, error)
 		SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error)
 		SponsorDetail(ctx context.Context, in *SponsorDetailReq, opts ...grpc.CallOption) (*SponsorDetailResp, error)
+		AddUserDynamic(ctx context.Context, in *AddUserDynamicReq, opts ...grpc.CallOption) (*AddUserDynamicResp, error)
+		UpdateUserDynamic(ctx context.Context, in *UpdateUserDynamicReq, opts ...grpc.CallOption) (*UpdateUserDynamicResp, error)
+		DelUserDynamic(ctx context.Context, in *DelUserDynamicReq, opts ...grpc.CallOption) (*DelUserDynamicResp, error)
+		GetUserDynamicById(ctx context.Context, in *GetUserDynamicByIdReq, opts ...grpc.CallOption) (*GetUserDynamicByIdResp, error)
+		SearchUserDynamic(ctx context.Context, in *SearchUserDynamicReq, opts ...grpc.CallOption) (*SearchUserDynamicResp, error)
+		GetUserDynamicByUserId(ctx context.Context, in *GetUserDynamicByUserIdReq, opts ...grpc.CallOption) (*GetUserDynamicByUserIdResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -389,4 +408,34 @@ func (m *defaultUsercenter) SearchUserSponsor(ctx context.Context, in *SearchUse
 func (m *defaultUsercenter) SponsorDetail(ctx context.Context, in *SponsorDetailReq, opts ...grpc.CallOption) (*SponsorDetailResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.SponsorDetail(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) AddUserDynamic(ctx context.Context, in *AddUserDynamicReq, opts ...grpc.CallOption) (*AddUserDynamicResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.AddUserDynamic(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserDynamic(ctx context.Context, in *UpdateUserDynamicReq, opts ...grpc.CallOption) (*UpdateUserDynamicResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserDynamic(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DelUserDynamic(ctx context.Context, in *DelUserDynamicReq, opts ...grpc.CallOption) (*DelUserDynamicResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DelUserDynamic(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserDynamicById(ctx context.Context, in *GetUserDynamicByIdReq, opts ...grpc.CallOption) (*GetUserDynamicByIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserDynamicById(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SearchUserDynamic(ctx context.Context, in *SearchUserDynamicReq, opts ...grpc.CallOption) (*SearchUserDynamicResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SearchUserDynamic(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserDynamicByUserId(ctx context.Context, in *GetUserDynamicByUserIdReq, opts ...grpc.CallOption) (*GetUserDynamicByUserIdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserDynamicByUserId(ctx, in, opts...)
 }

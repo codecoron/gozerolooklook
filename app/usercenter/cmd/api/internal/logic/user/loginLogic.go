@@ -20,6 +20,7 @@ type LoginLogic struct {
 
 func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) LoginLogic {
 	return LoginLogic{
+
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
