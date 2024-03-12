@@ -144,3 +144,20 @@ CREATE TABLE `user_contact`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '抽奖发起人联系方式' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for user_dynamic
+-- ----------------------------
+DROP TABLE IF EXISTS `user_dynamic`;
+CREATE TABLE `user_dynamic`  (
+     `id` int(0) NOT NULL AUTO_INCREMENT,
+     `user_id` int not null comment '发布动态用户id',
+     `dynamic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci not null comment '发布动态地址',
+     `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '动态描述',
+     `create_time` datetime not null default current_timestamp,
+     `update_time` datetime not null default current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+     `delete_time` datetime DEFAULT NULL,
+     PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户发布动态表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;

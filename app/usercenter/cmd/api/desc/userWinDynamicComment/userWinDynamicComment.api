@@ -1,0 +1,42 @@
+syntax = "v1"
+
+info(
+    title: "用户累计奖品发布动态及晒单"
+    desc: "用户累计奖品发布动态及晒单"
+)
+//============================> usercenter 累计奖品 用户晒单列表 <============================
+
+type (
+    DynamicInfo{
+        Id int64 `json:"id"`
+        dynamicUrl string `json:"dynamicUrl"`
+        Remark string `json:"remark"`
+        UpdateTime int64 `json:"updateTime,omitempty"`
+    }
+)
+
+type (
+    UserCommentInfo{
+        Id          int64  `json:"id,omitempty"`
+        UserId      int64  `json:"userId,omitempty"`
+        LotteryId   int64  `json:"lotteryId,omitempty"`
+        PrizeName   string `json:"prizeName,omitempty"`
+        Content     string `json:"content,omitempty"`
+        Pics        string `json:"pics,omitempty"`
+        PraiseCount int64  `json:"praiseCount,omitempty"`
+        CreateTime  int64  `json:"createTime,omitempty"`
+        UpdateTime  int64  `json:"updateTime,omitempty"`
+        IsPraise    int64  `json:"isPraise,omitempty"`
+    }
+)
+type (
+    UserWonDynamicCommentReq {
+        userId int64 `json:"userId"`
+    }
+
+    UserWonDynamicCommentResp {
+        Count int64 `json:"count"`
+        UserDynamicList []DynamicInfo `json:"userDynamicList"`
+        UserCommentList []UserCommentInfo `json:"userCommentList"`
+    }
+)

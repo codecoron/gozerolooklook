@@ -44,6 +44,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 	})
 	authResult, err := miniprogram.GetAuth().Code2Session(req.Code)
 	if err != nil || authResult.ErrCode != 0 || authResult.OpenID == "" {
+		logx.Error("微信登录报错\n", err)
 		return nil, errors.Wrapf(xerr.NewErrMsg("发起授权请求失败"), "发起授权请求失败 err : %v , code : %s  , authResult : %+v", err, req.Code, authResult)
 	}
 	//2、Parsing WeChat-Mini return data

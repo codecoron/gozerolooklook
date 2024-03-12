@@ -32,7 +32,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		MiniProgram:   newMiniprogramClient(c), // looklook使用
 		WxMiniProgram: MustNewMiniProgram(c),   // lottery使用
 
-		OrderRpc:      order.NewOrder(zrpc.MustNewClient(c.OrderRpcConf)),
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
 		LotteryRpc:    lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
 		NoticeRpc:     notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),

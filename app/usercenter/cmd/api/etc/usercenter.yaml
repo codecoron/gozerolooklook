@@ -36,11 +36,23 @@ UsercenterRpcConf:
   Endpoints:
     - 127.0.0.1:2004
   NonBlock: true
+
 LotteryRpcConf:
   Endpoints:
     - 127.0.0.1:2005
   NonBlock: true
+
 CheckinRpcConf:
   Endpoints:
     - 127.0.0.1:2007
+  NonBlock: true
+
+CommentRpcConf:
+  Endpoints:
+    - 127.0.0.1:2009
+  NonBlock: true
+
+FileUploadRpcConf:
+  Endpoints:
+    - 127.0.0.1:2008
   NonBlock: true

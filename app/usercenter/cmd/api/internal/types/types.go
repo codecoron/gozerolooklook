@@ -77,6 +77,21 @@ type CreateContactResp struct {
 	Id int64 `json:"id"`
 }
 
+type CreateDynamicInfo struct {
+	DynamicUrl string `json:"dynamicUrl"`
+	Remark     string `json:"remark"`
+}
+
+type CreateDynamicReq struct {
+	UserId     int64  `json:"userId"`
+	DynamicUrl string `json:"dynamicUrl"`
+	Remark     string `json:"remark"`
+}
+
+type CreateDynamicResp struct {
+	Id int64 `json:"id"`
+}
+
 type CreateSponsorReq struct {
 	UserId     int64  `json:"userId"`
 	Type       int64  `json:"type"`
@@ -94,6 +109,14 @@ type CreateSponsorResp struct {
 	Id int64 `json:"id"`
 }
 
+type DeleteDynamicReq struct {
+	Id     int64 `json:"id"`
+	UserId int64 `json:"userId"`
+}
+
+type DeleteDynamicResp struct {
+}
+
 type DistrictInfo struct {
 	Province DistrictItem `json:"province"`
 	City     DistrictItem `json:"city"`
@@ -104,6 +127,13 @@ type DistrictInfo struct {
 type DistrictItem struct {
 	Id   string `json:"id,omitempty"`
 	Name string `json:"name"`
+}
+
+type DynamicInfo struct {
+	Id         int64  `json:"id"`
+	DynamicUrl string `json:"dynamicUrl"`
+	Remark     string `json:"remark"`
+	UpdateTime string `json:"updateTime"`
 }
 
 type LoginReq struct {
@@ -227,6 +257,19 @@ type UserAddress struct {
 	AddressInfo
 }
 
+type UserCommentInfo struct {
+	Id          int64  `json:"id"`
+	UserId      int64  `json:"userId"`
+	LotteryId   int64  `json:"lotteryId"`
+	PrizeName   string `json:"prizeName"`
+	Content     string `json:"content"`
+	Pics        string `json:"pics"`
+	PraiseCount int64  `json:"praiseCount"`
+	CreateTime  int64  `json:"createTime"`
+	UpdateTime  int64  `json:"updateTime"`
+	IsPraise    int64  `json:"isPraise"`
+}
+
 type UserInfoReq struct {
 }
 
@@ -245,6 +288,16 @@ type UserUpdateReq struct {
 }
 
 type UserUpdateResp struct {
+}
+
+type UserWonDynamicCommentReq struct {
+	UserId int64 `json:"userId"`
+}
+
+type UserWonDynamicCommentResp struct {
+	Count           int64             `json:"count"`
+	UserDynamicList []DynamicInfo     `json:"userDynamicList"`
+	UserCommentList []UserCommentInfo `json:"userCommentList"`
 }
 
 type WXMiniAuthReq struct {
