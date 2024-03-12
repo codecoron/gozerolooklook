@@ -49,7 +49,7 @@ func (l *UserWonDynamicCommentListLogic) UserWonDynamicCommentList(req *types.Us
 	}
 
 	// 获取累计奖品数量
-	wonLotteryCount, err := l.svcCtx.LotteryRpcConf.GetWonListCount(l.ctx, &lottery.GetWonListCountReq{
+	wonLotteryCount, err := l.svcCtx.LotteryRpc.GetWonListCount(l.ctx, &lottery.GetWonListCountReq{
 		UserId: req.UserId,
 	})
 	if err != nil {
