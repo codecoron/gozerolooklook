@@ -133,7 +133,7 @@ type DynamicInfo struct {
 	Id         int64  `json:"id"`
 	DynamicUrl string `json:"dynamicUrl"`
 	Remark     string `json:"remark"`
-	UpdateTime int64  `json:"updateTime,omitempty"`
+	UpdateTime string `json:"updateTime"`
 }
 
 type LoginReq struct {
@@ -258,16 +258,16 @@ type UserAddress struct {
 }
 
 type UserCommentInfo struct {
-	Id          int64  `json:"id,omitempty"`
-	UserId      int64  `json:"userId,omitempty"`
-	LotteryId   int64  `json:"lotteryId,omitempty"`
-	PrizeName   string `json:"prizeName,omitempty"`
-	Content     string `json:"content,omitempty"`
-	Pics        string `json:"pics,omitempty"`
-	PraiseCount int64  `json:"praiseCount,omitempty"`
-	CreateTime  int64  `json:"createTime,omitempty"`
-	UpdateTime  int64  `json:"updateTime,omitempty"`
-	IsPraise    int64  `json:"isPraise,omitempty"`
+	Id          int64  `json:"id"`
+	UserId      int64  `json:"userId"`
+	LotteryId   int64  `json:"lotteryId"`
+	PrizeName   string `json:"prizeName"`
+	Content     string `json:"content"`
+	Pics        string `json:"pics"`
+	PraiseCount int64  `json:"praiseCount"`
+	CreateTime  int64  `json:"createTime"`
+	UpdateTime  int64  `json:"updateTime"`
+	IsPraise    int64  `json:"isPraise"`
 }
 
 type UserInfoReq struct {
