@@ -9,7 +9,6 @@ import (
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/mqueue/cmd/job/internal/config"
 	"looklook/app/notice/cmd/rpc/notice"
-	"looklook/app/order/cmd/rpc/order"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 )
 
@@ -19,7 +18,7 @@ type ServiceContext struct {
 	MiniProgram   *miniprogram.MiniProgram // looklook使用
 	WxMiniProgram *miniProgram.MiniProgram // lottery使用
 	CheckInRpc    checkin.Checkin
-	OrderRpc      order.Order
+	//OrderRpc      order.Order
 	UsercenterRpc usercenter.Usercenter
 	LotteryRpc    lottery.LotteryZrpcClient
 	NoticeRpc     notice.Notice
