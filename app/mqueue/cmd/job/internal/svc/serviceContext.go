@@ -5,6 +5,7 @@ import (
 	"github.com/hibiken/asynq"
 	"github.com/silenceper/wechat/v2/miniprogram"
 	"github.com/zeromicro/go-zero/zrpc"
+	"looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/mqueue/cmd/job/internal/config"
 	"looklook/app/notice/cmd/rpc/notice"
@@ -16,7 +17,7 @@ type ServiceContext struct {
 	AsynqServer   *asynq.Server
 	MiniProgram   *miniprogram.MiniProgram // looklook使用
 	WxMiniProgram *miniProgram.MiniProgram // lottery使用
-	//CheckInRpc    checkin.Checkin
+	CheckInRpc    checkin.Checkin
 	//OrderRpc      order.Order
 	UsercenterRpc usercenter.Usercenter
 	LotteryRpc    lottery.LotteryZrpcClient
@@ -33,6 +34,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
 		LotteryRpc:    lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
 		NoticeRpc:     notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
-		//CheckInRpc:    checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
+		CheckInRpc:    checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
 	}
 }
