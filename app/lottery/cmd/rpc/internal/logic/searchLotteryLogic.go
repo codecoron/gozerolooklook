@@ -31,7 +31,7 @@ func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchL
 		if err != nil {
 			return nil, err
 		}
-		in.LastId = id
+		in.LastId = id + 1
 	}
 	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Limit, in.IsSelected, in.LastId)
 	if err != nil && err != model.ErrNotFound {
