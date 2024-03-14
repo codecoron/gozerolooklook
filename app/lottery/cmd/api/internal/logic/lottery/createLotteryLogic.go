@@ -63,6 +63,7 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		SponsorId:     req.SponsorId,
 		IsClocked:     req.IsClocked,
 		ClockTask:     pbClockTask,
+		PublishType:   req.PublishType,
 	})
 	if err != nil {
 		return nil, err
