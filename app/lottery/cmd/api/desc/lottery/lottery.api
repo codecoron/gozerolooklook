@@ -199,12 +199,3 @@ type (
         Id int64 `json:"id"`
     }
 )
-
-// 发布抽奖
-type (
-    PublishLotteryReq{
-        Id int64 `json:"id"`
-    }
-    PublishLotteryResp{
-    }
-)

@@ -69,7 +69,7 @@ type CreateLotteryReq struct {
 	Prizes        []*CreatePrize   `json:"prizes"`                            //奖品 支持多个
 	IsClocked     int64            `json:"isClocked"`                         //是否开启打卡任务 0未开启；1已开启
 	ClockTask     *CreateClockTask `json:"clockTask, optional"`               //打卡任务 支持一个
-	PublishType   int64            `json:"publishType" validate:"oneof=1 2"`  //发布类型 1发布测试 2发布抽奖
+	PublishType   int64            `json:"publishType" validate:"oneof=1 2"`  //发布类型 1发布抽奖 2发布测试
 }
 
 type CreateLotteryResp struct {
@@ -180,13 +180,6 @@ type CreateClockTaskRecordReq struct {
 
 type CreateClockTaskRecordResp struct {
 	Id int64 `json:"id"`
-}
-
-type PublishLotteryReq struct {
-	Id int64 `json:"id"`
-}
-
-type PublishLotteryResp struct {
 }
 
 type LotteryParticipation struct {
