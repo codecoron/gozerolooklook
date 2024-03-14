@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"database/sql"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -47,11 +48,13 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.SponsorId = in.SponsorId
 		lottery.IsClocked = in.IsClocked
 
-		//if in.PublishType == 1 {
-		//	lottery.PublishTime = time.Now().Unix()
-		//} else {
-		//	lottery.PublishTime = time.Unix(in.PublishTime, 0)
-		//}
+		if in.PublishType == 1 {
+			var nullTime sql.NullTime
+			t := time.Now()
+			nullTime.Time = t
+			nullTime.Valid = true
+			lottery.PublishTime = nullTime
+		}
 
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
