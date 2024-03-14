@@ -31,7 +31,7 @@ func (l *SearchCommentLogic) SearchComment(in *pb.SearchCommentReq) (*pb.SearchC
 		}
 		in.LastId = id + 1
 	}
-	list, err := l.svcCtx.CommentModel.CommentList(l.ctx, in.Page, in.Limit, in.LastId, in.Sort)
+	list, err := l.svcCtx.CommentModel.CommentList(l.ctx, in.Limit, in.LastId, in.Sort)
 	if err != nil {
 		return nil, err
 	}
