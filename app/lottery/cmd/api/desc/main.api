@@ -91,10 +91,6 @@ service lottery {
 	@doc "完成打卡任务"
 	@handler createClockTaskRecord
 	post /lottery/createClockTaskRecord (CreateClockTaskRecordReq) returns (CreateClockTaskRecordResp)
-	
-	@doc "发布抽奖"
-	@handler publishLottery
-	post /lottery/publishLottery (PublishLotteryReq) returns (PublishLotteryResp)
 }
 
 //no need login

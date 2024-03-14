@@ -391,34 +391,6 @@
         ]
       }
     },
-    "lottery/v1/lottery/publishLottery": {
-      "post": {
-        "summary": "发布抽奖",
-        "operationId": "publishLottery",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/PublishLotteryResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PublishLotteryReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      }
-    },
     "lottery/v1/lottery/setLotteryIsSelected": {
       "post": {
         "summary": "lottery setIsSelected",
@@ -791,7 +763,7 @@
         "publishType": {
           "type": "integer",
           "format": "int64",
-          "description": "发布类型 1发布测试 2发布抽奖"
+          "description": "发布类型 1发布抽奖 2发布测试"
         }
       },
       "title": "CreateLotteryReq",
@@ -1337,23 +1309,6 @@
         "count",
         "grant_type"
       ]
-    },
-    "PublishLotteryReq": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "PublishLotteryReq",
-      "required": [
-        "id"
-      ]
-    },
-    "PublishLotteryResp": {
-      "type": "object",
-      "title": "PublishLotteryResp"
     },
     "SearchLotteryParticipationReq": {
       "type": "object",
