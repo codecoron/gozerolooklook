@@ -133,7 +133,7 @@ type DynamicInfo struct {
 	Id         int64  `json:"id"`
 	DynamicUrl string `json:"dynamicUrl"`
 	Remark     string `json:"remark"`
-	UpdateTime int64  `json:"updateTime,omitempty"`
+	UpdateTime int64  `json:"updateTime"`
 }
 
 type LoginReq struct {

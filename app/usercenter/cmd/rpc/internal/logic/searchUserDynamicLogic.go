@@ -33,10 +33,7 @@ func (l *SearchUserDynamicLogic) SearchUserDynamic(in *pb.SearchUserDynamicReq) 
 		for _, dynamic := range list {
 			var pbDynamic pb.UserDynamic
 			_ = copier.Copy(&pbDynamic, dynamic)
-			pbDynamic.Id = dynamic.Id
-			pbDynamic.UserId = dynamic.UserId
-			pbDynamic.DynamicUrl = dynamic.DynamicUrl
-			pbDynamic.Remark = dynamic.Remark
+			pbDynamic.UpdateTime = dynamic.UpdateTime.Unix()
 			resp = append(resp, &pbDynamic)
 		}
 	}
