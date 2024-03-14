@@ -6,12 +6,10 @@ import (
 	"github.com/pkg/errors"
 	"looklook/app/comment/cmd/rpc/comment"
 	"looklook/app/lottery/cmd/rpc/lottery"
-	"looklook/app/usercenter/cmd/rpc/usercenter"
-	"looklook/common/xerr"
-	"strconv"
-
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
+	"looklook/app/usercenter/cmd/rpc/usercenter"
+	"looklook/common/xerr"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -45,7 +43,7 @@ func (l *UserWonDynamicCommentListLogic) UserWonDynamicCommentList(req *types.Us
 			//logx.Error("item:%v", item)
 			var t types.DynamicInfo
 			_ = copier.Copy(&t, item)
-			t.UpdateTime = strconv.FormatInt(item.UpdateTime, 10)
+			//t.UpdateTime = strconv.FormatInt(item.UpdateTime, 10)
 			userDynamicList = append(userDynamicList, t)
 		}
 	}

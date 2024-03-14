@@ -34,10 +34,6 @@ func (l *SearchUserDynamicLogic) SearchUserDynamic(in *pb.SearchUserDynamicReq) 
 			var pbDynamic pb.UserDynamic
 			logx.Error("dynamic:", dynamic)
 			_ = copier.Copy(&pbDynamic, dynamic)
-			//pbDynamic.Id = dynamic.Id
-			//pbDynamic.UserId = dynamic.UserId
-			//pbDynamic.DynamicUrl = dynamic.DynamicUrl
-			//pbDynamic.Remark = dynamic.Remark
 			pbDynamic.UpdateTime = dynamic.UpdateTime.Unix()
 			resp = append(resp, &pbDynamic)
 		}

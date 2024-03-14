@@ -2,6 +2,7 @@ package userDynamic
 
 import (
 	"context"
+	"looklook/app/usercenter/cmd/rpc/pb"
 
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
@@ -24,7 +25,13 @@ func NewDeleteDynamicLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Del
 }
 
 func (l *DeleteDynamicLogic) DeleteDynamic(req *types.DeleteDynamicReq) (resp *types.DeleteDynamicResp, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.UsercenterRpc.DelUserDynamic(l.ctx, &pb.DelUserDynamicReq{
+		Id:     req.Id,
+		UserId: req.UserId,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return
 }

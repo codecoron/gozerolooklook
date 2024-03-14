@@ -29,9 +29,6 @@ func (c *customUserDynamicModel) FindListByUserId(ctx context.Context, userId in
 	var resp []*UserDynamic
 	query := fmt.Sprintf("select * from %s where user_id = %d order by create_time DESC", c.table, userId)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query)
-	//for i, dynamic := range resp {
-	//	resp[i].UpdateTime = time.Now().
-	//}
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_TYPEIS2_AND_ISNOT_ANNOUNCE_LOTTERYS_ERROR), "QueryRowsNoCacheCtx,&resp:%v, query:%v, error: %v", &resp, query, err)
 	}
