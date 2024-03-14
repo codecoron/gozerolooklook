@@ -200,14 +200,6 @@ type (
     }
 )
 
-// 获取lastId
-type (
-    GetLastIdReq{}
-    GetLastIdResp{
-        LastId int64 `json:"lastId"`
-    }
-)
-
 // 发布抽奖
 type (
     PublishLotteryReq{

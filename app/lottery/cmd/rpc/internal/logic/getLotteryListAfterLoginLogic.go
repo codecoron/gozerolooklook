@@ -29,6 +29,13 @@ func (l *GetLotteryListAfterLoginLogic) GetLotteryListAfterLogin(in *pb.GetLotte
 		return nil, err
 	}
 
+	if in.LastId == 0 {
+		in.LastId, err = l.svcCtx.LotteryModel.GetLastId(l.ctx)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	list, err := l.svcCtx.LotteryModel.GetLotteryListAfterLogin(l.ctx, in.Size, in.IsSelected, in.LastId, ParticipatedLotteryIds)
 	if err != nil {
 		return nil, err

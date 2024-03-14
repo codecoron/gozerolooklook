@@ -182,13 +182,6 @@ type CreateClockTaskRecordResp struct {
 	Id int64 `json:"id"`
 }
 
-type GetLastIdReq struct {
-}
-
-type GetLastIdResp struct {
-	LastId int64 `json:"lastId"`
-}
-
 type PublishLotteryReq struct {
 	Id int64 `json:"id"`
 }
