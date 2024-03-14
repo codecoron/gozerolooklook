@@ -61,9 +61,9 @@ func (m *defaultLotteryModel) UpdatePublishTime(ctx context.Context, data *Lotte
 func (c *customLotteryModel) LotteryList(ctx context.Context, limit, selected, lastId int64) ([]*Lottery, error) {
 	var query string
 	if selected != 0 {
-		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id <= ? order by id desc limit ?", lotteryRows, c.table)
+		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id < ? order by id desc limit ?", lotteryRows, c.table)
 	} else {
-		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id <= ? order by id desc limit ?", lotteryRows, c.table)
+		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id < ? order by id desc limit ?", lotteryRows, c.table)
 	}
 	var resp []*Lottery
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
@@ -183,9 +183,9 @@ func (c *customLotteryModel) GetLotteryListAfterLogin(ctx context.Context, size,
 	//fmt.Println("lotteryIdsStr:", lotteryIdsStr)
 
 	if isSelected != 0 {
-		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id <= ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
+		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id < ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
 	} else {
-		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id <= ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
+		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id < ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
 	}
 
 	var resp []*Lottery
