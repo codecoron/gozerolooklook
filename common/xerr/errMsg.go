@@ -45,6 +45,7 @@ func init() {
 	// 抽奖列表
 	message[DB_GET_LOTTERY_LIST_ERROR] = "获取抽奖列表失败"
 	message[DB_GETLOTTERYLIST_AFTERLOGIN_ERROR] = "获取登录后抽奖列表失败"
+	message[DB_GETLASTID_ERROR] = "获取最后一个抽奖id失败"
 	// 检验当前用户是否发起过抽奖
 	message[DB_GET_LOTTERYID_BYUSERID_ERROR] = "获取当前用户抽奖Id失败"
 	message[DB_LOTTERYID_NOTFOUND] = "当前用户没有发起过抽奖"

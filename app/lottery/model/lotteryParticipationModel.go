@@ -40,14 +40,20 @@ func NewLotteryParticipationModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...
 }
 
 func (m *defaultLotteryParticipationModel) UpdateWinners(ctx context.Context, LotteryId, UserId, PrizeId int64) error {
+	data, err := m.FindOneByLotteryIdUserId(ctx, LotteryId, UserId)
+	if err != nil {
+		return err
+	}
+	gozeroLotteryParticipationIdKey := fmt.Sprintf("%s%v", cacheGozeroLotteryParticipationIdPrefix, data.Id)
+	gozeroLotteryParticipationLotteryIdUserIdKey := fmt.Sprintf("%s%v:%v", cacheGozeroLotteryParticipationLotteryIdUserIdPrefix, data.LotteryId, data.UserId)
 	query := fmt.Sprintf("update %s set is_won = 1, prize_id = ? where `lottery_id` = ? and `user_id` = ?", m.table)
-	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
+	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
 		res, err := conn.ExecCtx(ctx, query, PrizeId, LotteryId, UserId)
 		if err != nil {
 			return nil, err
 		}
 		return res, nil
-	})
+	}, gozeroLotteryParticipationIdKey, gozeroLotteryParticipationLotteryIdUserIdKey)
 	if err != nil {
 		return errors.Wrapf(xerr.NewErrCode(xerr.UPDATE_WINNER_ERROR), "UpdateWinners, PrizeId:%v, LotteryId:%v, UserId:%v, error: %v", PrizeId, LotteryId, UserId, err)
 	}

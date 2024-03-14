@@ -33,6 +33,8 @@ const (
 	Lottery_CheckUserCreatedLotteryAndThisWeek_FullMethodName = "/pb.lottery/CheckUserCreatedLotteryAndThisWeek"
 	Lottery_GetLotteryListAfterLogin_FullMethodName           = "/pb.lottery/GetLotteryListAfterLogin"
 	Lottery_GetLotteryStatistic_FullMethodName                = "/pb.lottery/GetLotteryStatistic"
+	Lottery_GetLotteryListLastId_FullMethodName               = "/pb.lottery/GetLotteryListLastId"
+	Lottery_PublishLottery_FullMethodName                     = "/pb.lottery/PublishLottery"
 	Lottery_AddPrize_FullMethodName                           = "/pb.lottery/AddPrize"
 	Lottery_UpdatePrize_FullMethodName                        = "/pb.lottery/UpdatePrize"
 	Lottery_DelPrize_FullMethodName                           = "/pb.lottery/DelPrize"
@@ -71,6 +73,8 @@ type LotteryClient interface {
 	CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 	GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
 	GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error)
+	GetLotteryListLastId(ctx context.Context, in *GetLotteryListLastIdReq, opts ...grpc.CallOption) (*GetLotteryListLastIdResp, error)
+	PublishLottery(ctx context.Context, in *PublishLotteryReq, opts ...grpc.CallOption) (*PublishLotteryResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 	UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -221,6 +225,24 @@ func (c *lotteryClient) GetLotteryListAfterLogin(ctx context.Context, in *GetLot
 func (c *lotteryClient) GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error) {
 	out := new(GetLotteryStatisticResp)
 	err := c.cc.Invoke(ctx, Lottery_GetLotteryStatistic_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lotteryClient) GetLotteryListLastId(ctx context.Context, in *GetLotteryListLastIdReq, opts ...grpc.CallOption) (*GetLotteryListLastIdResp, error) {
+	out := new(GetLotteryListLastIdResp)
+	err := c.cc.Invoke(ctx, Lottery_GetLotteryListLastId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lotteryClient) PublishLottery(ctx context.Context, in *PublishLotteryReq, opts ...grpc.CallOption) (*PublishLotteryResp, error) {
+	out := new(PublishLotteryResp)
+	err := c.cc.Invoke(ctx, Lottery_PublishLottery_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -399,6 +421,8 @@ type LotteryServer interface {
 	CheckUserCreatedLotteryAndThisWeek(context.Context, *CheckUserCreatedLotteryAndThisWeekReq) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 	GetLotteryListAfterLogin(context.Context, *GetLotteryListAfterLoginReq) (*GetLotteryListAfterLoginResp, error)
 	GetLotteryStatistic(context.Context, *GetLotteryStatisticReq) (*GetLotteryStatisticResp, error)
+	GetLotteryListLastId(context.Context, *GetLotteryListLastIdReq) (*GetLotteryListLastIdResp, error)
+	PublishLottery(context.Context, *PublishLotteryReq) (*PublishLotteryResp, error)
 	// -----------------------奖品表-----------------------
 	AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error)
 	UpdatePrize(context.Context, *UpdatePrizeReq) (*UpdatePrizeResp, error)
@@ -467,6 +491,12 @@ func (UnimplementedLotteryServer) GetLotteryListAfterLogin(context.Context, *Get
 }
 func (UnimplementedLotteryServer) GetLotteryStatistic(context.Context, *GetLotteryStatisticReq) (*GetLotteryStatisticResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLotteryStatistic not implemented")
+}
+func (UnimplementedLotteryServer) GetLotteryListLastId(context.Context, *GetLotteryListLastIdReq) (*GetLotteryListLastIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLotteryListLastId not implemented")
+}
+func (UnimplementedLotteryServer) PublishLottery(context.Context, *PublishLotteryReq) (*PublishLotteryResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishLottery not implemented")
 }
 func (UnimplementedLotteryServer) AddPrize(context.Context, *AddPrizeReq) (*AddPrizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrize not implemented")
@@ -780,6 +810,42 @@ func _Lottery_GetLotteryStatistic_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LotteryServer).GetLotteryStatistic(ctx, req.(*GetLotteryStatisticReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Lottery_GetLotteryListLastId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLotteryListLastIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).GetLotteryListLastId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_GetLotteryListLastId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).GetLotteryListLastId(ctx, req.(*GetLotteryListLastIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Lottery_PublishLottery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishLotteryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LotteryServer).PublishLottery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Lottery_PublishLottery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LotteryServer).PublishLottery(ctx, req.(*PublishLotteryReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1152,6 +1218,14 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLotteryStatistic",
 			Handler:    _Lottery_GetLotteryStatistic_Handler,
+		},
+		{
+			MethodName: "GetLotteryListLastId",
+			Handler:    _Lottery_GetLotteryListLastId_Handler,
+		},
+		{
+			MethodName: "PublishLottery",
+			Handler:    _Lottery_PublishLottery_Handler,
 		},
 		{
 			MethodName: "AddPrize",
