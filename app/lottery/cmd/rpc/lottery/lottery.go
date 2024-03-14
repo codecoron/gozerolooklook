@@ -44,6 +44,8 @@ type (
 	GetLotteryByIdResp                     = pb.GetLotteryByIdResp
 	GetLotteryListAfterLoginReq            = pb.GetLotteryListAfterLoginReq
 	GetLotteryListAfterLoginResp           = pb.GetLotteryListAfterLoginResp
+	GetLotteryListLastIdReq                = pb.GetLotteryListLastIdReq
+	GetLotteryListLastIdResp               = pb.GetLotteryListLastIdResp
 	GetLotteryStatisticReq                 = pb.GetLotteryStatisticReq
 	GetLotteryStatisticResp                = pb.GetLotteryStatisticResp
 	GetParticipationUserIdsByLotteryIdReq  = pb.GetParticipationUserIdsByLotteryIdReq
@@ -67,6 +69,8 @@ type (
 	LotterySponsorReq                      = pb.LotterySponsorReq
 	LotterySponsorResp                     = pb.LotterySponsorResp
 	Prize                                  = pb.Prize
+	PublishLotteryReq                      = pb.PublishLotteryReq
+	PublishLotteryResp                     = pb.PublishLotteryResp
 	SearchLotteryParticipationReq          = pb.SearchLotteryParticipationReq
 	SearchLotteryParticipationResp         = pb.SearchLotteryParticipationResp
 	SearchLotteryReq                       = pb.SearchLotteryReq
@@ -99,6 +103,8 @@ type (
 		CheckUserCreatedLotteryAndThisWeek(ctx context.Context, in *CheckUserCreatedLotteryAndThisWeekReq, opts ...grpc.CallOption) (*CheckUserCreatedLotteryAndThisWeekResp, error)
 		GetLotteryListAfterLogin(ctx context.Context, in *GetLotteryListAfterLoginReq, opts ...grpc.CallOption) (*GetLotteryListAfterLoginResp, error)
 		GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error)
+		GetLotteryListLastId(ctx context.Context, in *GetLotteryListLastIdReq, opts ...grpc.CallOption) (*GetLotteryListLastIdResp, error)
+		PublishLottery(ctx context.Context, in *PublishLotteryReq, opts ...grpc.CallOption) (*PublishLotteryResp, error)
 		// -----------------------奖品表-----------------------
 		AddPrize(ctx context.Context, in *AddPrizeReq, opts ...grpc.CallOption) (*AddPrizeResp, error)
 		UpdatePrize(ctx context.Context, in *UpdatePrizeReq, opts ...grpc.CallOption) (*UpdatePrizeResp, error)
@@ -201,6 +207,16 @@ func (m *defaultLotteryZrpcClient) GetLotteryListAfterLogin(ctx context.Context,
 func (m *defaultLotteryZrpcClient) GetLotteryStatistic(ctx context.Context, in *GetLotteryStatisticReq, opts ...grpc.CallOption) (*GetLotteryStatisticResp, error) {
 	client := pb.NewLotteryClient(m.cli.Conn())
 	return client.GetLotteryStatistic(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) GetLotteryListLastId(ctx context.Context, in *GetLotteryListLastIdReq, opts ...grpc.CallOption) (*GetLotteryListLastIdResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.GetLotteryListLastId(ctx, in, opts...)
+}
+
+func (m *defaultLotteryZrpcClient) PublishLottery(ctx context.Context, in *PublishLotteryReq, opts ...grpc.CallOption) (*PublishLotteryResp, error) {
+	client := pb.NewLotteryClient(m.cli.Conn())
+	return client.PublishLottery(ctx, in, opts...)
 }
 
 // -----------------------奖品表-----------------------

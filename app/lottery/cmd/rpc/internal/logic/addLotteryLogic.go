@@ -47,6 +47,12 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.SponsorId = in.SponsorId
 		lottery.IsClocked = in.IsClocked
 
+		//if in.PublishType == 1 {
+		//	lottery.PublishTime = time.Now().Unix()
+		//} else {
+		//	lottery.PublishTime = time.Unix(in.PublishTime, 0)
+		//}
+
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {

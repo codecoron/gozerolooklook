@@ -32,6 +32,7 @@ type (
 		GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
 		// 登录后获取抽奖列表
 		GetLotteryListAfterLogin(ctx context.Context, size, isSelected, lastId int64, lotteryIds []int64) ([]*Lottery, error)
+		GetLastId(ctx context.Context) (int64, error)
 	}
 
 	customLotteryModel struct {
@@ -190,6 +191,16 @@ func (c *customLotteryModel) GetLotteryListAfterLogin(ctx context.Context, size,
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, size)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLOTTERYLIST_AFTERLOGIN_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, limit:%v, error: %v", &resp, query, lastId, size, err)
+	}
+	return resp, nil
+}
+
+func (c *customLotteryModel) GetLastId(ctx context.Context) (int64, error) {
+	var resp int64
+	query := fmt.Sprintf("SELECT id FROM %s ORDER BY id DESC LIMIT 1", c.table)
+	err := c.QueryRowNoCacheCtx(ctx, &resp, query)
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLASTID_ERROR), "GetLastId, error: %v", err)
 	}
 	return resp, nil
 }

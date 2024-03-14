@@ -40,6 +40,7 @@ message AddLotteryReq {
   int64 SponsorId = 11;
   int64 isClocked = 12; // 是否开启打卡任务
   ClockTask clockTask = 13; // 打卡任务 最多支持一个
+  int64 publishType = 14; // 发布类型 1发布测试 2发布正式
 }
 
 message AddLotteryResp {
@@ -195,6 +196,22 @@ message GetLotteryStatisticResp {
   int64 ParticipationCount = 1; // 参与抽奖总数
   int64 CreatedCount = 2; // 发起抽奖总数
   int64 WonCount = 3; // 中奖记录总数
+}
+
+// 获取抽奖列表lastId
+message GetLotteryListLastIdReq {
+}
+
+message GetLotteryListLastIdResp {
+  int64 LastId = 1; // 最后一条记录的id
+}
+
+// 发布抽奖
+message PublishLotteryReq {
+  int64 LotteryId = 1; // 抽奖id
+}
+
+message PublishLotteryResp {
 }
 
 
@@ -449,6 +466,8 @@ service lottery{
   rpc CheckUserCreatedLotteryAndThisWeek(CheckUserCreatedLotteryAndThisWeekReq) returns (CheckUserCreatedLotteryAndThisWeekResp);
   rpc GetLotteryListAfterLogin(GetLotteryListAfterLoginReq) returns (GetLotteryListAfterLoginResp);
   rpc GetLotteryStatistic(GetLotteryStatisticReq) returns (GetLotteryStatisticResp);
+  rpc GetLotteryListLastId(GetLotteryListLastIdReq) returns (GetLotteryListLastIdResp);
+  rpc PublishLottery(PublishLotteryReq) returns (PublishLotteryResp);
   //-----------------------奖品表-----------------------
   rpc AddPrize(AddPrizeReq) returns (AddPrizeResp);
   rpc UpdatePrize(UpdatePrizeReq) returns (UpdatePrizeResp);
