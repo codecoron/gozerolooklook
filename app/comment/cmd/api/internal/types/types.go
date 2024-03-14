@@ -84,7 +84,6 @@ type CommentUpdateResp struct {
 
 type CommentListReq struct {
 	LastId   int64 `json:"lastId"`
-	Page     int64 `json:"page"`
 	PageSize int64 `json:"pageSize"`
 	Sort     int64 `json:"sort"`
 }

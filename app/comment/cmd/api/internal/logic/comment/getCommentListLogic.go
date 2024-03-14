@@ -29,7 +29,6 @@ func NewGetCommentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 func (l *GetCommentListLogic) GetCommentList(req *types.CommentListReq) (*types.CommentListResp, error) {
 	resp, err := l.svcCtx.CommentRpc.SearchComment(l.ctx, &comment.SearchCommentReq{
 		LastId: req.LastId,
-		Page:   req.Page,
 		Limit:  req.PageSize,
 		Sort:   req.Sort,
 	})
