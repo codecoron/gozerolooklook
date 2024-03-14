@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"database/sql"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -49,11 +48,8 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.IsClocked = in.IsClocked
 
 		if in.PublishType == 1 {
-			var nullTime sql.NullTime
-			t := time.Now()
-			nullTime.Time = t
-			nullTime.Valid = true
-			lottery.PublishTime = nullTime
+			lottery.PublishTime.Time = time.Now()
+			lottery.PublishTime.Valid = true
 		}
 
 		//打印出sql 调试错误
