@@ -4,11 +4,10 @@ import (
 	"context"
 	"flag"
 	"github.com/zeromicro/go-zero/core/logx"
+	"looklook/app/mqueue/cmd/job/internal/config"
 	"looklook/app/mqueue/cmd/job/internal/logic"
 	"looklook/app/mqueue/cmd/job/internal/svc"
 	"os"
-
-	"looklook/app/mqueue/cmd/job/internal/config"
 
 	"github.com/zeromicro/go-zero/core/conf"
 )
@@ -19,14 +18,15 @@ func main() {
 	flag.Parse()
 	var c config.Config
 
-	conf.MustLoad(*configFile, &c, conf.UseEnv())
+	//conf.MustLoad(*configFile, &c, conf.UseEnv())
+	conf.MustLoad(*configFile, &c)
 
 	// log、prometheus、trace、metricsUrl
 	if err := c.SetUp(); err != nil {
 		panic(err)
 	}
 
-	//logx.DisableStat()
+	logx.DisableStat()
 
 	svcContext := svc.NewServiceContext(c)
 	ctx := context.Background()
