@@ -32,6 +32,7 @@ type (
 		GetWeekLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
 		// 登录后获取抽奖列表
 		GetLotteryListAfterLogin(ctx context.Context, size, isSelected, lastId int64, lotteryIds []int64) ([]*Lottery, error)
+		GetLastId(ctx context.Context) (int64, error)
 	}
 
 	customLotteryModel struct {
@@ -60,9 +61,9 @@ func (m *defaultLotteryModel) UpdatePublishTime(ctx context.Context, data *Lotte
 func (c *customLotteryModel) LotteryList(ctx context.Context, limit, selected, lastId int64) ([]*Lottery, error) {
 	var query string
 	if selected != 0 {
-		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id > ? limit ?", lotteryRows, c.table)
+		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id <= ? order by id desc limit ?", lotteryRows, c.table)
 	} else {
-		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id > ? limit ?", lotteryRows, c.table)
+		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id <= ? order by id desc limit ?", lotteryRows, c.table)
 	}
 	var resp []*Lottery
 	//err := c.conn.QueryRowsCtx(ctx, &resp, query, (page-1)*limit, limit)
@@ -110,11 +111,12 @@ func (c *customLotteryModel) GetLotterysByLessThanCurrentTime(ctx context.Contex
 // UpdateLotteryStatus 根据lotteryId更新lottery状态为已开奖
 func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryId int64) error {
 	// 准备更新数据的SQL语句
+	lotteryLotteryIdKey := fmt.Sprintf("%s%v", cacheLotteryLotteryIdPrefix, lotteryId)
 	query := fmt.Sprintf("UPDATE %s SET is_announced = 1 WHERE id = ?", c.table)
 
 	_, err := c.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (sql.Result, error) {
 		return conn.Exec(query, lotteryId)
-	})
+	}, lotteryLotteryIdKey)
 	if err != nil {
 		return errors.Wrapf(xerr.NewErrCode(xerr.UPDATE_LOTTERY_STATUS_ERROR), "UpdateLotteryStatus, lotteryId:%v error: %v", lotteryId, err)
 	}
@@ -181,15 +183,25 @@ func (c *customLotteryModel) GetLotteryListAfterLogin(ctx context.Context, size,
 	//fmt.Println("lotteryIdsStr:", lotteryIdsStr)
 
 	if isSelected != 0 {
-		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id > ? and id not in (%s) limit ?", lotteryRows, c.table, lotteryIdsStr)
+		query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id <= ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
 	} else {
-		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id > ? and id not in (%s) limit ?", lotteryRows, c.table, lotteryIdsStr)
+		query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id <= ? and id not in (%s) order by id desc limit ?", lotteryRows, c.table, lotteryIdsStr)
 	}
 
 	var resp []*Lottery
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, size)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLOTTERYLIST_AFTERLOGIN_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, limit:%v, error: %v", &resp, query, lastId, size, err)
+	}
+	return resp, nil
+}
+
+func (c *customLotteryModel) GetLastId(ctx context.Context) (int64, error) {
+	var resp int64
+	query := fmt.Sprintf("SELECT id FROM %s ORDER BY id DESC LIMIT 1", c.table)
+	err := c.QueryRowNoCacheCtx(ctx, &resp, query)
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLASTID_ERROR), "GetLastId, error: %v", err)
 	}
 	return resp, nil
 }
