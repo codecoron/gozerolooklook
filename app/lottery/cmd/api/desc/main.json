@@ -193,34 +193,6 @@
         ]
       }
     },
-    "lottery/v1/lottery/getLastId": {
-      "post": {
-        "summary": "获取抽奖列表lastId",
-        "operationId": "getLastId",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/GetLastIdResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GetLastIdReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      }
-    },
     "lottery/v1/lottery/getLotteryWinList": {
       "post": {
         "summary": "获取当前用户中奖列表",
@@ -886,23 +858,6 @@
         "count",
         "thumb",
         "grantType"
-      ]
-    },
-    "GetLastIdReq": {
-      "type": "object",
-      "title": "GetLastIdReq"
-    },
-    "GetLastIdResp": {
-      "type": "object",
-      "properties": {
-        "lastId": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "GetLastIdResp",
-      "required": [
-        "lastId"
       ]
     },
     "GetLotteryWinList2Req": {

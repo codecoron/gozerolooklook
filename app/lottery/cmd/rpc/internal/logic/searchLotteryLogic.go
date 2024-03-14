@@ -26,6 +26,13 @@ func NewSearchLotteryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sea
 
 func (l *SearchLotteryLogic) SearchLottery(in *pb.SearchLotteryReq) (*pb.SearchLotteryResp, error) {
 	//list, err := l.svcCtx.LotteryModel.FindPageListByIdDESC(l.ctx, whereBuilder, in.LastId, in.PageSize)
+	if in.LastId == 0 {
+		id, err := l.svcCtx.LotteryModel.GetLastId(l.ctx)
+		if err != nil {
+			return nil, err
+		}
+		in.LastId = id
+	}
 	list, err := l.svcCtx.LotteryModel.LotteryList(l.ctx, in.Limit, in.IsSelected, in.LastId)
 	if err != nil && err != model.ErrNotFound {
 		return nil, err

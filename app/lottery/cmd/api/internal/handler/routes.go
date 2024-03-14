@@ -43,11 +43,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/getLotteryWinnersList",
 				Handler: lottery.GetLotteryWinList2Handler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/lottery/getLastId",
-				Handler: lottery.GetLastIdHandler(serverCtx),
-			},
 		},
 		rest.WithPrefix("/lottery/v1"),
 	)
