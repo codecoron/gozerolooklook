@@ -41,10 +41,10 @@ func (c *customCommentModel) CommentList(ctx context.Context, page, limit, lastI
 	var query string
 	if sort == 1 {
 		// 按照点赞数倒序排序
-		query = fmt.Sprintf("select %s from %s where del_state = ? AND id <= ? order by praise_count desc limit ?,?", commentRows, c.table)
+		query = fmt.Sprintf("select %s from %s where del_state = ? AND id < ? order by praise_count desc limit ?,?", commentRows, c.table)
 	} else {
 		// 按照id倒序排序
-		query = fmt.Sprintf("select %s from %s where del_state = ? AND id <= ? order by id desc limit ?,?", commentRows, c.table)
+		query = fmt.Sprintf("select %s from %s where del_state = ? AND id < ? order by id desc limit ?,?", commentRows, c.table)
 	}
 	var resp []*Comment
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, globalkey.DelStateNo, lastId, (page-1)*limit, limit)
