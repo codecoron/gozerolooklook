@@ -125,7 +125,8 @@ func (c *customLotteryModel) UpdateLotteryStatus(ctx context.Context, lotteryId 
 
 func (c *customLotteryModel) GetTypeIs2AndIsNotAnnounceLotterys(ctx context.Context, announceType int64) ([]*Lottery, error) {
 	var resp []*Lottery
-	query := fmt.Sprintf("SELECT * FROM %s WHERE announce_type = ? AND is_announced = 0", c.table)
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE announce_type = ? AND is_announced = 0 AND publish_time IS NOT NULL", c.table)
 	err := c.QueryRowsNoCacheCtx(ctx, &resp, query, announceType)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_TYPEIS2_AND_ISNOT_ANNOUNCE_LOTTERYS_ERROR), "GetTypeIs2AndIsNotAnnounceLotterys,announceType:%v, error: %v", announceType, err)
