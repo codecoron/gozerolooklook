@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/app/lottery/cmd/rpc/pb"
@@ -225,6 +226,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 // NotifyParticipators 通知MQ队列
 func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotteryId int64) error {
+	fmt.Println("NotifyParticipators", participators, lotteryId)
 	_, err := l.svcCtx.NoticeRpc.NoticeLotteryDraw(l.ctx, &notice.NoticeLotteryDrawReq{
 		LotteryId: lotteryId,
 		UserIds:   participators,
@@ -307,7 +309,7 @@ func (s *TimeLotteryStrategy) Run() error {
 		}
 
 		// 执行开奖结果通知任务
-		//err := s.NotifyParticipators(participators, lotteryId)
+		err := s.NotifyParticipators(participators, lotteryId)
 		if err != nil {
 			return err
 		}
