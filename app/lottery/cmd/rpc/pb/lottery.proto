@@ -399,8 +399,8 @@ message GetWonListByLotteryIdReq{
 
 message UserInfo{
   int64 id = 1;
-  string nickname = 2;
-  string avatar = 3;
+  bytes nickname = 2;
+  bytes avatar = 3;
 }
 
 message WonList2 {

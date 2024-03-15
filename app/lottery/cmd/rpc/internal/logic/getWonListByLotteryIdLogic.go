@@ -33,7 +33,7 @@ type UserInfo struct {
 
 func (l *GetWonListByLotteryIdLogic) GetWonListByLotteryId(in *pb.GetWonListByLotteryIdReq) (*pb.GetWonListByLotteryIdResp, error) {
 	// 查询当前抽奖的中奖列表
-	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ?", in.LotteryId)
+	builder := l.svcCtx.LotteryParticipationModel.SelectBuilder().Where("lottery_id = ? and is_won = 1", in.LotteryId)
 	WinInfo, err := l.svcCtx.LotteryParticipationModel.FindAll(l.ctx, builder, "")
 	if err != nil {
 		return nil, err
@@ -112,8 +112,8 @@ func (l *GetWonListByLotteryIdLogic) GetWonListByLotteryId(in *pb.GetWonListByLo
 			user := userInfoMap[userId]
 			users = append(users, &pb.UserInfo{
 				Id:       user.Id,
-				Nickname: user.Nickname,
-				Avatar:   user.Avatar,
+				Nickname: []byte(user.Nickname),
+				Avatar:   []byte(user.Avatar),
 			})
 		}
 		list = append(list, &pb.WonList2{
