@@ -99,6 +99,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/lottery/createClockTaskRecord",
 				Handler: lottery.CreateClockTaskRecordHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/getCreateLotteryListByUserId",
+				Handler: lottery.GetCreateLotteryListByUserIdHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/lottery/v1"),
