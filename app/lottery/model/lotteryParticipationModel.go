@@ -21,7 +21,7 @@ type (
 		UpdateWinners(ctx context.Context, LotteryId, UserId, PrizeId int64) error
 		GetParticipatorsCountByLotteryId(ctx context.Context, LotteryId int64) (int64, error)
 		CheckIsWonByUserIdAndLotteryId(ctx context.Context, LotteryId, UserId int64) (int64, error)
-		GetWonListByUserId(ctx context.Context, UserId, Page, Size, LastId int64) ([]*LotteryParticipation, error)
+		GetWonListByUserId(ctx context.Context, UserId, Size, LastId int64) ([]*LotteryParticipation, error)
 		GetWonListCountByUserId(ctx context.Context, UserId int64) (int64, error)
 		CheckIsParticipatedByUserIdAndLotteryId(ctx context.Context, UserId, LotteryId int64) (int64, error)
 		GetParticipatedLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
@@ -93,17 +93,17 @@ func (m *defaultLotteryParticipationModel) CheckIsWonByUserIdAndLotteryId(ctx co
 	return resp, nil
 }
 
-func (m *defaultLotteryParticipationModel) GetWonListByUserId(ctx context.Context, UserId, Page, Size, LastId int64) ([]*LotteryParticipation, error) {
-	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ? AND is_won = 1 AND id > ? LIMIT ?, ?", m.table)
+func (m *defaultLotteryParticipationModel) GetWonListByUserId(ctx context.Context, UserId, Size, LastId int64) ([]*LotteryParticipation, error) {
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ? AND is_won = 1 AND id > ? LIMIT ?", m.table)
 	var resp []*LotteryParticipation
-	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, UserId, LastId, (Page-1)*Size, Size)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, UserId, LastId, Size)
 	if err == sqlx.ErrNotFound {
 		fmt.Println("sqlx.ErrNotFoundfff", err)
 		return resp, nil
 	}
 	if err != nil {
 		fmt.Println("asdfasdf", err)
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_WONLIST_BYUSERID_ERROR), "GetWonListByUserId, UserId:%v, Page:%v, Size:%v, error: %v", UserId, Page, Size, err)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_WONLIST_BYUSERID_ERROR), "GetWonListByUserId, UserId:%v, Size:%v, error: %v", UserId, Size, err)
 	}
 	return resp, nil
 }

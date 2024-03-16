@@ -67,7 +67,6 @@ type WonList {
 // 获取当前用户中奖列表
 type GetLotteryWinListReq {
 	LastId int64 `json:"lastId"`
-	Page int64 `json:"page"`
 	Size int64 `json:"size"`
 }
 
