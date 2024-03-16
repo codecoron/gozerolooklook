@@ -8,6 +8,7 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/common/xerr"
+	"time"
 )
 
 var _ LotteryParticipationModel = (*customLotteryParticipationModel)(nil)
@@ -25,6 +26,7 @@ type (
 		GetWonListCountByUserId(ctx context.Context, UserId int64) (int64, error)
 		CheckIsParticipatedByUserIdAndLotteryId(ctx context.Context, UserId, LotteryId int64) (int64, error)
 		GetParticipatedLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
+		FindAllByUserId(UserId int64) ([]*LotteryParticipation2, error)
 	}
 
 	customLotteryParticipationModel struct {
@@ -37,6 +39,16 @@ func NewLotteryParticipationModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...
 	return &customLotteryParticipationModel{
 		defaultLotteryParticipationModel: newLotteryParticipationModel(conn, c, opts...),
 	}
+}
+
+type LotteryParticipation2 struct {
+	Id         int64     `db:"id"`         // 主键
+	LotteryId  int64     `db:"lottery_id"` // 参与的抽奖的id
+	UserId     int64     `db:"user_id"`    // 用户id
+	IsWon      int64     `db:"is_won"`     // 中奖了吗？
+	PrizeId    int64     `db:"prize_id"`   // 中奖id
+	CreateTime time.Time `db:"create_time"`
+	UpdateTime time.Time `db:"update_time"`
 }
 
 func (m *defaultLotteryParticipationModel) UpdateWinners(ctx context.Context, LotteryId, UserId, PrizeId int64) error {
@@ -134,6 +146,20 @@ func (m *defaultLotteryParticipationModel) GetParticipatedLotteryIdsByUserId(ctx
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, UserId)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.GET_PARTICIPATED_LOTTERYIDS_BYUSERID_ERROR), "GetParticipatedLotteryIdsByUserId, UserId:%v, error: %v", UserId, err)
+	}
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) FindAllByUserId(UserId int64) ([]*LotteryParticipation2, error) {
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ?", m.table)
+	var resp []*LotteryParticipation2
+	err := m.QueryRowsNoCache(&resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.FIND_ALLBYUSERID_ERROR), "FindAllByUserId, UserId:%v, error: %v", UserId, err)
+	}
+	var ParticipateTime []time.Time
+	for _, v := range resp {
+		ParticipateTime = append(ParticipateTime, v.CreateTime)
 	}
 	return resp, nil
 }

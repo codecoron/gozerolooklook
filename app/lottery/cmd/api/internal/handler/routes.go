@@ -101,8 +101,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/lottery/getCreateLotteryListByUserId",
-				Handler: lottery.GetCreateLotteryListByUserIdHandler(serverCtx),
+				Path:    "/lottery/getLotteryListByUserId",
+				Handler: lottery.GetLotteryListByUserIdHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

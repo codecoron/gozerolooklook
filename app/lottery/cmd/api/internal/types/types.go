@@ -183,13 +183,20 @@ type CreateClockTaskRecordResp struct {
 	Id int64 `json:"id"`
 }
 
-type GetCreateLotteryListByUserIdReq struct {
-	LastId   int64 `json:"lastId"`
-	PageSize int64 `json:"pageSize"`
+type LotteryPrizes struct {
+	LotteryId int64          `json:"lotteryId"` //抽奖ID
+	Prizes    []*CreatePrize `json:"prizes"`    //奖品信息
+	Time      int64          `json:"time"`      //参与/发起/中奖时间
 }
 
-type GetCreateLotteryListByUserIdResp struct {
-	List []Prize `json:"list"`
+type GetLotteryListByUserIdReq struct {
+	Page int64 `json:"page"`                        // 每页数量
+	Size int64 `json:"size"`                        // 页码
+	Type int64 `json:"type" validate:"oneof=1 2 3"` // 1:全部（发起+参与） 2:发起 3：中奖
+}
+
+type GetLotteryListByUserIdResp struct {
+	List []LotteryPrizes `json:"list"`
 }
 
 type LotteryParticipation struct {
