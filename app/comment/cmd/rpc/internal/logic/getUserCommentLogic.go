@@ -39,6 +39,10 @@ func (l *GetUserCommentLogic) GetUserComment(in *pb.GetUserCommentReq) (*pb.GetU
 	}
 
 	// 3. 获取当前用户是否点赞
+	if len(commentIds) == 0 {
+		return &pb.GetUserCommentResp{}, nil
+	}
+
 	likeList, err := l.svcCtx.PraiseModel.IsPraiseList(l.ctx, commentIds, in.UserId)
 	if err != nil {
 		return nil, err
