@@ -26,7 +26,7 @@ func NewGetWonListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetWon
 }
 
 func (l *GetWonListLogic) GetWonList(in *pb.GetWonListReq) (*pb.GetWonListResp, error) {
-	res, err := l.svcCtx.LotteryParticipationModel.GetWonListByUserId(l.ctx, in.UserId, in.Page, in.Size, in.LastId)
+	res, err := l.svcCtx.LotteryParticipationModel.GetWonListByUserId(l.ctx, in.UserId, in.Size, in.LastId)
 	if err != nil {
 		return nil, err
 	}

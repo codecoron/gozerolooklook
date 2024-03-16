@@ -29,7 +29,6 @@ func (l *GetLotteryWinListLogic) GetLotteryWinList(req *types.GetLotteryWinListR
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	list, err := l.svcCtx.LotteryRpc.GetWonList(l.ctx, &lottery.GetWonListReq{
 		UserId: userId,
-		Page:   req.Page,
 		Size:   req.Size,
 		LastId: req.LastId,
 	})

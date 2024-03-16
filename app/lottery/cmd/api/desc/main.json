@@ -867,10 +867,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
         "size": {
           "type": "integer",
           "format": "int64"
@@ -879,7 +875,6 @@
       "title": "GetLotteryWinListReq",
       "required": [
         "lastId",
-        "page",
         "size"
       ]
     },

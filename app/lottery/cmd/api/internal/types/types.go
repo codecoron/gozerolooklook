@@ -239,7 +239,6 @@ type WonList struct {
 
 type GetLotteryWinListReq struct {
 	LastId int64 `json:"lastId"`
-	Page   int64 `json:"page"`
 	Size   int64 `json:"size"`
 }
 
