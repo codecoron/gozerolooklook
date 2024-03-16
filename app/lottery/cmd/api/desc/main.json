@@ -193,15 +193,15 @@
         ]
       }
     },
-    "lottery/v1/lottery/getCreateLotteryListByUserId": {
+    "lottery/v1/lottery/getLotteryListByUserId": {
       "post": {
-        "summary": "获取当前用户发起的抽奖列表",
-        "operationId": "getCreateLotteryListByUserId",
+        "summary": "获取当前用户全部/发起/中奖的抽奖列表",
+        "operationId": "getLotteryListByUserId",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/GetCreateLotteryListByUserIdResp"
+              "$ref": "#/definitions/GetLotteryListByUserIdResp"
             }
           }
         },
@@ -211,7 +211,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetCreateLotteryListByUserIdReq"
+              "$ref": "#/definitions/GetLotteryListByUserIdReq"
             }
           }
         ],
@@ -866,35 +866,44 @@
         "grantType"
       ]
     },
-    "GetCreateLotteryListByUserIdReq": {
+    "GetLotteryListByUserIdReq": {
       "type": "object",
       "properties": {
-        "lastId": {
+        "page": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": " 每页数量"
         },
-        "pageSize": {
+        "size": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": " 页码"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 1:全部（发起+参与） 2:发起 3：中奖"
         }
       },
-      "title": "GetCreateLotteryListByUserIdReq",
+      "title": "GetLotteryListByUserIdReq",
       "required": [
-        "lastId",
-        "pageSize"
+        "page",
+        "size",
+        "type",
+        "oneof=1 2 3"
       ]
     },
-    "GetCreateLotteryListByUserIdResp": {
+    "GetLotteryListByUserIdResp": {
       "type": "object",
       "properties": {
         "list": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Prize"
+            "$ref": "#/definitions/LotteryPrizes"
           }
         }
       },
-      "title": "GetCreateLotteryListByUserIdResp",
+      "title": "GetLotteryListByUserIdResp",
       "required": [
         "list"
       ]
@@ -1230,6 +1239,34 @@
         "user_id",
         "is_won",
         "prize_id"
+      ]
+    },
+    "LotteryPrizes": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖ID"
+        },
+        "prizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreatePrize"
+          },
+          "description": "奖品信息"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "参与/发起/中奖时间"
+        }
+      },
+      "title": "LotteryPrizes",
+      "required": [
+        "lotteryId",
+        "prizes",
+        "time"
       ]
     },
     "LotterySponsor": {

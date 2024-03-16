@@ -33,6 +33,7 @@ type (
 		// 登录后获取抽奖列表
 		GetLotteryListAfterLogin(ctx context.Context, size, isSelected, lastId int64, lotteryIds []int64) ([]*Lottery, error)
 		GetLastId(ctx context.Context) (int64, error)
+		FindAllByUserId(UserId int64) ([]*Lottery2, error)
 	}
 
 	customLotteryModel struct {
@@ -203,6 +204,21 @@ func (c *customLotteryModel) GetLastId(ctx context.Context) (int64, error) {
 	err := c.QueryRowNoCacheCtx(ctx, &resp, query)
 	if err != nil {
 		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLASTID_ERROR), "GetLastId, error: %v", err)
+	}
+	return resp, nil
+}
+
+type Lottery2 struct {
+	Id         int64     `db:"id"`
+	CreateTime time.Time `db:"create_time"`
+}
+
+func (c *customLotteryModel) FindAllByUserId(UserId int64) ([]*Lottery2, error) {
+	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ?", c.table)
+	var resp []*Lottery2
+	err := c.QueryRowsNoCache(&resp, query, UserId)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_ALLBYUSERID_ERROR), "FindAllByUserId, UserId:%v, error: %v", UserId, err)
 	}
 	return resp, nil
 }

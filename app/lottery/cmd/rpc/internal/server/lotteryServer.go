@@ -103,6 +103,11 @@ func (s *LotteryServer) PublishLottery(ctx context.Context, in *pb.PublishLotter
 	return l.PublishLottery(in)
 }
 
+func (s *LotteryServer) GetLotteryPrizesListByUserId(ctx context.Context, in *pb.GetLotteryPrizesListByUserIdReq) (*pb.GetLotteryPrizesListByUserIdResp, error) {
+	l := logic.NewGetLotteryPrizesListByUserIdLogic(ctx, s.svcCtx)
+	return l.GetLotteryPrizesListByUserId(in)
+}
+
 // -----------------------奖品表-----------------------
 func (s *LotteryServer) AddPrize(ctx context.Context, in *pb.AddPrizeReq) (*pb.AddPrizeResp, error) {
 	l := logic.NewAddPrizeLogic(ctx, s.svcCtx)
