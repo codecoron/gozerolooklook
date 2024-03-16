@@ -91,6 +91,10 @@ service lottery {
 	@doc "完成打卡任务"
 	@handler createClockTaskRecord
 	post /lottery/createClockTaskRecord (CreateClockTaskRecordReq) returns (CreateClockTaskRecordResp)
+	
+	@doc "获取当前用户发起的抽奖列表"
+	@handler getCreateLotteryListByUserId
+	post /lottery/getCreateLotteryListByUserId (GetCreateLotteryListByUserIdReq) returns (GetCreateLotteryListByUserIdResp)
 }
 
 //no need login

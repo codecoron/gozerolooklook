@@ -38,6 +38,7 @@ type CreatePrize struct {
 	Name      string `json:"name"`      //奖品名称
 	Count     int64  `json:"count"`     //奖品份数
 	Thumb     string `json:"thumb"`     //默认一等奖配图
+	Level     int64  `json:"level"`     //奖品等级 1一等奖 2二等奖 3三等奖，依次类推
 	GrantType int64  `json:"grantType"` //奖品发放方式：1快递邮寄 2让中奖者联系我 3中奖者填写信息 4跳转到其他小程序
 }
 
@@ -180,6 +181,15 @@ type CreateClockTaskRecordReq struct {
 
 type CreateClockTaskRecordResp struct {
 	Id int64 `json:"id"`
+}
+
+type GetCreateLotteryListByUserIdReq struct {
+	LastId   int64 `json:"lastId"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type GetCreateLotteryListByUserIdResp struct {
+	List []Prize `json:"list"`
 }
 
 type LotteryParticipation struct {

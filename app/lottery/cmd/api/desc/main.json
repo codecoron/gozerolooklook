@@ -193,6 +193,34 @@
         ]
       }
     },
+    "lottery/v1/lottery/getCreateLotteryListByUserId": {
+      "post": {
+        "summary": "获取当前用户发起的抽奖列表",
+        "operationId": "getCreateLotteryListByUserId",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCreateLotteryListByUserIdResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetCreateLotteryListByUserIdReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/getLotteryWinList": {
       "post": {
         "summary": "获取当前用户中奖列表",
@@ -817,6 +845,11 @@
           "type": "string",
           "description": "默认一等奖配图"
         },
+        "level": {
+          "type": "integer",
+          "format": "int64",
+          "description": "奖品等级 1一等奖 2二等奖 3三等奖，依次类推"
+        },
         "grantType": {
           "type": "integer",
           "format": "int64",
@@ -829,7 +862,41 @@
         "name",
         "count",
         "thumb",
+        "level",
         "grantType"
+      ]
+    },
+    "GetCreateLotteryListByUserIdReq": {
+      "type": "object",
+      "properties": {
+        "lastId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetCreateLotteryListByUserIdReq",
+      "required": [
+        "lastId",
+        "pageSize"
+      ]
+    },
+    "GetCreateLotteryListByUserIdResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prize"
+          }
+        }
+      },
+      "title": "GetCreateLotteryListByUserIdResp",
+      "required": [
+        "list"
       ]
     },
     "GetLotteryWinList2Req": {
