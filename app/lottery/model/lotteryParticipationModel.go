@@ -26,7 +26,9 @@ type (
 		GetWonListCountByUserId(ctx context.Context, UserId int64) (int64, error)
 		CheckIsParticipatedByUserIdAndLotteryId(ctx context.Context, UserId, LotteryId int64) (int64, error)
 		GetParticipatedLotteryIdsByUserId(ctx context.Context, UserId int64) ([]int64, error)
-		FindAllByUserId(UserId int64) ([]*LotteryParticipation2, error)
+		FindAllByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery2, error)
+		FindWonListByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery3, error)
+		GetLastId(ctx context.Context) (int64, error)
 	}
 
 	customLotteryParticipationModel struct {
@@ -150,16 +152,57 @@ func (m *defaultLotteryParticipationModel) GetParticipatedLotteryIdsByUserId(ctx
 	return resp, nil
 }
 
-func (m *defaultLotteryParticipationModel) FindAllByUserId(UserId int64) ([]*LotteryParticipation2, error) {
-	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ?", m.table)
-	var resp []*LotteryParticipation2
-	err := m.QueryRowsNoCache(&resp, query, UserId)
+type Lottery3 struct {
+	Id              int64     `db:"id"`
+	Time            time.Time `db:"time"`
+	ParticipationId int64     `db:"participation_id"`
+}
+
+// 获取当前用户所有参与+发起的抽奖信息/中奖的
+func (m *defaultLotteryParticipationModel) FindAllByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery2, error) {
+	var query string
+	var resp []*Lottery2
+	// 获取参与+发起的抽奖信息
+	query = fmt.Sprintf(`
+SELECT lottery_id as id,create_time as time
+FROM (
+	SELECT id as lottery_id,create_time FROM lottery 
+	WHERE user_id = ?
+	AND is_announced = ?
+	UNION
+	SELECT lottery_id,lottery.create_time FROM lottery_participation 
+	LEFT JOIN lottery ON lottery.id = lottery_participation.lottery_id
+	WHERE lottery_participation.user_id = ?
+	AND lottery.is_announced = ?
+)
+AS a
+WHERE lottery_id < ?
+ORDER BY lottery_id
+DESC LIMIT ?`)
+	err := m.QueryRowsNoCache(&resp, query, UserId, IsAnnounced, UserId, IsAnnounced, LastId, Size)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.FIND_ALLBYUSERID_ERROR), "FindAllByUserId, UserId:%v, error: %v", UserId, err)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.FIND_ALLBYUSERID_ERROR), "FindAllByUserId, UserId:%v, LastId:%v, Size:%v, IsAnnounced:%v, error: %v", UserId, LastId, Size, IsAnnounced, err)
 	}
-	var ParticipateTime []time.Time
-	for _, v := range resp {
-		ParticipateTime = append(ParticipateTime, v.CreateTime)
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) FindWonListByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery3, error) {
+	query := fmt.Sprintf("SELECT l.id,lp.id as participation_id,lp.update_time as time FROM %s lp LEFT JOIN %s l ON lp.lottery_id = l.id WHERE lp.user_id = ? AND lp.id < ? AND l.is_announced = 1 AND lp.is_won = 1 ORDER BY id DESC LIMIT ?", m.table, "lottery")
+	var resp []*Lottery3
+	err := m.QueryRowsNoCache(&resp, query, UserId, LastId, Size)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.FIND_WONLIST_BYUSERID_ERROR), "FindWonListByUserId, UserId:%v, LastId:%v, Size:%v, IsAnnounced:%v, error: %v", UserId, LastId, Size, IsAnnounced, err)
+
+	}
+	return resp, nil
+}
+
+func (m *defaultLotteryParticipationModel) GetLastId(ctx context.Context) (int64, error) {
+	var resp int64
+	query := fmt.Sprintf("SELECT id FROM %s ORDER BY id DESC LIMIT 1", m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query)
+	if err != nil {
+		return 0, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLASTID_ERROR), "GetLastId, error: %v", err)
 	}
 	return resp, nil
 }

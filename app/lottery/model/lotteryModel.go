@@ -33,7 +33,7 @@ type (
 		// 登录后获取抽奖列表
 		GetLotteryListAfterLogin(ctx context.Context, size, isSelected, lastId int64, lotteryIds []int64) ([]*Lottery, error)
 		GetLastId(ctx context.Context) (int64, error)
-		FindAllByUserId(UserId int64) ([]*Lottery2, error)
+		FindAllByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery2, error)
 	}
 
 	customLotteryModel struct {
@@ -209,14 +209,15 @@ func (c *customLotteryModel) GetLastId(ctx context.Context) (int64, error) {
 }
 
 type Lottery2 struct {
-	Id         int64     `db:"id"`
-	CreateTime time.Time `db:"create_time"`
+	Id   int64     `db:"id"`
+	Time time.Time `db:"time"`
 }
 
-func (c *customLotteryModel) FindAllByUserId(UserId int64) ([]*Lottery2, error) {
-	query := fmt.Sprintf("SELECT * FROM %s WHERE user_id = ?", c.table)
+// FindAllByUserId 获取当前用户发起的所有抽奖
+func (c *customLotteryModel) FindAllByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery2, error) {
+	query := fmt.Sprintf("SELECT id ,create_time as time FROM %s WHERE user_id = ? AND is_announced = ? AND id < ? ORDER BY id DESC LIMIT ?", c.table)
 	var resp []*Lottery2
-	err := c.QueryRowsNoCache(&resp, query, UserId)
+	err := c.QueryRowsNoCache(&resp, query, UserId, IsAnnounced, LastId, Size)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_FIND_ALLBYUSERID_ERROR), "FindAllByUserId, UserId:%v, error: %v", UserId, err)
 	}

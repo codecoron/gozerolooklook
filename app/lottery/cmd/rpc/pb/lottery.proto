@@ -293,17 +293,17 @@ message CreatePrize {
 message LotteryPrizes {
   int64 lotteryId = 2; // 抽奖id
   repeated Prize Prizes = 3; // 奖品列表
-  int64 ParticipateTime = 4; // 参与时间
-  int64 CreateTime = 6; // 创建时间
-  int64 WonTime = 7; // 中奖时间
+  int64 ParticipationId = 4; // 参与id
+  int64 Time = 5; // 参与/创建/中奖时间
 }
 
-// 获取当前用户发起的和参与的抽奖列表
+// 获取当前用户发起/参与/中奖的抽奖列表
 message GetLotteryPrizesListByUserIdReq {
   int64 type = 1; // 1发起的 2参与的 3中奖的
   int64 size = 2; // 每页条数
   int64 userId = 3; // 当前用户id
-  int64 page = 4; // 页码
+  int64 lastId = 4; // 最后一条记录的id
+  int64 isAnnounced = 5; // 是否已开奖 0否 1是
 }
 
 message GetLotteryPrizesListByUserIdResp {
