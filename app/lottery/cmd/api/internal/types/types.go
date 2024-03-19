@@ -184,15 +184,17 @@ type CreateClockTaskRecordResp struct {
 }
 
 type LotteryPrizes struct {
-	LotteryId int64          `json:"lotteryId"` //抽奖ID
-	Prizes    []*CreatePrize `json:"prizes"`    //奖品信息
-	Time      int64          `json:"time"`      //参与/发起/中奖时间
+	LotteryId       int64    `json:"lotteryId"`       //抽奖ID
+	Prizes          []*Prize `json:"prizes"`          //奖品信息
+	ParticipationId int64    `json:"participationId"` //参与ID
+	Time            int64    `json:"time"`            //参与/发起/中奖时间
 }
 
 type GetLotteryListByUserIdReq struct {
-	Page int64 `json:"page"`                        // 每页数量
-	Size int64 `json:"size"`                        // 页码
-	Type int64 `json:"type" validate:"oneof=1 2 3"` // 1:全部（发起+参与） 2:发起 3：中奖
+	Type        int64 `json:"type" validate:"oneof=1 2 3"`      // 1:全部（发起+参与） 2:发起 3：中奖
+	Size        int64 `json:"size"`                             // 每页数量
+	LastId      int64 `json:"lastId"`                           // 最后一条数据的id
+	IsAnnounced int64 `json:"isAnnounced" validate:"oneof=0 1"` // 是否已开奖 0:未开奖 1:已开奖
 }
 
 type GetLotteryListByUserIdResp struct {

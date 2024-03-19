@@ -43,84 +43,81 @@ type LotteryPrizes struct {
 }
 
 func (l *GetLotteryPrizesListByUserIdLogic) GetLotteryPrizesListByUserId(in *pb.GetLotteryPrizesListByUserIdReq) (*pb.GetLotteryPrizesListByUserIdResp, error) {
-	// 获取当前用户发起的所有抽奖
-	lotterys, err := l.svcCtx.LotteryModel.FindAllByUserId(in.UserId)
-	if err != nil {
-		return nil, err
-	}
-	//for _, lottery := range lotterys {
-	//	fmt.Println("获取当前用户发起的所有抽奖", lottery.CreateTime)
-	//}
-	// 获取当前用户所有参与的抽奖信息
-	participates, err := l.svcCtx.LotteryParticipationModel.FindAllByUserId(in.UserId)
-	if err != nil {
-		return nil, err
-	}
-	//for _, participation := range participates {
-	//	fmt.Println("获取当前用户所有参与的抽奖信息", participation.CreateTime)
-	//	fmt.Println("获取当前用户所有参与的fff", participation.UpdateTime)
-	//}
-	LotteryList := make([]*LotteryPrizes, 0)
-	if in.Type == 1 {
-		// 获取当前用户所有参与+发起的抽奖信息
-		alreadyExist := make(map[int64]struct{})
-		for _, participation := range participates {
-			LotteryList = append(LotteryList, &LotteryPrizes{
-				lotteryId: participation.LotteryId,
-			})
-			alreadyExist[participation.LotteryId] = struct{}{}
-		}
-		// 去重
+	var err error
+	lotterys := make([]*model2.Lottery3, 0)
 
-		for _, lottery := range lotterys {
-			if _, ok := alreadyExist[lottery.Id]; !ok {
-				LotteryList = append(LotteryList, &LotteryPrizes{
-					lotteryId: lottery.Id,
-				})
+	switch in.Type {
+	case 1:
+		if in.LastId == 0 {
+			lastId, err := l.svcCtx.LotteryModel.GetLastId(l.ctx)
+			if err != nil {
+				return nil, err
 			}
+			in.LastId = lastId + 1
 		}
-	} else if in.Type == 2 {
+		// 获取当前用户所有参与的抽奖信息
+		//fmt.Println("获取当前用户所有参与的抽奖信息", in.UserId, in.LastId, in.Size, in.IsAnnounced, in.Type)
+		lotterys2, err := l.svcCtx.LotteryParticipationModel.FindAllByUserId(in.UserId, in.LastId, in.Size, in.IsAnnounced)
+		if err != nil {
+			return nil, err
+		}
+		for _, lottery := range lotterys2 {
+			lotterys = append(lotterys, &model2.Lottery3{
+				Id:   lottery.Id,
+				Time: lottery.Time,
+			})
+		}
+
+	case 2:
 		// 获取当前用户发起的所有抽奖
-		for _, participation := range participates {
-			LotteryList = append(LotteryList, &LotteryPrizes{
-				lotteryId:  participation.LotteryId,
-				CreateTime: participation.CreateTime.Unix(),
+		if in.LastId == 0 {
+			lastId, err := l.svcCtx.LotteryModel.GetLastId(l.ctx)
+			if err != nil {
+				return nil, err
+			}
+			in.LastId = lastId + 1
+		}
+		//fmt.Println("获取当前用户发起的所有抽奖", in.UserId, in.LastId, in.Size, in.IsAnnounced, in.Type)
+		lotterys2, err := l.svcCtx.LotteryModel.FindAllByUserId(in.UserId, in.LastId, in.Size, in.IsAnnounced)
+		if err != nil {
+			return nil, err
+		}
+		for _, lottery := range lotterys2 {
+			lotterys = append(lotterys, &model2.Lottery3{
+				Id:   lottery.Id,
+				Time: lottery.Time,
 			})
 		}
-	} else if in.Type == 3 {
-		// 获取当前用户中奖的所有抽奖
-		for _, participation := range participates {
-			if participation.IsWon == 1 {
-				LotteryList = append(LotteryList, &LotteryPrizes{
-					lotteryId: participation.LotteryId,
-					WonTime:   participation.UpdateTime.Unix(),
-				})
+	case 3:
+
+		if in.LastId == 0 {
+			lastId, err := l.svcCtx.LotteryParticipationModel.GetLastId(l.ctx)
+			if err != nil {
+				return nil, err
 			}
+			in.LastId = lastId + 1
+		}
+		// 获取当前用户所有参与的抽奖信息（中奖的）
+		//fmt.Println("获取当前用户所有中奖的抽奖信息", in.UserId, in.LastId, in.Size, in.IsAnnounced, in.Type)
+		// 分页根据参与表的id作为lastId
+		lotterys, err = l.svcCtx.LotteryParticipationModel.FindWonListByUserId(in.UserId, in.LastId, in.Size, in.IsAnnounced)
+		if err != nil {
+			return nil, err
 		}
 	}
 
-	if len(LotteryList) == 0 {
-		return &pb.GetLotteryPrizesListByUserIdResp{}, nil
-	}
-	// 根据page和size获取当前用户所有的抽奖记录
-	// 处理边界问题
-	if int((in.Page-1)*in.Size) > len(LotteryList) {
-		return &pb.GetLotteryPrizesListByUserIdResp{}, nil
-	}
-
-	if in.Page > 0 && in.Size > 0 && int(in.Page*in.Size) > len(LotteryList) {
-		LotteryList = LotteryList[(in.Page-1)*in.Size:]
-	} else if in.Page > 0 && in.Size > 0 {
-		LotteryList = LotteryList[(in.Page-1)*in.Size : in.Page*in.Size]
-	} else {
-		return &pb.GetLotteryPrizesListByUserIdResp{}, nil
-	}
+	//for _, lottery := range lotterys {
+	//	fmt.Println("获取当前用户抽奖列表：", in.Type, lottery)
+	//}
 
 	// 得到LottoryList后，根据lotteryId获取奖品列表
 	// 先统计lotteryIds
 	lotteryIds := make([]int64, 0)
-	for _, lottery := range LotteryList {
-		lotteryIds = append(lotteryIds, lottery.lotteryId)
+	for _, lottery := range lotterys {
+		lotteryIds = append(lotteryIds, lottery.Id)
+	}
+	if len(lotteryIds) == 0 {
+		return &pb.GetLotteryPrizesListByUserIdResp{}, nil
 	}
 	//fmt.Println("lotteryIds", lotteryIds)
 
@@ -152,18 +149,17 @@ func (l *GetLotteryPrizesListByUserIdLogic) GetLotteryPrizesListByUserId(in *pb.
 	//for k, v := range prizesMap {
 	//	fmt.Println("prizesMap", k, v)
 	//}
-
-	// 组装数据
+	//
+	//// 组装数据
 	resp := make([]*pb.LotteryPrizes, 0)
-	for _, lottery := range LotteryList {
+	for _, lottery := range lotterys {
 		//fmt.Println("lottery", lottery.lotteryId)
 		//fmt.Println("prizesMap", prizesMap[lottery.lotteryId])
 		resp = append(resp, &pb.LotteryPrizes{
-			LotteryId:       lottery.lotteryId,
-			Prizes:          prizesMap[lottery.lotteryId],
-			ParticipateTime: lottery.ParticipateTime,
-			CreateTime:      lottery.CreateTime,
-			WonTime:         lottery.WonTime,
+			LotteryId:       lottery.Id,
+			Prizes:          prizesMap[lottery.Id],
+			ParticipationId: lottery.ParticipationId,
+			Time:            lottery.Time.Unix(),
 		})
 	}
 	//for _, v := range resp {

@@ -869,28 +869,35 @@
     "GetLotteryListByUserIdReq": {
       "type": "object",
       "properties": {
-        "page": {
-          "type": "integer",
-          "format": "int64",
-          "description": " 每页数量"
-        },
-        "size": {
-          "type": "integer",
-          "format": "int64",
-          "description": " 页码"
-        },
         "type": {
           "type": "integer",
           "format": "int64",
           "description": " 1:全部（发起+参与） 2:发起 3：中奖"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页数量"
+        },
+        "lastId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 最后一条数据的id"
+        },
+        "isAnnounced": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否已开奖 0:未开奖 1:已开奖"
         }
       },
       "title": "GetLotteryListByUserIdReq",
       "required": [
-        "page",
-        "size",
         "type",
-        "oneof=1 2 3"
+        "oneof=1 2 3",
+        "size",
+        "lastId",
+        "isAnnounced",
+        "oneof=0 1"
       ]
     },
     "GetLotteryListByUserIdResp": {
@@ -1252,9 +1259,14 @@
         "prizes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/CreatePrize"
+            "$ref": "#/definitions/Prize"
           },
           "description": "奖品信息"
+        },
+        "participationId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "参与ID"
         },
         "time": {
           "type": "integer",
@@ -1266,6 +1278,7 @@
       "required": [
         "lotteryId",
         "prizes",
+        "participationId",
         "time"
       ]
     },

@@ -28,10 +28,11 @@ func NewGetLotteryListByUserIdLogic(ctx context.Context, svcCtx *svc.ServiceCont
 func (l *GetLotteryListByUserIdLogic) GetLotteryListByUserId(req *types.GetLotteryListByUserIdReq) (resp *types.GetLotteryListByUserIdResp, err error) {
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	res, err := l.svcCtx.LotteryRpc.GetLotteryPrizesListByUserId(l.ctx, &lottery.GetLotteryPrizesListByUserIdReq{
-		UserId: userId,
-		Page:   req.Page,
-		Size:   req.Size,
-		Type:   req.Type,
+		UserId:      userId,
+		LastId:      req.LastId,
+		Size:        req.Size,
+		Type:        req.Type,
+		IsAnnounced: req.IsAnnounced,
 	})
 	if err != nil {
 		return nil, err
@@ -42,26 +43,20 @@ func (l *GetLotteryListByUserIdLogic) GetLotteryListByUserId(req *types.GetLotte
 	for _, v := range res.LotteryPrizes {
 		var item types.LotteryPrizes
 		item.LotteryId = v.LotteryId
-		if req.Type == 1 {
-			if v.CreateTime != 0 {
-				item.Time = v.CreateTime
-			} else {
-				item.Time = v.ParticipateTime
-			}
-		} else if req.Type == 2 {
-			item.Time = v.ParticipateTime
-		} else if req.Type == 3 {
-			item.Time = v.WonTime
-		}
-		item.Prizes = make([]*types.CreatePrize, 0)
+		item.Time = v.Time
+		item.Prizes = make([]*types.Prize, 0)
 		for _, prize := range v.Prizes {
-			item.Prizes = append(item.Prizes, &types.CreatePrize{
-				Type:      prize.Type,
-				Name:      prize.Name,
-				Count:     prize.Count,
-				Level:     prize.Level,
-				Thumb:     prize.Thumb,
-				GrantType: prize.GrantType,
+			item.Prizes = append(item.Prizes, &types.Prize{
+				Id:        prize.Id,
+				LotteryId: prize.LotteryId,
+				CreatePrize: types.CreatePrize{
+					Type:      prize.Type,
+					Name:      prize.Name,
+					Count:     prize.Count,
+					Thumb:     prize.Thumb,
+					Level:     prize.Level,
+					GrantType: prize.GrantType,
+				},
 			})
 		}
 		resp.List = append(resp.List, item)
