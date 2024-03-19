@@ -176,12 +176,28 @@ func (c *customLotteryModel) GetWeekLotteryIdsByUserId(ctx context.Context, User
 func (c *customLotteryModel) GetLotteryListAfterLogin(ctx context.Context, size, isSelected, lastId int64, lotteryIds []int64) ([]*Lottery, error) {
 	var query string
 
+	if len(lotteryIds) == 0 {
+		if isSelected != 0 {
+			query = fmt.Sprintf("select %s from %s where is_selected = 1 and is_announced = 0 and publish_time IS NOT NULL and id < ? order by id desc limit ?", lotteryRows, c.table)
+		} else {
+			query = fmt.Sprintf("select %s from %s where is_announced = 0 and publish_time IS NOT NULL and id < ? order by id desc limit ?", lotteryRows, c.table)
+		}
+		var resp []*Lottery
+		err := c.QueryRowsNoCacheCtx(ctx, &resp, query, lastId, size)
+		if err != nil {
+			return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_GETLOTTERYLIST_AFTERLOGIN_ERROR), "QueryRowsNoCacheCtx, &resp:%v, query:%v, lastId:%v, limit:%v, error: %v", &resp, query, lastId, size, err)
+		}
+		return resp, nil
+	}
+
 	// 重新写query，lotteryIds是用户已经参与过的抽奖id，需要去除
 	var lotteryIdsStr string
 	for _, lotteryId := range lotteryIds {
 		lotteryIdsStr += fmt.Sprintf("%v,", lotteryId)
 	}
-	lotteryIdsStr = lotteryIdsStr[:len(lotteryIdsStr)-1]
+	if len(lotteryIds) != 0 {
+		lotteryIdsStr = lotteryIdsStr[:len(lotteryIdsStr)-1]
+	}
 	//fmt.Println("lotteryIdsStr:", lotteryIdsStr)
 
 	if isSelected != 0 {

@@ -187,7 +187,7 @@ DESC LIMIT ?`)
 }
 
 func (m *defaultLotteryParticipationModel) FindWonListByUserId(UserId, LastId, Size, IsAnnounced int64) ([]*Lottery3, error) {
-	query := fmt.Sprintf("SELECT l.id,lp.id as participation_id,lp.update_time as time FROM %s lp LEFT JOIN %s l ON lp.lottery_id = l.id WHERE lp.user_id = ? AND lp.id < ? AND l.is_announced = 1 AND lp.is_won = 1 ORDER BY id DESC LIMIT ?", m.table, "lottery")
+	query := fmt.Sprintf("SELECT l.id,lp.id as participation_id,lp.update_time as time FROM %s lp LEFT JOIN %s l ON lp.lottery_id = l.id WHERE lp.user_id = ? AND lp.is_won = 1 AND lp.id < ? AND l.is_announced = 1 ORDER BY id DESC LIMIT ?", m.table, "lottery")
 	var resp []*Lottery3
 	err := m.QueryRowsNoCache(&resp, query, UserId, LastId, Size)
 	if err != nil {
