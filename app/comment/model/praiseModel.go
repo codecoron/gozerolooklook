@@ -80,7 +80,7 @@ func (c *customPraiseModel) IsPraiseList(ctx context.Context, commentIds []int64
 			commentIdsStr = fmt.Sprintf("%s,%d", commentIdsStr, v)
 		}
 	}
-	query := fmt.Sprintf("select comment_id from %s where comment_id in (%s) and user_id = ?", c.table, commentIdsStr)
+	query := fmt.Sprintf("select comment_id from %s where user_id = ? and comment_id in (%s)", c.table, commentIdsStr)
 
 	err := c.QueryRowsNoCacheCtx(ctx, &ids, query, userId)
 	if err != nil && err != sqlx.ErrNotFound {
