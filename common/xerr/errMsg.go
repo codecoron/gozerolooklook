@@ -24,6 +24,7 @@ func init() {
 	message[CHECKIN_TASK_NOT_FOUND] = "任务不存在"
 	message[CHECKIN_TASK_REWARD_COLLECTED] = "不可重复领取奖励"
 	message[CHECKIN_TASK_NOT_FINISHED] = "任务未完成"
+	message[GET_TASK_PROGRESS_ERROR] = "获取任务进度策略失败"
 	// 抽奖模块
 	// 开奖
 	message[DB_FIND_PARTICIPATOR_ERROR] = "获取当前用户参与抽奖信息失败"
