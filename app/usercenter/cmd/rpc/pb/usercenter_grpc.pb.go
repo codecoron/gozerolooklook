@@ -19,48 +19,55 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Usercenter_Login_FullMethodName                = "/pb.usercenter/login"
-	Usercenter_Register_FullMethodName             = "/pb.usercenter/register"
-	Usercenter_GetUserInfo_FullMethodName          = "/pb.usercenter/getUserInfo"
-	Usercenter_GetUserAuthByAuthKey_FullMethodName = "/pb.usercenter/getUserAuthByAuthKey"
-	Usercenter_GetUserAuthByUserId_FullMethodName  = "/pb.usercenter/getUserAuthByUserId"
-	Usercenter_GenerateToken_FullMethodName        = "/pb.usercenter/generateToken"
-	Usercenter_UpdateUserBaseInfo_FullMethodName   = "/pb.usercenter/updateUserBaseInfo"
-	Usercenter_SetAdmin_FullMethodName             = "/pb.usercenter/setAdmin"
-	Usercenter_AddUser_FullMethodName              = "/pb.usercenter/AddUser"
-	Usercenter_UpdateUser_FullMethodName           = "/pb.usercenter/UpdateUser"
-	Usercenter_DelUser_FullMethodName              = "/pb.usercenter/DelUser"
-	Usercenter_GetUserById_FullMethodName          = "/pb.usercenter/GetUserById"
-	Usercenter_SearchUser_FullMethodName           = "/pb.usercenter/SearchUser"
-	Usercenter_CheckIsAdmin_FullMethodName         = "/pb.usercenter/CheckIsAdmin"
-	Usercenter_WxMiniRegister_FullMethodName       = "/pb.usercenter/WxMiniRegister"
-	Usercenter_AddUserAddress_FullMethodName       = "/pb.usercenter/AddUserAddress"
-	Usercenter_UpdateUserAddress_FullMethodName    = "/pb.usercenter/UpdateUserAddress"
-	Usercenter_DelUserAddress_FullMethodName       = "/pb.usercenter/DelUserAddress"
-	Usercenter_GetUserAddressById_FullMethodName   = "/pb.usercenter/GetUserAddressById"
-	Usercenter_SearchUserAddress_FullMethodName    = "/pb.usercenter/SearchUserAddress"
-	Usercenter_AddUserAuth_FullMethodName          = "/pb.usercenter/AddUserAuth"
-	Usercenter_UpdateUserAuth_FullMethodName       = "/pb.usercenter/UpdateUserAuth"
-	Usercenter_DelUserAuth_FullMethodName          = "/pb.usercenter/DelUserAuth"
-	Usercenter_GetUserAuthById_FullMethodName      = "/pb.usercenter/GetUserAuthById"
-	Usercenter_SearchUserAuth_FullMethodName       = "/pb.usercenter/SearchUserAuth"
-	Usercenter_AddUserContact_FullMethodName       = "/pb.usercenter/AddUserContact"
-	Usercenter_EditUserContact_FullMethodName      = "/pb.usercenter/EditUserContact"
-	Usercenter_UpdateUserContact_FullMethodName    = "/pb.usercenter/UpdateUserContact"
-	Usercenter_DelUserContact_FullMethodName       = "/pb.usercenter/DelUserContact"
-	Usercenter_GetUserContactById_FullMethodName   = "/pb.usercenter/GetUserContactById"
-	Usercenter_SearchUserContact_FullMethodName    = "/pb.usercenter/SearchUserContact"
-	Usercenter_AddUserShop_FullMethodName          = "/pb.usercenter/AddUserShop"
-	Usercenter_UpdateUserShop_FullMethodName       = "/pb.usercenter/UpdateUserShop"
-	Usercenter_DelUserShop_FullMethodName          = "/pb.usercenter/DelUserShop"
-	Usercenter_GetUserShopById_FullMethodName      = "/pb.usercenter/GetUserShopById"
-	Usercenter_SearchUserShop_FullMethodName       = "/pb.usercenter/SearchUserShop"
-	Usercenter_AddUserSponsor_FullMethodName       = "/pb.usercenter/AddUserSponsor"
-	Usercenter_UpdateUserSponsor_FullMethodName    = "/pb.usercenter/UpdateUserSponsor"
-	Usercenter_DelUserSponsor_FullMethodName       = "/pb.usercenter/DelUserSponsor"
-	Usercenter_GetUserSponsorById_FullMethodName   = "/pb.usercenter/GetUserSponsorById"
-	Usercenter_SearchUserSponsor_FullMethodName    = "/pb.usercenter/SearchUserSponsor"
-	Usercenter_SponsorDetail_FullMethodName        = "/pb.usercenter/SponsorDetail"
+	Usercenter_Login_FullMethodName                  = "/pb.usercenter/login"
+	Usercenter_Register_FullMethodName               = "/pb.usercenter/register"
+	Usercenter_GetUserInfo_FullMethodName            = "/pb.usercenter/getUserInfo"
+	Usercenter_GetUserAuthByAuthKey_FullMethodName   = "/pb.usercenter/getUserAuthByAuthKey"
+	Usercenter_GetUserAuthByUserId_FullMethodName    = "/pb.usercenter/getUserAuthByUserId"
+	Usercenter_GenerateToken_FullMethodName          = "/pb.usercenter/generateToken"
+	Usercenter_UpdateUserBaseInfo_FullMethodName     = "/pb.usercenter/updateUserBaseInfo"
+	Usercenter_SetAdmin_FullMethodName               = "/pb.usercenter/setAdmin"
+	Usercenter_GetUserInfoByUserIds_FullMethodName   = "/pb.usercenter/getUserInfoByUserIds"
+	Usercenter_AddUser_FullMethodName                = "/pb.usercenter/AddUser"
+	Usercenter_UpdateUser_FullMethodName             = "/pb.usercenter/UpdateUser"
+	Usercenter_DelUser_FullMethodName                = "/pb.usercenter/DelUser"
+	Usercenter_GetUserById_FullMethodName            = "/pb.usercenter/GetUserById"
+	Usercenter_SearchUser_FullMethodName             = "/pb.usercenter/SearchUser"
+	Usercenter_CheckIsAdmin_FullMethodName           = "/pb.usercenter/CheckIsAdmin"
+	Usercenter_WxMiniRegister_FullMethodName         = "/pb.usercenter/WxMiniRegister"
+	Usercenter_AddUserAddress_FullMethodName         = "/pb.usercenter/AddUserAddress"
+	Usercenter_UpdateUserAddress_FullMethodName      = "/pb.usercenter/UpdateUserAddress"
+	Usercenter_DelUserAddress_FullMethodName         = "/pb.usercenter/DelUserAddress"
+	Usercenter_GetUserAddressById_FullMethodName     = "/pb.usercenter/GetUserAddressById"
+	Usercenter_SearchUserAddress_FullMethodName      = "/pb.usercenter/SearchUserAddress"
+	Usercenter_AddUserAuth_FullMethodName            = "/pb.usercenter/AddUserAuth"
+	Usercenter_UpdateUserAuth_FullMethodName         = "/pb.usercenter/UpdateUserAuth"
+	Usercenter_DelUserAuth_FullMethodName            = "/pb.usercenter/DelUserAuth"
+	Usercenter_GetUserAuthById_FullMethodName        = "/pb.usercenter/GetUserAuthById"
+	Usercenter_SearchUserAuth_FullMethodName         = "/pb.usercenter/SearchUserAuth"
+	Usercenter_AddUserContact_FullMethodName         = "/pb.usercenter/AddUserContact"
+	Usercenter_EditUserContact_FullMethodName        = "/pb.usercenter/EditUserContact"
+	Usercenter_UpdateUserContact_FullMethodName      = "/pb.usercenter/UpdateUserContact"
+	Usercenter_DelUserContact_FullMethodName         = "/pb.usercenter/DelUserContact"
+	Usercenter_GetUserContactById_FullMethodName     = "/pb.usercenter/GetUserContactById"
+	Usercenter_SearchUserContact_FullMethodName      = "/pb.usercenter/SearchUserContact"
+	Usercenter_AddUserShop_FullMethodName            = "/pb.usercenter/AddUserShop"
+	Usercenter_UpdateUserShop_FullMethodName         = "/pb.usercenter/UpdateUserShop"
+	Usercenter_DelUserShop_FullMethodName            = "/pb.usercenter/DelUserShop"
+	Usercenter_GetUserShopById_FullMethodName        = "/pb.usercenter/GetUserShopById"
+	Usercenter_SearchUserShop_FullMethodName         = "/pb.usercenter/SearchUserShop"
+	Usercenter_AddUserSponsor_FullMethodName         = "/pb.usercenter/AddUserSponsor"
+	Usercenter_UpdateUserSponsor_FullMethodName      = "/pb.usercenter/UpdateUserSponsor"
+	Usercenter_DelUserSponsor_FullMethodName         = "/pb.usercenter/DelUserSponsor"
+	Usercenter_GetUserSponsorById_FullMethodName     = "/pb.usercenter/GetUserSponsorById"
+	Usercenter_SearchUserSponsor_FullMethodName      = "/pb.usercenter/SearchUserSponsor"
+	Usercenter_SponsorDetail_FullMethodName          = "/pb.usercenter/SponsorDetail"
+	Usercenter_AddUserDynamic_FullMethodName         = "/pb.usercenter/AddUserDynamic"
+	Usercenter_UpdateUserDynamic_FullMethodName      = "/pb.usercenter/UpdateUserDynamic"
+	Usercenter_DelUserDynamic_FullMethodName         = "/pb.usercenter/DelUserDynamic"
+	Usercenter_GetUserDynamicById_FullMethodName     = "/pb.usercenter/GetUserDynamicById"
+	Usercenter_SearchUserDynamic_FullMethodName      = "/pb.usercenter/SearchUserDynamic"
+	Usercenter_GetUserDynamicByUserId_FullMethodName = "/pb.usercenter/GetUserDynamicByUserId"
 )
 
 // UsercenterClient is the client API for Usercenter service.
@@ -77,6 +84,8 @@ type UsercenterClient interface {
 	UpdateUserBaseInfo(ctx context.Context, in *UpdateUserBaseInfoReq, opts ...grpc.CallOption) (*UpdateUserBaseInfoResp, error)
 	SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error)
 	// -----------------------用户表-----------------------
+	// 根据发过来的用户切片获取用户信息
+	GetUserInfoByUserIds(ctx context.Context, in *GetUserInfoByUserIdsReq, opts ...grpc.CallOption) (*GetUserInfoByUserIdsResp, error)
 	AddUser(ctx context.Context, in *AddUserReq, opts ...grpc.CallOption) (*AddUserResp, error)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 	DelUser(ctx context.Context, in *DelUserReq, opts ...grpc.CallOption) (*DelUserResp, error)
@@ -109,13 +118,18 @@ type UsercenterClient interface {
 	DelUserShop(ctx context.Context, in *DelUserShopReq, opts ...grpc.CallOption) (*DelUserShopResp, error)
 	GetUserShopById(ctx context.Context, in *GetUserShopByIdReq, opts ...grpc.CallOption) (*GetUserShopByIdResp, error)
 	SearchUserShop(ctx context.Context, in *SearchUserShopReq, opts ...grpc.CallOption) (*SearchUserShopResp, error)
-	// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
 	AddUserSponsor(ctx context.Context, in *AddUserSponsorReq, opts ...grpc.CallOption) (*AddUserSponsorResp, error)
 	UpdateUserSponsor(ctx context.Context, in *UpdateUserSponsorReq, opts ...grpc.CallOption) (*UpdateUserSponsorResp, error)
 	DelUserSponsor(ctx context.Context, in *DelUserSponsorReq, opts ...grpc.CallOption) (*DelUserSponsorResp, error)
 	GetUserSponsorById(ctx context.Context, in *GetUserSponsorByIdReq, opts ...grpc.CallOption) (*GetUserSponsorByIdResp, error)
 	SearchUserSponsor(ctx context.Context, in *SearchUserSponsorReq, opts ...grpc.CallOption) (*SearchUserSponsorResp, error)
 	SponsorDetail(ctx context.Context, in *SponsorDetailReq, opts ...grpc.CallOption) (*SponsorDetailResp, error)
+	AddUserDynamic(ctx context.Context, in *AddUserDynamicReq, opts ...grpc.CallOption) (*AddUserDynamicResp, error)
+	UpdateUserDynamic(ctx context.Context, in *UpdateUserDynamicReq, opts ...grpc.CallOption) (*UpdateUserDynamicResp, error)
+	DelUserDynamic(ctx context.Context, in *DelUserDynamicReq, opts ...grpc.CallOption) (*DelUserDynamicResp, error)
+	GetUserDynamicById(ctx context.Context, in *GetUserDynamicByIdReq, opts ...grpc.CallOption) (*GetUserDynamicByIdResp, error)
+	SearchUserDynamic(ctx context.Context, in *SearchUserDynamicReq, opts ...grpc.CallOption) (*SearchUserDynamicResp, error)
+	GetUserDynamicByUserId(ctx context.Context, in *GetUserDynamicByUserIdReq, opts ...grpc.CallOption) (*GetUserDynamicByUserIdResp, error)
 }
 
 type usercenterClient struct {
@@ -192,6 +206,15 @@ func (c *usercenterClient) UpdateUserBaseInfo(ctx context.Context, in *UpdateUse
 func (c *usercenterClient) SetAdmin(ctx context.Context, in *SetAdminReq, opts ...grpc.CallOption) (*SetAdminResp, error) {
 	out := new(SetAdminResp)
 	err := c.cc.Invoke(ctx, Usercenter_SetAdmin_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserInfoByUserIds(ctx context.Context, in *GetUserInfoByUserIdsReq, opts ...grpc.CallOption) (*GetUserInfoByUserIdsResp, error) {
+	out := new(GetUserInfoByUserIdsResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserInfoByUserIds_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -504,6 +527,60 @@ func (c *usercenterClient) SponsorDetail(ctx context.Context, in *SponsorDetailR
 	return out, nil
 }
 
+func (c *usercenterClient) AddUserDynamic(ctx context.Context, in *AddUserDynamicReq, opts ...grpc.CallOption) (*AddUserDynamicResp, error) {
+	out := new(AddUserDynamicResp)
+	err := c.cc.Invoke(ctx, Usercenter_AddUserDynamic_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserDynamic(ctx context.Context, in *UpdateUserDynamicReq, opts ...grpc.CallOption) (*UpdateUserDynamicResp, error) {
+	out := new(UpdateUserDynamicResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserDynamic_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) DelUserDynamic(ctx context.Context, in *DelUserDynamicReq, opts ...grpc.CallOption) (*DelUserDynamicResp, error) {
+	out := new(DelUserDynamicResp)
+	err := c.cc.Invoke(ctx, Usercenter_DelUserDynamic_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserDynamicById(ctx context.Context, in *GetUserDynamicByIdReq, opts ...grpc.CallOption) (*GetUserDynamicByIdResp, error) {
+	out := new(GetUserDynamicByIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserDynamicById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SearchUserDynamic(ctx context.Context, in *SearchUserDynamicReq, opts ...grpc.CallOption) (*SearchUserDynamicResp, error) {
+	out := new(SearchUserDynamicResp)
+	err := c.cc.Invoke(ctx, Usercenter_SearchUserDynamic_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserDynamicByUserId(ctx context.Context, in *GetUserDynamicByUserIdReq, opts ...grpc.CallOption) (*GetUserDynamicByUserIdResp, error) {
+	out := new(GetUserDynamicByUserIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserDynamicByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsercenterServer is the server API for Usercenter service.
 // All implementations must embed UnimplementedUsercenterServer
 // for forward compatibility
@@ -518,6 +595,8 @@ type UsercenterServer interface {
 	UpdateUserBaseInfo(context.Context, *UpdateUserBaseInfoReq) (*UpdateUserBaseInfoResp, error)
 	SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error)
 	// -----------------------用户表-----------------------
+	// 根据发过来的用户切片获取用户信息
+	GetUserInfoByUserIds(context.Context, *GetUserInfoByUserIdsReq) (*GetUserInfoByUserIdsResp, error)
 	AddUser(context.Context, *AddUserReq) (*AddUserResp, error)
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
 	DelUser(context.Context, *DelUserReq) (*DelUserResp, error)
@@ -550,13 +629,18 @@ type UsercenterServer interface {
 	DelUserShop(context.Context, *DelUserShopReq) (*DelUserShopResp, error)
 	GetUserShopById(context.Context, *GetUserShopByIdReq) (*GetUserShopByIdResp, error)
 	SearchUserShop(context.Context, *SearchUserShopReq) (*SearchUserShopResp, error)
-	// -----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
 	AddUserSponsor(context.Context, *AddUserSponsorReq) (*AddUserSponsorResp, error)
 	UpdateUserSponsor(context.Context, *UpdateUserSponsorReq) (*UpdateUserSponsorResp, error)
 	DelUserSponsor(context.Context, *DelUserSponsorReq) (*DelUserSponsorResp, error)
 	GetUserSponsorById(context.Context, *GetUserSponsorByIdReq) (*GetUserSponsorByIdResp, error)
 	SearchUserSponsor(context.Context, *SearchUserSponsorReq) (*SearchUserSponsorResp, error)
 	SponsorDetail(context.Context, *SponsorDetailReq) (*SponsorDetailResp, error)
+	AddUserDynamic(context.Context, *AddUserDynamicReq) (*AddUserDynamicResp, error)
+	UpdateUserDynamic(context.Context, *UpdateUserDynamicReq) (*UpdateUserDynamicResp, error)
+	DelUserDynamic(context.Context, *DelUserDynamicReq) (*DelUserDynamicResp, error)
+	GetUserDynamicById(context.Context, *GetUserDynamicByIdReq) (*GetUserDynamicByIdResp, error)
+	SearchUserDynamic(context.Context, *SearchUserDynamicReq) (*SearchUserDynamicResp, error)
+	GetUserDynamicByUserId(context.Context, *GetUserDynamicByUserIdReq) (*GetUserDynamicByUserIdResp, error)
 	mustEmbedUnimplementedUsercenterServer()
 }
 
@@ -587,6 +671,9 @@ func (UnimplementedUsercenterServer) UpdateUserBaseInfo(context.Context, *Update
 }
 func (UnimplementedUsercenterServer) SetAdmin(context.Context, *SetAdminReq) (*SetAdminResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetAdmin not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserInfoByUserIds(context.Context, *GetUserInfoByUserIdsReq) (*GetUserInfoByUserIdsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfoByUserIds not implemented")
 }
 func (UnimplementedUsercenterServer) AddUser(context.Context, *AddUserReq) (*AddUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUser not implemented")
@@ -689,6 +776,24 @@ func (UnimplementedUsercenterServer) SearchUserSponsor(context.Context, *SearchU
 }
 func (UnimplementedUsercenterServer) SponsorDetail(context.Context, *SponsorDetailReq) (*SponsorDetailResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SponsorDetail not implemented")
+}
+func (UnimplementedUsercenterServer) AddUserDynamic(context.Context, *AddUserDynamicReq) (*AddUserDynamicResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserDynamic not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserDynamic(context.Context, *UpdateUserDynamicReq) (*UpdateUserDynamicResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserDynamic not implemented")
+}
+func (UnimplementedUsercenterServer) DelUserDynamic(context.Context, *DelUserDynamicReq) (*DelUserDynamicResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelUserDynamic not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserDynamicById(context.Context, *GetUserDynamicByIdReq) (*GetUserDynamicByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserDynamicById not implemented")
+}
+func (UnimplementedUsercenterServer) SearchUserDynamic(context.Context, *SearchUserDynamicReq) (*SearchUserDynamicResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchUserDynamic not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserDynamicByUserId(context.Context, *GetUserDynamicByUserIdReq) (*GetUserDynamicByUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserDynamicByUserId not implemented")
 }
 func (UnimplementedUsercenterServer) mustEmbedUnimplementedUsercenterServer() {}
 
@@ -843,6 +948,24 @@ func _Usercenter_SetAdmin_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UsercenterServer).SetAdmin(ctx, req.(*SetAdminReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserInfoByUserIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfoByUserIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserInfoByUserIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserInfoByUserIds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserInfoByUserIds(ctx, req.(*GetUserInfoByUserIdsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1459,6 +1582,114 @@ func _Usercenter_SponsorDetail_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_AddUserDynamic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserDynamicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).AddUserDynamic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_AddUserDynamic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).AddUserDynamic(ctx, req.(*AddUserDynamicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserDynamic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserDynamicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserDynamic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserDynamic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserDynamic(ctx, req.(*UpdateUserDynamicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_DelUserDynamic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelUserDynamicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).DelUserDynamic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_DelUserDynamic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).DelUserDynamic(ctx, req.(*DelUserDynamicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserDynamicById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserDynamicByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserDynamicById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserDynamicById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserDynamicById(ctx, req.(*GetUserDynamicByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SearchUserDynamic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserDynamicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SearchUserDynamic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SearchUserDynamic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SearchUserDynamic(ctx, req.(*SearchUserDynamicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserDynamicByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserDynamicByUserIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserDynamicByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserDynamicByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserDynamicByUserId(ctx, req.(*GetUserDynamicByUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Usercenter_ServiceDesc is the grpc.ServiceDesc for Usercenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1497,6 +1728,10 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "setAdmin",
 			Handler:    _Usercenter_SetAdmin_Handler,
+		},
+		{
+			MethodName: "getUserInfoByUserIds",
+			Handler:    _Usercenter_GetUserInfoByUserIds_Handler,
 		},
 		{
 			MethodName: "AddUser",
@@ -1633,6 +1868,30 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SponsorDetail",
 			Handler:    _Usercenter_SponsorDetail_Handler,
+		},
+		{
+			MethodName: "AddUserDynamic",
+			Handler:    _Usercenter_AddUserDynamic_Handler,
+		},
+		{
+			MethodName: "UpdateUserDynamic",
+			Handler:    _Usercenter_UpdateUserDynamic_Handler,
+		},
+		{
+			MethodName: "DelUserDynamic",
+			Handler:    _Usercenter_DelUserDynamic_Handler,
+		},
+		{
+			MethodName: "GetUserDynamicById",
+			Handler:    _Usercenter_GetUserDynamicById_Handler,
+		},
+		{
+			MethodName: "SearchUserDynamic",
+			Handler:    _Usercenter_SearchUserDynamic_Handler,
+		},
+		{
+			MethodName: "GetUserDynamicByUserId",
+			Handler:    _Usercenter_GetUserDynamicByUserId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,7 +19,6 @@ type Lottery struct {
 
 type LotteryListReq struct {
 	LastId     int64 `json:"lastId"`
-	Page       int64 `json:"page"`
 	PageSize   int64 `json:"pageSize"`
 	IsSelected int64 `json:"isSelected"`
 }
@@ -39,12 +38,13 @@ type CreatePrize struct {
 	Name      string `json:"name"`      //奖品名称
 	Count     int64  `json:"count"`     //奖品份数
 	Thumb     string `json:"thumb"`     //默认一等奖配图
+	Level     int64  `json:"level"`     //奖品等级 1一等奖 2二等奖 3三等奖，依次类推
 	GrantType int64  `json:"grantType"` //奖品发放方式：1快递邮寄 2让中奖者联系我 3中奖者填写信息 4跳转到其他小程序
 }
 
 type CreateClockTask struct {
-	Type             int64  `json:"type"`                       // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
-	Seconds          int64  `json:"seconds"`                    // 任务秒数
+	Type             int64  `json:"type, optional"`             // 任务类型 1: 体验小程序 2： 浏览指定公众号文章 3: 浏览图片（微信图片二维码等） 4： 浏览视频号视频
+	Seconds          int64  `json:"seconds, optional"`          // 任务秒数
 	AppletType       int64  `json:"appletType, optional"`       // type=1时该字段才有意义 小程序跳转类型，1小程序链接 2小程序路径
 	PageLink         string `json:"pageLink, optional"`         // type=1 并且 applet_type=1时 该字段才有意义 配置要跳转小程序的页面链接 （如 #小程序://抽奖/oM....）
 	AppId            string `json:"appId, optional"`            // type=1 并且 applet_type=2时 该字段才有意义 配置要跳转的小程序AppID
@@ -53,23 +53,24 @@ type CreateClockTask struct {
 	VideoAccountId   string `json:"videoAccountId, optional"`   // type=4时 该字段才有意义 视频号ID
 	VideoId          string `json:"videoId, optional"`          // type=4时 该字段才有意义 视频ID
 	ArticleLink      string `json:"articleLink, optional"`      // type=2时 该字段才有意义 公众号文章链接
-	Copywriting      string `json:"copywriting"`                // 引导参与者完成打卡任务的文案
-	ChanceType       int64  `json:"chanceType"`                 // 概率类型 1: 随机 2: 指定
+	Copywriting      string `json:"copywriting,optional"`       // 引导参与者完成打卡任务的文案
+	ChanceType       int64  `json:"chanceType,optional"`        // 概率类型 1: 随机 2: 指定
 	IncreaseMultiple int64  `json:"increaseMultiple, optional"` // ChanceType=2时 该字段才有意义，概率增加倍数
 }
 
 type CreateLotteryReq struct {
-	Name          string           `json:"name"`                //默认一等奖名称
-	Thumb         string           `json:"thumb"`               //默认一等奖配图
-	AnnounceType  int64            `json:"announceType"`        //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
-	AnnounceTime  int64            `json:"announceTime"`        //开奖时间
-	JoinNumber    int64            `json:"joinNumber"`          //自动开奖人数标准
-	Introduce     string           `json:"introduce"`           //抽奖说明
-	AwardDeadline int64            `json:"awardDeadline"`       //领奖截止时间
-	SponsorId     int64            `json:"sponsorId"`           // 赞助商Id
-	Prizes        []*CreatePrize   `json:"prizes"`              //奖品 支持多个
-	IsClocked     int64            `json:"isClocked"`           //是否开启打卡任务 0未开启；1已开启
-	ClockTask     *CreateClockTask `json:"clockTask, optional"` //打卡任务 支持一个
+	Name          string           `json:"name"`                              //默认一等奖名称
+	Thumb         string           `json:"thumb"`                             //默认一等奖配图
+	AnnounceType  int64            `json:"announceType" validate:"oneof=1 2"` //开奖设置：1按时间开奖 2按人数开奖 3即抽即中
+	AnnounceTime  int64            `json:"announceTime"`                      //开奖时间
+	JoinNumber    int64            `json:"joinNumber"`                        //自动开奖人数标准
+	Introduce     string           `json:"introduce"`                         //抽奖说明
+	AwardDeadline int64            `json:"awardDeadline"`                     //领奖截止时间
+	SponsorId     int64            `json:"sponsorId"`                         // 赞助商Id
+	Prizes        []*CreatePrize   `json:"prizes"`                            //奖品 支持多个
+	IsClocked     int64            `json:"isClocked"`                         //是否开启打卡任务 0未开启；1已开启
+	ClockTask     *CreateClockTask `json:"clockTask, optional"`               //打卡任务 支持一个
+	PublishType   int64            `json:"publishType" validate:"oneof=1 2"`  //发布类型 1发布抽奖 2发布测试
 }
 
 type CreateLotteryResp struct {
@@ -92,17 +93,17 @@ type SetLotteryIsSelectedResp struct {
 }
 
 type LotterySponsor struct {
-	Id         int64  `json:"id"`         //id
-	UserId     int64  `json:"userId"`     //userId
-	Type       int64  `json:"type"`       //1微信号 2公众号 3小程序 4微信群 5视频号
-	AppletType int64  `json:"appletType"` //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
-	Name       string `json:"name"`       //名称
-	Desc       string `json:"desc"`       //描述
-	Avatar     string `json:"avatar"`     //avatar
-	IsShow     int64  `json:"isShow"`     //1显示 2不显示
-	QrCode     string `json:"qrCode"`     //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
-	InputA     string `json:"inputA"`     //type=5 applet_type=2 or applet_type=1 输入框A
-	InputB     string `json:"inputB"`     //type=5 applet_type=2输入框B
+	Id         int64  `json:"id"`              //id
+	UserId     int64  `json:"userId"`          //userId
+	Type       int64  `json:"type"`            //1微信号 2公众号 3小程序 4微信群 5视频号
+	AppletType int64  `json:"appletType"`      //type=3时该字段才有意义，1小程序链接 2路径跳转 3二维码跳转
+	Name       string `json:"name"`            //名称
+	Desc       string `json:"desc"`            //描述
+	Avatar     string `json:"avatar"`          //avatar
+	IsShow     int64  `json:"isShow"`          //1显示 2不显示
+	QrCode     string `json:"qrCode,optional"` //二维码图片地址, type=1 2 3&applet_type=3 4的时候启用
+	InputA     string `json:"inputA,optional"` //type=5 applet_type=2 or applet_type=1 输入框A
+	InputB     string `json:"inputB,optional"` //type=5 applet_type=2输入框B
 }
 
 type LotteryDetailReq struct {
@@ -173,6 +174,33 @@ type ChanceTypeListResp struct {
 	List []ChanceType `json:"list"`
 }
 
+type CreateClockTaskRecordReq struct {
+	LotteryId   int64 `json:"lotteryId"`
+	ClockTaskId int64 `json:"clockTaskId"`
+}
+
+type CreateClockTaskRecordResp struct {
+	Id int64 `json:"id"`
+}
+
+type LotteryPrizes struct {
+	LotteryId       int64    `json:"lotteryId"`       //抽奖ID
+	Prizes          []*Prize `json:"prizes"`          //奖品信息
+	ParticipationId int64    `json:"participationId"` //参与ID
+	Time            int64    `json:"time"`            //参与/发起/中奖时间
+}
+
+type GetLotteryListByUserIdReq struct {
+	Type        int64 `json:"type" validate:"oneof=1 2 3"`      // 1:全部（发起+参与） 2:发起 3：中奖
+	Size        int64 `json:"size"`                             // 每页数量
+	LastId      int64 `json:"lastId"`                           // 最后一条数据的id
+	IsAnnounced int64 `json:"isAnnounced" validate:"oneof=0 1"` // 是否已开奖 0:未开奖 1:已开奖
+}
+
+type GetLotteryListByUserIdResp struct {
+	List []LotteryPrizes `json:"list"`
+}
+
 type LotteryParticipation struct {
 	Id        int64 `json:"id"`         // 主键
 	LotteryId int64 `json:"lottery_id"` // 参与的抽奖的id
@@ -230,10 +258,31 @@ type WonList struct {
 
 type GetLotteryWinListReq struct {
 	LastId int64 `json:"lastId"`
-	Page   int64 `json:"page"`
 	Size   int64 `json:"size"`
 }
 
 type GetLotteryWinListResp struct {
 	List []*WonList `json:"list"`
+}
+
+type CheckIsWinReq struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type CheckIsWinResp struct {
+	IsWon int64 `json:"isWon"`
+}
+
+type GetLotteryWinList2Req struct {
+	LotteryId int64 `json:"lotteryId"`
+}
+
+type WonList2 struct {
+	Prize       *Prizes     `json:"prize"`
+	WinnerCount int64       `json:"winnerCount"`
+	Users       []*UserInfo `json:"users"`
+}
+
+type GetLotteryWinList2Resp struct {
+	List []*WonList2 `json:"list"`
 }

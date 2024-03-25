@@ -253,6 +253,18 @@ message SearchUserAuthReq {
 message SearchUserAuthResp {
   repeated UserAuth userAuth = 1; //userAuth
 }
+message UserInfoForComment{
+  int64 id = 2; //userId
+  string nickname = 3; //userName
+  string avatar = 4; //avatar
+}
+message  GetUserInfoByUserIdsReq{
+  repeated int64 userIds = 1; //userIds
+}
+
+message  GetUserInfoByUserIdsResp{
+  repeated UserInfoForComment userInfo = 1;
+}
 
 //--------------------------------抽奖发起人联系方式--------------------------------
 message UserContact {
@@ -582,6 +594,69 @@ message SponsorDetailResp {
   string inputB = 11; //type=5 applet_type=2输入框B
 }
 
+//-------------------------------- 用户发布动态 --------------------------------
+message UserDynamic {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string dynamicUrl = 3; //文件地址链接
+  string remark = 4; //备注
+  int64 updateTime = 6; //updateTime
+}
+
+message AddUserDynamicReq {
+  int64 userId = 1; //userId
+  string dynamicUrl = 2; //文件地址链接
+  string remark = 3; //备注
+}
+message AddUserDynamicResp {
+  int64 Id = 1; //id
+}
+
+message UpdateUserDynamicReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string dynamicUrl = 3; //文件地址链接
+  string remark = 4; //备注
+}
+message UpdateUserDynamicResp {
+}
+
+message DelUserDynamicReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+}
+
+message DelUserDynamicResp {
+}
+
+message GetUserDynamicByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUserDynamicByIdResp {
+  UserDynamic userDynamic = 1; //userDynamic
+}
+
+message GetUserDynamicByUserIdReq {
+  int64 userId = 1; //id
+}
+
+message GetUserDynamicByUserIdResp {
+  UserDynamic userDynamic = 1; //userDynamic
+}
+message SearchUserDynamicReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  string dynamicUrl = 5; //文件地址链接
+  string remark = 6; //备注
+  int64 updateTime = 8; //updateTime
+}
+
+message SearchUserDynamicResp {
+  repeated UserDynamic userDynamic = 1; //userDynamic
+}
 
 
 
@@ -599,6 +674,8 @@ service usercenter{
   rpc updateUserBaseInfo(UpdateUserBaseInfoReq) returns(UpdateUserBaseInfoResp);
   rpc setAdmin(SetAdminReq) returns(SetAdminResp);
   //-----------------------用户表-----------------------
+  //根据发过来的用户切片获取用户信息
+  rpc getUserInfoByUserIds(GetUserInfoByUserIdsReq) returns(GetUserInfoByUserIdsResp);
   rpc AddUser(AddUserReq) returns (AddUserResp);
   rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp);
   rpc DelUser(DelUserReq) returns (DelUserResp);
@@ -632,10 +709,18 @@ service usercenter{
   rpc GetUserShopById(GetUserShopByIdReq) returns (GetUserShopByIdResp);
   rpc SearchUserShop(SearchUserShopReq) returns (SearchUserShopResp);
   //-----------------------抽奖发起人联系方式（抽奖赞助商）-----------------------
+
   rpc AddUserSponsor(AddUserSponsorReq) returns (AddUserSponsorResp);
   rpc UpdateUserSponsor(UpdateUserSponsorReq) returns (UpdateUserSponsorResp);
   rpc DelUserSponsor(DelUserSponsorReq) returns (DelUserSponsorResp);
   rpc GetUserSponsorById(GetUserSponsorByIdReq) returns (GetUserSponsorByIdResp);
   rpc SearchUserSponsor(SearchUserSponsorReq) returns (SearchUserSponsorResp);
   rpc SponsorDetail(SponsorDetailReq) returns(SponsorDetailResp);
+
+  rpc AddUserDynamic(AddUserDynamicReq) returns (AddUserDynamicResp);
+  rpc UpdateUserDynamic(UpdateUserDynamicReq) returns (UpdateUserDynamicResp);
+  rpc DelUserDynamic(DelUserDynamicReq) returns (DelUserDynamicResp);
+  rpc GetUserDynamicById(GetUserDynamicByIdReq) returns (GetUserDynamicByIdResp);
+  rpc SearchUserDynamic(SearchUserDynamicReq) returns (SearchUserDynamicResp);
+  rpc GetUserDynamicByUserId(GetUserDynamicByUserIdReq) returns (GetUserDynamicByUserIdResp);
 }

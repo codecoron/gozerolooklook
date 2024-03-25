@@ -45,6 +45,10 @@ func init() {
 	message[DB_INSERTPRIZE_ERROR] = "插入奖品信息失败"
 	// 抽奖列表
 	message[DB_GET_LOTTERY_LIST_ERROR] = "获取抽奖列表失败"
+	message[DB_GETLOTTERYLIST_AFTERLOGIN_ERROR] = "获取登录后抽奖列表失败"
+	message[DB_GETLASTID_ERROR] = "获取最后一个抽奖id失败"
+	message[FIND_ALLBYUSERID_ERROR] = "根据用户id获取参与抽奖列表失败"
+	message[DB_FIND_ALLBYUSERID_ERROR] = "根据用户id获取发起抽奖列表失败"
 	// 检验当前用户是否发起过抽奖
 	message[DB_GET_LOTTERYID_BYUSERID_ERROR] = "获取当前用户抽奖Id失败"
 	message[DB_LOTTERYID_NOTFOUND] = "当前用户没有发起过抽奖"
@@ -59,6 +63,8 @@ func init() {
 	message[GET_WONLISTCOUNT_BYUSERID_ERROR] = "获取当前用户中奖总数失败"
 	message[CHECK_ISPARTICIPATED_BYUSERID_ANDLOTTERYID_ERROR] = "检查当前用户是否参与抽奖失败"
 	message[GET_PARTICIPATED_LOTTERYIDS_BYUSERID_ERROR] = "获取当前用户参与抽奖ids失败"
+	message[FIND_WONLIST_BYUSERID_ERROR] = "根据用户id获取中奖列表失败"
+	message[LOTTERY_HAS_BEEN_ANOUNCED] = "抽奖已公布，不能抽奖"
 	// 晒单模块
 	message[ErrUserNotWon] = "用户没有中奖"
 	message[DB_INSERTCOMMENT_ERROR] = "插入评论失败"

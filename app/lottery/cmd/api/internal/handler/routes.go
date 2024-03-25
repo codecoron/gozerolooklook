@@ -24,8 +24,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: lottery.LotteryListHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
-				Path:    "/lottery/participation",
+				Method:  http.MethodPost,
+				Path:    "/lottery/participations",
 				Handler: lottery.SearchParticipationHandler(serverCtx),
 			},
 			{
@@ -37,6 +37,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/lottery/chanceTypeList",
 				Handler: lottery.ChanceTypeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/getLotteryWinnersList",
+				Handler: lottery.GetLotteryWinList2Handler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/lottery/v1"),
@@ -83,6 +88,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/lottery/lotteryListAfterLogin",
 				Handler: lottery.LotteryListAfterLoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/checkIsWin",
+				Handler: lottery.CheckIsWinHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/createClockTaskRecord",
+				Handler: lottery.CreateClockTaskRecordHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/lottery/getLotteryListByUserId",
+				Handler: lottery.GetLotteryListByUserIdHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

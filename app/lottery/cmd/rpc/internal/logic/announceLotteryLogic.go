@@ -110,19 +110,39 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 	winners := make([]Winner, 0)
 
-	// todo 每个参与者有不同的中奖概率，重新制定中奖规则
-
 	// 假定的每个用户的中奖倍率
-	testRatios := make([]int64, len(participantor))
-	for i := range testRatios {
-		testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
+	//testRatios := make([]int64, len(participantor))
+	//for i := range testRatios {
+	//	testRatios[i] = rand.Int63n(10) + 1 // Ensure a non-zero ratio, random value between 1 and 10
+	//}
+
+	records, err := l.svcCtx.ClockTaskRecordModel.GetClockTaskRecordByLotteryIdAndUserIds(lotteryId, participantor)
+	if err != nil {
+		return nil, err
 	}
 
-	// todo 得到每个参与者的中奖倍率。这里已经得到了参与者的Id，在这里获取就行。
-	Ratios := make([]int64, len(participantor))
-	Ratios = testRatios
+	//fmt.Println("records:", records)
 
-	fmt.Println("Ratios:", Ratios)
+	// 查出来可能有多条记录 每条记录就是完成的一次任务 increase_multiple就是那一次任务所增加的概率,一个用户可能有多条记录，我这边在业务里面再进行统计一次
+	// 所以用一个map来存储每个用户的中奖倍率
+	RationsMap := make(map[int64]int64)
+	for _, participant := range participantor {
+		RationsMap[participant] = 1
+	}
+
+	for _, record := range records {
+		RationsMap[record.UserId] += record.IncreaseMultiple
+	}
+
+	Ratios := make([]int64, len(participantor))
+
+	for i, participant := range participantor {
+		Ratios[i] = RationsMap[participant]
+	}
+
+	//Ratios = testRatios
+
+	//fmt.Println("Ratios:", Ratios)
 	// 计算总的中奖概率
 	totalRatio := int64(0)
 	for _, ratio := range Ratios {
@@ -133,7 +153,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 	for idx := range Ratios {
 		FinalRatios[idx] = float64(Ratios[idx]) / float64(totalRatio)
 	}
-	fmt.Println("FinalRatios:", FinalRatios)
+	//fmt.Println("FinalRatios:", FinalRatios)
 
 	// 根据中奖总数量进行开奖
 	for i := 0; i < int(WinnersNum); i++ { // 中奖人数
@@ -206,6 +226,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 
 // NotifyParticipators 通知MQ队列
 func (l *AnnounceLotteryLogic) NotifyParticipators(participators []int64, lotteryId int64) error {
+	fmt.Println("NotifyParticipators", participators, lotteryId)
 	_, err := l.svcCtx.NoticeRpc.NoticeLotteryDraw(l.ctx, &notice.NoticeLotteryDrawReq{
 		LotteryId: lotteryId,
 		UserIds:   participators,
@@ -288,7 +309,7 @@ func (s *TimeLotteryStrategy) Run() error {
 		}
 
 		// 执行开奖结果通知任务
-		//err := s.NotifyParticipators(participators, lotteryId)
+		err := s.NotifyParticipators(participators, lotteryId)
 		if err != nil {
 			return err
 		}
@@ -394,3 +415,24 @@ func (s *PeopleLotteryStrategy) CheckLottery(lotteries []*model.Lottery) (Checke
 	}
 	return
 }
+
+// 在开奖模块中，采用定时任务的方式，每隔一段时间执行一次开奖任务，这样可以避免在高并发情况下，大量的开奖任务同时执行，导致数据库压力过大。
+// 为什么不一直监听MQ消息，而是采用定时任务的方式？
+// 1. MQ消息监听方式，需要一直监听MQ消息，这样会导致大量的MQ消息监听，对MQ服务器压力过大。
+
+// 延迟队列会被问到什么面试题？
+// 1. 延迟队列是什么？
+// 2. 延迟队列的实现原理是什么？
+// 3. 延迟队列的应用场景有哪些？
+// 4. 延迟队列的实现方式有哪些？
+// 5. 延迟队列的使用有哪些注意事项？
+// 请你给出上面问题的答案。
+// 1. 延迟队列是一种特殊的消息队列，它的消息不会立即被消费，而是在一定时间后才会被消费。
+// 2. 延迟队列的实现原理是通过消息的TTL（Time To Live）和死信队列来实现的。消息的TTL是指消息的存活时间，当消息的TTL到期后，消息会被发送到死信队列中，然后再由消费者来消费。
+// 3. 延迟队列的应用场景有很多，比如订单超时未支付，可以将订单消息发送到延迟队列中，然后在一定时间后再进行处理；还有比如秒杀活动，可以将秒杀消息发送到延迟队列中，然后在活动开始后再进行处理。
+// 4. 延迟队列的实现方式有很多，比如可以通过消息队列的TTL和死信队列来实现，也可以通过定时任务来实现，还可以通过定时轮询来实现。
+// asynq 是一个简单、可靠、高效的分布式任务队列，它支持延迟任务、重试任务、定时任务、并发任务等功能，适用于各种异步任务处理场景。
+// asynq的实现原理是通过消息队列来实现的，它使用了Redis作为消息队列，通过Redis的list数据结构来存储消息，通过Redis的pub/sub功能来实现消息的发布和订阅，通过Redis的zset数据结构来实现消息的延迟和定时。
+// asynq的应用场景有很多，比如可以用来处理异步任务、定时任务、延迟任务、重试任务等，适用于各种异步任务处理场景。
+// asynq的实现方式是通过Redis的list数据结构来存储消息，通过Redis的pub/sub功能来实现消息的发布和订阅，通过Redis的zset数据结构来实现消息的延迟和定时。
+// asynq的使用有一些注意事项，比如需要保证消息的幂等性，需要保证消息的可靠性，需要保证消息的顺序性，需要保证消息的一致性等。

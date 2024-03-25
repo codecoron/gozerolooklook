@@ -1,6 +1,9 @@
 package svc
 
 import (
+	"looklook/app/checkin/cmd/rpc/checkin"
+	"looklook/app/comment/cmd/rpc/comment"
+	"looklook/app/lottery/cmd/rpc/lottery"
 	"looklook/app/usercenter/cmd/api/internal/config"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
 
@@ -9,16 +12,21 @@ import (
 )
 
 type ServiceContext struct {
-	Config        config.Config
-	UsercenterRpc usercenter.Usercenter
-
+	Config                config.Config
+	UsercenterRpc         usercenter.Usercenter
+	LotteryRpc            lottery.LotteryZrpcClient
+	CheckinRpc            checkin.Checkin
 	SetUidToCtxMiddleware rest.Middleware
+	CommentRpcConf        comment.CommentZrpcClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 
 	return &ServiceContext{
-		Config:        c,
-		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
+		Config:         c,
+		UsercenterRpc:  usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
+		LotteryRpc:     lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
+		CheckinRpc:     checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
+		CommentRpcConf: comment.NewCommentZrpcClient(zrpc.MustNewClient(c.CommentRpcConf)),
 	}
 }

@@ -63,6 +63,7 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		SponsorId:     req.SponsorId,
 		IsClocked:     req.IsClocked,
 		ClockTask:     pbClockTask,
+		PublishType:   req.PublishType,
 	})
 	if err != nil {
 		return nil, err
@@ -71,3 +72,35 @@ func (l *CreateLotteryLogic) CreateLottery(req *types.CreateLotteryReq) (resp *t
 		Id: addLottery.Id,
 	}, nil
 }
+
+// 这里用到了什么设计模式
+// 这里用到了抽象工厂模式
+// 代码中的抽象工厂模式的实现：
+// 1. CreateLotteryLogic 是抽象工厂
+// 2. NewCreateLotteryLogic 是具体工厂
+// 3. svc.ServiceContext 是抽象产品
+// 4. LotteryRpc 是具体产品
+// 5. 抽象工厂模式的实现中，抽象工厂和具体工厂都实现了同一个接口 CreateLotteryLogic
+// 这里用到了代理模式
+// 代码中的代理模式：
+// 1. CreateLotteryLogic是代理主题角色
+// 2. svc.ServiceContext是真实主题角色
+// 3. CreateLotteryLogic实现了CreateLottery方法，这个方法的实现是调用了svc.ServiceContext的LotteryRpc.AddLottery方法
+// 4. CreateLotteryLogic和svc.ServiceContext都实现了同一个接口
+// 5. CreateLotteryLogic保存了一个引用使得代理可以访问实体
+// 6. CreateLotteryLogic提供了一个与svc.ServiceContext相同的接口，这样代理就可以替代实体
+// 7. CreateLotteryLogic控制对svc.ServiceContext的存取
+// 8. CreateLotteryLogic提供了其他功能，比如记录日志
+
+// 哪里可能会用到单例模式
+// 1. 服务端的配置信息
+// 2. 数据库连接池
+// 3. 日志对象
+// 4. 线程池
+// 5. 缓存
+// 6. 对象池
+// 7. 任务管理器
+// 8. 连接池
+// 9. 等等
+// 代码中的单例模式的实现：
+// 1. svc.ServiceContext中的Config是单例模式

@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -48,6 +47,11 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 		lottery.SponsorId = in.SponsorId
 		lottery.IsClocked = in.IsClocked
 
+		if in.PublishType == 1 {
+			lottery.PublishTime.Time = time.Now()
+			lottery.PublishTime.Valid = true
+		}
+
 		//打印出sql 调试错误
 		insert, err := l.svcCtx.LotteryModel.TransInsert(l.ctx, session, lottery)
 		if err != nil {
@@ -86,7 +90,6 @@ func (l *AddLotteryLogic) AddLottery(in *pb.AddLotteryReq) (*pb.AddLotteryResp, 
 			clockTask.ChanceType = in.ClockTask.ChanceType
 			clockTask.IncreaseMultiple = in.ClockTask.IncreaseMultiple
 
-			fmt.Println("clockTask-------", clockTask)
 			insert, err = l.svcCtx.ClockTaskModel.TransInsert(l.ctx, session, clockTask)
 			if err != nil {
 				return errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERTLOTTERY_ERROR), "Lottery Database Exception clockTask : %+v , err: %v", clockTask, err)

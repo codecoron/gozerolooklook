@@ -90,6 +90,35 @@
         ]
       }
     },
+    "lottery/v1/lottery/checkIsWin": {
+      "post": {
+        "summary": "判断当前用户当前抽奖是否中奖",
+        "operationId": "checkIsWin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CheckIsWinResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 获取当前用户当前抽奖是否中奖",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckIsWinReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/clockTaskTypeList": {
       "get": {
         "summary": "打卡任务类型",
@@ -102,6 +131,34 @@
             }
           }
         },
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/createClockTaskRecord": {
+      "post": {
+        "summary": "完成打卡任务",
+        "operationId": "createClockTaskRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateClockTaskRecordResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateClockTaskRecordReq"
+            }
+          }
+        ],
         "requestBody": {},
         "tags": [
           "lottery"
@@ -136,6 +193,34 @@
         ]
       }
     },
+    "lottery/v1/lottery/getLotteryListByUserId": {
+      "post": {
+        "summary": "获取当前用户全部/发起/中奖的抽奖列表",
+        "operationId": "getLotteryListByUserId",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetLotteryListByUserIdResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetLotteryListByUserIdReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
     "lottery/v1/lottery/getLotteryWinList": {
       "post": {
         "summary": "获取当前用户中奖列表",
@@ -156,6 +241,35 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/GetLotteryWinListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/getLotteryWinnersList": {
+      "post": {
+        "summary": "获取当前抽奖中奖者名单",
+        "operationId": "getLotteryWinList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetLotteryWinList2Resp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 得到当前抽奖中奖者名单列表",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetLotteryWinList2Req"
             }
           }
         ],
@@ -250,45 +364,6 @@
       }
     },
     "lottery/v1/lottery/participation": {
-      "get": {
-        "summary": "抽奖人",
-        "operationId": "searchParticipation",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/SearchLotteryParticipationResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "lotteryId",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "pageIndex",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "lottery"
-        ]
-      },
       "post": {
         "summary": "参与抽奖",
         "operationId": "addLotteryParticipation",
@@ -307,6 +382,34 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/AddLotteryParticipationReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "lottery"
+        ]
+      }
+    },
+    "lottery/v1/lottery/participations": {
+      "post": {
+        "summary": "抽奖人",
+        "operationId": "searchParticipation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchLotteryParticipationResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchLotteryParticipationReq"
             }
           }
         ],
@@ -455,6 +558,32 @@
         "isParticipated"
       ]
     },
+    "CheckIsWinReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CheckIsWinReq",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "CheckIsWinResp": {
+      "type": "object",
+      "properties": {
+        "isWon": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CheckIsWinResp",
+      "required": [
+        "isWon"
+      ]
+    },
     "ClockTaskTypeListReq": {
       "type": "object",
       "title": "ClockTaskTypeListReq"
@@ -569,9 +698,38 @@
         "videoAccountId",
         "videoId",
         "articleLink",
-        "copywriting",
-        "chanceType",
         "increaseMultiple"
+      ]
+    },
+    "CreateClockTaskRecordReq": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "clockTaskId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateClockTaskRecordReq",
+      "required": [
+        "lotteryId",
+        "clockTaskId"
+      ]
+    },
+    "CreateClockTaskRecordResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreateClockTaskRecordResp",
+      "required": [
+        "id"
       ]
     },
     "CreateLotteryReq": {
@@ -629,6 +787,11 @@
         "clockTask": {
           "$ref": "#/definitions/CreateClockTask",
           "description": "打卡任务 支持一个"
+        },
+        "publishType": {
+          "type": "integer",
+          "format": "int64",
+          "description": "发布类型 1发布抽奖 2发布测试"
         }
       },
       "title": "CreateLotteryReq",
@@ -636,6 +799,7 @@
         "name",
         "thumb",
         "announceType",
+        "oneof=1 2",
         "announceTime",
         "joinNumber",
         "introduce",
@@ -643,7 +807,8 @@
         "sponsorId",
         "prizes",
         "isClocked",
-        "clockTask"
+        "clockTask",
+        "publishType"
       ]
     },
     "CreateLotteryResp": {
@@ -680,6 +845,11 @@
           "type": "string",
           "description": "默认一等奖配图"
         },
+        "level": {
+          "type": "integer",
+          "format": "int64",
+          "description": "奖品等级 1一等奖 2二等奖 3三等奖，依次类推"
+        },
         "grantType": {
           "type": "integer",
           "format": "int64",
@@ -692,17 +862,91 @@
         "name",
         "count",
         "thumb",
+        "level",
         "grantType"
+      ]
+    },
+    "GetLotteryListByUserIdReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 1:全部（发起+参与） 2:发起 3：中奖"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页数量"
+        },
+        "lastId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 最后一条数据的id"
+        },
+        "isAnnounced": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否已开奖 0:未开奖 1:已开奖"
+        }
+      },
+      "title": "GetLotteryListByUserIdReq",
+      "required": [
+        "type",
+        "oneof=1 2 3",
+        "size",
+        "lastId",
+        "isAnnounced",
+        "oneof=0 1"
+      ]
+    },
+    "GetLotteryListByUserIdResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LotteryPrizes"
+          }
+        }
+      },
+      "title": "GetLotteryListByUserIdResp",
+      "required": [
+        "list"
+      ]
+    },
+    "GetLotteryWinList2Req": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetLotteryWinList2Req",
+      "required": [
+        "lotteryId"
+      ]
+    },
+    "GetLotteryWinList2Resp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WonList2"
+          }
+        }
+      },
+      "title": "GetLotteryWinList2Resp",
+      "required": [
+        "list"
       ]
     },
     "GetLotteryWinListReq": {
       "type": "object",
       "properties": {
         "lastId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "page": {
           "type": "integer",
           "format": "int64"
         },
@@ -714,7 +958,6 @@
       "title": "GetLotteryWinListReq",
       "required": [
         "lastId",
-        "page",
         "size"
       ]
     },
@@ -936,10 +1179,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
         "pageSize": {
           "type": "integer",
           "format": "int64"
@@ -952,7 +1191,6 @@
       "title": "LotteryListReq",
       "required": [
         "lastId",
-        "page",
         "pageSize",
         "isSelected"
       ]
@@ -1008,6 +1246,40 @@
         "user_id",
         "is_won",
         "prize_id"
+      ]
+    },
+    "LotteryPrizes": {
+      "type": "object",
+      "properties": {
+        "lotteryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抽奖ID"
+        },
+        "prizes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prize"
+          },
+          "description": "奖品信息"
+        },
+        "participationId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "参与ID"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "参与/发起/中奖时间"
+        }
+      },
+      "title": "LotteryPrizes",
+      "required": [
+        "lotteryId",
+        "prizes",
+        "participationId",
+        "time"
       ]
     },
     "LotterySponsor": {
@@ -1072,10 +1344,7 @@
         "name",
         "desc",
         "avatar",
-        "isShow",
-        "qrCode",
-        "inputA",
-        "inputB"
+        "isShow"
       ]
     },
     "Prize": {
@@ -1350,6 +1619,30 @@
         "user_id",
         "is_won",
         "prize"
+      ]
+    },
+    "WonList2": {
+      "type": "object",
+      "properties": {
+        "prize": {
+          "$ref": "#/definitions/Prizes"
+        },
+        "winnerCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInfo"
+          }
+        }
+      },
+      "title": "WonList2",
+      "required": [
+        "prize",
+        "winnerCount",
+        "users"
       ]
     }
   },

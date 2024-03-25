@@ -19,6 +19,7 @@ type ServiceContext struct {
 	UserAddressModel model.UserAddressModel
 	UserSponsorModel model.UserSponsorModel
 	UserContactModel model.UserContactModel
+	UserDynamicModel model.UserDynamicModel
 	CheckinRpc       checkin.Checkin
 }
 
@@ -38,6 +39,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserAddressModel: model.NewUserAddressModel(sqlConn, c.Cache),
 		UserSponsorModel: model.NewUserSponsorModel(sqlConn, c.Cache),
 		UserContactModel: model.NewUserContactModel(sqlConn, c.Cache),
+		UserDynamicModel: model.NewUserDynamicModel(sqlConn, c.Cache),
 		CheckinRpc:       checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
 	}
 }

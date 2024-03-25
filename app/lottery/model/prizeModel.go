@@ -22,6 +22,8 @@ type (
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		FindByLotteryId(ctx context.Context, lotteryId int64) ([]*Prize, error)
 		FindPageByLotteryId(ctx context.Context, lotteryId int64, offset int64, limit int64) ([]*Prize, error)
+		GetPrizeInfoByPrizeIds(ctx context.Context, prizeIds []int64) ([]*Prize, error)
+		FindAllByLotteryIds(ctx context.Context, lotteryIds []int64) ([]*Prize, error)
 	}
 
 	customPrizeModel struct {
@@ -64,6 +66,46 @@ func (m *defaultPrizeModel) FindPageByLotteryId(ctx context.Context, lotteryId i
 	var resp []*Prize
 	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ? limit ?,?", m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, lotteryId, (offset-1)*limit, limit)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *defaultPrizeModel) GetPrizeInfoByPrizeIds(ctx context.Context, prizeIds []int64) ([]*Prize, error) {
+	var resp []*Prize
+	// 这里传int64类型的切片，需要将切片转换成字符串，然后在sql语句中使用in关键字
+	prizeIdsStr := ""
+	for i, v := range prizeIds {
+		if i == 0 {
+			prizeIdsStr = fmt.Sprintf("%d", v)
+		} else {
+			prizeIdsStr = fmt.Sprintf("%s,%d", prizeIdsStr, v)
+		}
+	}
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE id in (%s)", m.table, prizeIdsStr)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *defaultPrizeModel) FindAllByLotteryIds(ctx context.Context, lotteryIds []int64) ([]*Prize, error) {
+	var resp []*Prize
+	// 这里传int64类型的切片，需要将切片转换成字符串，然后在sql语句中使用in关键字
+	lotteryIdsStr := ""
+	for i, v := range lotteryIds {
+		if i == 0 {
+			lotteryIdsStr = fmt.Sprintf("%d", v)
+		} else {
+			lotteryIdsStr = fmt.Sprintf("%s,%d", lotteryIdsStr, v)
+		}
+	}
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id in (%s)", m.table, lotteryIdsStr)
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query)
 	if err != nil {
 		return nil, err
 	}

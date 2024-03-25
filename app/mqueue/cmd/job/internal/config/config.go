@@ -12,8 +12,6 @@ type Config struct {
 	WxMiniConf WxMiniConf
 	WxMsgConf  WxMsgConf
 
-	SettleRpcConf     zrpc.RpcClientConf
-	OrderRpcConf      zrpc.RpcClientConf
 	UsercenterRpcConf zrpc.RpcClientConf
 	LotteryRpcConf    zrpc.RpcClientConf
 	NoticeRpcConf     zrpc.RpcClientConf

@@ -7,7 +7,9 @@ import (
 	address "looklook/app/usercenter/cmd/api/internal/handler/address"
 	user "looklook/app/usercenter/cmd/api/internal/handler/user"
 	userContact "looklook/app/usercenter/cmd/api/internal/handler/userContact"
+	userDynamic "looklook/app/usercenter/cmd/api/internal/handler/userDynamic"
 	userSponsor "looklook/app/usercenter/cmd/api/internal/handler/userSponsor"
+	userWonDynamicComment "looklook/app/usercenter/cmd/api/internal/handler/userWonDynamicComment"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -110,8 +112,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/user/createDynamic",
+				Handler: userDynamic.CreateDynamicHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/deleteDynamic",
+				Handler: userDynamic.DeleteDynamicHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/userContact/sponsorDel",
+				Handler: userSponsor.SponsorDelHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userContact/upDateSponsor",
+				Handler: userSponsor.UpDateSponsorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/userSponsor/addSponsor",
 				Handler: userSponsor.AddSponsorHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/userSponsor/sponsorList",
+				Handler: userSponsor.SponsorListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
@@ -126,6 +167,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: userSponsor.SponsorDetailHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/usercenter/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/userWonDynamicCommentList",
+				Handler: userWonDynamicComment.UserWonDynamicCommentListHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/usercenter/v1"),
 	)
 }

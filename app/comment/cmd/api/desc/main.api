@@ -46,6 +46,10 @@ service comment {
 	@doc "评论点赞/取消点赞"
 	@handler commentPraise
 	post /comment/commentPraise (CommentPraiseReq) returns (CommentPraiseResp)
+	
+	@doc "获取评论列表"
+	@handler getCommentList
+	post /comment/getCommentList (CommentListReq) returns (CommentListResp)
 }
 
 //no need login
@@ -54,10 +58,6 @@ service comment {
 	group:  comment
 )
 service comment {
-	@doc "获取评论列表"
-	@handler getCommentList
-	post /comment/getCommentList (CommentListReq) returns (CommentListResp)
-	
 	@doc "获取评论详情"
 	@handler getCommentDetail
 	post /comment/getCommentDetail (CommentDetailReq) returns (CommentDetailResp)

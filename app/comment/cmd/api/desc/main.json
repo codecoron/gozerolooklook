@@ -389,10 +389,6 @@
           "type": "integer",
           "format": "int64"
         },
-        "page": {
-          "type": "integer",
-          "format": "int64"
-        },
         "pageSize": {
           "type": "integer",
           "format": "int64"
@@ -405,7 +401,6 @@
       "title": "CommentListReq",
       "required": [
         "lastId",
-        "page",
         "pageSize",
         "sort"
       ]
@@ -537,6 +532,11 @@
         "user": {
           "$ref": "#/definitions/User",
           "description": " 用户信息"
+        },
+        "isPraise": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 是否点赞"
         }
       },
       "title": "Comments",
@@ -552,7 +552,8 @@
         "updateTime",
         "deleteTime",
         "delstate",
-        "user"
+        "user",
+        "isPraise"
       ]
     },
     "GetCommentLastIdReq": {
