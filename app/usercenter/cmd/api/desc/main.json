@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "usercenter/v1/user/addAddress": {
+    "/usercenter/v1/user/addAddress": {
       "post": {
         "summary": "添加收货地址",
         "operationId": "addAddress",
@@ -38,13 +38,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "address"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/addressList": {
+    "/usercenter/v1/user/addressList": {
       "post": {
         "summary": "收货地址列表",
         "operationId": "addressList",
@@ -66,13 +70,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "address"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/convertAddress": {
+    "/usercenter/v1/user/convertAddress": {
       "post": {
         "summary": "识别并转换收货地址",
         "operationId": "convertAddress",
@@ -94,13 +102,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "address"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/createDynamic": {
+    "/usercenter/v1/user/createDynamic": {
       "post": {
         "summary": "创建用户动态",
         "operationId": "createDynamic",
@@ -122,13 +134,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userDynamic"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/deleteDynamic": {
+    "/usercenter/v1/user/deleteDynamic": {
       "post": {
         "summary": "删除用户动态",
         "operationId": "deleteDynamic",
@@ -150,13 +166,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userDynamic"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/detail": {
+    "/usercenter/v1/user/detail": {
       "post": {
         "summary": "获得用户数据",
         "operationId": "detail",
@@ -178,13 +198,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/login": {
+    "/usercenter/v1/user/login": {
       "post": {
         "summary": "登录",
         "operationId": "login",
@@ -206,13 +230,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
         ]
       }
     },
-    "usercenter/v1/user/register": {
+    "/usercenter/v1/user/register": {
       "post": {
         "summary": "注册",
         "operationId": "register",
@@ -234,13 +257,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
         ]
       }
     },
-    "usercenter/v1/user/setAdmin": {
+    "/usercenter/v1/user/setAdmin": {
       "post": {
         "summary": "设置user为admin",
         "operationId": "setAdmin",
@@ -262,13 +284,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/update": {
+    "/usercenter/v1/user/update": {
       "put": {
         "summary": "修改用户基本信息",
         "operationId": "update",
@@ -290,13 +316,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/userWonDynamicCommentList": {
+    "/usercenter/v1/user/userWonDynamicCommentList": {
       "post": {
         "summary": "累计奖品发布动态用户晒单列表",
         "operationId": "UserWonDynamicCommentList",
@@ -318,13 +348,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userWonDynamicComment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/user/wxMiniAuth": {
+    "/usercenter/v1/user/wxMiniAuth": {
       "post": {
         "summary": "小程序注册登录",
         "operationId": "wxMiniAuth",
@@ -346,13 +380,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "user"
         ]
       }
     },
-    "usercenter/v1/userContact/ContactDel": {
+    "/usercenter/v1/userContact/ContactDel": {
       "post": {
         "summary": "批量删除联系方式",
         "operationId": "ContactDel",
@@ -374,13 +407,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userContact"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userContact/addContact": {
+    "/usercenter/v1/userContact/addContact": {
       "post": {
         "summary": "添加抽奖发起人联系方式",
         "operationId": "addContact",
@@ -402,13 +439,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userContact"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userContact/contactList": {
+    "/usercenter/v1/userContact/contactList": {
       "post": {
         "summary": "我的联系方式列表",
         "operationId": "contactList",
@@ -430,13 +471,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userContact"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userContact/sponsorDel": {
+    "/usercenter/v1/userContact/sponsorDel": {
       "post": {
         "summary": "删除（赞助商）",
         "operationId": "sponsorDel",
@@ -458,13 +503,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userSponsor"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userContact/upDateContact": {
+    "/usercenter/v1/userContact/upDateContact": {
       "post": {
         "summary": "修改抽奖发起人联系方式",
         "operationId": "upDateContact",
@@ -486,13 +535,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userContact"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userContact/upDateSponsor": {
+    "/usercenter/v1/userContact/upDateSponsor": {
       "post": {
         "summary": "修改抽奖发起人（赞助商）",
         "operationId": "upDateSponsor",
@@ -514,13 +567,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userSponsor"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userSponsor/addSponsor": {
+    "/usercenter/v1/userSponsor/addSponsor": {
       "post": {
         "summary": "添加 抽奖发起人（赞助商）",
         "operationId": "addSponsor",
@@ -542,13 +599,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userSponsor"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "usercenter/v1/userSponsor/sponsorDetail": {
+    "/usercenter/v1/userSponsor/sponsorDetail": {
       "post": {
         "summary": "抽奖发起人（赞助商）详情",
         "operationId": "sponsorDetail",
@@ -570,13 +631,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userSponsor"
         ]
       }
     },
-    "usercenter/v1/userSponsor/sponsorList": {
+    "/usercenter/v1/userSponsor/sponsorList": {
       "post": {
         "summary": "我的赞助商列表（赞助商）",
         "operationId": "sponsorList",
@@ -598,9 +658,13 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "userSponsor"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     }
@@ -609,8 +673,24 @@
     "AddAddressReq": {
       "type": "object",
       "properties": {
-        "": {
-          "$ref": "#/definitions/AddressInfo"
+        "contactName": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "district": {
+          "$ref": "#/definitions/DistrictInfo"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "AddAddressReq"
@@ -822,8 +902,24 @@
     "ConvertAddressResp": {
       "type": "object",
       "properties": {
-        "": {
-          "$ref": "#/definitions/AddressInfo"
+        "contactName": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "district": {
+          "$ref": "#/definitions/DistrictInfo"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "ConvertAddressResp"
@@ -1014,8 +1110,7 @@
       "required": [
         "province",
         "city",
-        "county",
-        "town"
+        "county"
       ]
     },
     "DistrictItem": {
@@ -1030,7 +1125,6 @@
       },
       "title": "DistrictItem",
       "required": [
-        "id",
         "name"
       ]
     },
@@ -1501,8 +1595,24 @@
           "type": "integer",
           "format": "int64"
         },
-        "": {
-          "$ref": "#/definitions/AddressInfo"
+        "contactName": {
+          "type": "string"
+        },
+        "contactMobile": {
+          "type": "string"
+        },
+        "district": {
+          "$ref": "#/definitions/DistrictInfo"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "UserAddress",
@@ -1552,19 +1662,7 @@
           "format": "int64"
         }
       },
-      "title": "UserCommentInfo",
-      "required": [
-        "id",
-        "userId",
-        "lotteryId",
-        "prizeName",
-        "content",
-        "pics",
-        "praiseCount",
-        "createTime",
-        "updateTime",
-        "isPraise"
-      ]
+      "title": "UserCommentInfo"
     },
     "UserInfoReq": {
       "type": "object",
@@ -1740,10 +1838,5 @@
       "name": "Authorization",
       "in": "header"
     }
-  },
-  "security": [
-    {
-      "apiKey": []
-    }
-  ]
+  }
 }

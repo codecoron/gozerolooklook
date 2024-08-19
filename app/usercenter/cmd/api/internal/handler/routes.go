@@ -19,16 +19,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 添加收货地址
 				Method:  http.MethodPost,
 				Path:    "/user/addAddress",
 				Handler: address.AddAddressHandler(serverCtx),
 			},
 			{
+				// 收货地址列表
 				Method:  http.MethodPost,
 				Path:    "/user/addressList",
 				Handler: address.AddressListHandler(serverCtx),
 			},
 			{
+				// 识别并转换收货地址
 				Method:  http.MethodPost,
 				Path:    "/user/convertAddress",
 				Handler: address.ConvertAddressHandler(serverCtx),
@@ -41,16 +44,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 登录
 				Method:  http.MethodPost,
 				Path:    "/user/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
 			{
+				// 注册
 				Method:  http.MethodPost,
 				Path:    "/user/register",
 				Handler: user.RegisterHandler(serverCtx),
 			},
 			{
+				// 小程序注册登录
 				Method:  http.MethodPost,
 				Path:    "/user/wxMiniAuth",
 				Handler: user.WxMiniAuthHandler(serverCtx),
@@ -62,16 +68,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 获得用户数据
 				Method:  http.MethodPost,
 				Path:    "/user/detail",
 				Handler: user.DetailHandler(serverCtx),
 			},
 			{
+				// 设置user为admin
 				Method:  http.MethodPost,
 				Path:    "/user/setAdmin",
 				Handler: user.SetAdminHandler(serverCtx),
 			},
 			{
+				// 修改用户基本信息
 				Method:  http.MethodPut,
 				Path:    "/user/update",
 				Handler: user.UpdateHandler(serverCtx),
@@ -84,21 +93,25 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 批量删除联系方式
 				Method:  http.MethodPost,
 				Path:    "/userContact/ContactDel",
 				Handler: userContact.ContactDelHandler(serverCtx),
 			},
 			{
+				// 添加抽奖发起人联系方式
 				Method:  http.MethodPost,
 				Path:    "/userContact/addContact",
 				Handler: userContact.AddContactHandler(serverCtx),
 			},
 			{
+				// 我的联系方式列表
 				Method:  http.MethodPost,
 				Path:    "/userContact/contactList",
 				Handler: userContact.ContactListHandler(serverCtx),
 			},
 			{
+				// 修改抽奖发起人联系方式
 				Method:  http.MethodPost,
 				Path:    "/userContact/upDateContact",
 				Handler: userContact.UpDateContactHandler(serverCtx),
@@ -111,6 +124,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 创建用户动态
 				Method:  http.MethodPost,
 				Path:    "/user/createDynamic",
 				Handler: userDynamic.CreateDynamicHandler(serverCtx),
@@ -123,6 +137,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 删除用户动态
 				Method:  http.MethodPost,
 				Path:    "/user/deleteDynamic",
 				Handler: userDynamic.DeleteDynamicHandler(serverCtx),
@@ -135,21 +150,25 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 删除（赞助商）
 				Method:  http.MethodPost,
 				Path:    "/userContact/sponsorDel",
 				Handler: userSponsor.SponsorDelHandler(serverCtx),
 			},
 			{
+				// 修改抽奖发起人（赞助商）
 				Method:  http.MethodPost,
 				Path:    "/userContact/upDateSponsor",
 				Handler: userSponsor.UpDateSponsorHandler(serverCtx),
 			},
 			{
+				// 添加 抽奖发起人（赞助商）
 				Method:  http.MethodPost,
 				Path:    "/userSponsor/addSponsor",
 				Handler: userSponsor.AddSponsorHandler(serverCtx),
 			},
 			{
+				// 我的赞助商列表（赞助商）
 				Method:  http.MethodPost,
 				Path:    "/userSponsor/sponsorList",
 				Handler: userSponsor.SponsorListHandler(serverCtx),
@@ -162,6 +181,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 抽奖发起人（赞助商）详情
 				Method:  http.MethodPost,
 				Path:    "/userSponsor/sponsorDetail",
 				Handler: userSponsor.SponsorDetailHandler(serverCtx),
@@ -173,6 +193,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 累计奖品发布动态用户晒单列表
 				Method:  http.MethodPost,
 				Path:    "/user/userWonDynamicCommentList",
 				Handler: userWonDynamicComment.UserWonDynamicCommentListHandler(serverCtx),

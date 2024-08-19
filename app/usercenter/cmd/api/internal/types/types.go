@@ -10,16 +10,21 @@ type AddAddressResp struct {
 }
 
 type AddressInfo struct {
-	ContactName   string       `json:"contactName"`
-	ContactMobile string       `json:"contactMobile"`
-	District      DistrictInfo `json:"district"`
-	Detail        string       `json:"detail"`
-	Postcode      string       `json:"postcode"`
-	IsDefault     int64        `json:"isDefault"`
+	ContactName   string `json:"contactName"`
+	ContactMobile string `json:"contactMobile"`
+	District      struct {
+		Province DistrictItem `json:"province"`
+		City     DistrictItem `json:"city"`
+		County   DistrictItem `json:"county"`
+		Town     DistrictItem `json:"town,omitempty"`
+	} `json:"district"`
+	Detail    string `json:"detail"`
+	Postcode  string `json:"postcode"`
+	IsDefault int64  `json:"isDefault"`
 }
 
 type AddressListReq struct {
-	Page     int64 `json:"page"`
+	Page     int64 `json:"page,range=[1:]"`
 	PageSize int64 `json:"pageSize"`
 }
 
@@ -118,10 +123,22 @@ type DeleteDynamicResp struct {
 }
 
 type DistrictInfo struct {
-	Province DistrictItem `json:"province"`
-	City     DistrictItem `json:"city"`
-	County   DistrictItem `json:"county"`
-	Town     DistrictItem `json:"town,omitempty"`
+	Province struct {
+		Id   string `json:"id,omitempty"`
+		Name string `json:"name"`
+	} `json:"province"`
+	City struct {
+		Id   string `json:"id,omitempty"`
+		Name string `json:"name"`
+	} `json:"city"`
+	County struct {
+		Id   string `json:"id,omitempty"`
+		Name string `json:"name"`
+	} `json:"county"`
+	Town struct {
+		Id   string `json:"id,omitempty"`
+		Name string `json:"name"`
+	} `json:"town,omitempty"`
 }
 
 type DistrictItem struct {
@@ -274,7 +291,22 @@ type UserInfoReq struct {
 }
 
 type UserInfoResp struct {
-	UserInfo User `json:"userInfo"`
+	UserInfo struct {
+		Id                 int64   `json:"id"`
+		Mobile             string  `json:"mobile"`
+		Nickname           string  `json:"nickname"`
+		Sex                int64   `json:"sex"`
+		Avatar             string  `json:"avatar"`
+		Info               string  `json:"info"`
+		IsAdmin            int64   `json:"isAdmin"`
+		Signature          string  `json:"signature"`
+		Longitude          float64 `json:"longitude"`
+		Latitude           float64 `json:"latitude"`
+		ParticipationCount int64   `json:"participation_count"`
+		CreatedCount       int64   `json:"created_count"`
+		WonCount           int64   `json:"won_count"`
+		Integral           int64   `json:"integral"`
+	} `json:"userInfo"`
 }
 
 type UserUpdateReq struct {
