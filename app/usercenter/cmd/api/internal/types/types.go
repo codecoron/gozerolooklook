@@ -57,7 +57,7 @@ type ContactDetailResp struct {
 }
 
 type ContactListReq struct {
-	Page     int64 `json:"page"`
+	Page     int64 `json:"page,range=[1:]"`
 	PageSize int64 `json:"pageSize"`
 }
 
