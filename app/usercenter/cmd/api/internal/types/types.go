@@ -215,8 +215,8 @@ type Sponsor struct {
 }
 
 type SponsorListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
+	Page     int64 `json:"page,range=[1:]"`
+	PageSize int64 `json:"pageSize,range=[0:]"`
 }
 
 type SponsorListResp struct {
