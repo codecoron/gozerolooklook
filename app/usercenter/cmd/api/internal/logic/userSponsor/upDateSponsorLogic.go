@@ -4,13 +4,11 @@ import (
 	"context"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
-	"looklook/app/usercenter/cmd/rpc/pb"
-	"looklook/common/xerr"
-
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"looklook/app/usercenter/cmd/rpc/pb"
+	"looklook/common/xerr"
 )
 
 type UpDateSponsorLogic struct {
@@ -35,10 +33,14 @@ func (l *UpDateSponsorLogic) UpDateSponsor(req *types.UpdateSponsorReq) (resp *t
 		return nil, err
 	}
 	sponsor, err := l.svcCtx.UsercenterRpc.UpdateUserSponsor(l.ctx, pbSponsorReq)
-	logx.Debug(sponsor)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("修改联系方式失败"), "add Sponsor rpc AddUserSponsor fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(xerr.NewErrMsg("修改联系方式失败"), "update Sponsor rpc UpdateUserSponsor fail req: %+v , err : %v ", req, err)
 	}
-	return &types.UpdateSponsorResp{}, nil
-	return
+
+	resp = &types.UpdateSponsorResp{}
+	err = copier.Copy(sponsor, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
