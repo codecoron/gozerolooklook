@@ -27,7 +27,7 @@ func NewAddLotteryParticipationLogic(ctx context.Context, svcCtx *svc.ServiceCon
 
 func (l *AddLotteryParticipationLogic) AddLotteryParticipation(in *pb.AddLotteryParticipationReq) (*pb.AddLotteryParticipationResp, error) {
 	if lottery, err := l.svcCtx.LotteryModel.FindOne(l.ctx, in.LotteryId); err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR_NOT_FOUND), "【RPC ERR】%+v", err)
 	} else if lottery.IsAnnounced != 0 {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.LOTTERY_HAS_BEEN_ANOUNCED), "抽奖已公布，不能抽奖")
 	}
