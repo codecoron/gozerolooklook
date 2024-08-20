@@ -8,7 +8,6 @@ import (
 	"looklook/app/usercenter/cmd/api/internal/svc"
 	"looklook/app/usercenter/cmd/api/internal/types"
 	"looklook/app/usercenter/cmd/rpc/pb"
-	"looklook/common/xerr"
 )
 
 type UpDateSponsorLogic struct {
@@ -34,7 +33,7 @@ func (l *UpDateSponsorLogic) UpDateSponsor(req *types.UpdateSponsorReq) (resp *t
 	}
 	sponsor, err := l.svcCtx.UsercenterRpc.UpdateUserSponsor(l.ctx, pbSponsorReq)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("修改联系方式失败"), "update Sponsor rpc UpdateUserSponsor fail req: %+v , err : %v ", req, err)
+		return nil, errors.Wrapf(err, "update Sponsor rpc UpdateUserSponsor fail req: %+v , err : %v ", req, err)
 	}
 
 	resp = &types.UpdateSponsorResp{}
