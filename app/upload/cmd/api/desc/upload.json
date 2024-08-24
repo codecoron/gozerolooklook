@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "upload/v1/upload/add": {
+    "/upload/v1/upload/add": {
       "post": {
         "summary": "文件上传",
         "operationId": "upload",
@@ -38,9 +38,13 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "upload"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     }
@@ -88,10 +92,5 @@
       "name": "Authorization",
       "in": "header"
     }
-  },
-  "security": [
-    {
-      "apiKey": []
-    }
-  ]
+  }
 }
