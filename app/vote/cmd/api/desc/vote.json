@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "vote/v1/vote/createVote": {
+    "/vote/v1/vote/createVote": {
       "post": {
         "summary": "创建投票设置接口",
         "operationId": "createVote",
@@ -38,13 +38,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/createVoteRecord": {
+    "/vote/v1/vote/createVoteRecord": {
       "post": {
         "summary": "新增投票记录",
         "operationId": "createVoteRecord",
@@ -66,13 +70,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/enableVoteDetail": {
+    "/vote/v1/vote/enableVoteDetail": {
       "post": {
         "summary": "开启或关闭投票设置",
         "operationId": "enableVote",
@@ -94,13 +102,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/updateVote": {
+    "/vote/v1/vote/updateVote": {
       "post": {
         "summary": "编辑投票设置接口",
         "operationId": "updateVote",
@@ -122,13 +134,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/viewUserVoteRecordDetail": {
+    "/vote/v1/vote/viewUserVoteRecordDetail": {
       "post": {
         "summary": "查看当前用户投票记录",
         "operationId": "viewUserVoteRecordDetail",
@@ -150,13 +166,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/viewVoteDetail": {
+    "/vote/v1/vote/viewVoteDetail": {
       "post": {
         "summary": "查看投票设置详情",
         "operationId": "viewVoteDetail",
@@ -178,13 +198,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "vote/v1/vote/viewVoteRecordDetail": {
+    "/vote/v1/vote/viewVoteRecordDetail": {
       "post": {
         "summary": "查看投票记录详情",
         "operationId": "viewVoteRecordDetail",
@@ -206,9 +230,13 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "vote"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     }
@@ -269,7 +297,6 @@
       "required": [
         "lotteryId",
         "enableVote",
-        "eq=0|eq=1",
         "voteConfig"
       ]
     },
@@ -336,7 +363,6 @@
       "required": [
         "id",
         "enableVote",
-        "eq=0|eq=1",
         "voteConfig"
       ]
     },
@@ -497,12 +523,10 @@
         "title",
         "description",
         "winnerSelection",
-        "eq=0|eq=1",
         "type",
         "minVotes",
         "maxVotes",
-        "options",
-        "required"
+        "options"
       ]
     },
     "VoteOption": {
@@ -581,10 +605,5 @@
       "name": "Authorization",
       "in": "header"
     }
-  },
-  "security": [
-    {
-      "apiKey": []
-    }
-  ]
+  }
 }
