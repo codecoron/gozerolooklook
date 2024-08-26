@@ -31,12 +31,12 @@ Log:
 #   AppId: wx0fe80d42b0d37cc8
 #   Secret: 495f7df09f227dde93f57f875a8f0e9f
 
-#rpc service
-UsercenterRpcConf:
-  Endpoints:
-    - 127.0.0.1:2004
-  NonBlock: true
-  Timeout: 3000
+# #rpc service
+# UsercenterRpcConf:
+#   Endpoints:
+#     - 127.0.0.1:2004
+#   NonBlock: true
+#   Timeout: 3000
 
 LotteryRpcConf:
   Endpoints:
