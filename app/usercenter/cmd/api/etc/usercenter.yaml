@@ -26,34 +26,34 @@ Log:
   Level: debug
   Encoding: plain
 
-#WxMiniConf
-# WxMiniConf:
-#   AppId: wx0fe80d42b0d37cc8
-#   Secret: 495f7df09f227dde93f57f875a8f0e9f
+# WxMiniConf
+WxMiniConf:
+  AppId: wx0fe80d42b0d37cc8
+  Secret: 495f7df09f227dde93f57f875a8f0e9f
 
-# #rpc service
-# UsercenterRpcConf:
-#   Endpoints:
-#     - 127.0.0.1:2004
-#   NonBlock: true
-#   Timeout: 3000
+#rpc service
+UsercenterRpcConf:
+  Endpoints:
+    - 127.0.0.1:2004
+  NonBlock: true
+  Timeout: 3000
 
 LotteryRpcConf:
   Endpoints:
     - 127.0.0.1:2005
   NonBlock: true
 
-# CheckinRpcConf:
-#   Endpoints:
-#     - 127.0.0.1:2007
-#   NonBlock: true
+CheckinRpcConf:
+  Endpoints:
+    - 127.0.0.1:2007
+  NonBlock: true
 
-# CommentRpcConf:
-#   Endpoints:
-#     - 127.0.0.1:2009
-#   NonBlock: true
+CommentRpcConf:
+  Endpoints:
+    - 127.0.0.1:2009
+  NonBlock: true
 
-# FileUploadRpcConf:
-#   Endpoints:
-#     - 127.0.0.1:2008
-#   NonBlock: true
+FileUploadRpcConf:
+  Endpoints:
+    - 127.0.0.1:2008
+  NonBlock: true
