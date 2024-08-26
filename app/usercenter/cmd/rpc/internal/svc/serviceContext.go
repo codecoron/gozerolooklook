@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"github.com/zeromicro/go-zero/zrpc"
-	"looklook/app/checkin/cmd/rpc/checkin"
+	// "github.com/zeromicro/go-zero/zrpc"
+	// "looklook/app/checkin/cmd/rpc/checkin"
 	"looklook/app/usercenter/cmd/rpc/internal/config"
 	"looklook/app/usercenter/model"
 
@@ -20,7 +20,7 @@ type ServiceContext struct {
 	UserSponsorModel model.UserSponsorModel
 	UserContactModel model.UserContactModel
 	UserDynamicModel model.UserDynamicModel
-	CheckinRpc       checkin.Checkin
+	// CheckinRpc       checkin.Checkin
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -40,6 +40,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserSponsorModel: model.NewUserSponsorModel(sqlConn, c.Cache),
 		UserContactModel: model.NewUserContactModel(sqlConn, c.Cache),
 		UserDynamicModel: model.NewUserDynamicModel(sqlConn, c.Cache),
-		CheckinRpc:       checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
+		// CheckinRpc:       checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
 	}
 }
