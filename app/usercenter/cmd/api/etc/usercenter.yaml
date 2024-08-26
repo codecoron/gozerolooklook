@@ -27,9 +27,9 @@ Log:
   Encoding: plain
 
 #WxMiniConf
-WxMiniConf:
-  AppId: wx0fe80d42b0d37cc8
-  Secret: 495f7df09f227dde93f57f875a8f0e9f
+# WxMiniConf:
+#   AppId: wx0fe80d42b0d37cc8
+#   Secret: 495f7df09f227dde93f57f875a8f0e9f
 
 #rpc service
 UsercenterRpcConf:
@@ -43,10 +43,10 @@ LotteryRpcConf:
     - 127.0.0.1:2005
   NonBlock: true
 
-CheckinRpcConf:
-  Endpoints:
-    - 127.0.0.1:2007
-  NonBlock: true
+# CheckinRpcConf:
+#   Endpoints:
+#     - 127.0.0.1:2007
+#   NonBlock: true
 
 CommentRpcConf:
   Endpoints:

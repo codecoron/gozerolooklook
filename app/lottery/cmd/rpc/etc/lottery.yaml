@@ -39,8 +39,8 @@ UsercenterRpcConf:
     - 127.0.0.1:2004
   NonBlock: true
 
-NoticeRpcConf:
-  Endpoints:
-    - 127.0.0.1:2006
-  NonBlock: true
-  Timeout: 500000 #调试
+# NoticeRpcConf:
+#   Endpoints:
+#     - 127.0.0.1:2006
+#   NonBlock: true
+#   Timeout: 500000 #调试
