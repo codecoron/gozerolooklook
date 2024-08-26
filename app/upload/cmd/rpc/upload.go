@@ -32,6 +32,8 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+	s.AddOptions(grpc.MaxRecvMsgSize(1024 * 1024 * 1024))
+	s.AddOptions(grpc.MaxSendMsgSize(1024 * 1024 * 1024))
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

@@ -9,55 +9,55 @@ scrape_configs:
     static_configs:
       - targets: [ '127.0.0.1:9090' ]
 
-  - job_name: 'order-api'
-    static_configs:
-      - targets: [ 'looklook:4001' ]
-        labels:
-          job: order-api
-          app: order-api
-          env: dev
-  - job_name: 'order-rpc'
-    static_configs:
-      - targets: [ 'looklook:4002' ]
-        labels:
-          job: order-rpc
-          app: order-rpc
-          env: dev
-  - job_name: 'order-mq'
-    static_configs:
-      - targets: [ 'looklook:4003' ]
-        labels:
-          job: order-mq
-          app: order-mq
-          env: dev
-  - job_name: 'payment-api'
-    static_configs:
-      - targets: [ 'looklook:4004' ]
-        labels:
-          job: payment-api
-          app: payment-api
-          env: dev
-  - job_name: 'payment-rpc'
-    static_configs:
-      - targets: [ 'looklook:4005' ]
-        labels:
-          job: payment-rpc
-          app: payment-rpc
-          env: dev
-  - job_name: 'travel-api'
-    static_configs:
-      - targets: [ 'looklook:4006' ]
-        labels:
-          job: travel-api
-          app: travel-api
-          env: dev
-  - job_name: 'travel-rpc'
-    static_configs:
-      - targets: [ 'looklook:4007' ]
-        labels:
-          job: travel-rpc
-          app: travel-rpc
-          env: dev
+#  - job_name: 'order-api'
+#    static_configs:
+#      - targets: [ 'looklook:4001' ]
+#        labels:
+#          job: order-api
+#          app: order-api
+#          env: dev
+#  - job_name: 'order-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4002' ]
+#        labels:
+#          job: order-rpc
+#          app: order-rpc
+#          env: dev
+#  - job_name: 'order-mq'
+#    static_configs:
+#      - targets: [ 'looklook:4003' ]
+#        labels:
+#          job: order-mq
+#          app: order-mq
+#          env: dev
+#  - job_name: 'payment-api'
+#    static_configs:
+#      - targets: [ 'looklook:4004' ]
+#        labels:
+#          job: payment-api
+#          app: payment-api
+#          env: dev
+#  - job_name: 'payment-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4005' ]
+#        labels:
+#          job: payment-rpc
+#          app: payment-rpc
+#          env: dev
+#  - job_name: 'travel-api'
+#    static_configs:
+#      - targets: [ 'looklook:4006' ]
+#        labels:
+#          job: travel-api
+#          app: travel-api
+#          env: dev
+#  - job_name: 'travel-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4007' ]
+#        labels:
+#          job: travel-rpc
+#          app: travel-rpc
+#          env: dev
   - job_name: 'usercenter-api'
     static_configs:
       - targets: [ 'looklook:4008' ]
@@ -129,50 +129,50 @@ scrape_configs:
           app: lottery-rpc
           env: dev
 
-  - job_name: 'vote-api'
-    static_configs:
-      - targets: [ 'looklook:4027' ]
-        labels:
-          job: vote-api
-          app: vote-api
-          env: dev
-  - job_name: 'vote-rpc'
-    static_configs:
-      - targets: [ 'looklook:4028' ]
-        labels:
-          job: vote-rpc
-          app: vote-rpc
-          env: dev
+#  - job_name: 'vote-api'
+#    static_configs:
+#      - targets: [ 'looklook:4027' ]
+#        labels:
+#          job: vote-api
+#          app: vote-api
+#          env: dev
+#  - job_name: 'vote-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4028' ]
+#        labels:
+#          job: vote-rpc
+#          app: vote-rpc
+#          env: dev
 
-  - job_name: 'shop-api'
-    static_configs:
-      - targets: [ 'looklook:4019' ]
-        labels:
-          job: shop-api
-          app: shop-api
-          env: dev
-  - job_name: 'shop-rpc'
-    static_configs:
-      - targets: [ 'looklook:4020' ]
-        labels:
-          job: shop-rpc
-          app: shop-rpc
-          env: dev
+#  - job_name: 'shop-api'
+#    static_configs:
+#      - targets: [ 'looklook:4019' ]
+#        labels:
+#          job: shop-api
+#          app: shop-api
+#          env: dev
+#  - job_name: 'shop-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4020' ]
+#        labels:
+#          job: shop-rpc
+#          app: shop-rpc
+#          env: dev
 
-  - job_name: 'notic-api'
-    static_configs:
-      - targets: [ 'looklook:4029' ]
-        labels:
-          job: notic-api
-          app: notic-api
-          env: dev
-  - job_name: 'notic-rpc'
-    static_configs:
-      - targets: [ 'looklook:4030' ]
-        labels:
-          job: notic-rpc
-          app: notic-rpc
-          env: dev
+#  - job_name: 'notic-api'
+#    static_configs:
+#      - targets: [ 'looklook:4029' ]
+#        labels:
+#          job: notic-api
+#          app: notic-api
+#          env: dev
+#  - job_name: 'notic-rpc'
+#    static_configs:
+#      - targets: [ 'looklook:4030' ]
+#        labels:
+#          job: notic-rpc
+#          app: notic-rpc
+#          env: dev
 
   - job_name: 'comment-api'
     static_configs:

@@ -23,7 +23,7 @@ Telemetry:
 Log:
   ServiceName: usercenter-api
   Mode: console
-  Level: error
+  Level: debug
   Encoding: plain
 
 #WxMiniConf
@@ -36,6 +36,7 @@ UsercenterRpcConf:
   Endpoints:
     - 127.0.0.1:2004
   NonBlock: true
+  Timeout: 3000
 
 LotteryRpcConf:
   Endpoints:

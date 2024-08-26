@@ -55,6 +55,7 @@ func (l *LotteryDetailLogic) LotteryDetail(in *pb.LotteryDetailReq) (resp *pb.Lo
 	if err != nil {
 		return nil, err
 	}
+	l.Logger.Debugf("获取当前用户是否参与当前lottery: %v", count)
 	resp.IsParticipated = count
 	return resp, nil
 }

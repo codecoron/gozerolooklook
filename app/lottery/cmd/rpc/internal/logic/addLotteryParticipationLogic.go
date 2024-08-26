@@ -37,7 +37,7 @@ func (l *AddLotteryParticipationLogic) AddLotteryParticipation(in *pb.AddLottery
 		UserId:    in.UserId,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_INSERT_ERR_KEY_EXISTED), "%v", err)
 	}
 
 	id, err := r.LastInsertId()

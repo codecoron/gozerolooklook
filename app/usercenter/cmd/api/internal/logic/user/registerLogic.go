@@ -39,6 +39,9 @@ func (l *RegisterLogic) Register(req types.RegisterReq) (*types.RegisterResp, er
 
 	var resp types.RegisterResp
 	_ = copier.Copy(&resp, registerResp)
-
+	//logx.Infof("INFO 测试创建用户成功")
+	//logx.Debugf("Debug 测试创建用户成功")
+	//logx.Errorf("Error 测试创建用户成功")
+	l.Logger.Debugf("Error 测试创建用户成功")
 	return &resp, nil
 }

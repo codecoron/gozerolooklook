@@ -1,6 +1,8 @@
 Name: upload-api
 Host: 0.0.0.0
 Port: 1008
+MaxBytes: 6176497735
+Timeout: 300000
 
 #jwtAuth
 JwtAuth:
@@ -29,3 +31,4 @@ FileUploadRpcConf:
   Endpoints:
     - 127.0.0.1:2008
   NonBlock: true
+  Timeout: 300000

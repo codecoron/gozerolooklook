@@ -6,11 +6,15 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"looklook/common/xerr"
 )
 
 var _ PrizeModel = (*customPrizeModel)(nil)
+var (
+	cacheLotteryPrizeIdLotteryIdPrefix = "cache:lottery:prize:id:lotteryId:"
+)
 
 type (
 	// PrizeModel is an interface to be customized, add more methods here,
@@ -21,6 +25,7 @@ type (
 		TransInsert(ctx context.Context, session sqlx.Session, data *Prize) (sql.Result, error)
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		FindByLotteryId(ctx context.Context, lotteryId int64) ([]*Prize, error)
+		FindOneByIdLotteryId(ctx context.Context, id int64, lotteryId int64) (*Prize, error)
 		FindPageByLotteryId(ctx context.Context, lotteryId int64, offset int64, limit int64) ([]*Prize, error)
 		GetPrizeInfoByPrizeIds(ctx context.Context, prizeIds []int64) ([]*Prize, error)
 		FindAllByLotteryIds(ctx context.Context, lotteryIds []int64) ([]*Prize, error)
@@ -62,6 +67,27 @@ func (m *defaultPrizeModel) FindByLotteryId(ctx context.Context, lotteryId int64
 	}
 	return resp, nil
 }
+
+func (m *defaultPrizeModel) FindOneByIdLotteryId(ctx context.Context, id int64, lotteryId int64) (*Prize, error) {
+	lotteryPrizeIdLotteryIdKey := fmt.Sprintf("%s%v:%v", cacheLotteryPrizeIdLotteryIdPrefix, id, lotteryId)
+	var resp Prize
+	err := m.QueryRowIndexCtx(ctx, &resp, lotteryPrizeIdLotteryIdKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v any) (i any, e error) {
+		query := fmt.Sprintf("select %s from %s where `id` = ? and `lottery_id` = ? limit 1", prizeRows, m.table)
+		if err := conn.QueryRowCtx(ctx, &resp, query, id, lotteryId); err != nil {
+			return nil, err
+		}
+		return resp.Id, nil
+	}, m.queryPrimary)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
 func (m *defaultPrizeModel) FindPageByLotteryId(ctx context.Context, lotteryId int64, offset int64, limit int64) ([]*Prize, error) {
 	var resp []*Prize
 	query := fmt.Sprintf("SELECT * FROM %s WHERE lottery_id = ? limit ?,?", m.table)

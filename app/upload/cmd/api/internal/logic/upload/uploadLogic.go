@@ -3,12 +3,11 @@ package upload
 import (
 	"context"
 	"github.com/pkg/errors"
+	"looklook/app/upload/cmd/api/internal/svc"
+	"looklook/app/upload/cmd/api/internal/types"
 	"looklook/app/upload/cmd/rpc/upload"
 	"looklook/common/ctxdata"
 	"looklook/common/xerr"
-
-	"looklook/app/upload/cmd/api/internal/svc"
-	"looklook/app/upload/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

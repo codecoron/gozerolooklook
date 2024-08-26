@@ -35,3 +35,4 @@ goctl api go -api main.api -dir ../  --style=goZero --home=../../../../../deploy
 # ./kafka-console-consumer.sh  --bootstrap-server kafka:9092  --topic looklook-log   --from-beginning
 # 命令生产
 # ./kafka-console-producer.sh --bootstrap-server kafka:9092 --topic second
+#goctl api plugin -plugin goctl-swagger="swagger -filename user.json" -api user.api -dir .

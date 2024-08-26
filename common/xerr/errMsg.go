@@ -13,6 +13,7 @@ func init() {
 	message[DB_ERROR] = "数据库繁忙,请稍后再试"
 	message[DB_UPDATE_AFFECTED_ZERO_ERROR] = "更新数据影响行数为0"
 	message[DB_ERROR_NOT_FOUND] = "数据不存在"
+	message[DB_INSERT_ERR_KEY_EXISTED] = "数据插入失败"
 
 	//投票
 	message[VOTE_VOTE_CONFIG_NOT_FOUND] = "投票配置有问题,请检查配置" //投票配置通用错误,内容可根据业务来定义

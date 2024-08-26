@@ -130,6 +130,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 		RationsMap[participant] = 1
 	}
 
+	// 对于完成任务的用户根据倍数提升概率
 	for _, record := range records {
 		RationsMap[record.UserId] += record.IncreaseMultiple
 	}
@@ -154,6 +155,7 @@ func (l *AnnounceLotteryLogic) DrawLottery(ctx context.Context, lotteryId int64,
 		FinalRatios[idx] = float64(Ratios[idx]) / float64(totalRatio)
 	}
 	//fmt.Println("FinalRatios:", FinalRatios)
+	//logx.Debugf("FinalRatos: %v", FinalRatios)
 
 	// 根据中奖总数量进行开奖
 	for i := 0; i < int(WinnersNum); i++ { // 中奖人数
@@ -309,10 +311,10 @@ func (s *TimeLotteryStrategy) Run() error {
 		}
 
 		// 执行开奖结果通知任务
-		err := s.NotifyParticipators(participators, lotteryId)
-		if err != nil {
-			return err
-		}
+		//err := s.NotifyParticipators(participators, lotteryId)
+		//if err != nil {
+		//	return err
+		//}
 	}
 	return err
 }
@@ -383,10 +385,10 @@ func (s *PeopleLotteryStrategy) Run() error {
 		}
 
 		// 执行开奖结果通知任务
-		err := s.NotifyParticipators(participators, lottery.Id)
-		if err != nil {
-			return err
-		}
+		//err := s.NotifyParticipators(participators, lottery.Id)
+		//if err != nil {
+		//	return err
+		//}
 	}
 	return nil
 }

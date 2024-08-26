@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 	"looklook/app/usercenter/cmd/rpc/internal/svc"
 	"looklook/app/usercenter/cmd/rpc/pb"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UpdateUserBaseInfoLogic struct {

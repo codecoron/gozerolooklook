@@ -22,7 +22,7 @@ Telemetry:
 
 Log:
   ServiceName: usercenter-rpc
-  Level: error
+  Level: info
 
 Redis:
   Host: redis:6379
