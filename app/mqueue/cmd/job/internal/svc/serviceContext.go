@@ -33,7 +33,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
 		LotteryRpc:    lottery.NewLotteryZrpcClient(zrpc.MustNewClient(c.LotteryRpcConf)),
-		NoticeRpc:     notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
-		CheckInRpc:    checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
+		// NoticeRpc:     notice.NewNotice(zrpc.MustNewClient(c.NoticeRpcConf)),
+		// CheckInRpc:    checkin.NewCheckin(zrpc.MustNewClient(c.CheckinRpcConf)),
 	}
 }
