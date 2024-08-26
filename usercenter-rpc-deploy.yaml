@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usercenter-rpc
+  namespace: lottery-backend
+  labels:
+    app: usercenter-rpc
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: usercenter-rpc
+  template:
+    metadata:
+      labels:
+        app: usercenter-rpc
+    spec:
+      serviceAccountName: find-endpoints
+      containers:
+      - name: usercenter-rpc
+        image: 192.168.0.105/go-zero-looklook/usercenter-rpc:e244f39
+        ports:
+        - containerPort: 2004
+        readinessProbe:
+          tcpSocket:
+            port: 2004
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 2004
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        resources:
+          requests:
+            cpu: 200m
+            memory: 50Mi
+          limits:
+            cpu: 300m
+            memory: 100Mi
+        volumeMounts:
+        - name: timezone
+          mountPath: /etc/localtime
+      imagePullSecrets:
+      - name: docker-login
+      volumes:
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: usercenter-rpc-svc
+  namespace: lottery-backend
+spec:
+  ports:
+  - nodePort: 32004
+    port: 2004
+    protocol: TCP
+    targetPort: 2004
+  type: NodePort
+  selector:
+    app: usercenter-rpc
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: usercenter-rpc-hpa-c
+  namespace: lottery-backend
+  labels:
+    app: usercenter-rpc-hpa-c
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: usercenter-rpc
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: usercenter-rpc-hpa-m
+  namespace: lottery-backend
+  labels:
+    app: usercenter-rpc-hpa-m
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: usercenter-rpc
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
