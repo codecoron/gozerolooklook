@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "comment/v1/comment/Test": {
+    "/comment/v1/comment/Test": {
       "post": {
         "summary": "测试Api",
         "operationId": "Test",
@@ -38,13 +38,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
         ]
       }
     },
-    "comment/v1/comment/addComment": {
+    "/comment/v1/comment/addComment": {
       "post": {
         "summary": "增加评论",
         "operationId": "addComment",
@@ -66,13 +65,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "comment/v1/comment/commentPraise": {
+    "/comment/v1/comment/commentPraise": {
       "post": {
         "summary": "评论点赞/取消点赞",
         "operationId": "commentPraise",
@@ -94,13 +97,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "comment/v1/comment/deleteComment": {
+    "/comment/v1/comment/deleteComment": {
       "post": {
         "summary": "删除评论",
         "operationId": "deleteComment",
@@ -122,13 +129,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "comment/v1/comment/getCommentDetail": {
+    "/comment/v1/comment/getCommentDetail": {
       "post": {
         "summary": "获取评论详情",
         "operationId": "getCommentDetail",
@@ -150,13 +161,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
         ]
       }
     },
-    "comment/v1/comment/getCommentList": {
+    "/comment/v1/comment/getCommentList": {
       "post": {
         "summary": "获取评论列表",
         "operationId": "getCommentList",
@@ -178,13 +188,17 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     },
-    "comment/v1/comment/getLastId": {
+    "/comment/v1/comment/getLastId": {
       "post": {
         "summary": "获取评论lastId",
         "operationId": "getCommentLastId",
@@ -206,13 +220,12 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
         ]
       }
     },
-    "comment/v1/comment/updateComment": {
+    "/comment/v1/comment/updateComment": {
       "post": {
         "summary": "更新评论",
         "operationId": "updateComment",
@@ -234,9 +247,13 @@
             }
           }
         ],
-        "requestBody": {},
         "tags": [
           "comment"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
         ]
       }
     }
@@ -599,10 +616,8 @@
       "title": "TestReq",
       "required": [
         "age",
-        "gte=1",
         "name",
         "email",
-        "required",
         "password",
         "repassword",
         "date"
@@ -659,10 +674,5 @@
       "name": "Authorization",
       "in": "header"
     }
-  },
-  "security": [
-    {
-      "apiKey": []
-    }
-  ]
+  }
 }
